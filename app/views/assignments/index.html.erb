@@ -1,0 +1,22 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Assignments" %>
+
+<h1>Assignments</h1>
+<table>
+  <tr>
+    <th>Student</th>
+    <th>Teacher</th>
+    <th>Composition</th>
+  </tr> 
+  <% @assignments.each do |assignment| %>
+  <tr>
+    <td><%= link_to assignment.student, assignment   %></td>
+    <td><%= assignment.teacher %></td>
+    <td><%= assignment.composition %></td>
+  </tr>
+   <% end %>
+</table>
+
+
+<%= link_to "New assignment", new_assignment_path %>

@@ -1,7 +1,17 @@
 <p style="color: green"><%= notice %></p>
 
 <%= render @assignment %>
-
+<h1>Lessons</h1>
+<table>
+  <tr>
+    <th>Name</th>
+  </tr> 
+  <% @assignment.lessons.each do |lesson| %>
+  <tr>
+    <td><%= link_to lesson.name, lesson   %></td>
+  </tr>
+   <% end %>
+</table>
 <div>
   <%= link_to "Edit this assignment", edit_assignment_path(@assignment) %> |
   <%= link_to "Back to assignments", assignments_path %>

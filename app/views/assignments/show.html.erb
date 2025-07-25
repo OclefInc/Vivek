@@ -1,20 +1,20 @@
 <p style="color: green"><%= notice %></p>
 
 <%= render @assignment %>
-<h1>Lessons</h1>
-<table>
+<h1 class="text-2xl text-red-500">Lessons</h1>
+<table class="w-full text-left text-gray-500 border">
   <tr>
-    <th>Name</th>
+    <th class="px-6 py-3">Name</th>
   </tr> 
   <% @assignment.lessons.each do |lesson| %>
-  <tr>
-    <td><%= link_to lesson.name, lesson   %></td>
+  <tr class="border">
+    <td class="px-6 py-3"><%= link_to lesson.name, lesson   %></td>
   </tr>
    <% end %>
 </table>
-<div>
-  <%= link_to "Edit this assignment", edit_assignment_path(@assignment) %> |
-  <%= link_to "Back to assignments", assignments_path %>
+<div class="flex">
+  <%= link_to "Edit this assignment", edit_assignment_path(@assignment), class:"mt-2 rounded-lg py-3 px-5 bg-gray-200 inline-block font-medium border me-2" %>
+  <%= link_to "Back to assignments", assignments_path, class:"mt-2 rounded-lg py-3 px-5 bg-gray-200 inline-block font-medium border me-2" %>
 
-  <%= button_to "Destroy this assignment", @assignment, method: :delete %>
+  <%= button_to "Destroy this assignment", @assignment, method: :delete, class:"mt-2 rounded-lg py-3 px-5 bg-red-200 inline-block font-medium border" %>
 </div>

@@ -2,8 +2,8 @@
 
 <% content_for :title, "Assignments" %>
 
-<h1>Assignments</h1>
-<table>
+<h1 class="text-2xl text-red-400">Assignments</h1>
+<table class="w-full text-left text-gray-500">
   <tr>
     <th>Student</th>
     <th>Teacher</th>
@@ -11,7 +11,7 @@
   </tr> 
   <% @assignments.each do |assignment| %>
   <tr>
-    <td><%= link_to assignment.student, assignment   %></td>
+    <td><%= link_to assignment.student, assignment, class:"text-blue-500 hover:text-red-500"    %></td>
     <td><%= assignment.teacher %></td>
     <td><%= assignment.composition %></td>
   </tr>

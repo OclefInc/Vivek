@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# == Schema Information
+#
+# Table name: students
+#
+#  id            :bigint           not null, primary key
+#  name          :string
+#  year_of_birth :integer
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#
+one:
+  name: MyString
+  year_of_birth: 1
+
+two:
+  name: MyString
+  year_of_birth: 1

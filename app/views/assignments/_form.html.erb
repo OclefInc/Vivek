@@ -13,20 +13,23 @@
 
   <div>
     <%= form.label :student, style: "display: block" %>
-    <%= form.text_field :student %>
+    <%= form.collection_select :student_id, Student.order(:name), :id, :name, {},
+      { class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" } %>
   </div>
 
   <div>
     <%= form.label :teacher, style: "display: block" %>
-    <%= form.text_field :teacher %>
+    <%= form.collection_select :teacher_id, Teacher.order(:name), :id, :name, {},
+      { class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" } %>
   </div>
 
   <div>
     <%= form.label :composition, style: "display: block" %>
-    <%= form.text_field :composition %>
+    <%= form.collection_select :composition_id, Composition.order(:name), :id, :name, {},
+      { class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" } %>
   </div>
 
   <div>
-    <%= form.submit %>
-  </div>
+  <%= form.submit class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+  </div> 
 <% end %>

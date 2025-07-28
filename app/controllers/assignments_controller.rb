@@ -65,6 +65,6 @@ class AssignmentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def assignment_params
-      params.expect(assignment: [ :student, :teacher, :composition ])
+      params.expect(assignment: [ :student_id, :teacher_id, :composition_id ])
     end
 end

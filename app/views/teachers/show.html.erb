@@ -8,7 +8,19 @@
   <h1 class="font-bold text-4xl">Showing teacher</h1>
 
   <%= render @teacher %>
-
+  <h1 class="text-2xl text-red-500">Assignments</h1>
+<table class="w-full text-left text-gray-500 border">
+  <tr>
+    <th class="px-6 py-3">Composition</th>
+    <th class="px-6 py-3">Student</th>
+  </tr> 
+  <% @teacher.assignments.each do |assignment| %>
+  <tr class="border">
+    <td class="px-6 py-3"><%= link_to assignment.composition.name, assignment   %></td>
+    <td class="px-6 py-3"><%= assignment.student.name   %></td>
+  </tr>
+   <% end %>
+</table>
   <%= link_to "Edit this teacher", edit_teacher_path(@teacher), class: "w-full sm:w-auto text-center rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
   <%= link_to "Back to teachers", teachers_path, class: "w-full sm:w-auto text-center mt-2 sm:mt-0 sm:ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
   <%= button_to "Destroy this teacher", @teacher, method: :delete, form_class: "sm:inline-block mt-2 sm:mt-0 sm:ml-2", class: "w-full rounded-md px-3.5 py-2.5 text-white bg-red-600 hover:bg-red-500 font-medium cursor-pointer", data: { turbo_confirm: "Are you sure?" } %>

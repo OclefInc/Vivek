@@ -1,17 +1,17 @@
 <div id="<%= dom_id assignment %>">
   <p>
     <strong>Student:</strong>
-    <%= assignment.student.name %>
+    <%= link_to assignment.student.name, assignment.student, class:'text-blue-500' %>
   </p>
 
   <p>
     <strong>Teacher:</strong>
-    <%= assignment.teacher.name %>
+    <%= link_to assignment.teacher.name, assignment.teacher, class:'text-red-500' %>
   </p>
 
   <p>
     <strong>Composition:</strong>
-    <%= assignment.composition.name %>
+    <%= link_to assignment.composition.name, assignment.composition, class:'text-green-500' %>
   </p>
 
 </div>

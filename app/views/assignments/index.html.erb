@@ -11,9 +11,9 @@
   </tr> 
   <% @assignments.each do |assignment| %>
   <tr>
-    <td><%= link_to assignment.student, assignment, class:"text-blue-500 hover:text-red-500"    %></td>
-    <td><%= assignment.teacher %></td>
-    <td><%= assignment.composition %></td>
+    <td><%= link_to assignment.student.name, assignment, class:"text-blue-500 hover:text-red-500"    %></td>
+    <td><%= assignment.teacher.name %></td>
+    <td><%= assignment.composition.name %></td>
   </tr>
    <% end %>
 </table>

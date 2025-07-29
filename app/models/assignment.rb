@@ -17,4 +17,7 @@ class Assignment < ApplicationRecord
     belongs_to :student
     belongs_to :teacher
     belongs_to :composition
+    def name 
+        "#{composition.name} (#{student.name})"
+    end
 end

@@ -13,15 +13,11 @@
 
   <div>
     <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
+    <%= form.text_field :name, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": lesson.errors[:name].none?, "border-red-400 focus:outline-red-600": lesson.errors[:name].any?}] %>
   </div>
-
+  <%= form.hidden_field :assignment_id %>
   <div>
-    <%= form.label :assignment_id, style: "display: block" %>
-    <%= form.number_field :assignment_id %>
-  </div>
-
-  <div>
-    <%= form.submit %>
+    <div class="inline">
+    <%= form.submit class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-green-500 text-white inline-block font-medium cursor-pointer" %>
   </div>
 <% end %>

@@ -10,4 +10,6 @@
 #
 class Lesson < ApplicationRecord
     belongs_to :assignment
+    validates_presence_of :name
+
 end

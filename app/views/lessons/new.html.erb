@@ -1,7 +1,7 @@
 <% content_for :title, "New lesson" %>
 
 <h1>New lesson</h1>
-
+<%= render "/assignments/assignment", assignment:@lesson.assignment %>
 <%= render "form", lesson: @lesson %>
 
 <br>

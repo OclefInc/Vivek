@@ -11,5 +11,5 @@
 class Lesson < ApplicationRecord
     belongs_to :assignment
     validates_presence_of :name
-
+    has_one_attached :lesson_video
 end

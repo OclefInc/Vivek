@@ -11,4 +11,5 @@
 class Student < ApplicationRecord
     validates_presence_of :name, :year_of_birth
     has_many :assignments
+    has_one_attached :profile_picture
 end

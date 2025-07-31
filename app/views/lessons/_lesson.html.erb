@@ -1,4 +1,7 @@
 <div id="<%= dom_id lesson %>">
+<p>
+    <%= image_tag lesson.lesson_video if lesson.lesson_video.attached? %>
+  </p>
   <p>
     <strong>Name:</strong>
     <%= lesson.name %>

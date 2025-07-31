@@ -65,6 +65,6 @@ class CompositionsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def composition_params
-      params.expect(composition: [ :name, :composer ])
+      params.expect(composition: [ :sheet_music, :name, :composer ])
     end
 end

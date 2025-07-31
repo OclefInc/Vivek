@@ -11,4 +11,5 @@
 class Teacher < ApplicationRecord
     validates_presence_of :name, :city
     has_many :assignments
+    has_one_attached :profile_picture
 end

@@ -10,7 +10,8 @@
       </ul>
     </div>
   <% end %>
-          <div class="my-5">
+
+  <div class="my-5">
     <%= form.label :profile_picture %>
     <%= form.file_field :profile_picture, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": student.errors[:name].none?, "border-red-400 focus:outline-red-600": student.errors[:name].any?}] %>
   </div>
@@ -23,6 +24,11 @@
   <div class="my-5">
     <%= form.label :year_of_birth %>
     <%= form.number_field :year_of_birth, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": student.errors[:year_of_birth].none?, "border-red-400 focus:outline-red-600": student.errors[:year_of_birth].any?}] %>
+  </div>
+  <div>
+    <%= form.label :bio, style: "display: block" %>
+    <%= form.rich_text_area :bio,
+      class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
   </div>
 
   <div class="inline">

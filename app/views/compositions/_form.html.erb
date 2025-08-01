@@ -10,10 +10,6 @@
       </ul>
     </div>
   <% end %>
-   <div class="my-5">
-    <%= form.label :sheet_music %>
-    <%= form.file_field :sheet_music, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": composition.errors[:name].none?, "border-red-400 focus:outline-red-600": composition.errors[:name].any?}] %>
-  </div>
 
   <div class="my-5">
     <%= form.label :name %>
@@ -23,6 +19,15 @@
   <div class="my-5">
     <%= form.label :composer %>
     <%= form.text_field :composer, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": composition.errors[:composer].none?, "border-red-400 focus:outline-red-600": composition.errors[:composer].any?}] %>
+  </div>
+  <div>
+    <%= form.label :description, style: "display: block" %>
+    <%= form.rich_text_area :description,
+      class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+  </div>
+  <div class="my-5">
+    <%= form.label :sheet_music %>
+    <%= form.file_field :sheet_music, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": composition.errors[:name].none?, "border-red-400 focus:outline-red-600": composition.errors[:name].any?}] %>
   </div>
 
   <div class="inline">

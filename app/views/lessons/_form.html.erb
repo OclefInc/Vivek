@@ -18,6 +18,11 @@
     <%= form.label :name, style: "display: block" %>
     <%= form.text_field :name, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": lesson.errors[:name].none?, "border-red-400 focus:outline-red-600": lesson.errors[:name].any?}] %>
   </div>
+  <div>
+    <%= form.label :description, style: "display: block" %>
+    <%= form.rich_text_area :description,
+      class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+  </div>
   <%= form.hidden_field :assignment_id %>
   <div>
     <div class="inline">

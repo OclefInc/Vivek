@@ -12,4 +12,5 @@ class Composition < ApplicationRecord
     validates_presence_of :name, :composer
     has_many :assignments
     has_one_attached :sheet_music
+    has_rich_text :description
 end

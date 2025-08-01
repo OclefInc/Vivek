@@ -13,5 +13,12 @@
     <strong>Composition:</strong>
     <%= link_to assignment.composition.name, assignment.composition, class:'text-green-500' %>
   </p>
+  <div>
+    <%= image_tag assignment.summary_video if assignment.summary_video.attached? %>
+  </div>
+  <p>
+    <strong>Description:</strong>
+    <%= assignment.description %>
+  </p>
 
 </div>

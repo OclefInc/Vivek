@@ -23,6 +23,11 @@
     <%= form.rich_text_area :description,
       class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
   </div>
+  <div>
+    <%= form.label :skills, style: "display: block" %>
+    <%= form.collection_select :skill_ids, Skill.order(:name), :id, :name, {},
+      { multiple:true, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" } %>
+  </div>
   <%= form.hidden_field :assignment_id %>
   <div>
     <div class="inline">

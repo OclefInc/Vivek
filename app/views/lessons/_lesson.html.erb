@@ -6,9 +6,13 @@
     <strong>Name:</strong>
     <%= lesson.name %>
   </p>
-  <p>
+  <p >
     <strong>Description:</strong>
     <%= lesson.description %>
+  </p>
+  <p>
+    <strong>Skills:</strong>
+    <%= lesson.skills.map{|skill| link_to(skill.name, skill)}.join(', ').html_safe %>
   </p>
   <p>
     <strong>Assignment:</strong>

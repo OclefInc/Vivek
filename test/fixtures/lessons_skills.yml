@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# == Schema Information
+#
+# Table name: lessons_skills
+#
+#  id         :bigint           not null, primary key
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  lesson_id  :integer
+#  skill_id   :integer
+#
+one:
+  lesson_id: 1
+  skill_id: 1
+
+two:
+  lesson_id: 1
+  skill_id: 1

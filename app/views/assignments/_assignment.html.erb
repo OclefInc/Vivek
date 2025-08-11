@@ -1,17 +1,17 @@
 <div id="<%= dom_id assignment %>">
   <p>
     <strong>Student:</strong>
-    <%= link_to assignment.student.name, assignment.student, class:'text-blue-500' %>
+    <%= link_to assignment.student.name, assignment.student, class:'text-blue-600' %>
   </p>
 
   <p>
     <strong>Teacher:</strong>
-    <%= link_to assignment.teacher.name, assignment.teacher, class:'text-blue-500' %>
+    <%= link_to assignment.teacher.name, assignment.teacher, class:'text-red-600' %>
   </p>
 
   <p>
     <strong>Composition:</strong>
-    <%= link_to assignment.composition.name, assignment.composition, class:'text-blue-500' %>
+    <%= link_to assignment.composition.name, assignment.composition, class:'text-green-600' %>
   </p>
   <div>
     <%= image_tag assignment.summary_video if assignment.summary_video.attached? %>

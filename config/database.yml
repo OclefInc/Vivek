@@ -81,9 +81,6 @@ test:
 production:
   primary: &primary_production
     <<: *default
-    database: vivek_production
-    username: vivek
-    password: <%= ENV["VIVEK_DATABASE_PASSWORD"] %>
   cache:
     <<: *primary_production
     database: vivek_production_cache

@@ -79,5 +79,8 @@ test:
 # for a full overview on how database connection configuration can be specified.
 #
 production:
-  primary: 
-    adapter: postgresql
+  <<: *default
+  database: vivek_production
+  username: vivek
+  password: <%= ENV["DATABASE_PASSWORD"] %>
+  url: <%= ENV["DATABASE_URL"] %>

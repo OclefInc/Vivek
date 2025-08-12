@@ -46,6 +46,10 @@ Rails.application.configure do
   # Don't log any deprecations.
   config.active_support.report_deprecations = false
 
+  # Disable Action Cable for production to avoid database config issues
+  config.action_cable.disable_request_forgery_protection = true
+  config.action_cable.url = nil
+
   # Replace the default in-process memory cache store with a durable alternative.
   config.cache_store = :solid_cache_store
 

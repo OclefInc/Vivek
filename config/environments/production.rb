@@ -50,13 +50,11 @@ Rails.application.configure do
   config.action_cable.disable_request_forgery_protection = true
   config.action_cable.url = nil
 
-  # Replace the default in-process memory cache store with a durable alternative.
-  config.cache_store = :solid_cache_store
+  # Use memory cache store instead of solid_cache to avoid database config issues
+  config.cache_store = :memory_store
 
-  # Replace the default in-process and non-durable queuing backend for Active Job.
-  config.active_job.queue_adapter = :solid_queue
-  # Use primary database for solid_queue on Heroku
-  config.solid_queue.connects_to = { database: { writing: :primary } }
+  # Use async job adapter instead of solid_queue to avoid database config issues
+  config.active_job.queue_adapter = :async
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.

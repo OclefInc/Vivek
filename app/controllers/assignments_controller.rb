@@ -1,4 +1,5 @@
 class AssignmentsController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_assignment, only: %i[ show edit update destroy ]
 
   # GET /assignments or /assignments.json

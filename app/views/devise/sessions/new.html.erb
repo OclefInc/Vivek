@@ -1,14 +1,17 @@
+
+<div class="flex flex-row justify-center">
+<div class="border shadow-lg bg-gray-200 rounded-md px-5 py-5 ">
 <h2 class="font-bold" >Log in </h2>
 
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
   <div class="field">
     <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: ["block sm:w-auto shadow-sm rounded-md border px-3 py-2 mt-2 w-full", ] %>
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "block w-full sm:w-auto bg-red-50 shadow-sm rounded-lg border-2 border-blue-900 px-3 py-2 mt-2 focus:outline-none focus:ring-0 focus:border-blue-900" %>
   </div>
 
   <div class="field">
     <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password", class: ["block sm:w-auto shadow-sm rounded-md border px-3 py-2 mt-2 w-full", ] %>
+    <%= f.password_field :password, autocomplete: "current-password", class: "block w-full sm:w-auto bg-red-50 shadow-sm rounded-lg border-2 border-blue-900 px-3 py-2 mt-2 focus:outline-none focus:ring-0 focus:border-blue-900"  %>
   </div>
 
   <% if devise_mapping.rememberable? %>
@@ -24,3 +27,5 @@
 <% end %>
 
 <%= render "devise/shared/links" %>
+</div>
+</div>

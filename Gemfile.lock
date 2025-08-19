@@ -130,6 +130,7 @@ GEM
       raabro (~> 1.4)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    htmlbeautifier (1.4.3)
     i18n (1.14.7)
       concurrent-ruby (~> 1.0)
     image_processing (1.14.0)
@@ -403,6 +404,7 @@ DEPENDENCIES
   capybara
   debug
   devise (~> 4.9)
+  htmlbeautifier
   image_processing (~> 1.2)
   importmap-rails
   jbuilder

@@ -7,42 +7,34 @@
     <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= yield :head %>
-
     <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
     <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
-
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
-
   <body>
-  <header class="text-gray-600 bg-sky-100 body-font">
-  <p class="notice"><%= notice %></p>
-  <p class="alert"><%= alert %></p>
-  <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-    <a class="flex title-font font-medium items-center text-black mb-4 md:mb-0">
-      <span class="ml-3 text-2xl">The Vivek Project.</span>
-    </a>
-    <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
-      <a href="/assignments" class="mr-5 hover:text-gray-900">Assignments</a>
-      <a href="/students" class="mr-5 hover:text-gray-900">Students</a>
-      <a href="/teachers" class="mr-5 hover:text-gray-900">Teachers</a>
-      <a href="/compositions" class="mr-5 hover:text-gray-900">Compositions</a>
-      <a href="/skills" class="mr-5 hover:text-gray-900">Skills</a>
-    </nav>
-    
-    <%= button_to "Log out", destroy_user_session_path, method: :delete, class:"inline-flex items-center bg-gray-100 border-0 py-2 px-3 focus:outline-none hover:bg-gray-200 rounded-lg text-base mt-4 md:mt-0" %>
-
-      
-  </div>
-</header>
+    <header class="text-gray-600 bg-sky-100 body-font">
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
+      <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
+        <a class="flex title-font font-medium items-center text-black mb-4 md:mb-0">
+          <span class="ml-3 text-2xl">The Vivek Project.</span>
+        </a>
+        <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
+          <a href="/assignments" class="mr-5 hover:text-gray-900">Assignments</a>
+          <a href="/students" class="mr-5 hover:text-gray-900">Students</a>
+          <a href="/teachers" class="mr-5 hover:text-gray-900">Teachers</a>
+          <a href="/compositions" class="mr-5 hover:text-gray-900">Compositions</a>
+          <a href="/skills" class="mr-5 hover:text-gray-900">Skills</a>
+        </nav>
+        <%= button_to "Log out", destroy_user_session_path, method: :delete, class:"inline-flex object-center items-center justify-right bg-white opacity-50 border-sky-50 border-2 py-1 px-3 focus:outline-none hover:border-sky-500 hover:border-2 rounded-lg text-black mt-4 md:mt-0" %>
+      </div>
+    </header>
     <main class="container mx-auto mt-28 px-5">
       <%= yield %>
     </main>

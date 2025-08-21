@@ -56,6 +56,9 @@ group :development do
   gem "web-console"
   gem "annotaterb"
   gem "htmlbeautifier"
+  gem "rufo"
+  gem "ruby-lsp"
+  gem "rubocop"
 end
 
 group :test do

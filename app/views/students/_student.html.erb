@@ -1,17 +1,17 @@
-<div id="<%= dom_id student %>" class="w-full sm:w-auto my-5 space-y-5">
-  <div>
-    <%= image_tag student.profile_picture if student.profile_picture.attached? %>
+<div class="flex">
+  <div ><%= image_tag student.profile_picture, class:"max-w-24" if student.profile_picture.attached? %></div>
+  <div >
+    <div>
+      <strong class="block font-medium mb-1">Name:</strong>
+      <%= student.name %>
+    </div>
+    <div>
+      <strong class="block font-medium mb-1">Year of birth:</strong>
+      <%= student.year_of_birth %>
+    </div>
   </div>
-  <div>
-    <strong class="block font-medium mb-1">Name:</strong>
-    <%= student.name %>
-  </div>
-  <div>
-    <strong class="block font-medium mb-1">Year of birth:</strong>
-    <%= student.year_of_birth %>
-  </div>
-  <p>
-    <strong>Bio:</strong>
-    <%= student.bio %>
-  </p>
 </div>
+<p>
+  <strong>Bio:</strong>
+  <%= student.bio %>
+</p>

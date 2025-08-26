@@ -1,18 +1,23 @@
 <% content_for :title, "Skills" %>
-
 <div class="w-full">
   <% if notice.present? %>
     <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
   <% end %>
-
   <div class="flex justify-between items-center">
     <h1 class="font-bold text-4xl">Skills</h1>
-    <%= link_to "New skill", new_skill_path, class: "rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
+    <%= form_with url: skills_path, method: :get, data: { turbo_frame: "skills-table", turbo_action: "advance" } do |form| %>
+      <%= form.text_field :query,
+            value: params[:query],
+            id: "table-search",
+            class: "block p-2 ps-10 text-sm text-gray-700 border border-gray-300 rounded-xl w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
+            placeholder: "Search for skills",
+            oninput: "this.form.requestSubmit()" %>
+    <% end %>
+    <%= link_to "New skill", new_skill_path, class: "rounded-lg px-3.5 py-2.5 bg-blue-600 hover:bg-blue-400 text-white block font-medium" %>
   </div>
-
   <div id="skills" class="min-w-full divide-y divide-gray-200 space-y-5">
     <% @skill_categories.each do |skill_category| %>
-      <h4 class="font-bold text-4xl" > <%= skill_category.name %> </h4>
+      <h4 class="font-bold text-xl" > <%= skill_category.name %> </h4>
       <% skill_category.skills.each do |skill| %>
         <div class="flex flex-col sm:flex-row justify-between items-center pb-5 sm:pb-0">
           <%= render skill %>

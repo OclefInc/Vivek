@@ -1,5 +1,6 @@
 class SkillsController < ApplicationController
   before_action :authenticate_user!
+  before_action :authorize_user
   before_action :set_skill, only: %i[ show edit update destroy ]
 
   # GET /skills or /skills.json

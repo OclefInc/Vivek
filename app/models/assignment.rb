@@ -20,7 +20,7 @@ class Assignment < ApplicationRecord
     has_rich_text :description
     has_one_attached :summary_video
 
-def name
+    def name
         "#{composition.name} (#{student.name})"
     end
 end

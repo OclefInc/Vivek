@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :sheet_musics
   devise_for :users, controllers: { 
     confirmations: 'users/confirmations',
     #omniauth_callbacks: 'users/omniauth_callbacks',

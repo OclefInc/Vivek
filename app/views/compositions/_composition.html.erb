@@ -1,14 +1,15 @@
 <div id="<%= dom_id composition %>" class="w-full sm:w-auto my-5 space-y-5">
-<div>
-    <%= image_tag composition.sheet_music if composition.sheet_music.attached? %>
-  </div>
-<div>
+  <div>
     <strong class="block font-2xl mb-1">Name:</strong>
     <%= composition.name %>
   </div>
   <div>
     <strong class="block font-medium mb-1">Composer:</strong>
     <%= composition.composer %>
+  </div>
+  <div>
+    <strong class="block font-medium mb-1">Number of Scores:</strong>
+    <%= link_to composition.sheet_musics.length, sheet_musics_path({composition_id:composition.id}) %>
   </div>
   <p>
     <strong>Description:</strong>

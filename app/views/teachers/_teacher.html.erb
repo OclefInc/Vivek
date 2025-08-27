@@ -1,17 +1,17 @@
-<div id="<%= dom_id teacher %>" class="w-full sm:w-auto my-5 space-y-5">
-  <div>
-    <%= image_tag teacher.profile_picture if teacher.profile_picture.attached? %>
+<div id="<%= dom_id teacher %>" class="flex sm:w-auto my-5 space-y-5">
+  <div class="py-2 px-2">
+    <%= image_tag teacher.profile_picture, class:"max-w-32" if teacher.profile_picture.attached? %>
   </div>
-  <div>
-    <strong class="block font-medium mb-1">Name:</strong>
-    <%= teacher.name %>
+  <div class="flex-column px-4 py-4">
+    <div> <%= teacher.name %>
+    </div>
+    <div>
+      <strong> City: </strong>
+      <%= teacher.city %>
+    </div>
   </div>
-  <div>
-    <strong class="block font-medium mb-1">City:</strong>
-    <%= teacher.city %>
-  </div>
-  <p>
+  <div class="flex-column">
     <strong>Bio:</strong>
     <%= teacher.bio %>
-  </p>
+  </div>
 </div>

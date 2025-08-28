@@ -12,11 +12,26 @@ class Lesson < ApplicationRecord
     belongs_to :assignment
     validates_presence_of :name
     has_rich_text :description
+    has_rich_text :student_journal
+    has_rich_text :teacher_journal
     has_one_attached :lesson_video
     validates_presence_of :lesson_video
     validate :lesson_video_is_video_type
     has_and_belongs_to_many :skills
+    def complete?
+      description.present? &&
+      student_journal.present? &&
+      teacher_journal.present?
+    end
 
+    def status
+      if complete?
+        "Complete"
+      else 
+        "Incomplete"
+      end
+    end
+    
     def lesson_video_is_video_type
         unless lesson_video.content_type.starts_with?("video/")
           errors.add(:lesson_video, "must be a video file")

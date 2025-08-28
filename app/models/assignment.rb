@@ -20,6 +20,18 @@ class Assignment < ApplicationRecord
     has_rich_text :description
     has_one_attached :summary_video
 
+    def complete?
+      !lessons.map{|lesson| lesson.complete?}.any?(false)
+    end
+
+    def status
+      if complete?
+        "Complete"
+      else 
+        "Incomplete"
+      end
+    end
+
     def name
         "#{composition.name} (#{student.name})"
     end

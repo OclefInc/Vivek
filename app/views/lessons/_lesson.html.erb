@@ -1,5 +1,5 @@
 <div id="<%= dom_id lesson %>">
-<p>
+  <p>
     <%= image_tag lesson.lesson_video if lesson.lesson_video.attached? %>
   </p>
   <p>
@@ -10,6 +10,14 @@
     <strong>Description:</strong>
     <%= lesson.description %>
   </p>
+  <p >
+    <strong>Student Journal:</strong>
+    <%= lesson.student_journal %>
+  </p>
+  <p >
+    <strong>Teacher Journal:</strong>
+    <%= lesson.teacher_journal %>
+  </p>
   <p>
     <strong>Skills:</strong>
     <%= lesson.skills.map{|skill| link_to(skill.name, skill)}.join(', ').html_safe %>
@@ -18,5 +26,4 @@
     <strong>Assignment:</strong>
     <%= link_to lesson.assignment.name, lesson.assignment %>
   </p>
-
 </div>

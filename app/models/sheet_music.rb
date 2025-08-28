@@ -21,4 +21,8 @@ class SheetMusic < ApplicationRecord
         end
       end
     end
+
+    def pdf_file_path
+      ActiveStorage::Blob.service.path_for(pdf_file.key)
+    end
 end

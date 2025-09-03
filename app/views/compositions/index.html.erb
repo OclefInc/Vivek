@@ -13,7 +13,7 @@
             placeholder: "Search for compositions",
             oninput: "this.form.requestSubmit()" %>
     <% end %>
-    <%= link_to "New composition", new_composition_path, class: "rounded-lg px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
+    <%= link_to "Add new composition", new_composition_path, class: "rounded-lg px-3 py-2 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
   </div>
   <div id="compositions" class="min-w-full divide-y divide-gray-200 space-y-5">
     <% if @compositions.any? %>

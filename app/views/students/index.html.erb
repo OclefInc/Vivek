@@ -13,7 +13,7 @@
             placeholder: "Search for students",
             oninput: "this.form.requestSubmit()" %>
     <% end %>
-    <%= link_to "New student", new_student_path, class: "rounded-lg px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
+    <%= link_to "Add new student", new_student_path, class: "rounded-lg px-3 py-2 bg-blue-600 hover:bg-blue-400 text-white block font-medium" %>
   </div>
   <table class="w-full text-left text-gray-800 px-10 py-2">
     <tr>
@@ -22,7 +22,7 @@
     </tr>
     <% @students.each do |student| %>
       <tr>
-        <td><%= link_to student.name, student, class:"text-blue-500 hover:text-blue-400 px-1 py-1" %></td>
+        <td><%= link_to student.name, student, class:"text-blue-500 hover:text-red-500 px-1 py-1" %></td>
         <td class="px-1 py-1"><%= student.assignments.length %></td>
       </tr>
     <% end %>

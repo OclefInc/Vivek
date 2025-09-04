@@ -1,24 +1,24 @@
 <div id="<%= dom_id assignment %>">
-  <p>
-    <strong>Student:</strong>
-    <%= link_to assignment.student.name, assignment.student, class:'text-blue-600' %>
-  </p>
-
-  <p>
-    <strong>Teacher:</strong>
-    <%= link_to assignment.teacher.name, assignment.teacher, class:'text-red-600' %>
-  </p>
-
-  <p>
-    <strong>Composition:</strong>
-    <%= link_to assignment.composition.name, assignment.composition, class:'text-green-600' %>
-  </p>
-  <div>
-    <%= image_tag assignment.summary_video if assignment.summary_video.attached? %>
+  <div class="flex mx-auto px-8 py-4">
+    <div class="px-2 py-2">
+      <p>
+        <%= link_to assignment.composition.name, assignment.composition, class:'text-blue-600 hover:text-red-500 text-2xl px-6 py-4' %>
+      </p>
+      <p>
+        <%= link_to assignment.student.name, assignment.student, class:'font-semibold text-blue-600 hover:text-red-500 px-6 py-4' %>
+        (Student)
+      </p>
+      <p>
+        <%= link_to assignment.teacher.name, assignment.teacher, class:'font-semibold text-blue-600 hover:text-red-500 px-6 py-4' %>
+        (Teacher)
+      </p>
+    </div>
+    <div class="px-5 py-2">
+      <strong>Description:</strong>
+      <%= assignment.description %>
+    </div>
+    <div>
+      <%= image_tag assignment.summary_video if assignment.summary_video.attached? %>
+    </div>
   </div>
-  <p>
-    <strong>Description:</strong>
-    <%= assignment.description %>
-  </p>
-
 </div>

@@ -71,4 +71,4 @@ gem "tailwindcss-rails", "~> 4.3"
 
 gem "devise", "~> 4.9"
 
-gem "aws-sdk-s3", "1.94.0"
+gem "mailgun-rails"

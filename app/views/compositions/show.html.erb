@@ -1,25 +1,26 @@
 <% content_for :title, "Showing composition" %>
-<div class="md:w-2/3 w-full">
+<h1 class="font-bold text-2xl">Composition Details:</h1>
+<div class="flex justify-between items-center">
   <% if notice.present? %>
     <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
   <% end %>
-  <h1 class="font-bold text-2xl">Composition Details:</h1>
   <%= render @composition %>
-  <%= link_to "Add New Score", new_sheet_music_path({composition_id:@composition.id}), class: "w-full sm:w-auto text-center rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-  <h1 class="text-2xl text-red-500">Assignments</h1>
-  <table class="w-full text-left text-gray-500 border">
+  <%= link_to "Add New Score", new_sheet_music_path({composition_id:@composition.id}), class: "rounded-lg px-3 py-2 bg-blue-600 hover:bg-blue-400 text-white block font-medium" %>
+</div>
+<h1 class="text-2xl text-red-500">Assignments</h1>
+<div class="max-w-5xl mx-auto px-8 py-4">
+  <table class="w-full table-auto border-collapse">
     <tr>
-      <th class="px-6 py-3">Student</th>
-      <th class="px-6 py-3">Teacher</th>
+      <th class="text-left px-3 py-2 border-b border-gray-300">Student</th>
+      <th class="text-left px-3 py-2 border-b border-gray-300">Teacher</th>
     </tr>
     <% @composition.assignments.each do |assignment| %>
-      <tr class="border">
-        <td class="px-6 py-3"><%= link_to assignment.student.name, assignment   %></td>
-        <td class="px-6 py-3"><%= assignment.teacher.name   %></td>
-      </tr>
+      <td class="text-left px-3 py-2 border-b border-gray-300"><%= link_to assignment.student.name, assignment, class:"text-blue-500 text-semibold hover:text-blue-400 hover:text-bold"  %></td>
+      <td class="text-left px-3 py-2 border-b border-gray-300"><%= assignment.teacher.name   %></td>
     <% end %>
   </table>
-  <%= link_to "Edit this composition", edit_composition_path(@composition), class: "w-full sm:w-auto text-center rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-  <%= link_to "Back to compositions", compositions_path, class: "w-full sm:w-auto text-center mt-2 sm:mt-0 sm:ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-  <%= button_to "Destroy this composition", @composition, method: :delete, form_class: "sm:inline-block mt-2 sm:mt-0 sm:ml-2", class: "w-full rounded-md px-3.5 py-2.5 text-white bg-red-600 hover:bg-red-500 font-medium cursor-pointer", data: { turbo_confirm: "Are you sure?" } %>
+</div>
+<%= link_to "Edit this composition", edit_composition_path(@composition), class: "w-full sm:w-auto text-center rounded-lg px-3 py-2 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+<%= link_to "Back to compositions", compositions_path, class: "w-full sm:w-auto text-center mt-2 sm:mt-0 sm:ml-2 rounded-lg px-3 py-2 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+<%= button_to "Delete this composition", @composition, method: :delete, form_class: "sm:inline-block mt-2 sm:mt-0 sm:ml-2", class: "w-full rounded-lg px-3 py-2 text-white bg-red-600 hover:bg-red-500 font-medium cursor-pointer", data: { turbo_confirm: "Are you sure?" } %>
 </div>

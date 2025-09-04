@@ -3,9 +3,12 @@
   <% if notice.present? %>
     <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
   <% end %>
-  <%= link_to @composition.name, @composition %>
   <div class="flex justify-between items-center">
-    <h3 class="font-bold text-4xl">Scores</h3>
+    <span class="text-2xl text-bold">
+      Scores for 
+      <%= link_to @composition.name, @composition, class: 'text-2xl text-bold text-blue-600 hover:text-blue-400 hover:text-bold' %>
+      (<%= @composition.composer %>)
+    </span>
     <%= link_to "Add New Score", new_sheet_music_path({composition_id:@composition.id}), class: "rounded-lg px-3 py-2 bg-blue-600 hover:bg-blue-400 text-white block font-medium" %>
   </div>
   <div id="sheet_musics" class="min-w-full divide-y divide-gray-200 space-y-5">

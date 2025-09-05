@@ -1,16 +1,16 @@
 <div id="<%= dom_id teacher %>" class="flex w-auto my-2 space-y-2 items-start">
-  <div class="py-2 px-2">
+  <div class="py-2 px-4">
     <%= image_tag teacher.profile_picture, class:"max-w-32" if teacher.profile_picture.attached? %>
   </div>
-  <div class="flex-column w-full mx-4">
-    <div class="font-bold text-pretty sm:text-wrap"> <%= teacher.name %>
+  <div class="w-auto pb-2 px-4">
+    <div class="font-bold w-35 pb-2"> <%= teacher.name %>
     </div>
     <p>
       City:
       <%= teacher.city %>
     </p>
   </div>
-  <div class="flex-auto ">
+  <div class="flex-auto w-full">
     <strong>Bio:</strong>
     <%= teacher.bio %>
   </div>

@@ -14,7 +14,7 @@ class LessonsController < ApplicationController
 
   # GET /lessons/new
   def new
-    @lesson = Lesson.new(assignment_id:params[:assignment_id])
+    @lesson = Lesson.new(assignment_id: params[:assignment_id])
   end
 
   # GET /lessons/1/edit

@@ -1,17 +1,18 @@
-<div class="flex">
-  <div ><%= image_tag student.profile_picture, class:"max-w-32" if student.profile_picture.attached? %></div>
-  <div >
-    <div>
-      <strong class="block font-medium mb-1">Name:</strong>
+<div id="<%= dom_id student %>" class="flex w-auto my-2 space-y-2 items-start">
+  <div class="py-2 px-4">
+    <%= image_tag student.profile_picture, class:"max-w-32" if student.profile_picture.attached? %>
+  </div>
+  <div class="w-auto pb-2 px-4">
+    <div class="font-bold w-35 pb-2">
       <%= student.name %>
     </div>
-    <div>
-      <strong class="block font-medium mb-1">Year of birth:</strong>
+    <p>
+      Born:
       <%= student.year_of_birth %>
-    </div>
+    </p>
+  </div>
+  <div class="flex-auto w-full">
+    <strong>Bio:</strong>
+    <%= student.bio %>
   </div>
 </div>
-<p>
-  <strong>Bio:</strong>
-  <%= student.bio %>
-</p>

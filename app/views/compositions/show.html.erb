@@ -1,11 +1,16 @@
 <% content_for :title, "Showing composition" %>
 <h1 class="font-bold text-2xl">Composition Details:</h1>
-<div class="flex justify-between items-center">
+<div class="flex justify-between items-start">
   <% if notice.present? %>
     <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
   <% end %>
   <%= render @composition %>
   <%= link_to "Add New Score", new_sheet_music_path({composition_id:@composition.id}), class: "rounded-lg px-3 py-2 bg-blue-600 hover:bg-blue-400 text-white block font-medium" %>
+</div>
+<div class="flex justify-end">
+  <%= link_to "Edit", edit_composition_path(@composition), class: "w-full sm:w-auto text-center rounded-lg px-3 py-2 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+  <%= link_to "All compositions", compositions_path, class: "w-full sm:w-auto text-center mt-2 sm:mt-0 sm:ml-2 rounded-lg px-3 py-2 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+  <%= button_to "Delete", @composition, method: :delete, form_class: "sm:inline-block mt-2 sm:mt-0 sm:ml-2", class: "w-full rounded-lg px-3 py-2 text-white bg-red-600 hover:bg-red-500 font-medium cursor-pointer", data: { turbo_confirm: "Are you sure?" } %>
 </div>
 <h1 class="text-2xl text-red-500">Assignments</h1>
 <div class="max-w-5xl mx-auto px-8 py-4">
@@ -19,8 +24,4 @@
       <td class="text-left px-3 py-2 border-b border-gray-300"><%= assignment.teacher.name   %></td>
     <% end %>
   </table>
-</div>
-<%= link_to "Edit this composition", edit_composition_path(@composition), class: "w-full sm:w-auto text-center rounded-lg px-3 py-2 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-<%= link_to "Back to compositions", compositions_path, class: "w-full sm:w-auto text-center mt-2 sm:mt-0 sm:ml-2 rounded-lg px-3 py-2 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-<%= button_to "Delete this composition", @composition, method: :delete, form_class: "sm:inline-block mt-2 sm:mt-0 sm:ml-2", class: "w-full rounded-lg px-3 py-2 text-white bg-red-600 hover:bg-red-500 font-medium cursor-pointer", data: { turbo_confirm: "Are you sure?" } %>
 </div>

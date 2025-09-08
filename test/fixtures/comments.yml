@@ -1,0 +1,22 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# == Schema Information
+#
+# Table name: comments
+#
+#  id              :bigint           not null, primary key
+#  annotation_type :string
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  annotation_id   :integer
+#  user_id         :integer
+#
+one:
+  user_id: 1
+  annotation_id: 1
+  annotation_type: MyString
+
+two:
+  user_id: 1
+  annotation_id: 1
+  annotation_type: MyString

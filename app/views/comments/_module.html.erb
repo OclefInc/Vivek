@@ -1,0 +1,23 @@
+<%= form_with(model: Comment.new(annotation:annotation)) do |form| %>
+  <div>
+    <%= form.label :Comments, style: "display: block" %>
+    <%= form.rich_text_area :note,
+      class: "block shadow rounded-2xl border border-gray-200 outline-none px-3 py-2 mt-2 w-full", style:"height:75px" %>
+  </div>
+  <%= form.hidden_field :annotation_id %>
+  <%= form.hidden_field :annotation_type %>
+  <div>
+    <div class="inline">
+      <%= form.submit class: "w-full sm:w-auto rounded-lg my-2 px-3 py-2 bg-blue-600 hover:bg-blue-400 text-white inline-block font-medium cursor-pointer" %>
+    </div>
+  </div>
+<% end %>
+<% annotation.comments.order(created_at: :desc).each do |comment| %>
+  <div>
+    <div> <%= comment.note %> </div>
+    <div class="flex justify-between ">
+      <div> <%= comment.user.email %> </div>
+      <div> <%= local_time(comment.created_at) %> </div>
+    </div>
+  </div>
+<% end %>

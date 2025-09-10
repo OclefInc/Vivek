@@ -3,7 +3,7 @@
     <%= @episode.name %>
   </div>
   <div class="text-xl text-semibold" >
-    Assignment: <span> <%= link_to @episode.assignment.name, @episode.assignment, class:"text-blue-600 text-bold hover:text-blue-400 px-1 py-1" %> </span>
+    Project: <span> <%= link_to @episode.assignment.name, @episode.assignment, class:"text-blue-600 text-bold hover:text-blue-400 px-1 py-1" %> </span>
   </div>
 </div>
 <p>
@@ -29,16 +29,4 @@
     <%= @episode.teacher_journal %>
   </div>
 </div>
-<%= form_with(model: Comment.new(annotation:@episode)) do |form| %>
-  <div>
-    <%= form.label :note, style: "display: block" %>
-    <%= form.rich_text_area :note,
-      class: "block shadow rounded-2xl border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
-  <%= form.hidden_field :annotation_id %>
-  <%= form.hidden_field :annotation_type %>
-  <div>
-    <div class="inline">
-      <%= form.submit class: "w-full sm:w-auto rounded-lg my-2 px-3 py-2 bg-blue-600 hover:bg-blue-400 text-white inline-block font-medium cursor-pointer" %>
-    </div>
-  <% end %>
+<%= render partial:"/comments/module", locals:{annotation:@episode} %>

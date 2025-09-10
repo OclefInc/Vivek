@@ -9,7 +9,7 @@ class CommentsController < ApplicationController
       @project=@episode.assignment
       redirect_to project_episode_path(@project, @episode)
     else
-      redirect_to root_path
+      redirect_to @comment.annotation
     end
   end
   private

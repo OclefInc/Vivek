@@ -1,17 +1,21 @@
 <p class="text-xl font-semibold my-2"> Comments: </p>
-<div class="px-3 py-3 border border-w-2 border-blue-100 rounded-2xl">
-  <%= form_with(model: Comment.new(annotation:annotation)) do |form| %>
-    <div>
-      <%= form.rich_text_area :note,
+<div class="px-3 py-3">
+  <% if signed_in? %>
+    <%= form_with(model: Comment.new(annotation:annotation)) do |form| %>
+      <div>
+        <%= form.rich_text_area :note,
       class: "block shadow rounded-2xl border border-gray-200 outline-none mr-5 px-3 py-2 mt-2 w-full", placeholder: "Add a comment" %>
-    </div>
-    <%= form.hidden_field :annotation_id %>
-    <%= form.hidden_field :annotation_type %>
-    <div>
-      <div class="flex justify-end">
-        <%= form.submit class: "w-auto sm:w-auto rounded-lg my-2 px-3 py-2 bg-blue-600 hover:bg-blue-400 text-white inline-block font-medium cursor-pointer" %>
       </div>
-    </div>
+      <%= form.hidden_field :annotation_id %>
+      <%= form.hidden_field :annotation_type %>
+      <div>
+        <div class="flex justify-end">
+          <%= form.submit class: "w-auto sm:w-auto rounded-lg my-2 px-3 py-2 bg-blue-600 hover:bg-blue-400 text-white inline-block font-medium cursor-pointer" %>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <div > Please sign in to add a comment </div>
   <% end %>
   <% annotation.comments.order(created_at: :desc).each do |comment| %>
     <div class="my-6">

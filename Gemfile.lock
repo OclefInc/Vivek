@@ -74,6 +74,10 @@ GEM
       uri (>= 0.13.1)
     addressable (2.8.7)
       public_suffix (>= 2.0.2, < 7.0)
+    airbrake (13.0.5)
+      airbrake-ruby (~> 6.0)
+    airbrake-ruby (6.2.2)
+      rbtree3 (~> 0.6)
     annotaterb (4.17.0)
       activerecord (>= 6.0.0)
       activesupport (>= 6.0.0)
@@ -183,6 +187,7 @@ GEM
       zeitwerk (>= 2.6.18, < 3.0)
     language_server-protocol (3.17.0.5)
     lint_roller (1.1.0)
+    local_time (3.0.3)
     logger (1.7.0)
     loofah (2.24.1)
       crass (~> 1.0.2)
@@ -296,6 +301,7 @@ GEM
     rake (13.3.0)
     rbs (3.9.4)
       logger
+    rbtree3 (0.7.1)
     rdoc (6.14.2)
       erb
       psych (>= 4.0.0)
@@ -430,6 +436,7 @@ PLATFORMS
   x86_64-linux-musl
 
 DEPENDENCIES
+  airbrake
   annotaterb
   aws-sdk-s3 (= 1.94.0)
   bootsnap
@@ -442,6 +449,7 @@ DEPENDENCIES
   importmap-rails
   jbuilder
   kamal
+  local_time
   mailgun-rails
   pg (~> 1.1)
   propshaft

@@ -9,20 +9,20 @@
       </ul>
     </div>
   <% end %>
-  <div class="my-5">
+  <div class="my-5 max-w-1/3 flex-initial">
     <%= form.label :name %>
     <%= form.text_field :name, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": composition.errors[:name].none?, "border-red-400 focus:outline-red-600": composition.errors[:name].any?}] %>
   </div>
-  <div class="my-5">
+  <div class="my-5 max-w-1/3 flex-initial">
     <%= form.label :composer %>
     <%= form.text_field :composer, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": composition.errors[:composer].none?, "border-red-400 focus:outline-red-600": composition.errors[:composer].any?}] %>
   </div>
-  <div>
+  <div class="w-full mb-6">
     <%= form.label :description, style: "display: block" %>
     <%= form.rich_text_area :description,
       class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
   </div>
-  <div class="inline">
-    <%= form.submit class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
+  <div class="inline mt-4">
+    <%= form.submit class: "w-full sm:w-auto rounded-lg px-3 py-2 bg-blue-600 hover:bg-blue-400 text-white inline-block font-medium cursor-pointer" %>
   </div>
 <% end %>

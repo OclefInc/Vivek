@@ -6,8 +6,8 @@
     <div class="text-nowrap">
       <span class="font-semibold text-nowrap"> <%= composition.composer %> </span>
     </div>
-    <div class="text-nowrap">
-      Number of Scores:
+    <div class="text-nowrap my-4">
+      Available Scores:
       <%= link_to composition.sheet_musics.length, sheet_musics_path({composition_id:composition.id}), class: 'font-semibold text-blue-600 hover:text-blue-400 hover:text-bold px-2 py-1' %>
     </div>
   </div>

@@ -1,12 +1,7 @@
 <% content_for :title, "Editing lesson" %>
-
 <h1>Editing lesson</h1>
-
 <%= render "form", lesson: @lesson %>
-
-<br>
-
 <div>
-  <%= link_to "Show lesson", @lesson %> |
-  <%= link_to "Back to lessons", lessons_path %>
+  <%= link_to "Show lesson", @lesson, class: "w-full sm:w-auto text-center mt-2 sm:mt-0 rounded-lg px-3 py-2 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+  <%= link_to "Back to lessons", lessons_path, class: "w-full sm:w-auto text-center mt-2 sm:mt-0 rounded-lg px-3 py-2 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
 </div>

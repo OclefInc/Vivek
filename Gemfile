@@ -74,3 +74,7 @@ gem "devise", "~> 4.9"
 gem "mailgun-rails"
 
 gem "aws-sdk-s3", "1.94.0"
+
+gem "local_time"
+
+gem "airbrake"

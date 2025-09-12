@@ -19,6 +19,7 @@ class Assignment < ApplicationRecord
     belongs_to :composition
     has_rich_text :description
     has_one_attached :summary_video
+    has_many :comments, as: :annotation
 
     def complete?
       !lessons.map{|lesson| lesson.complete?}.any?(false)

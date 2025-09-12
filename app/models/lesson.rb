@@ -18,6 +18,7 @@ class Lesson < ApplicationRecord
     validates_presence_of :lesson_video
     validate :lesson_video_is_video_type
     has_and_belongs_to_many :skills
+    has_many :comments, as: :annotation
     def complete?
       description.present? &&
       student_journal.present? &&

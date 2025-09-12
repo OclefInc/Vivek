@@ -1,12 +1,7 @@
-<% content_for :title, "Editing assignment" %>
-
-<h1>Editing assignment</h1>
-
+<% content_for :title, "Edit assignment" %>
+<h1 class="text-3xl text-semibold mb-4">Edit assignment</h1>
 <%= render "form", assignment: @assignment %>
-
-<br>
-
 <div>
-  <%= link_to "Show this assignment", @assignment %> |
-  <%= link_to "Back to assignments", assignments_path %>
+  <%= link_to "Show", @assignment, class: "w-full sm:w-auto text-center mt-2 sm:mt-0 rounded-lg px-3 py-2 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+  <%= link_to "All assignments", assignments_path, class: "w-full sm:w-auto text-center mt-2 sm:mt-0 rounded-lg px-3 py-2 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
 </div>

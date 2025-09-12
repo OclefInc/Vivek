@@ -1,0 +1,29 @@
+<p style="color: green"><%= notice %></p>
+<h1 class="font-bold text-3xl mb-2">Project:</h1>
+<div class="px-2 py-2 border rounded-2xl border-gray-200 border-2">
+  <div id="<%= dom_id @project %>">
+    <div class="flex mx-auto mx-2 my-2">
+      <div class="mx-1 my-1">
+        <p class="mb-2">
+          <%= link_to @project.composition.name, @project.composition, class:'text-blue-600 hover:text-blue-400 text-2xl' %>
+        </p>
+        <p class="mb-2">
+          <%= link_to @project.student.name, @project.student, class:'font-semibold text-blue-600 hover:text-blue-400' %>
+          (Student)
+        </p>
+        <p class="mb-2">
+          <%= link_to @project.teacher.name, @project.teacher, class:'font-semibold text-blue-600 hover:text-blue-400' %>
+          (Teacher)
+        </p>
+      </div>
+      <div class="px-8 my-2">
+        <strong>Description:</strong>
+        <%= @project.description %>
+      </div>
+      <div>
+        <%= image_tag @project.summary_video if @project.summary_video.attached? %>
+      </div>
+    </div>
+  </div>
+</div>
+<%= render partial:"/comments/module", locals:{annotation:@project} %>

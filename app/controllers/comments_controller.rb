@@ -25,7 +25,7 @@ class CommentsController < ApplicationController
     @comment = Comment.find(params[:id])
     @comment.unpublish(current_user.id)
     respond_to do |format|
-      format.html { redirect_to comments_path, status: :see_other, notice: "Comment was successfully destroyed." }
+      format.html { redirect_to comments_path, status: :see_other, notice: "Comment was successfully unpublished." }
       format.json { head :no_content }
     end
   end

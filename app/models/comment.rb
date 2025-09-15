@@ -13,4 +13,12 @@ class Comment < ApplicationRecord
   belongs_to :user
   belongs_to :annotation, polymorphic: true, touch: true
   has_rich_text :note
+  def unpublish(a_id)
+    self.unpublished_date=Time.now
+    self.admin_id=a_id
+    self.save
+  end
+  def is_published?
+    self.unpublished_date.nil?
+  end
 end

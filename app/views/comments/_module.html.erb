@@ -17,7 +17,7 @@
   <% else %>
     <div > Please sign in to add a comment </div>
   <% end %>
-  <% annotation.comments.order(created_at: :desc).each do |comment| %>
+  <% annotation.comments.where(unpublished_date: nil).order(created_at: :desc).each do |comment| %>
     <div class="my-6">
       <div class="flex justify-between">
         <div class="px-3 text-gray-500"> <%= comment.user.email %> </div>

@@ -10,15 +10,18 @@
 #
 class Lesson < ApplicationRecord
     belongs_to :assignment
-    validates_presence_of :name
+    
+    has_and_belongs_to_many :skills
+    has_many :comments, as: :annotation
     has_rich_text :description
     has_rich_text :student_journal
     has_rich_text :teacher_journal
     has_one_attached :lesson_video
+
+    validates_presence_of :name
     validates_presence_of :lesson_video
     validate :lesson_video_is_video_type
-    has_and_belongs_to_many :skills
-    has_many :comments, as: :annotation
+    
     def complete?
       description.present? &&
       student_journal.present? &&

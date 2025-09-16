@@ -13,10 +13,11 @@
 #  teacher_id     :integer
 #
 class Assignment < ApplicationRecord
-    has_many :lessons
     belongs_to :student
     belongs_to :teacher
     belongs_to :composition
+    
+    has_many :lessons
     has_rich_text :description
     has_one_attached :summary_video
     has_many :comments, as: :annotation

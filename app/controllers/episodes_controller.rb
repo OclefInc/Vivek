@@ -1,4 +1,5 @@
 class EpisodesController < ApplicationController
+  layout "public"
   def index
   end
 

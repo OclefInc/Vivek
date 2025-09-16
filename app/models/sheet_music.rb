@@ -9,9 +9,11 @@
 #
 class SheetMusic < ApplicationRecord
   belongs_to :composition
+
   has_rich_text :info
   has_one_attached :pdf_file
   has_many :comments, as: :annotation
+  
   validates_presence_of :pdf_file
     validate :pdf_file_is_pdf_type
 

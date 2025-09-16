@@ -1,4 +1,5 @@
 class ProjectsController < ApplicationController
+  layout "public"
   def index
   end
 

@@ -13,7 +13,11 @@
   </div>
   <div class="ml-4 flex items-start justify-end gap-2">
     <%= link_to "All comments", comments_path, class: "w-full sm:w-auto text-center mt-2 sm:mt-0 sm:ml-2 rounded-md px-3 py-2 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-    <%= button_to "Unpublish", @comment, method: :delete, form_class: "sm:inline-block mt-2 sm:mt-0 sm:ml-2", class: "w-full rounded-md px-3 py-2 text-white bg-red-600 hover:bg-red-500 font-medium cursor-pointer", data: { turbo_confirm: "Are you sure?" } %>
+    <% if @comment.is_published? %>
+      <%= button_to "Unpublish", @comment, method: :delete, form_class: "sm:inline-block mt-2 sm:mt-0 sm:ml-2", class: "w-full rounded-md px-3 py-2 text-white bg-red-600 hover:bg-red-500 font-medium cursor-pointer", data: { turbo_confirm: "Are you sure?" } %>
+    <% else %>
+      <%= button_to "Republish", @comment, method: :delete, form_class: "sm:inline-block mt-2 sm:mt-0 sm:ml-2", class: "w-full rounded-md px-3 py-2 text-white bg-red-600 hover:bg-red-500 font-medium cursor-pointer", data: { turbo_confirm: "Are you sure?" } %>
+    <% end %>
   </div>
 </div>
 <%= @comment.annotation_id %>

@@ -3,11 +3,11 @@
     <%= @episode.name %>
   </div>
   <div class="text-xl text-semibold" >
-    Project: <span> <%= link_to @episode.assignment.name, @episode.assignment, class:"text-blue-600 text-bold hover:text-blue-400 px-1 py-1" %> </span>
+    Project: <span> <%= link_to @episode.assignment.name, project_path(@episode.assignment), class:"text-blue-600 text-bold hover:text-blue-400 px-1 py-1" %> </span>
   </div>
 </div>
 <p>
-  <%= image_tag @episode.lesson_video if @episode.lesson_video.attached? %>
+  <%= video_tag @episode.lesson_video, controls:true if @episode.lesson_video.attached? %>
 </p>
 <div class="flex px-4 py-6">
   <div class="w-2/3 flex-auto">

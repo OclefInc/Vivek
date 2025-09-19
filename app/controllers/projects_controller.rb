@@ -1,6 +1,7 @@
 class ProjectsController < ApplicationController
   layout "public"
   def index
+    @projects=Assignment.all
   end
 
   def show

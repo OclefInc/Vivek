@@ -1,4 +1,17 @@
 <div>
-  <h1 class="font-bold text-4xl">Projects#index</h1>
-  <p>Find me in app/views/projects/index.html.erb</p>
+  <h1 class="font-bold text-4xl">Projects</h1>
+</div>
+<div id="skills" class="min-w-full divide-y divide-gray-200 space-y-5">
+  <% @projects.each do |project| %>
+    <div class="border">
+      <h4 class="text-3xl ps-4 text-red-600 italic py-5" > <%= link_to project.name, project_path(project) %> </h4>
+      <p> <%= project.composition.composer %> </p>
+      <p> Teacher: <%= project.teacher.name %> </p>
+      <p> Number of Episodes: <%= project.lessons.length %> </p>
+      <div class="px-8 my-2">
+        <strong>Description:</strong>
+        <%= project.description %>
+      </div>
+    </div>
+  <% end %>
 </div>

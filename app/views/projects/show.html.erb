@@ -25,7 +25,7 @@
       </div>
     </div>
   </div>
-  <% @project.lessons.each do |lesson| %>
+  <% @project.lessons.order(:sort).each do |lesson| %>
     <div class="border">
       <p class="text-3xl ps-4 text-red-600 italic py-5" > <%= link_to lesson.name, project_episode_path(@project, lesson) %> </p>
     </div>

@@ -4,11 +4,16 @@
 #
 #  id            :bigint           not null, primary key
 #  name          :string
+#  sort          :integer          default(1000)
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  assignment_id :integer
 #
 class Lesson < ApplicationRecord
+
+    include RailsSortable::Model
+    set_sortable :sort  # Indicate a sort column
+
     belongs_to :assignment
     
     has_and_belongs_to_many :skills

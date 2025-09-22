@@ -4,6 +4,7 @@
 #
 #  id            :bigint           not null, primary key
 #  name          :string
+#  sort          :integer          default(1000)
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  assignment_id :integer

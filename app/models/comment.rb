@@ -2,12 +2,14 @@
 #
 # Table name: comments
 #
-#  id              :bigint           not null, primary key
-#  annotation_type :string
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  annotation_id   :integer
-#  user_id         :integer
+#  id               :bigint           not null, primary key
+#  annotation_type  :string
+#  unpublished_date :datetime
+#  created_at       :datetime         not null
+#  updated_at       :datetime         not null
+#  admin_id         :integer
+#  annotation_id    :integer
+#  user_id          :integer
 #
 class Comment < ApplicationRecord
   belongs_to :user

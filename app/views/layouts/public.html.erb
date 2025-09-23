@@ -17,23 +17,23 @@
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
-  <body>
-    <header class="text-gray-600 bg-sky-100 body-font">
+  <body class="bg-neutral-900">
+    <header class="text-gray-300 bg-teal-800 body-font">
       <p class="notice"><%= notice %></p>
       <p class="alert"><%= alert %></p>
       <div class="container mx-auto flex flex-wrap justify-between p-5 flex-col md:flex-row items-center">
         <a class="flex title-font font-medium items-center text-black mb-4 md:mb-0">
-          <span class="ml-3 text-2xl">The Vivek Project.</span>
+          <span class="ml-3 text-2xl text-white">The Vivek Project.</span>
         </a>
         <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
           <a href="/about" class="mr-5 hover:text-gray-900">About</a>
           <a href="/contact" class="mr-5 hover:text-gray-900">Contact</a>
         </nav>
         <% if user_signed_in? %>
-          <%= button_to "Log out", destroy_user_session_path, method: :delete, class:"inline-flex object-center items-center justify-right bg-white opacity-50 border-sky-50 border-2 py-1 px-3 focus:outline-none hover:border-sky-500 hover:border-2 rounded-lg text-black mt-4 md:mt-0" %>
           <% if current_user.is_employee? %>
             <a href="/assignments" class="mr-5 hover:text-gray-900">Admin</a>
           <% end %>
+          <%= button_to "Log out", destroy_user_session_path, method: :delete, class:"inline-flex object-center items-center justify-right bg-white opacity-50 border-teal-800 border-2 py-1 px-3 focus:outline-none hover:border-teal-500 hover:border-2 rounded-xl text-black mt-4 md:mt-0" %>
         <% else %>
           <a href= <%= new_user_session_path %> class="inline-flex object-center items-center justify-right bg-white opacity-50 border-sky-50 border-2 py-1 px-3 focus:outline-none hover:border-sky-500 hover:border-2 rounded-lg text-black mt-4 md:mt-0">Login
             <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">

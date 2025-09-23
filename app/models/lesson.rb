@@ -24,8 +24,8 @@ class Lesson < ApplicationRecord
     has_one_attached :lesson_video
 
     validates_presence_of :name
-    validates_presence_of :lesson_video
-    validate :lesson_video_is_video_type
+    # validates_presence_of :lesson_video
+    # validate :lesson_video_is_video_type
     
     def complete?
       description.present? &&

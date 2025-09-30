@@ -1,0 +1,29 @@
+<% content_for :title, "Skill Info:" %>
+<% if notice.present? %>
+  <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
+<% end %>
+<h1 class="font-semibold text-4xl">Skill Info:</h1>
+<div class="flex justify-between ">
+  <%= render @skill %>
+  <div class="ml-4 flex items-start justify-end gap-2 my-5 space-y-5">
+    <%= link_to "All skills", display_skills_path, class: "rounded-md px-3 py-2 bg-gray-100 hover:bg-gray-50 font-medium whitespace-nowrap" %>
+  </div>
+</div>
+<h1 class="text-2xl text-left text-red-600 px-3 py-2">Episodes</h1>
+<div class="max-w-5xl mx-auto px-8 py-4">
+  <table class="w-full table-auto border-collapse">
+    <tr>
+      <th class="text-left px-3 py-2 border-b border-gray-300">Episode</th>
+      <th class="text-left px-3 py-2 border-b border-gray-300">Composition</th>
+      <th class="text-left px-3 py-2 border-b border-gray-300">Student</th>
+      <th class="text-left px-3 py-2 border-b border-gray-300">Teacher</th>
+    </tr>
+    <% @skill.lessons.each do |lesson| %>
+      <tr>
+        <td class="px-3 py-2 border-b border-gray-300"><%= link_to lesson.name, lesson, class:"text-blue-500 hover:text-red-500 px-1 py-1" %></td>
+        <td class="px-3 py-2 border-b border-gray-300"><%= lesson.assignment.composition.name %></td>
+        <td class="px-3 py-2 border-b border-gray-300"><%= lesson.assignment.student.name %></td>
+        <td class="px-3 py-2 border-b border-gray-300"><%= lesson.assignment.teacher.name %></td>
+      </tr>
+    <% end %>
+  </table>

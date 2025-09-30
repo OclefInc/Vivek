@@ -1,0 +1,2 @@
+module Display::TeachersHelper
+end

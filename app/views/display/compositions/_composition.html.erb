@@ -8,7 +8,7 @@
     </div>
     <div class="text-nowrap my-4 text-teal-400">
       Available Scores:
-      <%= link_to composition.sheet_musics.length, sheet_musics_path({composition_id:composition.id}), class: 'font-semibold text-indigo-400 hover:text-indigo-300 hover:text-bold px-2 py-1' %>
+      <%= link_to composition.sheet_musics.length, display_sheet_musics_path({composition_id:composition.id}), class: 'font-semibold text-indigo-400 hover:text-indigo-300 hover:text-bold px-2 py-1' %>
     </div>
   </div>
   <div class="flex-auto mx-6 my-2 text-teal-400">

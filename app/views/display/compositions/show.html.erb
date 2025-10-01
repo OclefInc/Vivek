@@ -7,7 +7,9 @@
   <%= render @composition %>
 </div>
 <div class="flex justify-end">
-  <%= link_to "All compositions", display_compositions_path, class: "w-full sm:w-auto text-center mt-2 sm:mt-0 sm:ml-2 rounded-lg px-3 py-2 bg-cyan-400 hover:bg-cyan-200 hover:border-2 hover:border-cyan-500 inline-block font-medium" %>
+  <%= link_to "All compositions", display_compositions_path, 
+  class: "rounded-xl px-3 py-2 border-2 border-neutral-900 bg-cyan-500 hover:border-2 hover:bg-cyan-300 hover:border-cyan-500 font-medium whitespace-nowrap"
+   %>
 </div>
 <h1 class="text-2xl text-teal-400">Assignments</h1>
 <div class="max-w-5xl mx-auto px-8 py-4">
@@ -17,8 +19,8 @@
       <th class="text-left px-3 py-2 border-b border-gray-300 text-teal-400">Teacher</th>
     </tr>
     <% @composition.assignments.each do |assignment| %>
-      <td class="text-left text-teal-300 px-3 py-2 border-b border-gray-300"><%= link_to assignment.student.name, assignment, class:"text-indigo-400 text-normal hover:text-indigo-300 hover:text-bold "  %></td>
-      <td class="text-left text-teal-300 px-3 py-2 border-b border-gray-300"><%= assignment.teacher.name   %></td>
+      <td class="text-left text-teal-300 px-3 py-2 border-b border-gray-300"><%= link_to assignment.student.name, project_path(assignment), class:"text-indigo-400 text-normal hover:text-indigo-300 hover:text-bold "  %></td>
+      <td class="text-left text-teal-300 px-3 py-2 border-b border-gray-300"><%= assignment.teacher.name %></td>
     <% end %>
   </table>
 </div>

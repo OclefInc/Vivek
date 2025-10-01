@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     sessions: 'users/sessions', 
     unlocks: 'users/unlocks'
   } 
+  resources :accounts
   resources :skills
   resources :compositions
   resources :teachers

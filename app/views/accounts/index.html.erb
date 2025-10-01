@@ -1,0 +1,31 @@
+<% content_for :title, "Accounts" %>
+<div class="w-full">
+  <% if notice.present? %>
+    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
+  <% end %>
+  <div class="flex justify-between items-center my-4 sm:flex-wrap">
+    <h1 class="font-semibold text-4xl">Accounts</h1>
+    <%= form_with url: accounts_path, method: :get, data: { turbo_frame: "accounts-table", turbo_action: "advance" } do |form| %>
+      <%= form.text_field :query,
+            value: params[:query],
+            id: "table-search",
+            class: "block p-2 ps-10 text-sm text-gray-700 border border-gray-300 rounded-xl w-80 flex-initial min-w-50 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
+            placeholder: "Search for accounts",
+            oninput: "this.form.requestSubmit()" %>
+    <% end %>
+  </div>
+  <div class="max-w-5xl mx-auto px-8 py-4">
+    <table class="w-full table-auto border-collapse">
+      <tr>
+        <th class="text-left px-3 py-2 border-b border-gray-300">Name</th>
+        <th class="text-left px-3 py-2 border-b border-gray-300">Email</th>
+      </tr>
+      <% @accounts.each do |user| %>
+        <tr>
+          <td class="px-3 py-2 border-b border-gray-300"><%= link_to user.name, account_path(user), class:"text-blue-500 text-semibold hover:text-red-500 px-1 py-1" %></td>
+          <td class="px-3 py-2 border-b border-gray-300"><%= user.email %></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div>

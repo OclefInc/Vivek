@@ -24,12 +24,18 @@
       Student Reflection:
     </p>
     <%= @episode.student_journal %>
+    <% if current_user && current_user == @episode.assignment.student.user %>
+      <p> Edit Student Journal </p>
+    <% end %>
   </div>
   <div class="flex-auto bg-neutral-800 rounded-2xl mx-1 my-1 px-3 py-3" >
     <p class="inline-block opacity-90 text-teal-500 shadow-md rounded-xl px-2 py-1 font-semibold">
       Teacher Comments:
     </p>
     <%= @episode.teacher_journal %>
+    <% if current_user && current_user == @episode.assignment.teacher.user %>
+      <p> Edit Teacher Journal </p>
+    <% end %>
   </div>
 </div>
 <%= render partial:"/comments/module", locals:{annotation:@episode} %>

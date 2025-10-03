@@ -32,7 +32,21 @@ class User < ApplicationRecord
 
   validates_presence_of :name
 
+  def roles
+    array=[]
+    array<<"Employee" if is_employee?
+    array<<"Student" if is_student?
+    array<<"Teacher" if is_teacher?
+    array
+  end
+
   def is_employee?
     email.ends_with?("oclef.com")
+  end
+  def is_student?
+    Student.where(user_id: self.id).any?
+  end
+  def is_teacher?
+    Teacher.where(user_id: self.id).any?
   end
 end

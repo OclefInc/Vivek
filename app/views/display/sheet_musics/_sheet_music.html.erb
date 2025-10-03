@@ -2,8 +2,8 @@
   <div class="flex items-start " >
     <embed src="<%= rails_blob_path(sheet_music.pdf_file) %>" width="35%" height="234" />
     <div class="flex-col py-4 px-4" >
-      <div class="px-4 py-4 ">
-        <%= link_to sheet_music.composition.name, display_sheet_music_path(sheet_music.composition.id), class: 'text-teal-400 text-semibold text-nowrap' %>
+      <div class="px-4 py-4 text-teal-400">
+        <%= sheet_music.composition.name %>
       </div>
       <div class="px-4 py-4 text-teal-400">
         <strong>Info:</strong>

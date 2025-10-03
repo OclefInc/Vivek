@@ -7,12 +7,14 @@
 #  year_of_birth :integer
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
+#  user_id       :integer
 #
 class Student < ApplicationRecord
     
     has_many :assignments
     has_one_attached :profile_picture
     has_rich_text :bio
+    belongs_to :user, optional: true
 
     validate :profile_picture_is_image_type
     validates_presence_of :profile_picture

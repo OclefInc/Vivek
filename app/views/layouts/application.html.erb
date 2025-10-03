@@ -26,16 +26,20 @@
         <a class="flex title-font font-medium items-center text-black mb-4 md:mb-0">
           <span class="ml-3 text-2xl">The Vivek Project.</span>
         </a>
-        <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
-          <a href="/assignments" class="mr-5 hover:text-gray-900">Assignments</a>
-          <a href="/students" class="mr-5 hover:text-gray-900">Students</a>
-          <a href="/teachers" class="mr-5 hover:text-gray-900">Teachers</a>
-          <a href="/compositions" class="mr-5 hover:text-gray-900">Compositions</a>
-          <a href="/skills" class="mr-5 hover:text-gray-900">Skills</a>
-          <a href="/comments" class="mr-5 hover:text-gray-900">Comments</a>
-          <a href="/accounts" class="mr-5 hover:text-gray-900">Accounts</a>
-        </nav>
-        <a href="/users/edit" class="mr-5 hover:text-gray-900">My</a>
+        <div class="md:ml-auto md:mr-auto flex-col flex-wrap items-center text-base justify-items-center">
+          <div class="mb-2">
+            <a href="/assignments" class="mr-5 text-cyan-600 hover:text-bold hover:text-cyan-500">Assignments</a>
+            <a href="/students" class="mr-5 text-cyan-600 hover:text-bold hover:text-cyan-500">Students</a>
+            <a href="/teachers" class="mr-5 text-cyan-600 hover:text-bold hover:text-cyan-500">Teachers</a>
+            <a href="/compositions" class="mr-5 text-cyan-600 hover:text-bold hover:text-cyan-500">Compositions</a>
+            <a href="/skills" class="mr-5 text-cyan-600 hover:text-bold hover:text-cyan-500">Skills</a>
+          </div>
+          <div class="flex-auto justify-between">
+            <a href="/comments" class="mr-5 text-cyan-600 hover:text-bold hover:text-cyan-500">Comments</a>
+            <a href="/accounts" class="mr-5 text-cyan-600 hover:text-bold hover:text-cyan-500">Accounts</a>
+          </div>
+        </div>
+        <a href="/users/edit" class="mr-5 text-cyan-600 hover:text-bold hover:text-cyan-500">My Account</a>
         <%= button_to "Log out", destroy_user_session_path, method: :delete, class:"inline-flex object-center items-center justify-right bg-white opacity-50 border-sky-50 border-2 py-1 px-3 focus:outline-none hover:border-sky-500 hover:border-2 rounded-lg text-black mt-4 md:mt-0" %>
       </div>
     </header>

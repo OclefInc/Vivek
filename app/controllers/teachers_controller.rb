@@ -67,6 +67,6 @@ class TeachersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def teacher_params
-      params.expect(teacher: [ :profile_picture, :name, :city, :bio ])
+      params.expect(teacher: [ :profile_picture, :name, :city, :bio, :user_id ])
     end
 end

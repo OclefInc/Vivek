@@ -10,7 +10,7 @@
   <%= video_tag @episode.lesson_video, controls:true if @episode.lesson_video.attached? %>
 </p>
 <div class="flex px-1 py-4 text-gray-400">
-  <div class="w-2/3 bg-neutral-800 text-gray-300 rounded-2xl mr-2 px-3 py-3 flex-auto">
+  <div class="w-2/3 bg-neutral-800 text-teal-500 rounded-2xl mr-2 px-3 py-3 flex-auto">
     <%= @episode.description %>
   </div>
   <div class="w-1/3 ml-2 flex-auto">
@@ -19,23 +19,36 @@
   </div>
 </div>
 <div class="flex">
-  <div class="flex-auto bg-neutral-800 rounded-2xl mx-1 my-1 px-3 py-3" >
-    <p class="inline-block opacity-90 text-teal-500 shadow-md rounded-xl px-2 py-1 font-semibold">
+  <div class="flex-auto">
+    <p class="text-teal-500 px-2 py-1 font-bold">
       Student Reflection:
     </p>
-    <%= @episode.student_journal %>
-    <% if current_user && current_user == @episode.assignment.student.user %>
-      <p> Edit Student Journal </p>
-    <% end %>
+    <div class="flex-auto bg-neutral-800 text-teal-400 rounded-2xl m-4 p-6">
+      <%= @episode.student_journal %>
+    </div>
+    <div class="justify-self-end m-4">
+      <% if current_user && current_user == @episode.assignment.student.user %>
+        <%= 
+        link_to("Edit", edit_project_episode_path(@episode.project, @episode), 
+          class: "rounded-xl px-3 py-2 border-2 border-neutral-900 bg-cyan-500 hover:border-2 hover:bg-cyan-300 hover:border-cyan-500 font-medium whitespace-nowrap")
+        %>
+      <% end %>
+    </div>
   </div>
-  <div class="flex-auto bg-neutral-800 rounded-2xl mx-1 my-1 px-3 py-3" >
-    <p class="inline-block opacity-90 text-teal-500 shadow-md rounded-xl px-2 py-1 font-semibold">
+  <div class="flex-auto">
+    <p class="text-teal-500 px-2 py-1 font-bold">
       Teacher Comments:
     </p>
-    <%= @episode.teacher_journal %>
-    <% if current_user && current_user == @episode.assignment.teacher.user %>
-      <p> Edit Teacher Journal </p>
-    <% end %>
+    <div class="flex-auto bg-neutral-800 text-teal-400 rounded-2xl m-4 p-6">
+      <%= @episode.teacher_journal %>
+    </div>
+    <div class="justify-self-end m-4">
+      <% if current_user && current_user == @episode.assignment.teacher.user %>
+        <%= link_to("Edit", edit_project_episode_path(@episode.project, @episode),
+          class: "rounded-xl px-3 py-2 border-2 border-neutral-900 bg-cyan-500 hover:border-2 hover:bg-cyan-300 hover:border-cyan-500 font-medium whitespace-nowrap")
+        %>
+      <% end %>
+    </div>
   </div>
 </div>
 <%= render partial:"/comments/module", locals:{annotation:@episode} %>

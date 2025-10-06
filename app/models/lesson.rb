@@ -46,4 +46,8 @@ class Lesson < ApplicationRecord
           errors.add(:lesson_video, "must be a video file")
         end
     end
+
+    def project
+      assignment
+    end
 end

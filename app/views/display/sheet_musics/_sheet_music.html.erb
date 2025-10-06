@@ -1,6 +1,6 @@
 <div id="<%= dom_id sheet_music %>" class="w-full sm:w-auto my-5 space-y-5">
   <div class="flex items-start " >
-    <embed src="<%= rails_blob_path(sheet_music.pdf_file) %>" width="35%" height="234" />
+    <embed src="<%= rails_blob_path(sheet_music.pdf_file) %>" width="100%" height="450" />
     <div class="flex-col py-4 px-4" >
       <div class="px-4 py-4 text-teal-400">
         <%= sheet_music.composition.name %>

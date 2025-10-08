@@ -1,17 +1,17 @@
 <p style="color: green"><%= notice %></p>
-<h1 class="text-teal-400 text-3xl mb-2">Project:</h1>
+<h1 class="text-teal-500 text-3xl mb-2">Project:</h1>
 <div class="px-2 py-2 border rounded-2xl border-teal-500 border-2">
   <div id="<%= dom_id @project %>">
     <div class="flex mx-auto mx-2 my-2">
       <div class="mx-1 my-1">
-        <p class="mb-2 text-teal-400 ">
+        <p class="mb-2 text-teal-500">
           <%= link_to @project.composition.name, display_composition_path(@project.composition), class:'text-indigo-400 hover:text-indigo-200 text-2xl' %>
         </p>
-        <p class="mb-2 text-teal-400 ">
+        <p class="mb-2 text-teal-500">
           <%= link_to @project.student.name, display_student_path(@project.student), class:'font-semibold text-indigo-400 hover:text-indigo-200' %>
           (Student)
         </p>
-        <p class="mb-2 text-teal-400 ">
+        <p class="mb-2 text-teal-500">
           <%= link_to @project.teacher.name, display_teacher_path(@project.teacher), class:'font-semibold text-indigo-400 hover:text-indigo-200' %>
           (Teacher)
         </p>

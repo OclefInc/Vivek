@@ -4,7 +4,7 @@
     <%= form_with(model: Comment.new(annotation:annotation)) do |form| %>
       <div >
         <%= form.rich_text_area :note,
-      class: "block shadow rounded-3xl border border-sky-100 outline-none focus-outline-2 focus:outline-sky-400 mr-5 mb-2 p-4 mt-2 w-full text-gray-500", placeholder: "Add a comment" %>
+      class: "block shadow rounded-3xl border-sky-100 dark:border-sky-800 focus-border-2 focus:border-sky-400 mr-5 mb-2 p-4 mt-2 w-full text-gray-500", placeholder: "Add a comment" %>
       </div>
       <%= form.hidden_field :annotation_id %>
       <%= form.hidden_field :annotation_type %>

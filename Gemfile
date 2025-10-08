@@ -78,3 +78,5 @@ gem "aws-sdk-s3", "1.94.0"
 gem "local_time"
 
 gem "airbrake"
+
+gem "rails_sortable"

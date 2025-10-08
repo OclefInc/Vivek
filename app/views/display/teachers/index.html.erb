@@ -1,0 +1,29 @@
+<% content_for :title, "Teachers" %>
+<% if notice.present? %>
+  <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
+<% end %>
+<div class="flex justify-between items-center my-4 pb-4">
+  <h1 class="text-3xl text-teal-400">Teachers</h1>
+  <%= form_with url: teachers_path, method: :get, data: { turbo_frame: "teachers-table", turbo_action: "advance" } do |form| %>
+    <%= form.text_field :query,
+            value: params[:query],
+            id: "table-search",
+            class: "block p-2 ps-10 text-sm text-gray-700 border border-gray-300 rounded-xl w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
+            placeholder: "Search for teachers",
+            oninput: "this.form.requestSubmit()" %>
+  <% end %>
+</div>
+<div id="teachers" class="min-w-full divide-y divide-gray-200 space-y-5">
+  <% if @teachers.any? %>
+    <% @teachers.each do |teacher| %>
+      <div class="flex justify-between w-auto ">
+        <%= render teacher %>
+        <div class="ml-4 flex items-start justify-end gap-2">
+          <%= link_to "Full Info", display_teacher_path(teacher), class: "rounded-xl px-3 py-2 border-2 border-neutral-900 bg-cyan-500 hover:border-2 hover:bg-cyan-300 hover:border-cyan-500 font-medium whitespace-nowrap" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% else %>
+  <p class="text-center my-10">No teachers found.</p>
+<% end %>

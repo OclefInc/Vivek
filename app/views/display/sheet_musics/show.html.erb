@@ -1,0 +1,13 @@
+<% content_for :title, "Showing sheet music" %>
+<% if notice.present? %>
+  <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+<% end %>
+<h1 class="text-teal-400 text-xl">Score</h1>
+<div class="flex flex-col sm:flex-row justify-between items-start pb-5 sm:pb-0">
+  <%= render @sheet_music %>
+  <div class="w-full sm:w-auto flex flex-col sm:flex-row space-x-2 space-y-2">
+    <%= link_to "All scores", display_sheet_musics_path({composition_id:@sheet_music.composition_id}),
+    class: "rounded-xl px-3 py-2 border-2 border-neutral-900 bg-cyan-500 hover:border-2 hover:bg-cyan-300 hover:border-cyan-500 font-medium whitespace-nowrap"
+    %>
+  </div>
+</div>

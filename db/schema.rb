@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_08_165315) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_03_163556) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -69,6 +69,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_08_165315) do
     t.string "annotation_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.datetime "unpublished_date"
+    t.integer "admin_id"
   end
 
   create_table "compositions", force: :cascade do |t|
@@ -83,6 +85,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_08_165315) do
     t.integer "assignment_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "sort", default: 1000
   end
 
   create_table "lessons_skills", force: :cascade do |t|
@@ -116,6 +119,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_08_165315) do
     t.integer "year_of_birth"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
   end
 
   create_table "teachers", force: :cascade do |t|
@@ -123,6 +127,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_08_165315) do
     t.string "city"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -139,6 +144,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_08_165315) do
     t.integer "failed_attempts", default: 0, null: false
     t.string "unlock_token"
     t.datetime "locked_at"
+    t.string "name"
+    t.string "unconfirmed_email"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

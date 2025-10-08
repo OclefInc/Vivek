@@ -1,0 +1,11 @@
+<h1> Comment:</h1>
+<div >
+  <div >
+    <div>
+      <div > <%= @comment.user.email %> </div>
+      <div > <%= @comment.created_at %> </div>
+    </div>
+    <div > <%= @comment.note %> </div>
+    <%= link_to "View in Admin", @comment %>
+  </div>
+</div>

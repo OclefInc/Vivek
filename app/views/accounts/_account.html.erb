@@ -1,0 +1,15 @@
+<div id="<%= dom_id user %>" class="flex w-auto my-2 space-y-2 items-start">
+  <div class="w-auto pb-2 px-4">
+    <div class="font-bold w-35 pb-2">
+      <%= user.name %>
+    </div>
+    <p>
+      Email:
+      <%= user.email %>
+    </p>
+    <p>
+      Role:
+      <%= user.roles.join(",") %>
+    </p>
+  </div>
+</div>

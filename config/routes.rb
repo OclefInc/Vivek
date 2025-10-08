@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
-  
+  namespace :display do
+    resources :sheet_musics
+    resources :skills
+    resources :compositions
+    resources :teachers
+    resources :students
+  end
   resources :sheet_musics
   devise_for :users, controllers: { 
     confirmations: 'users/confirmations',
@@ -9,6 +15,7 @@ Rails.application.routes.draw do
     sessions: 'users/sessions', 
     unlocks: 'users/unlocks'
   } 
+  resources :accounts
   resources :skills
   resources :compositions
   resources :teachers

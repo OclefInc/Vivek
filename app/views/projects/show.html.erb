@@ -1,22 +1,22 @@
 <p style="color: green"><%= notice %></p>
-<h1 class="font-bold text-3xl mb-2">Project:</h1>
-<div class="px-2 py-2 border rounded-2xl border-gray-200 border-2">
+<h1 class="text-teal-400 text-3xl mb-2">Project:</h1>
+<div class="px-2 py-2 border rounded-2xl border-teal-500 border-2">
   <div id="<%= dom_id @project %>">
     <div class="flex mx-auto mx-2 my-2">
       <div class="mx-1 my-1">
-        <p class="mb-2">
-          <%= link_to @project.composition.name, @project.composition, class:'text-blue-600 hover:text-blue-400 text-2xl' %>
+        <p class="mb-2 text-teal-400 ">
+          <%= link_to @project.composition.name, display_composition_path(@project.composition), class:'text-indigo-400 hover:text-indigo-200 text-2xl' %>
         </p>
-        <p class="mb-2">
-          <%= link_to @project.student.name, @project.student, class:'font-semibold text-blue-600 hover:text-blue-400' %>
+        <p class="mb-2 text-teal-400 ">
+          <%= link_to @project.student.name, display_student_path(@project.student), class:'font-semibold text-indigo-400 hover:text-indigo-200' %>
           (Student)
         </p>
-        <p class="mb-2">
-          <%= link_to @project.teacher.name, @project.teacher, class:'font-semibold text-blue-600 hover:text-blue-400' %>
+        <p class="mb-2 text-teal-400 ">
+          <%= link_to @project.teacher.name, display_teacher_path(@project.teacher), class:'font-semibold text-indigo-400 hover:text-indigo-200' %>
           (Teacher)
         </p>
       </div>
-      <div class="px-8 my-2">
+      <div class="px-8 my-2 text-teal-400">
         <strong>Description:</strong>
         <%= @project.description %>
       </div>
@@ -25,5 +25,10 @@
       </div>
     </div>
   </div>
+  <% @project.lessons.order(:sort).each do |lesson| %>
+    <div class="border">
+      <p class="text-xl p-2 text-orange-600 hover:text-orange-400 italic" > <%= link_to lesson.name, project_episode_path(@project, lesson) %> </p>
+    </div>
+  <% end %>
 </div>
 <%= render partial:"/comments/module", locals:{annotation:@project} %>

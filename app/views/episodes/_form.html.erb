@@ -1,0 +1,24 @@
+<p>
+  <%= video_tag episode.lesson_video, controls:true if episode.lesson_video.attached? %>
+</p>
+<%= form_with(model: episode, url:project_episode_path(episode.project, episode)) do |form| %>
+  <% if current_user == episode.assignment.teacher.user %>
+    <div>
+      <%= form.label :teacher_journal, style: "display: block" %>
+      <%= form.rich_text_area :teacher_journal,
+      class: "block shadow rounded-2xl border border-gray-200 outline-none px-3 py-2 mt-2 w-full text-teal-400" %>
+    </div>
+  <% end %>
+  <% if current_user == episode.assignment.student.user %>
+    <div>
+      <%= form.label :student_journal, style: "display: block" %>
+      <%= form.rich_text_area :student_journal,
+      class: "block shadow rounded-2xl border border-gray-200 outline-none px-3 py-2 mt-2 w-full text-teal-400" %>
+    </div>
+  <% end %>
+  <div>
+    <div class="inline">
+      <%= form.submit class: "w-full sm:w-auto rounded-lg my-2 px-3 py-2 bg-blue-600 hover:bg-blue-400 text-white inline-block font-medium cursor-pointer" %>
+    </div>
+  </div>
+<% end %>

@@ -1,32 +1,54 @@
-<div class="flex justify-between items-center" id="<%= dom_id @episode %>">
+<div class="flex justify-between items-center text-teal-600" id="<%= dom_id @episode %>">
   <div class="text-3xl text-bold">
     <%= @episode.name %>
   </div>
   <div class="text-xl text-semibold" >
-    Project: <span> <%= link_to @episode.assignment.name, @episode.assignment, class:"text-blue-600 text-bold hover:text-blue-400 px-1 py-1" %> </span>
+    Project: <span> <%= link_to @episode.assignment.name, project_path(@episode.assignment), class:"text-indigo-600 text-bold hover:text-indigo-400 px-1 py-1" %> </span>
   </div>
 </div>
 <p>
-  <%= image_tag @episode.lesson_video if @episode.lesson_video.attached? %>
+  <%= video_tag @episode.lesson_video, controls:true if @episode.lesson_video.attached? %>
 </p>
-<div class="flex px-4 py-6">
-  <div class="w-2/3 flex-auto">
-    <strong>Description:</strong>
+<div class="flex px-1 py-4">
+  <div class="w-2/3 bg-white bg-opacity-50 text-teal-600 dark:text-teal-400 border border-sky-300 dark:border-sky-800 dark:bg-zinc-800 rounded-2xl mr-2 px-3 py-3 flex-auto">
     <%= @episode.description %>
   </div>
-  <div class="w-1/3 flex-auto">
+  <div class="w-1/3 ml-2 flex-auto text-teal-600 ">
     <p class="font-bold"> Skills: </p>
-    <%= @episode.skills.map{|skill| link_to(skill.name, skill, class:"text-blue-700 hover:text-blue-400")}.join(', ').html_safe %>
+    <%= @episode.skills.map{|skill| link_to(skill.name, display_skill_path(skill), class:"text-indigo-600 pl-4 hover:text-indigo-400")}.join(', ').html_safe %>
   </div>
 </div>
-<div class="flex px-4 py-4 ">
-  <div class="flex-auto border border-sky-100 rounded-2xl outline-2 outline-offset-2 outline-sky-200 mx-3 my-3 px-3 py-3" >
-    <strong>Student Reflection:</strong>
-    <%= @episode.student_journal %>
+<div class="flex">
+  <div class="flex-auto">
+    <p class="text-teal-600">
+      Student Reflection:
+    </p>
+    <div class="flex-autobg-white dark:border-sky-800 dark:bg-zinc-800 bg-opacity-50 text-teal-600 dark:text-teal-400 border border-sky-300 rounded-2xl m-2 p-6">
+      <%= @episode.student_journal %>
+    </div>
+    <div class="justify-self-end m-4">
+      <% if current_user && current_user == @episode.assignment.student.user %>
+        <%= 
+        link_to("Edit", edit_project_episode_path(@episode.project, @episode), 
+          class: "rounded-xl px-3 py-2 border-2 border-indigo-300 bg-indigo-500 hover:border-2 dark:border-zinc-900 hover:bg-indigo-400 hover:border-indigo-100 text-white font-medium whitespace-nowrap")
+        %>
+      <% end %>
+    </div>
   </div>
-  <div class="flex-auto border border-sky-100 rounded-2xl outline-2 outline-offset-2 outline-sky-200 mx-3 my-3 px-3 py-3" >
-    <strong>Teacher Comments:</strong>
-    <%= @episode.teacher_journal %>
+  <div class="flex-auto">
+    <p class="text-teal-600">
+      Teacher Comments:
+    </p>
+    <div class="flex-auto bg-white bg-opacity-50 dark:border-sky-800 dark:bg-zinc-800 text-teal-600 dark:text-teal-400 border border-sky-300  rounded-2xl m-2 p-6">
+      <%= @episode.teacher_journal %>
+    </div>
+    <div class="justify-self-end m-4">
+      <% if current_user && current_user == @episode.assignment.teacher.user %>
+        <%= link_to("Edit", edit_project_episode_path(@episode.project, @episode),
+          class: "rounded-xl px-3 py-2 border-2 border-indigo-300 bg-indigo-500 dark:border-zinc-900 hover:border-2 hover:bg-indigo-400 hover:border-indigo-100 text-white font-medium whitespace-nowrap")
+        %>
+      <% end %>
+    </div>
   </div>
 </div>
 <%= render partial:"/comments/module", locals:{annotation:@episode} %>

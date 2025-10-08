@@ -3,7 +3,7 @@
 */
 
 trix-editor {
-  border: 1px solid #6a6969;
+  border: 1px solid #ace3f7;
   border-radius: 20px;
   margin: 0;
   padding: 0.4em 0.6em;
@@ -26,9 +26,9 @@ trix-toolbar .trix-button-row {
 trix-toolbar .trix-button-group {
   display: flex;
   margin-bottom: 10px;
-  border: 0px solid #565656;
-  border-top-color: #6e6e6e;
-  border-bottom-color: #6d6d6d;
+  border: 0px solid #96e0ff;
+  border-top-color: #96e0ff;
+  border-bottom-color: #96e0ff;
   border-radius: 10px;
 }
 
@@ -55,7 +55,7 @@ trix-toolbar .trix-button-group-spacer {
 trix-toolbar .trix-button {
   position: relative;
   float: left;
-  color: rgba(174, 174, 174, 0.6);
+  color: rgba(202, 202, 202, 0.868);
   font-size: 0.75em;
   font-weight: 600;
   white-space: nowrap;
@@ -63,17 +63,17 @@ trix-toolbar .trix-button {
   margin: 0;
   outline: none;
   border: none;
-  border-bottom: 0px transparent #6d6d6d;
+  border-bottom: 0px transparent #c8c8c8;
   border-radius: 20px;
-  background: rgba(55, 101, 112, 0.6);
+  background: rgba(130, 217, 255, 0.555);
 }
 
 trix-toolbar .trix-button:not(:first-child) {
-  border-left: 0px solid #6c6c6c;
+  border-left: 0px solid #aeaeae;
 }
 
 trix-toolbar .trix-button.trix-active {
-  background: #76a6b6;
+  background: #83c1f7;
   color: rgb(183, 246, 243);
 }
 
@@ -82,7 +82,7 @@ trix-toolbar .trix-button:not(:disabled) {
 }
 
 trix-toolbar .trix-button:disabled {
-  color: rgba(168, 168, 168, 0.125);
+  color: rgba(184, 209, 232, 0.613);
 }
 
 @media (max-width: 768px) {

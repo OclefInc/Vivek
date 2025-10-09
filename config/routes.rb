@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   namespace :display do
     resources :sheet_musics
     resources :skills
@@ -15,6 +16,11 @@ Rails.application.routes.draw do
     sessions: 'users/sessions', 
     unlocks: 'users/unlocks'
   } 
+  devise_scope :user do
+    authenticate :user, lambda{|u|u.is_employee?} do
+      mount MissionControl::Jobs::Engine, at: "/jobs"
+    end
+  end
   resources :accounts
   resources :skills
   resources :compositions

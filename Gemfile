@@ -80,3 +80,5 @@ gem "local_time"
 gem "airbrake"
 
 gem "rails_sortable"
+
+gem "mission_control-jobs"

@@ -15,8 +15,4 @@ test:
   <<: *default
 
 production:
-  primary:
-    adapter: postgresql
-  queue:
-    adapter: postgresql
-    url: <%= ENV["HEROKU_POSTGRESQL_ORANGE_URL"] %>
+  <<: *default

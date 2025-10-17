@@ -11,6 +11,6 @@ namespace :database do
   task :local, [:path] => [:environment] do |t, args|
     system "rails db:drop DISABLE_DATABASE_ENVIRONMENT_CHECK=1"
     system "rails db:create"
-    system "pg_restore --verbose --clean --no-acl --no-owner -h localhost -d vivek_development latest.dump"
+    system "pg_restore --verbose --clean --no-acl --no-owner -h localhost -d vivek_dev latest.dump"
   end
 end

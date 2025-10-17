@@ -21,7 +21,7 @@
         <%= @project.description %>
       </div>
       <div>
-        <%= image_tag @project.summary_video if @project.summary_video.attached? %>
+        <%= image_tag @project.summary_video, controls:true if @project.summary_video.attached? %>
       </div>
     </div>
   </div>

@@ -59,6 +59,7 @@ group :development do
   gem "rufo"
   gem "ruby-lsp"
   gem "rubocop"
+  gem "dotenv-rails"
 end
 
 group :test do

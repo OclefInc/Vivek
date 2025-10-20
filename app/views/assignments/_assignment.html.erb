@@ -1,6 +1,9 @@
 <div id="<%= dom_id assignment %>">
-  <div class="flex mx-auto mx-4 my-4">
-    <div class="mx-1 my-1">
+  <div class="mx-auto mx-4 my-4">
+    <div>
+      <%= video_tag assignment.summary_video, controls: true if assignment.summary_video.attached? %>
+    </div>
+    <div class="flex mx-1 my-1">
       <p class="mb-2">
         <%= link_to assignment.composition.name, assignment.composition, class:'text-blue-600 hover:text-blue-400 text-2xl' %>
       </p>
@@ -16,9 +19,6 @@
     <div class="px-5 my-1">
       <strong>Description:</strong>
       <%= assignment.description %>
-    </div>
-    <div>
-      <%= image_tag assignment.summary_video if assignment.summary_video.attached? %>
     </div>
   </div>
 </div>

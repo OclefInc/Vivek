@@ -1,23 +1,23 @@
 <div class="flex flex-row justify-center">
-  <div class="border-teal-800 border-2 shadow-lg bg-cyan-950 rounded-xl px-5 py-5">
-    <h2 class="text-center text-teal-100 text-2xl tracking-wider" >Sign In</h2>
+  <div class="border-sky-300 bg-sky-50 dark:border-sky-800 border-2 shadow-lg dark:bg-zinc-900 rounded-xl px-5 py-5">
+    <h2 class="text-center text-sky-800 dark:text-sky-300 text-2xl tracking-wider" >Sign In</h2>
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-      <div class="field text-gray-300 mb-4">
+      <div class="field text-sky-800 dark:text-sky-300 mb-4">
         <%= f.label :email %><br />
-        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: ["block w-full bg-cyan-800 text-gray-300 shadow-sm rounded-xl px-3 py-2 outline focus:outline-2 outline-teal-300" ]  %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: ["block w-full dark:bg-zinc-900 dark:text-zinc-300 shadow-sm rounded-xl px-3 py-2 outline-sky-400 dark:border dark:border-zinc-700 focus:outline-2 dark:outline-sky-500" ]  %>
       </div>
-      <div class="field text-gray-300 mb-4">
+      <div class="field text-sky-800 dark:text-sky-300 mb-4">
         <%= f.label :password %><br />
-        <%= f.password_field :password, autocomplete: "current-password", class: ["block w-full bg-cyan-800 text-gray-300 shadow-sm rounded-xl px-3 py-2 outline focus:outline-2 outline-teal-300"] %>
+        <%= f.password_field :password, autocomplete: "current-password", class: ["block w-full dark:bg-zinc-900 dark:text-zinc-300 shadow-sm rounded-xl px-3 py-2 outline-sky-400 dark:border dark:border-zinc-700 focus:outline-2 dark:outline-sky-500"] %>
       </div>
       <% if devise_mapping.rememberable? %>
-        <div class="field text-gray-300 mb-4 px-2 py-3">
+        <div class="field text-sky-800 dark:text-sky-300 mb-4">
           <%= f.check_box :remember_me %>
           <%= f.label :remember_me %>
         </div>
       <% end %>
       <div class="actions text-center">
-        <%= f.submit "Submit", class: "w-full sm:w-auto rounded-xl px-3 py-2 bg-indigo-600 hover:bg-indigo-400 text-white inline-block font-medium cursor-pointer text-center tracking-wider"  %>
+        <%= f.submit "Submit", class: "w-auto rounded-xl px-3 py-2 bg-indigo-600 hover:bg-indigo-400 text-white inline-block font-medium cursor-pointer text-center tracking-wider"  %>
       </div>
     <% end %>
     <div class="flex-col justify-items-center">

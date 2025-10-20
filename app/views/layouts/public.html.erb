@@ -36,7 +36,7 @@
           <a href="/users/edit" class="mr-5 hover:text-zinc-900">My Account</a>
           <%= button_to "Log out", destroy_user_session_path, method: :delete, class:"inline-flex object-center items-center justify-right bg-white opacity-50 border-lime-600 border-2 py-1 px-3 focus:outline-none hover:border-yellow-500 hover:border-2 rounded-xl text-black mt-4 md:mt-0" %>
         <% else %>
-          <a href= <%= new_user_session_path %> class="iinline-flex object-center items-center justify-right bg-white opacity-50 border-lime-600 border-2 py-1 px-3 focus:outline-none hover:border-yellow-500 hover:border-2 rounded-xl text-black mt-4 md:mt-0">Login
+          <a href= <%= new_user_session_path %> class="inline-flex object-center items-center justify-right bg-white opacity-50 border-lime-600 border-2 py-1 px-3 focus:outline-none hover:border-yellow-500 hover:border-2 rounded-xl text-black mt-4 md:mt-0">Login
             <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
               <path d="M5 12h14M12 5l7 7-7 7"></path>
             </svg>

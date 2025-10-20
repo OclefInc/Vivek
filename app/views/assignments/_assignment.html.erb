@@ -1,15 +1,15 @@
 <div id="<%= dom_id assignment %>">
   <div class="flex justify-evenly">
     <div class="w-auto">
-      <%= link_to assignment.composition.name, assignment.composition, class:'text-blue-600 hover:text-blue-400 text-2xl' %>
+      <%= link_to assignment.composition.name, assignment.composition, class:'text-indigo-600 hover:text-indigo-400 text-2xl' %>
     </div>
     <div class="w-auto">
       <div class="m-2">
-        <%= link_to assignment.student.name, assignment.student, class:'font-semibold text-blue-600 hover:text-blue-400' %>
+        <%= link_to assignment.student.name, assignment.student, class:'font-semibold text-indigo-600 hover:text-indigo-400' %>
         (Student)
       </div>
       <div class="m-2">
-        <%= link_to assignment.teacher.name, assignment.teacher, class:'font-semibold text-blue-600 hover:text-blue-400' %>
+        <%= link_to assignment.teacher.name, assignment.teacher, class:'font-semibold text-indigo-600 hover:text-indigo-400' %>
         (Teacher)
       </div>
     </div>

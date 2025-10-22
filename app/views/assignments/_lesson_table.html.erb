@@ -1,15 +1,15 @@
 <table class="w-full">
   <thead>
     <tr>
-      <th class="text-left px-3 py-2 border-b border-gray-300">Lesson</th>
-      <th class="text-left px-3 py-2 border-b border-gray-300">Status</th>
+      <th class="text-left md:px-3 py-2 border-b border-gray-300">Lesson</th>
+      <th class="text-left md:px-3 py-2 border-b border-gray-300">Status</th>
     </tr>
   </thead>
   <tbody data-controller="sortable">
     <% lessons.order(:sort).each_with_sortable_id do |lesson, sortable_id| %>
       <tr id="<%= sortable_id %>">
-        <td class="text-left px-3 py-2 border-b border-gray-300"><%= link_to lesson.name, lesson, class:"text-blue-500 hover:text-red-500"  %></td>
-        <td class="text-left px-3 py-2 border-b border-gray-300"><%= lesson.status %></td>
+        <td class="text-left md:px-3 py-2 border-b border-gray-300"><%= link_to lesson.name, lesson, class:"text-blue-500 hover:text-red-500"  %></td>
+        <td class="text-left md:px-3 py-2 border-b border-gray-300"><%= lesson.status %></td>
       </tr>
     <% end %>
   </tbody>

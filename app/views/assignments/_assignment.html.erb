@@ -1,11 +1,6 @@
 <div id="<%= dom_id assignment %>">
-  <div>
-    <%= video_tag assignment.summary_video, controls: true, size: "640x360", class: "max-w-full h-auto" if assignment.summary_video.attached? %>
-  </div>
-  <div class="flex mx-1 my-1">
-    <p class="mb-2">
-      <%= link_to assignment.composition.name, assignment.composition, class:'text-blue-600 hover:text-blue-400 text-2xl' %>
-    </p>
+  <div class="my-1">
+    <strong>Description:</strong>
     <p class="mb-2">
       <%= link_to assignment.student.name, assignment.student, class:'font-semibold text-blue-600 hover:text-blue-400' %>
       (Student)
@@ -14,9 +9,6 @@
       <%= link_to assignment.teacher.name, assignment.teacher, class:'font-semibold text-blue-600 hover:text-blue-400' %>
       (Teacher)
     </p>
-  </div>
-  <div class="px-5 my-1">
-    <strong>Description:</strong>
     <%= assignment.description %>
   </div>
 </div>

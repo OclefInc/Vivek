@@ -1,27 +1,27 @@
 <div>
-  <h1 class="font-bold text-zinc-400 text-2xl mb-2">Projects</h1>
+  <div class="text-sky-900 dark:text-sky-400 text-2xl mb-2">Projects:</div>
 </div>
-<div id="skills" class="min-w-full divide-y divide-zinc-200 space-y-5">
+<div id="projects" class="min-w-full divide-y divide-zinc-200 space-y-5">
   <% @projects.each do |project| %>
-    <div class="border rounded-2xl border-sky-300 dark:border-sky-900 dark:bg-zinc-800 border-2 px-4 py-3">
-      <h4 class="text-xl ps-4 text-orange-600 hover:text-orange-400 italic py-2"> <%= link_to project.name, project_path(project) %> </h4>
-      <div class="flex sm:flex-nowrap">
+    <div class="border shadow border-sky-100 rounded-2xl bg-sky-50 dark:border-zinc-800 dark:bg-zinc-900 border-2 px-4 py-3">
+      <h4 class="text-xl ps-4 text-orange-700 hover:text-amber-500 dark:text-orange-600 dark:hover:text-orange-400 italic py-2"> <%= link_to project.name, project_path(project) %> </h4>
+      <div class="flex sm:flex-nowrap text-zinc-900 dark:text-sky-300">
         <div class="flex-col w-auto px-6 m-2 ">
-          <div class="sm:flex-nowrap mb-2 dark:text-zinc-300 text-zinc-500">
+          <div class="sm:flex-nowrap mb-2">
             <strong> <%= project.composition.name %> </strong>
             <p class="text-right"> (<%= project.composition.composer %>) </p>
           </div>
-          <div class="flex-row sm:flex-nowrap mb-2 text-zinc-500">
+          <div class="flex-row sm:flex-nowrap mb-2 ">
             <strong> Teacher:  </strong>
-            <p class="dark:text-zinc-300 text-zinc-500"> <%= project.teacher.name %> </p>
+            <p> <%= project.teacher.name %> </p>
           </div>
-          <div class="text-zinc-500"> Number of Episodes: 
-            <b class="dark:text-zinc-300"> <%= project.lessons.length %> </b>
+          <div class=""> Number of Episodes: 
+            <b> <%= project.lessons.length %> </b>
           </div>
         </div>
-        <div class="flex-auto px-6 my-2 text-zinc-500">
+        <div class="flex-auto px-6 my-2 ">
           <strong>Description:</strong>
-          <p class="dark:text-zinc-300"> <%= project.description %> </p>
+          <p class=""> <%= project.description %> </p>
         </div>
       </div>
     </div>

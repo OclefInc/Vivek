@@ -11,4 +11,11 @@
     </p>
     <%= assignment.description %>
   </div>
+  <div>
+    <%= image_tag assignment.summary_video, controls:true if assignment.summary_video.attached? %>
+  </div>
+  <div class="px-5 my-1">
+    <strong>Description:</strong>
+    <%= assignment.description %>
+  </div>
 </div>

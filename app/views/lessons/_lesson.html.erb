@@ -7,7 +7,7 @@
   </div>
 </div>
 <p>
-  <%= video_tag lesson.lesson_video if lesson.lesson_video.attached? %>
+  <%= video_tag lesson.lesson_video, controls:true if lesson.lesson_video.attached? %>
 </p>
 <div class="flex px-4 py-6">
   <div class="w-2/3 flex-auto">

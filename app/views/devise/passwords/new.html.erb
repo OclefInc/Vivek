@@ -1,5 +1,5 @@
 <div class="flex flex-row justify-center">
-  <div class="border border-2 border-sky-300 shadow-lg bg-sky-50 rounded-xl px-5 py-5 ">
+  <div class="border-sky-300 bg-sky-50 dark:border-sky-800 border-2 shadow-lg dark:bg-zinc-900 rounded-xl px-5 py-5">
     <h2 class="text-2xl text-center tracking-wide">Forgot your password?</h2>
     <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
       <%= render "devise/shared/error_messages", resource: resource %>

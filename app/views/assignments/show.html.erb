@@ -9,7 +9,11 @@
 </div>
 <div class=" md:flex md:-mx-5 py-4">
   <div class="md:flex-1 md:basis-1/2 md:px-5">
-    <%= video_tag @assignment.summary_video, controls: true, class: "max-w-full h-auto" if @assignment.summary_video.attached? %>
+    <% if @assignment.summary_video.attached? %>
+      <div class="bg-black flex items-center justify-center" style="width: 640px; height: 480px; max-width: 100%;">
+        <%= video_tag @assignment.summary_video, style: "max-width: 100%; max-height: 100%;", controls: true, class: "max-w-full max-h-full" %>
+      </div>
+    <% end %>
     <%= render @assignment %>
   </div>
   <div class="w-full md:flex-1 md:basis-1/2 md:px-5">

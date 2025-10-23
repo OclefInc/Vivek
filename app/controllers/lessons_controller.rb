@@ -10,6 +10,7 @@ class LessonsController < ApplicationController
 
   # GET /lessons/1 or /lessons/1.json
   def show
+    @assignment = @lesson.assignment
   end
 
   # GET /lessons/new

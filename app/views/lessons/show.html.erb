@@ -1,7 +1,17 @@
 <p style="color: green"><%= notice %></p>
-<%= render @lesson %>
-<div class="flex px-2 py-2 justify-end">
-  <%= link_to "Edit", edit_lesson_path(@lesson), class: "w-full sm:w-auto text-center rounded-lg px-3 py-2 mx-1 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-  <%= link_to "All lessons", lessons_path, class: "w-full sm:w-auto text-center rounded-lg px-3 py-2 mx-1 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-  <%= button_to "Delete", @lesson, method: :delete, class: "w-full sm:w-auto rounded-lg px-3 py-2 mx-1 text-white bg-red-600 hover:bg-red-400 font-medium cursor-pointer", data: { turbo_confirm: "Are you sure?" } %>
+<div class="flex justify-between items-center">
+  <span class="font-bold sm:text-2xl"><%= link_to @assignment.composition.name, @assignment, class:'text-blue-600 hover:text-blue-400' %>: <%= @lesson.name %></span>
+  <div class="ml-2 flex items-center justify-end gap-1">
+    <%= link_to "Edit", edit_lesson_path(@lesson), class: "w-full sm:w-auto text-center rounded-lg px-3 py-2 mx-1 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+    <%= button_to "Delete", @lesson, method: :delete, class: "w-full sm:w-auto rounded-lg px-3 py-2 mx-1 text-white bg-red-600 hover:bg-red-400 font-medium cursor-pointer", data: { turbo_confirm: "Are you sure?" } %>
+  </div>
+</div>
+<div class=" md:flex md:-mx-5 py-4">
+  <div class="md:flex-1 md:basis-1/2 md:px-5">
+    <%= video_tag @lesson.lesson_video, controls: true, class: "max-w-full h-auto" if @lesson.lesson_video.attached? %>
+    <%= render @lesson %>
+  </div>
+  <div class="w-full md:flex-1 md:basis-1/2 md:px-5">
+    <%= render partial: '/assignments/lesson_table', locals: { lessons: @assignment.lessons } %>
+  </div>
 </div>

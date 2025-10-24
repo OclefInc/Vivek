@@ -18,6 +18,17 @@
   </div>
   <div class="w-full md:flex-1 md:basis-1/2 md:px-5">
     <%= render partial: 'lesson_table', locals: { lessons: @assignment.lessons } %>
+    <%= form_with(model: @assignment.lessons.build) do |form| %>
+      <div class="dropzone dropzone-default dz-clickable" data-controller="dropzone" data-dropzone-max-file-size="10000000" data-dropzone-accepted-files="video/*" data-turbo-permanent>
+        <%= form.file_field :lesson_video, direct_upload: true, data: { 'dropzone-target': "input", 'dropzone-capture-mode-value': 'environment', autosubmit: true, turbosubmit: nil, camera: false } %>
+        <div class="dropzone-msg dz-message needsclick">
+          <h3 class="dropzone-msg-title text-danger">Drag Video File Here</h3>
+          <span class="dropzone-msg-desc text-danger">Click To Browse</span>
+        </div>
+      </div>
+      <%= form.hidden_field :assignment_id %>
+      <%= form.submit class: "w-full sm:w-auto rounded-lg my-2 px-3 py-2 bg-blue-600 hover:bg-blue-400 text-white inline-block font-medium cursor-pointer" %>
+    <% end %>
   </div>
 </div>
 <%= render partial:"/comments/module", locals:{annotation:@assignment} %>

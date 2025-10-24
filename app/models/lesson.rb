@@ -22,9 +22,16 @@ class Lesson < ApplicationRecord
     has_rich_text :teacher_journal
     has_one_attached :lesson_video
 
+    before_validation :assign_default_name, on: :create
+
     validates_presence_of :name
     # validates_presence_of :lesson_video
     # validate :lesson_video_is_video_type
+
+    def assign_default_name
+      # set name to filename if name is blank
+      self.name = lesson_video.filename.to_s if name.blank? && lesson_video.attached?
+    end
 
     def complete?
       description.present? &&

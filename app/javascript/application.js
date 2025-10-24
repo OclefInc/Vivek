@@ -15,3 +15,27 @@ document.addEventListener("turbo:morph", () => {
     LocalTime.run()
 })
 
+window.getMetaValue = function(name) {
+  const element = findElement(document.head, `meta[name="${name}"]`)
+  if (element) {
+    return element.getAttribute("content")
+  }
+}
+
+window.findElement = function(root, selector) {
+  if (typeof root == "string") {
+    selector = root
+    root = document
+  }
+  return root.querySelector(selector)
+}
+
+window.removeElement = function(el) {
+  if (el && el.parentNode) {
+    el.parentNode.removeChild(el);
+  }
+}
+
+window.insertAfter =  function(el, referenceNode) {
+    return referenceNode.parentNode.insertBefore(el, referenceNode.nextSibling);
+}

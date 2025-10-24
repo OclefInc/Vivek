@@ -10,12 +10,11 @@
 #  assignment_id :integer
 #
 class Lesson < ApplicationRecord
-
-    include RailsSortable::Model
+  include RailsSortable::Model
     set_sortable :sort  # Indicate a sort column
 
     belongs_to :assignment
-    
+
     has_and_belongs_to_many :skills
     has_many :comments, as: :annotation
     has_rich_text :description
@@ -26,7 +25,7 @@ class Lesson < ApplicationRecord
     validates_presence_of :name
     # validates_presence_of :lesson_video
     # validate :lesson_video_is_video_type
-    
+
     def complete?
       description.present? &&
       student_journal.present? &&
@@ -36,11 +35,11 @@ class Lesson < ApplicationRecord
     def status
       if complete?
         "Complete"
-      else 
+      else
         "Incomplete"
       end
     end
-    
+
     def lesson_video_is_video_type
         unless lesson_video.content_type.starts_with?("video/")
           errors.add(:lesson_video, "must be a video file")

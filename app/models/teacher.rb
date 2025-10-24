@@ -14,5 +14,5 @@ class Teacher < ApplicationRecord
     has_one_attached :profile_picture
     has_rich_text :bio
     belongs_to :user, optional: true
-    validates_presence_of     :name, :city
+    validates_presence_of :name, :city
 end

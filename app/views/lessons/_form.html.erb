@@ -10,7 +10,13 @@
     </div>
   <% end %>
   <div>
-    <%= form.file_field :lesson_video, class: ["block shadow-sm rounded-lg border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": lesson.errors[:name].none?, "border-red-400 focus:outline-red-600": lesson.errors[:name].any?}] %>
+    <div class="dropzone dropzone-default dz-clickable" data-controller="dropzone" data-dropzone-max-file-size="10000000" data-dropzone-accepted-files="video/*" data-turbo-permanent>
+      <%= form.file_field :lesson_video, direct_upload: true, data: { 'dropzone-target': "input", 'dropzone-capture-mode-value': 'environment', autosubmit: false, turbosubmit: nil, camera: false } %>
+      <div class="dropzone-msg dz-message needsclick">
+        <h3 class="dropzone-msg-title text-danger">Drag Video File Here</h3>
+        <span class="dropzone-msg-desc text-danger">Click To Browse</span>
+      </div>
+    </div>
   </div>
   <div>
     <%= form.label :name, style: "display: block" %>

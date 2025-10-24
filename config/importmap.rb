@@ -13,3 +13,6 @@ pin "rails_sortable", to: "rails_sortable.js"
 pin "jquery", to: "https://ga.jspm.io/npm:jquery@3.6.0/dist/jquery.js"
 pin "jquery-ui", to: "https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"
 pin "jquery-ui-touch-punch", to: "https://cdnjs.cloudflare.com/ajax/libs/jqueryui-touch-punch/0.2.3/jquery.ui.touch-punch.min.js"
+
+pin "dropzone", to: "https://ga.jspm.io/npm:dropzone@5.7.2/dist/dropzone.js"
+pin "@rails/activestorage", to: "activestorage.esm.js"

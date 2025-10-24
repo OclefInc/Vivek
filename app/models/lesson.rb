@@ -28,10 +28,7 @@ class Lesson < ApplicationRecord
     # validates_presence_of :lesson_video
     # validate :lesson_video_is_video_type
 
-    def assign_default_name
-      # set name to filename if name is blank
-      self.name = lesson_video.filename.to_s if name.blank? && lesson_video.attached?
-    end
+
 
     def complete?
       description.present? &&
@@ -55,5 +52,11 @@ class Lesson < ApplicationRecord
 
     def project
       assignment
+    end
+
+    private
+    def assign_default_name
+      # set name to date if name is blank
+      self.name = Date.today.to_s if name.blank? && lesson_video.attached?
     end
 end

@@ -23,18 +23,22 @@ class Assignment < ApplicationRecord
     has_many :comments, as: :annotation
 
     def complete?
-      !lessons.map{|lesson| lesson.complete?}.any?(false)
+      !lessons.map { |lesson| lesson.complete? }.any?(false)
     end
 
     def status
       if complete?
         "Complete"
-      else 
+      else
         "Incomplete"
       end
     end
 
     def name
         "#{composition.name} (#{student.name})"
+    end
+
+    def first_lesson
+      lessons.order(:sort).first
     end
 end

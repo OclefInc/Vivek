@@ -11,7 +11,16 @@
   <div class="md:flex-1 md:basis-1/2 md:px-5">
     <% if @assignment.summary_video.attached? %>
       <div class="bg-black flex items-center justify-center" style="width: 640px; height: 480px; max-width: 100%;">
-        <%= video_tag @assignment.summary_video, style: "max-width: 100%; max-height: 100%;", controls: true, class: "max-w-full max-h-full" %>
+        <% if @assignment.summary_video.attached? %>
+          <%= video_tag @assignment.summary_video,
+          controls: true,
+          style: "max-width: 100%; max-height: 100%;",
+          class: "max-w-full h-auto",
+          data: {
+            controller: "video-autoplay",
+            video_autoplay_next_url_value: @assignment.first_lesson ? lesson_path(@assignment.first_lesson) : nil
+          } %>
+        <% end %>
       </div>
     <% end %>
     <%= render @assignment %>
@@ -22,8 +31,8 @@
       <div class="dropzone dropzone-default dz-clickable" data-controller="dropzone" data-dropzone-max-file-size="10000000" data-dropzone-accepted-files="video/*" data-turbo-permanent>
         <%= form.file_field :lesson_video, direct_upload: true, data: { 'dropzone-target': "input", 'dropzone-capture-mode-value': 'environment', autosubmit: true, turbosubmit: nil, camera: false } %>
         <div class="dropzone-msg dz-message needsclick">
-          <h3 class="dropzone-msg-title text-danger">Drag Video File Here</h3>
-          <span class="dropzone-msg-desc text-danger">Click To Browse</span>
+          <h3 class="dropzone-msg-title">Drag Video File Here</h3>
+          <span class="dropzone-msg-desc">Click To Browse</span>
         </div>
       </div>
       <%= form.hidden_field :assignment_id %>
@@ -31,4 +40,3 @@
     <% end %>
   </div>
 </div>
-<%= render partial:"/comments/module", locals:{annotation:@assignment} %>

@@ -12,18 +12,20 @@
   <% end %>
   <%= link_to "Add new assignment", new_assignment_path, class: "rounded-lg px-3 py-2 bg-blue-600 hover:bg-blue-400 text-white font-medium" %>
 </div>
-<div class="max-w-5xl mx-auto px-8 py-4">
+<div class="mx-auto py-4">
   <table class="w-full table-auto border-collapse">
     <tr>
+      <th class="text-left px-3 py-2 border-b border-gray-300">Composition</th>
+      <th class="text-left px-3 py-2 border-b border-gray-300">Lessons</th>
       <th class="text-left px-3 py-2 border-b border-gray-300">Student</th>
       <th class="text-left px-3 py-2 border-b border-gray-300">Teacher</th>
-      <th class="text-left px-3 py-2 border-b border-gray-300">Composition</th>
     </tr>
     <% @assignments.each do |assignment| %>
       <tr>
-        <td class="px-3 py-2 border-b border-gray-300"><%= link_to assignment.student.name, assignment, class:"text-blue-500 hover:text-red-500" %></td>
+        <td class="px-3 py-2 border-b border-gray-300"><%= link_to assignment.composition.name, assignment, class:"text-blue-500 hover:text-red-500"  %></td>
+        <td class="px-3 py-2 border-b border-gray-300"><%= link_to assignment.lessons.count %></td>
+        <td class="px-3 py-2 border-b border-gray-300"><%= link_to assignment.student.name%></td>
         <td class="px-3 py-2 border-b border-gray-300"><%= assignment.teacher.name %></td>
-        <td class="px-3 py-2 border-b border-gray-300"><%= assignment.composition.name %></td>
       </tr>
     <% end %>
   </table>

@@ -1,5 +1,5 @@
 <% content_for :title, "Showing composition" %>
-<h1 class="font-bold text-2xl text-sky-800 dark:text-sky-400">Composition Details:</h1>
+<h1 class="font-bold text-2xl text-sky-800 dark:text-zinc-300">Composition Details:</h1>
 <div class="flex justify-between items-start">
   <% if notice.present? %>
     <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
@@ -11,16 +11,16 @@
   class: "rounded-xl px-3 py-2 mt-2 border-2 border-white dark:border-indigo-300 bg-indigo-500 dark:border-zinc-900 hover:bg-indigo-400 hover:border-indigo-100 text-white font-medium whitespace-nowrap"
    %>
 </div>
-<h1 class="text-2xl text-sky-800 dark:text-sky-400">Assignments</h1>
+<h1 class="text-2xl text-sky-800 dark:text-zinc-400">Assignments</h1>
 <div class="max-w-5xl mx-auto px-8 py-4">
   <table class="w-full table-auto border-collapse">
     <tr>
-      <th class="text-left px-3 py-2 border-b border-gray-300 text-sky-800 dark:text-sky-400">Student</th>
-      <th class="text-left px-3 py-2 border-b border-gray-300 text-sky-800 dark:text-sky-400">Teacher</th>
+      <th class="text-left px-3 py-2 border-b border-sky-500 text-sky-800 dark:text-zinc-400">Student</th>
+      <th class="text-left px-3 py-2 border-b border-sky-500 text-sky-800 dark:text-zinc-400">Teacher</th>
     </tr>
     <% @composition.assignments.each do |assignment| %>
-      <td class="text-left text-sky-900 dark:text-sky-300 px-3 py-2 border-b border-gray-300"><%= link_to assignment.student.name, project_path(assignment), class:"text-indigo-400 text-normal hover:text-indigo-300 hover:text-bold "  %></td>
-      <td class="text-left text-sky-900 dark:text-sky-300 px-3 py-2 border-b border-gray-300"><%= assignment.teacher.name %></td>
+      <td class="text-left text-sky-900 dark:text-zinc-300 px-3 py-2 border-b border-sky-500"><%= link_to assignment.student.name, project_path(assignment), class:"text-indigo-400 text-normal hover:text-indigo-300 hover:text-bold "  %></td>
+      <td class="text-left text-sky-900 dark:text-zinc-300 px-3 py-2 border-b border-sky-500"><%= assignment.teacher.name %></td>
     <% end %>
   </table>
 </div>

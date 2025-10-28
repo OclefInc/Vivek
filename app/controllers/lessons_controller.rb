@@ -20,6 +20,9 @@ class LessonsController < ApplicationController
 
   # GET /lessons/1/edit
   def edit
+    if params[:field] == "description"
+      render partial: "description_form", layout: false
+    end
   end
 
   # POST /lessons or /lessons.json

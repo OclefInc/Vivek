@@ -3,8 +3,10 @@
   <%= lesson.skills.map{|skill| link_to(skill.name, skill, class:"text-blue-700 hover:text-blue-400")}.join(', ').html_safe %>
 </div>
 <div class="py-6">
-  <strong>Description:</strong>
-  <%= lesson.description %>
+  <%= turbo_frame_tag "lesson_#{lesson.id}_description" do %>
+    <strong>Description:</strong> <%= link_to "Edit", edit_lesson_path(lesson, field: :description), class: "text-blue-600 hover:text-blue-500 text-sm" %>
+    <%= lesson.description.present? ? lesson.description : content_tag(:span, "Click to add description", class: "text-gray-400 italic") %>
+  <% end %>
 </div>
 <div class="flex px-4 py-4 ">
   <div class="flex-auto border border-sky-100 rounded-2xl outline-2 outline-offset-2 outline-sky-200 mx-3 my-3 px-3 py-3" >

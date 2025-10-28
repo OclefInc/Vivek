@@ -1,0 +1,13 @@
+<%= turbo_frame_tag "lesson_#{@lesson.id}_skills" do %>
+  <%= form_with(model: @lesson, local: true) do |form| %>
+    <div>
+      <strong>Skills:</strong>
+      <%= form.collection_select :skill_ids, Skill.order(:name), :id, :name, {},
+      { multiple:true, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" } %>
+      <div class="mt-2 flex gap-2">
+        <%= form.submit "Save", class: "px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-medium cursor-pointer" %>
+        <%= link_to "Cancel", lesson_path(@lesson), class: "px-4 py-2 bg-gray-100 hover:bg-gray-50 rounded-lg font-medium" %>
+      </div>
+    </div>
+  <% end %>
+<% end %>

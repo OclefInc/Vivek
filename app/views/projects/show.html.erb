@@ -1,19 +1,19 @@
 <p style="color: green"><%= notice %></p>
-<h1 class="text-sky-900 dark:text-sky-400 text-2xl mb-2">Project:</h1>
+<h1 class="text-sky-900 dark:text-teal-400 text-2xl mb-2">Project:</h1>
 <div class="border shadow border-sky-100 rounded-2xl bg-sky-50 dark:border-zinc-800 dark:bg-zinc-900 border-2 px-4 py-3">
   <div id="<%= dom_id @project %>">
     <div class="flex mx-auto mx-2 my-2 justify-between">
       <div class="mx-1 my-1">
-        <p class="mb-2 text-sky-900 dark:text-sky-300">
+        <p class="mb-2 text-sky-900 dark:text-teal-400">
           <%= link_to @project.composition.name, display_composition_path(@project.composition), class:'text-indigo-500 hover:text-indigo-300 text-2xl' %>
         </p>
       </div>
       <div class="mx-1 my-1">
-        <p class="mb-2 text-sky-900 dark:text-sky-300">
+        <p class="mb-2 text-sky-900 dark:text-teal-400">
           <%= link_to @project.student.name, display_student_path(@project.student), class:'font-semibold text-indigo-500 hover:text-indigo-300' %>
           (Student)
         </p>
-        <p class="mb-2 text-sky-900 dark:text-sky-300">
+        <p class="mb-2 text-sky-900 dark:text-teal-400">
           <%= link_to @project.teacher.name, display_teacher_path(@project.teacher), class:'font-semibold text-indigo-500 hover:text-indigo-300' %>
           (Teacher)
         </p>
@@ -29,7 +29,7 @@
         <%= @project.description %>
       </div>
       <div class="w-full md:flex-1 md:basis-1/2 md:px-5">
-        <h1 class="mb-2 text-xl text-sky-900 dark:text-sky-300">
+        <h1 class="mb-2 text-xl text-sky-900 dark:text-teal-400">
           Episodes:
         </h1>
         <% @project.lessons.order(:sort).each do |lesson| %>

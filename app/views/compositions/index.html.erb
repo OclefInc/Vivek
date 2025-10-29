@@ -1,18 +1,12 @@
-<p style="color: green"><%= notice %></p>
-<% content_for :title, "Compositions" %>
-<div class="flex justify-between items-center">
-  <h1 class="text-3xl text-left text-red-600 px-3 py-2">Compositions</h1>
-  <%= form_with url: compositions_path, method: :get, data: { turbo_frame: "compositions-table", turbo_action: "advance", class: "flex-1 min-w-0" } do |form| %>
-    <%= form.text_field :query,
-            value: params[:query],
-            id: "table-search",
-            class: "p-2 ps-10 text-sm text-gray-700 flex-initial border border-gray-300 rounded-xl w-80 min-w-0 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
-            placeholder: "Search for compositions",
-            oninput: "this.form.requestSubmit()" %>
-  <% end %>
-  <%= link_to "Add new composition", new_composition_path, class: "rounded-lg px-3 py-2 bg-blue-600 hover:bg-blue-400 text-white block font-medium" %>
-</div>
-<div class="mx-auto py-4">
+<%= render layout: "shared/index_layout",
+           locals: {
+             title: "Compositions",
+             search_url: compositions_path,
+             turbo_frame: "compositions-table",
+             search_placeholder: "Search for compositions",
+             new_button_text: "Add new composition",
+             new_path: new_composition_path
+           } do %>
   <table class="w-full table-auto border-collapse">
     <tr>
       <th class="text-left px-3 py-2 border-b border-gray-300">Name</th>
@@ -27,4 +21,4 @@
       </tr>
     <% end %>
   </table>
-</div>
+<% end %>

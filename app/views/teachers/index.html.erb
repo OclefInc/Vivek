@@ -1,18 +1,12 @@
-<p style="color: green"><%= notice %></p>
-<% content_for :title, "Teachers" %>
-<div class="flex justify-between items-center">
-  <h1 class="text-3xl text-left text-red-600 px-3 py-2">Teachers</h1>
-  <%= form_with url: teachers_path, method: :get, data: { turbo_frame: "teachers-table", turbo_action: "advance" } do |form| %>
-    <%= form.text_field :query,
-            value: params[:query],
-            id: "table-search",
-            class: "block p-2 ps-10 text-sm text-gray-700 border border-gray-300 rounded-xl w-80 flex-initial min-w-50 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
-            placeholder: "Search for teachers",
-            oninput: "this.form.requestSubmit()" %>
-  <% end %>
-  <%= link_to "Add new teacher", new_teacher_path, class: "rounded-lg px-3 py-2 bg-blue-600 hover:bg-blue-400 text-white block font-medium" %>
-</div>
-<div class="mx-auto py-4">
+<%= render layout: "shared/index_layout",
+           locals: {
+             title: "Teachers",
+             search_url: teachers_path,
+             turbo_frame: "teachers-table",
+             search_placeholder: "Search for teachers",
+             new_button_text: "Add new teacher",
+             new_path: new_teacher_path
+           } do %>
   <table class="w-full table-auto border-collapse">
     <tr>
       <th class="text-left px-3 py-2 border-b border-gray-300">Name</th>
@@ -25,4 +19,4 @@
       </tr>
     <% end %>
   </table>
-</div>
+<% end %>

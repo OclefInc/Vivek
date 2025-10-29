@@ -1,32 +1,22 @@
-<% content_for :title, "Teachers" %>
-<% if notice.present? %>
-  <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
-<% end %>
-<div class="flex justify-between items-center my-4 pb-4">
-  <h1 class="text-3xl">Teachers</h1>
-  <%= form_with url: teachers_path, method: :get, data: { turbo_frame: "teachers-table", turbo_action: "advance" } do |form| %>
-    <%= form.text_field :query,
-            value: params[:query],
-            id: "table-search",
-            class: "block p-2 ps-10 text-sm text-gray-700 border border-gray-300 rounded-xl w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
-            placeholder: "Search for teachers",
-            oninput: "this.form.requestSubmit()" %>
-  <% end %>
-  <%= link_to "Add New Teacher", new_teacher_path, class: "rounded-lg px-3 py-2 bg-blue-600 hover:bg-blue-400 text-white block font-medium" %>
-</div>
-<div id="teachers" class="min-w-full divide-y divide-gray-200 space-y-5">
-  <% if @teachers.any? %>
+<%= render layout: "shared/index_layout",
+           locals: {
+             title: "Teachers",
+             search_url: teachers_path,
+             turbo_frame: "teachers-table",
+             search_placeholder: "Search for teachers",
+             new_button_text: "Add new teacher",
+             new_path: new_teacher_path
+           } do %>
+  <table class="w-full table-auto border-collapse">
+    <tr>
+      <th class="text-left px-3 py-2 border-b border-gray-300">Name</th>
+      <th class="text-left px-3 py-2 border-b border-gray-300">Projects</th>
+    </tr>
     <% @teachers.each do |teacher| %>
-      <div class="flex justify-between w-auto ">
-        <%= render teacher %>
-        <div class="ml-4 flex items-start justify-end gap-2">
-          <%= link_to "Full Info", teacher, class: "w-auto text-nowrap text-center rounded-md px-3 py-2 m-1 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-          <%= link_to "Edit", edit_teacher_path(teacher), class: "w-auto text-center rounded-md px-3 py-2 m-1 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-          <%= button_to "Delete", teacher, method: :delete, class: "w-full rounded-lg px-3 py-2 m-1 text-white bg-red-600 hover:bg-red-500 font-medium cursor-pointer", data: { turbo_confirm: "Are you sure?" } %>
-        </div>
-      </div>
-    </div>
-  <% end %>
-<% else %>
-  <p class="text-center my-10">No teachers found.</p>
+      <tr>
+        <td class="px-3 py-2 border-b border-gray-300"><%= link_to teacher.name, teacher, class:"text-blue-500 text-semibold hover:text-red-500 px-1 py-1" %></td>
+        <td class="px-3 py-2 border-b border-gray-300"><%= teacher.projects.length %></td>
+      </tr>
+    <% end %>
+  </table>
 <% end %>

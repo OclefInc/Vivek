@@ -15,4 +15,8 @@ class Teacher < ApplicationRecord
     has_rich_text :bio
     belongs_to :user, optional: true
     validates_presence_of :name, :city
+
+    def projects
+        assignments
+    end
 end

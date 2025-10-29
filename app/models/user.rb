@@ -49,4 +49,20 @@ class User < ApplicationRecord
   def is_teacher?
     Teacher.where(user_id: self.id).any?
   end
+
+  def account_type
+    @account_type ||= begin
+    array = []
+
+        array << "Employee" if is_employee?
+        array << "Teacher" if is_teacher?
+        array << "Student" if is_student?
+
+      if array.empty?
+        "Guest"
+      else
+        array.join(", ")
+      end
+  end
+  end
 end

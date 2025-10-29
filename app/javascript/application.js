@@ -13,7 +13,11 @@ import LocalTime from "local-time"
 LocalTime.start()
 document.addEventListener("turbo:morph", () => {
     LocalTime.run()
-})
+});
+
+document.addEventListener("turbo:before-cache", () => {
+    Array.from(document.getElementsByTagName('video')).forEach(video => video.removeAttribute('autoplay'));
+});
 
 window.getMetaValue = function(name) {
   const element = findElement(document.head, `meta[name="${name}"]`)

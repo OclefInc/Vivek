@@ -1,18 +1,12 @@
-<p style="color: green"><%= notice %></p>
-<% content_for :title, "Assignments" %>
-<div class="flex justify-between items-center">
-  <h1 class="text-3xl text-left text-red-600 px-3 py-2">Assignments</h1>
-  <%= form_with url: assignments_path, method: :get, data: { turbo_frame: "assignments-table", turbo_action: "advance", class: "flex-1 min-w-0" } do |form| %>
-    <%= form.text_field :query,
-            value: params[:query],
-            id: "table-search",
-            class: "p-2 ps-10 text-sm text-gray-700 flex-initial border border-gray-300 rounded-xl w-80 min-w-0 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
-            placeholder: "Search for assignments",
-            oninput: "this.form.requestSubmit()" %>
-  <% end %>
-  <%= link_to "Add new assignment", new_assignment_path, class: "rounded-lg px-3 py-2 bg-blue-600 hover:bg-blue-400 text-white font-medium" %>
-</div>
-<div class="mx-auto py-4">
+<%= render layout: "shared/index_layout",
+           locals: {
+             title: "Assignments",
+             search_url: assignments_path,
+             turbo_frame: "assignments-table",
+             search_placeholder: "Search for assignments",
+             new_button_text: "Add new assignment",
+             new_path: new_assignment_path
+           } do %>
   <table class="w-full table-auto border-collapse">
     <tr>
       <th class="text-left px-3 py-2 border-b border-gray-300">Composition</th>
@@ -29,4 +23,4 @@
       </tr>
     <% end %>
   </table>
-</div>
+<% end %>

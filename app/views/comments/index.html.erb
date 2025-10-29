@@ -1,7 +1,7 @@
 <p style="color: green"><%= notice %></p>
-<% content_for :title, "All Comments" %>
+<% content_for :title, "Comments" %>
 <div class="flex justify-between items-center">
-  <h1 class="text-3xl text-left text-red-600 px-3 py-2">All Comments</h1>
+  <h1 class="text-3xl text-left text-red-600 px-3 py-2">Comments</h1>
   <%= form_with url: comments_path, method: :get, data: { turbo_frame: "comments-table", turbo_action: "advance", class: "flex-1 min-w-0" } do |form| %>
     <%= form.text_field :query,
             value: params[:query],
@@ -10,8 +10,9 @@
             placeholder: "Search for comments",
             oninput: "this.form.requestSubmit()" %>
   <% end %>
+  <span></span>
 </div>
-<div class="max-w-5xl mx-auto px-8 py-4">
+<div class="mx-auto py-4">
   <table class="w-full table-auto border-collapse">
     <tr>
       <th class="text-left px-3 py-2 border-b border-gray-300">Date</th>

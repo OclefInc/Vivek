@@ -1,33 +1,29 @@
+<p style="color: green"><%= notice %></p>
 <% content_for :title, "Skills" %>
-<div class="w-full">
-  <% if notice.present? %>
-    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
-  <% end %>
-  <div class="flex justify-between items-center mx-2 my-6">
-    <h1 class="font-semibold text-4xl">Skills</h1>
-    <%= form_with url: skills_path, method: :get, data: { turbo_frame: "skills-table", turbo_action: "advance" } do |form| %>
-      <%= form.text_field :query,
+<div class="flex justify-between items-center">
+  <h1 class="text-3xl text-left text-red-600 px-3 py-2">Skills</h1>
+  <%= form_with url: skills_path, method: :get, data: { turbo_frame: "skills-table", turbo_action: "advance", class: "flex-1 min-w-0" } do |form| %>
+    <%= form.text_field :query,
             value: params[:query],
             id: "table-search",
-            class: "block p-2 ps-10 text-sm text-gray-700 border border-gray-300 rounded-xl w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
+            class: "p-2 ps-10 text-sm text-gray-700 flex-initial border border-gray-300 rounded-xl w-80 min-w-0 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
             placeholder: "Search for skills",
             oninput: "this.form.requestSubmit()" %>
-    <% end %>
-    <%= link_to "Add new skill", new_skill_path, class: "rounded-lg px-3 py-2 bg-blue-600 hover:bg-blue-400 text-white block font-medium" %>
-  </div>
-  <div id="skills" class="min-w-full divide-y divide-gray-200 space-y-5">
-    <% @skill_categories.each do |skill_category| %>
-      <h4 class="text-3xl ps-4 text-red-600 italic py-5" > <%= skill_category.name %> </h4>
+  <% end %>
+  <%= link_to "Add new skill", new_skill_path, class: "rounded-lg px-3 py-2 bg-blue-600 hover:bg-blue-400 text-white block font-medium" %>
+</div>
+<div id="skills" class="min-w-full divide-y divide-gray-200 space-y-5">
+  <% @skill_categories.each do |skill_category| %>
+    <h4 class="text-3xl ps-4 text-red-600 italic py-5" > <%= skill_category.name %> </h4>
+    <table class="w-full table-auto border-collapse">
+      <tr>
+        <th class="text-left px-3 py-2 border-b border-gray-300">Skill</th>
+      </tr>
       <% skill_category.skills.each do |skill| %>
-        <div class="flex flex-col sm:flex-row justify-between items-center pb-5 sm:pb-0">
-          <%= render skill %>
-          <div class="w-full sm:w-auto flex flex-col sm:flex-row space-x-2 space-y-2">
-            <%= link_to "Show", skill, class: "w-full sm:w-auto text-center rounded-lg px-3 py-2 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-            <%= link_to "Edit", edit_skill_path(skill), class: "w-full sm:w-auto text-center rounded-lg px-3 py-2 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-            <%= button_to "Delete", skill, method: :delete, class: "w-full sm:w-auto rounded-lg px-3 py-2 text-white bg-red-600 hover:bg-red-500 font-medium cursor-pointer", data: { turbo_confirm: "Are you sure?" } %>
-          </div>
-        </div>
+        <tr>
+          <td class="px-3 py-2 border-b border-gray-300"><%= link_to skill.name, skill, class:"text-blue-500 hover:text-red-500" %></td>
+        </tr>
       <% end %>
-    <% end %>
-  </div>
+    </table>
+  <% end %>
 </div>

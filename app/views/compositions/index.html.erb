@@ -1,34 +1,30 @@
+<p style="color: green"><%= notice %></p>
 <% content_for :title, "Compositions" %>
-<div class="w-full">
-  <% if notice.present? %>
-    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
-  <% end %>
-  <div class="flex justify-between items-center">
-    <h1 class="font-bold text-4xl">Compositions</h1>
-    <%= form_with url: compositions_path, method: :get, data: { turbo_frame: "compositions-table", turbo_action: "advance" } do |form| %>
-      <%= form.text_field :query,
+<div class="flex justify-between items-center">
+  <h1 class="text-3xl text-left text-red-600 px-3 py-2">Compositions</h1>
+  <%= form_with url: compositions_path, method: :get, data: { turbo_frame: "compositions-table", turbo_action: "advance", class: "flex-1 min-w-0" } do |form| %>
+    <%= form.text_field :query,
             value: params[:query],
             id: "table-search",
-            class: "block p-2 ps-10 text-sm text-gray-700 border border-gray-300 rounded-xl w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
+            class: "p-2 ps-10 text-sm text-gray-700 flex-initial border border-gray-300 rounded-xl w-80 min-w-0 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
             placeholder: "Search for compositions",
             oninput: "this.form.requestSubmit()" %>
+  <% end %>
+  <%= link_to "Add new composition", new_composition_path, class: "rounded-lg px-3 py-2 bg-blue-600 hover:bg-blue-400 text-white block font-medium" %>
+</div>
+<div class="mx-auto py-4">
+  <table class="w-full table-auto border-collapse">
+    <tr>
+      <th class="text-left px-3 py-2 border-b border-gray-300">Name</th>
+      <th class="text-left px-3 py-2 border-b border-gray-300">Composer</th>
+      <th class="text-left px-3 py-2 border-b border-gray-300">Scores</th>
+    </tr>
+    <% @compositions.each do |composition| %>
+      <tr>
+        <td class="px-3 py-2 border-b border-gray-300"><%= link_to composition.name, composition, class:"text-blue-500 hover:text-red-500" %></td>
+        <td class="px-3 py-2 border-b border-gray-300"><%= composition.composer %></td>
+        <td class="px-3 py-2 border-b border-gray-300"><%= composition.sheet_musics.count %></td>
+      </tr>
     <% end %>
-    <%= link_to "Add new composition", new_composition_path, class: "rounded-lg px-3 py-2 bg-blue-600 hover:bg-blue-500 text-white block font-medium" %>
-  </div>
-  <div id="compositions" class="min-w-full divide-y divide-gray-200 space-y-5">
-    <% if @compositions.any? %>
-      <% @compositions.each do |composition| %>
-        <div class="flex flex-col sm:flex-row justify-between items-start pb-5 sm:pb-0">
-          <%= render composition %>
-          <div class="ml-4 flex 2xsm:flex-wrap items-start justify-end gap-2 my-4 space-y-2">
-            <%= link_to "Full Info", composition, class: "w-full sm:w-auto text-center text-nowrap rounded-lg px-3 py-2 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-            <%= link_to "Edit", edit_composition_path(composition), class: "w-full sm:w-auto text-center rounded-lg px-3 py-2 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-            <%= button_to "Delete", composition, method: :delete, class: "w-full sm:w-auto rounded-lg px-3 py-2 text-white bg-red-600 hover:bg-red-500 font-medium cursor-pointer", data: { turbo_confirm: "Are you sure?" } %>
-          </div>
-        </div>
-      <% end %>
-    <% else %>
-      <p class="text-center my-10">No compositions found.</p>
-    <% end %>
-  </div>
+  </table>
 </div>

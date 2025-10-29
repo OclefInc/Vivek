@@ -1,10 +1,10 @@
-<p class="text-xl mt-10 mb-2 text-sky-800 dark:text-sky-400 tracking-wide"> Comments: </p>
+<p class="text-xl mt-10 mb-2 text-bold text-sky-800 dark:text-teal-400 tracking-wide"> Comments: </p>
 <div class="px-3 py-3 block shadow rounded-2xl sm:w-full md:w-2/3">
   <% if signed_in? %>
     <%= form_with(model: Comment.new(annotation:annotation)) do |form| %>
       <div >
         <%= form.rich_text_area :note,
-      class: "block shadow border rounded-3xl border-sky-100 dark:border-sky-900 mr-5 mb-2 p-4 mt-2 w-full text-sky-800 dark:text-sky-400", placeholder: "Add a comment" %>
+      class: "block shadow border rounded-3xl border-sky-100 dark:border-sky-900 mr-5 mb-2 p-4 mt-2 w-full text-sky-800 dark:text-teal-400", placeholder: "Add a comment" %>
       </div>
       <%= form.hidden_field :annotation_id %>
       <%= form.hidden_field :annotation_type %>
@@ -20,10 +20,10 @@
   <% annotation.comments.where(unpublished_date: nil).order(created_at: :desc).each do |comment| %>
     <div class="my-6 sm:w-full md:w-3/4">
       <div class="flex justify-between">
-        <div class="px-3 text-sm text-bold text-sky-700 dark:text-sky-500"> <%= comment.user.name %> </div>
+        <div class="px-3 text-sm text-bold text-sky-700 dark:text-teal-500"> <%= comment.user.name %> </div>
         <div class="text-zinc-300 text-sm px-3 justify-end"> <%= local_time(comment.created_at) %> </div>
       </div>
-      <div class="mx-5 my-3 px-3 py-2 dark:text-sky-200 text-sky-400 shadow shadow-md dark:bg-zinc-800 rounded-2xl"> <%= comment.note %> </div>
+      <div class="mx-5 my-3 px-3 py-2 dark:text-teal-200 text-sky-400 shadow shadow-md dark:bg-zinc-800 rounded-2xl"> <%= comment.note %> </div>
     </div>
   <% end %>
 </div>

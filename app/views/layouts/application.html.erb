@@ -18,31 +18,63 @@
     <%= stylesheet_link_tag "actiontext", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags 'application' %>
   </head>
-  <body>
-    <header class="text-gray-600 bg-sky-100 body-font">
-      <div class="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
-        <a class="flex title-font font-medium items-center text-black mb-4 md:mb-0">
-          <span class="ml-3 text-2xl">The Vivek Project.</span>
-        </a>
-        <div class="md:ml-auto md:mr-auto flex-col flex-wrap items-center text-base justify-items-center">
-          <div class="mb-2">
-            <a href="/assignments" class="mr-5 text-cyan-600 hover:text-bold hover:text-cyan-500">Assignments</a>
-            <a href="/students" class="mr-5 text-cyan-600 hover:text-bold hover:text-cyan-500">Students</a>
-            <a href="/teachers" class="mr-5 text-cyan-600 hover:text-bold hover:text-cyan-500">Teachers</a>
-            <a href="/compositions" class="mr-5 text-cyan-600 hover:text-bold hover:text-cyan-500">Compositions</a>
-            <a href="/skills" class="mr-5 text-cyan-600 hover:text-bold hover:text-cyan-500">Skills</a>
-          </div>
-          <div class="flex-auto justify-between">
-            <a href="/comments" class="mr-5 text-cyan-600 hover:text-bold hover:text-cyan-500">Comments</a>
-            <a href="/accounts" class="mr-5 text-cyan-600 hover:text-bold hover:text-cyan-500">Accounts</a>
-          </div>
-        </div>
-        <a href="/users/edit" class="mr-5 text-cyan-600 hover:text-bold hover:text-cyan-500">My Account</a>
-        <%= button_to "Log out", destroy_user_session_path, method: :delete, class:"inline-flex object-center items-center justify-right bg-white opacity-50 border-sky-50 border-2 py-1 px-3 focus:outline-none hover:border-sky-500 hover:border-2 rounded-lg text-black mt-4 md:mt-0" %>
+  <body class="flex h-screen overflow-hidden" data-controller="sidebar">
+    <!-- Sidebar -->
+    <aside class="bg-sky-100 w-64 flex-shrink-0 hidden md:flex flex-col">
+      <div class="p-5 border-b border-sky-200">
+        <span class="text-2xl font-medium text-black"><%= link_to("The Vivek Project", root_path) %></span>
       </div>
-    </header>
-    <main class="container mx-auto mt-10 px-5">
-      <%= yield %>
-    </main>
+      <nav class="flex-1 overflow-y-auto py-4">
+        <a href="/assignments" class="block px-5 py-3 text-cyan-600 hover:bg-sky-200 hover:text-cyan-500">Assignments</a>
+        <a href="/students" class="block px-5 py-3 text-cyan-600 hover:bg-sky-200 hover:text-cyan-500">Students</a>
+        <a href="/teachers" class="block px-5 py-3 text-cyan-600 hover:bg-sky-200 hover:text-cyan-500">Teachers</a>
+        <a href="/compositions" class="block px-5 py-3 text-cyan-600 hover:bg-sky-200 hover:text-cyan-500">Compositions</a>
+        <a href="/skills" class="block px-5 py-3 text-cyan-600 hover:bg-sky-200 hover:text-cyan-500">Skills</a>
+        <a href="/comments" class="block px-5 py-3 text-cyan-600 hover:bg-sky-200 hover:text-cyan-500">Comments</a>
+        <a href="/accounts" class="block px-5 py-3 text-cyan-600 hover:bg-sky-200 hover:text-cyan-500">Accounts</a>
+      </nav>
+      <div class="p-5 border-t border-sky-200">
+        <a href="/users/edit" class="block px-5 py-2 text-cyan-600 hover:text-cyan-500 mb-2">My Account</a>
+        <%= button_to "Log out", destroy_user_session_path, method: :delete, class:"w-full bg-white border-sky-50 border-2 py-2 px-3 hover:border-sky-500 rounded-lg text-black" %>
+      </div>
+    </aside>
+    <!-- Mobile menu button -->
+    <button data-action="click->sidebar#toggle"
+      class="md:hidden fixed top-4 left-4 z-50 p-2 bg-sky-100 rounded-lg">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
+    <!-- Mobile sidebar overlay -->
+    <div data-sidebar-target="overlay"
+         class="hidden fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
+         data-action="click->sidebar#close"></div>
+    <!-- Mobile sidebar -->
+    <aside data-sidebar-target="menu"
+           class="fixed top-0 left-0 h-full bg-sky-100 w-64 z-50 md:hidden flex flex-col"
+           style="transform: translateX(-100%); transition: transform 0.3s ease-in-out;">
+      <div class="p-5 border-b border-sky-200">
+        <span class="text-2xl font-medium text-black">The Vivek Project.</span>
+      </div>
+      <nav class="flex-1 overflow-y-auto py-4">
+        <a href="/assignments" class="block px-5 py-3 text-cyan-600 hover:bg-sky-200 hover:text-cyan-500">Assignments</a>
+        <a href="/students" class="block px-5 py-3 text-cyan-600 hover:bg-sky-200 hover:text-cyan-500">Students</a>
+        <a href="/teachers" class="block px-5 py-3 text-cyan-600 hover:bg-sky-200 hover:text-cyan-500">Teachers</a>
+        <a href="/compositions" class="block px-5 py-3 text-cyan-600 hover:bg-sky-200 hover:text-cyan-500">Compositions</a>
+        <a href="/skills" class="block px-5 py-3 text-cyan-600 hover:bg-sky-200 hover:text-cyan-500">Skills</a>
+        <a href="/comments" class="block px-5 py-3 text-cyan-600 hover:bg-sky-200 hover:text-cyan-500">Comments</a>
+        <a href="/accounts" class="block px-5 py-3 text-cyan-600 hover:bg-sky-200 hover:text-cyan-500">Accounts</a>
+      </nav>
+      <div class="p-5 border-t border-sky-200">
+        <a href="/users/edit" class="block px-5 py-2 text-cyan-600 hover:text-cyan-500 mb-2">My Account</a>
+        <%= button_to "Log out", destroy_user_session_path, method: :delete, class:"w-full bg-white border-sky-50 border-2 py-2 px-3 hover:border-sky-500 rounded-lg text-black" %>
+      </div>
+    </aside>
+    <!-- Main content area -->
+    <div class="flex-1 flex flex-col overflow-hidden">
+      <main class="flex-1 overflow-y-auto px-5 py-10 md:px-10">
+        <%= yield %>
+      </main>
+    </div>
   </body>
 </html>

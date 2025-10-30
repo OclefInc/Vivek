@@ -38,13 +38,17 @@
         <%= button_to "Log out", destroy_user_session_path, method: :delete, class:"w-full bg-white border-sky-50 border-2 py-2 px-3 hover:border-sky-500 rounded-lg text-black" %>
       </div>
     </aside>
-    <!-- Mobile menu button -->
-    <button data-action="click->sidebar#toggle"
-      class="md:hidden fixed top-4 left-4 z-50 p-2 bg-sky-100 rounded-lg">
-      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-      </svg>
-    </button>
+    <!-- Mobile header bar -->
+    <div class="md:hidden fixed top-0 left-0 w-full bg-sky-100 border-b border-sky-200 z-40 p-4">
+      <div class="relative flex items-center justify-center">
+        <button data-action="click->sidebar#toggle" class="absolute left-0 p-2 rounded-lg hover:bg-sky-200">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+        <span class="text-xl font-medium text-black"><%= link_to("The Vivek Project", root_path, class: "text-black") %></span>
+      </div>
+    </div>
     <!-- Mobile sidebar overlay -->
     <div data-sidebar-target="overlay"
          class="hidden fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
@@ -54,7 +58,7 @@
            class="fixed top-0 left-0 h-full bg-sky-100 w-64 z-50 md:hidden flex flex-col"
            style="transform: translateX(-100%); transition: transform 0.3s ease-in-out;">
       <div class="p-5 border-b border-sky-200">
-        <span class="text-2xl font-medium text-black">The Vivek Project.</span>
+        <span class="text-2xl font-medium text-black">The Vivek Project</span>
       </div>
       <nav class="flex-1 overflow-y-auto py-4">
         <%= link_to "Assignments", assignments_path, class: nav_link_class("/assignments") %>
@@ -72,7 +76,7 @@
     </aside>
     <!-- Main content area -->
     <div class="flex-1 flex flex-col overflow-hidden">
-      <main class="flex-1 overflow-y-auto px-5 py-10 md:px-10">
+      <main class="flex-1 overflow-y-auto px-5 pb-10 pt-24 md:pt-10 md:px-10">
         <%= yield %>
       </main>
     </div>

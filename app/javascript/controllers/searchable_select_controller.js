@@ -36,6 +36,12 @@ export default class extends Controller {
       createOnBlur: true,
       createFilter: function(input) {
         return input.length >= 1;
+      },
+      onItemAdd: () => {
+        // Use setTimeout to allow Tom Select to finish processing
+        setTimeout(() => {
+          this.moveToNextField()
+        }, 10)
       }
     }
 
@@ -62,5 +68,37 @@ export default class extends Controller {
       const control = this.tomSelect.control
       control.className = `ts-control ${originalClasses}`
     }
+  }
+
+  moveToNextField() {
+    // Blur the current Tom Select control
+    this.tomSelect.blur()
+
+    // Small delay to ensure blur completes
+    setTimeout(() => {
+      // Find all focusable elements in the form, excluding Tom Select internal inputs
+      const form = this.element.closest('form')
+      const allElements = form.querySelectorAll(
+        'select, input[type="file"], textarea:not([disabled]), trix-editor'
+      )
+
+      // Find the current element (the original select)
+      const focusableArray = Array.from(allElements)
+      const currentIndex = focusableArray.indexOf(this.element)
+
+      // Focus the next element
+      if (currentIndex >= 0 && currentIndex < focusableArray.length - 1) {
+        const nextElement = focusableArray[currentIndex + 1]
+
+        // Check if next element is a select with Tom Select
+        if (nextElement.tagName === 'SELECT' && nextElement.tomselect) {
+          nextElement.tomselect.focus()
+        } else if (nextElement.tagName === 'TRIX-EDITOR') {
+          nextElement.focus()
+        } else {
+          nextElement.focus()
+        }
+      }
+    }, 100)
   }
 }

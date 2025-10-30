@@ -21,7 +21,7 @@
     <%= button_to "Delete", @lesson, method: :delete, class: "w-full sm:w-auto rounded-lg px-3 py-2 mx-1 text-white bg-red-600 hover:bg-red-400 font-medium cursor-pointer", data: { turbo_confirm: "Are you sure?" } %>
   </div>
 </div>
-<div class=" md:flex md:-mx-5 py-4">
+<div class=" lg:flex md:-mx-5 py-4">
   <div class="md:flex-1 md:basis-1/2 md:px-5">
     <% if @lesson.lesson_video.attached? %>
       <div class="bg-black flex items-center justify-center" style="width: 640px; height: 480px; max-width: 100%;">

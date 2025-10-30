@@ -46,7 +46,9 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
           </svg>
         </button>
-        <span class="text-xl font-medium text-black"><%= link_to("The Vivek Project", root_path, class: "text-black") %></span>
+        <span class="text-xl font-medium text-black">
+          <%= content_for?(:page_title) ? content_for(:page_title) : (content_for?(:title) ? content_for(:title) : link_to("The Vivek Project", root_path, class: "text-black")) %>
+        </span>
       </div>
     </div>
     <!-- Mobile sidebar overlay -->

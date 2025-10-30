@@ -1,12 +1,13 @@
+<% content_for :title, 'Assignment' %>
 <p style="color: green"><%= notice %></p>
 <div class="flex justify-between items-center">
-  <span class="font-bold sm:text-2xl">Assignment: <%= link_to @assignment.composition.name, @assignment.composition, class:'text-blue-600 hover:text-blue-400' %></span>
+  <span class="px-2 py-1 font-bold text-2xl"><%= @assignment.composition.name %></span>
   <div class="ml-2 flex items-center justify-end gap-1">
     <%= link_to "Edit", edit_assignment_path(@assignment), class: "sm:w-auto text-center rounded-lg px-3 py-2 m-1 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
     <%= button_to "Delete", @assignment, method: :delete, class: "sm:w-auto rounded-lg px-3 py-2 m-1 text-white bg-red-600 hover:bg-red-500 font-medium cursor-pointer", data: { turbo_confirm: "Delete entire assignment; Are you sure?" } if @assignment.lessons.empty? %>
   </div>
 </div>
-<div class=" md:flex md:-mx-5 py-4">
+<div class=" lg:flex md:-mx-5 py-4">
   <div class="md:flex-1 md:basis-1/2 md:px-5">
     <% if @assignment.summary_video.attached? %>
       <div class="bg-black flex items-center justify-center" style="width: 640px; height: 480px; max-width: 100%;">

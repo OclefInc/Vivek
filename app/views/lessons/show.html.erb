@@ -39,6 +39,6 @@
     <%= render @lesson %>
   </div>
   <div class="w-full md:flex-1 md:basis-1/2 md:px-5">
-    <%= render partial: '/assignments/lesson_table', locals: { lessons: @assignment.lessons } %>
+    <%= render partial: '/assignments/lesson_table', locals: { lessons: @assignment.lessons, current_lesson: @lesson } %>
   </div>
 </div>

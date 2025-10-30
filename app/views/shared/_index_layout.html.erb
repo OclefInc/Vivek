@@ -1,16 +1,30 @@
 <p style="color: green"><%= notice %></p>
 <% content_for :title, title %>
-<div class="flex justify-between items-center">
-  <h1 class="text-3xl text-left text-red-600 px-3 py-2"><%= title %></h1>
-  <%= form_with url: search_url, method: :get, data: { turbo_frame: turbo_frame, turbo_action: "advance" } do |form| %>
-    <%= form.text_field :query,
-            value: params[:query],
-            id: "table-search",
-            class: "block p-2 ps-10 text-sm text-gray-700 border border-gray-300 rounded-xl w-80 flex-initial min-w-50 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
-            placeholder: search_placeholder,
-            oninput: "this.form.requestSubmit()" %>
-  <% end %>
-  <%= link_to 'Add', new_path, class: "rounded-lg px-3 py-2 bg-blue-600 hover:bg-blue-400 text-white block font-medium" %>
+<div data-controller="search-toggle">
+  <h1 class="md:hidden text-2xl text-center text-red-600 pb-4"><%= title %></h1>
+  <div class="flex justify-between items-center gap-2">
+    <%= form_with url: search_url, method: :get, data: { turbo_frame: turbo_frame, turbo_action: "advance" }, class: "flex-1" do |form| %>
+      <div class="relative">
+        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+          <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+        </div>
+        <%= form.text_field :query,
+                value: params[:query],
+                id: "table-search",
+                data: { search_toggle_target: "input" },
+                class: "block p-2 pl-10 text-sm text-gray-700 border border-gray-300 rounded-xl w-full md:w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500",
+                placeholder: search_placeholder,
+                oninput: "this.form.requestSubmit()" %>
+      </div>
+    <% end %>
+    <%= link_to new_path, class: "p-2 bg-blue-600 hover:bg-blue-400 text-white rounded-lg" do %>
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+      </svg>
+    <% end %>
+  </div>
 </div>
 <div class="mx-auto py-4">
   <%= yield %>

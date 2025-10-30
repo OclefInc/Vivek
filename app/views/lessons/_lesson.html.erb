@@ -1,28 +1,42 @@
-<div class="py-6">
-  <%= turbo_frame_tag "lesson_#{lesson.id}_skills" do %>
-    <strong>Skills:</strong> <%= link_to "Edit", edit_lesson_path(lesson, field: :skills), class: "text-blue-600 hover:text-blue-500 text-sm" %>
-    <% if lesson.skills.any? %>
-      <%= lesson.skills.map { |skill| link_to(skill.name, skill, class:"text-blue-700 hover:text-blue-400") }.join(', ').html_safe %>
-    <% else %>
-      <span class="text-gray-400 italic">Click to add skills</span>
+<div class="md:flex-1 md:basis-1/2 md:px-5">
+  <% if lesson.lesson_video.attached? %>
+    <div class="bg-black flex items-center justify-center" style="width: 640px; height: 480px; max-width: 100%;">
+      <%= video_tag lesson.lesson_video,
+          controls: true,
+          autoPlay: true,
+          style: "max-width: 100%; max-height: 100%;",
+          class: "max-w-full h-auto",
+          data: {
+            controller: "video-autoplay",
+            video_autoplay_next_url_value: lesson.next_lesson ? lesson_path(lesson.next_lesson) : nil
+          } %>
+    </div>
+  <% end %>
+  <div class="py-6">
+    <%= turbo_frame_tag "lesson_#{lesson.id}_skills" do %>
+      <strong>Skills:</strong> <%= link_to "Edit", edit_lesson_path(lesson, field: :skills), class: "text-blue-600 hover:text-blue-500 text-sm" %>
+      <% if lesson.skills.any? %>
+        <%= lesson.skills.map { |skill| link_to(skill.name, skill, class:"text-blue-700 hover:text-blue-400") }.join(', ').html_safe %>
+      <% else %>
+        <span class="text-gray-400 italic">Click to add skills</span>
+      <% end %>
     <% end %>
-  <% end %>
-</div>
-<div class="py-6">
-  <%= turbo_frame_tag "lesson_#{lesson.id}_description" do %>
-    <strong>Description:</strong> <%= link_to "Edit", edit_lesson_path(lesson, field: :description), class: "text-blue-600 hover:text-blue-500 text-sm" %>
-    <%= lesson.description.present? ? lesson.description : content_tag(:span, "Click to add description", class: "text-gray-400 italic") %>
-  <% end %>
-</div>
-<div class="py-6">
-  <%= turbo_frame_tag "lesson_#{lesson.id}_student_journal" do %>
-    <strong>Student Reflection:</strong> <%= link_to "Edit", edit_lesson_path(lesson, field: :student_journal), class: "text-blue-600 hover:text-blue-500 text-sm" %>
-    <%= lesson.student_journal.present? ? lesson.student_journal : content_tag(:span, "Click to add reflection", class: "text-gray-400 italic") %>
-  <% end %>
-</div>
-<div class="py-6">
-  <%= turbo_frame_tag "lesson_#{lesson.id}_teacher_journal" do %>
-    <strong>Teacher Comment:</strong> <%= link_to "Edit", edit_lesson_path(lesson, field: :teacher_journal), class: "text-blue-600 hover:text-blue-500 text-sm" %>
-    <%= lesson.teacher_journal.present? ? lesson.teacher_journal : content_tag(:span, "Click to add comments", class: "text-gray-400 italic") %>
-  <% end %>
-</div>
+  </div>
+  <div class="py-6">
+    <%= turbo_frame_tag "lesson_#{lesson.id}_description" do %>
+      <strong>Description:</strong> <%= link_to "Edit", edit_lesson_path(lesson, field: :description), class: "text-blue-600 hover:text-blue-500 text-sm" %>
+      <%= lesson.description.present? ? lesson.description : content_tag(:span, "Click to add description", class: "text-gray-400 italic") %>
+    <% end %>
+  </div>
+  <div class="py-6">
+    <%= turbo_frame_tag "lesson_#{lesson.id}_student_journal" do %>
+      <strong>Student Reflection:</strong> <%= link_to "Edit", edit_lesson_path(lesson, field: :student_journal), class: "text-blue-600 hover:text-blue-500 text-sm" %>
+      <%= lesson.student_journal.present? ? lesson.student_journal : content_tag(:span, "Click to add reflection", class: "text-gray-400 italic") %>
+    <% end %>
+  </div>
+  <div class="py-6">
+    <%= turbo_frame_tag "lesson_#{lesson.id}_teacher_journal" do %>
+      <strong>Teacher Comment:</strong> <%= link_to "Edit", edit_lesson_path(lesson, field: :teacher_journal), class: "text-blue-600 hover:text-blue-500 text-sm" %>
+      <%= lesson.teacher_journal.present? ? lesson.teacher_journal : content_tag(:span, "Click to add comments", class: "text-gray-400 italic") %>
+    <% end %>
+  </div>

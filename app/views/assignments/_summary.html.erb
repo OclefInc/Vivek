@@ -1,0 +1,14 @@
+  <div class="border  border-gray-300 rounded p-4">
+    <p>
+      <strong>Assignment:</strong>
+      <%= link_to @assignment.name, @assignment, class: 'text-blue-600 hover:text-blue-400' %>
+    </p>
+    <p>
+      <strong>Student:</strong>
+      <%= link_to @assignment.student.name, @assignment.student, class: 'text-blue-600 hover:text-blue-400' %>
+    </p>
+    <p>
+      <strong>Teacher:</strong>
+      <%= link_to @assignment.teacher.name, @assignment.teacher, class: 'text-blue-600 hover:text-blue-400' %>
+    </p>
+  </div>

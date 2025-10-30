@@ -21,10 +21,12 @@
     <%= button_to "Delete", @lesson, method: :delete, class: "w-full sm:w-auto rounded-lg px-3 py-2 mx-1 text-white bg-red-600 hover:bg-red-400 font-medium cursor-pointer", data: { turbo_confirm: "Are you sure?" } %>
   </div>
 </div>
-<div class=" lg:flex md:-mx-5 py-4">
-  <%= render @lesson %>
-</div>
-<div class="w-full md:flex-1 md:basis-1/2 md:px-5">
-  <%= render '/assignments/summary', assignment: @assignment %>
-  <%= render '/assignments/lesson_table',  lessons: @assignment.lessons, current_lesson: @lesson  %>
+<div class="lg:flex">
+  <div class="md:-mx-5 py-4">
+    <%= render @lesson %>
+  </div>
+  <div class="w-full  py-4 md:flex-1 md:basis-1/2 md:px-5">
+    <%= render '/assignments/summary', assignment: @assignment %>
+    <%= render '/assignments/lesson_table',  lessons: @assignment.lessons, current_lesson: @lesson  %>
+  </div>
 </div>

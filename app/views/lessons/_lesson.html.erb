@@ -1,4 +1,4 @@
-<div class="md:flex-1 md:basis-1/2 md:px-5">
+<div id="<%= dom_id lesson %>" class="md:flex-1 md:basis-1/2 md:px-5">
   <% if lesson.lesson_video.attached? %>
     <div class="bg-black flex items-center justify-center" style="width: 640px; height: 480px; max-width: 100%;">
       <%= video_tag lesson.lesson_video,
@@ -40,3 +40,4 @@
       <%= lesson.teacher_journal.present? ? lesson.teacher_journal : content_tag(:span, "Click to add comments", class: "text-gray-400 italic") %>
     <% end %>
   </div>
+</div>

@@ -18,6 +18,7 @@ class Assignment < ApplicationRecord
     belongs_to :composition
 
     has_many :lessons
+    has_many :teachers, through: :lessons
     has_rich_text :description
     has_one_attached :summary_video
     has_many :comments, as: :annotation

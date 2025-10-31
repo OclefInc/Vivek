@@ -8,12 +8,14 @@
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
 #  assignment_id :integer
+#  teacher_id    :integer
 #
 class Lesson < ApplicationRecord
   include RailsSortable::Model
     set_sortable :sort  # Indicate a sort column
 
     belongs_to :assignment
+    belongs_to :teacher, optional: true
 
     has_and_belongs_to_many :skills
     has_many :comments, as: :annotation

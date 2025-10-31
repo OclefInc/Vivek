@@ -22,35 +22,23 @@
       </select>
     </div>
     <div class="mb-4">
-      <%= form.label :teacher, style: "display: block" %>
-      <select name="assignment[teacher_name]"
-            data-controller="searchable-select"
-            data-searchable-select-placeholder-value="Select or type teacher name..."
-            class="block outline-none">
-        <option value=""></option>
-        <% Teacher.order(:name).each do |teacher| %>
-          <option value="<%= teacher.name %>" <%= 'selected' if assignment.teacher_id == teacher.id %>><%= teacher.name %></option>
-          <% end %>
-        </select>
-      </div>
-      <div class="mb-4">
-        <%= form.label :composition, style: "display: block" %>
-        <select name="assignment[composition_name]"
+      <%= form.label :composition, style: "display: block" %>
+      <select name="assignment[composition_name]"
             data-controller="searchable-select"
             data-searchable-select-placeholder-value="Select or type composition name..."
             class="block outline-none">
-          <option value=""></option>
-          <% Composition.order(:name).each do |composition| %>
-            <option value="<%= composition.name %>" <%= 'selected' if assignment.composition_id == composition.id %>><%= composition.name %></option>
-            <% end %>
-          </select>
-        </div>
-        <div>
-          <%= form.label :description, style: "display: block" %>
-          <%= form.rich_text_area :description,
+        <option value=""></option>
+        <% Composition.order(:name).each do |composition| %>
+          <option value="<%= composition.name %>" <%= 'selected' if assignment.composition_id == composition.id %>><%= composition.name %></option>
+          <% end %>
+        </select>
+      </div>
+      <div>
+        <%= form.label :description, style: "display: block" %>
+        <%= form.rich_text_area :description,
       class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 mb-4 w-full" %>
-        </div>
-        <div class="my-2">
-          <%= form.submit class: "rounded-lg py-2 px-3 bg-blue-600 hover:bg-blue-400 text-white inline-block font-medium cursor-pointer" %>
-        </div>
-      <% end %>
+      </div>
+      <div class="my-2">
+        <%= form.submit class: "rounded-lg py-2 px-3 bg-blue-600 hover:bg-blue-400 text-white inline-block font-medium cursor-pointer" %>
+      </div>
+    <% end %>

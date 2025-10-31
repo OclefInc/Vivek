@@ -30,16 +30,16 @@
     <% end %>
   <% end %>
   <div class="my-1">
-    <div class="flex justify-between items-center">
-      <p class="mb-2">
-        <b>Student:</b>
-        <%= link_to assignment.student.name, assignment.student, class:'font-semibold text-blue-600 hover:text-blue-400' %>
-      </p>
-      <p class="mb-2">
-        <b>Teacher:</b>
-        <%= link_to assignment.teacher.name, assignment.teacher, class:'font-semibold text-blue-600 hover:text-blue-400' %>
-      </p>
-    </div>
+    <p class="mb-2">
+      <b>Student:</b>
+      <%= link_to assignment.student.name, assignment.student, class:'text-blue-600 hover:text-blue-400' %>
+    </p>
+    <p class="mb-2">
+      <b><%= 'Teacher'.pluralize(assignment.teachers.count) %>:</b>
+      <% assignment.teachers.each do |teacher| %>
+        <%= link_to teacher.name, teacher, class:'text-blue-600 hover:text-blue-400' %>
+      <% end %>
+    </p>
     <%= turbo_frame_tag "assignment_#{assignment.id}_description" do %>
       <strong>Description:</strong> <%= link_to edit_assignment_path(assignment, field: :description), class: "text-blue-600 hover:text-blue-500 text-sm inline-flex items-center", title: "Edit" do %>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">

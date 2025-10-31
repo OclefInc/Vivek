@@ -26,15 +26,13 @@ class AssignmentsController < ApplicationController
 
   # POST /assignments or /assignments.json
   def create
-    # Find or create student, teacher, and composition by name
+    # Find or create student and composition by name
     student = find_or_create_record(Student, assignment_params[:student_name])
-    teacher = find_or_create_record(Teacher, assignment_params[:teacher_name])
     composition = find_or_create_record(Composition, assignment_params[:composition_name])
 
     # Create assignment with the associated records
-    @assignment = Assignment.new(assignment_params.except(:student_name, :teacher_name, :composition_name))
+    @assignment = Assignment.new(assignment_params.except(:student_name, :composition_name))
     @assignment.student_id = student&.id
-    @assignment.teacher_id = teacher&.id
     @assignment.composition_id = composition&.id
 
     respond_to do |format|
@@ -50,18 +48,16 @@ class AssignmentsController < ApplicationController
 
   # PATCH/PUT /assignments/1 or /assignments/1.json
   def update
-    # Find or create student, teacher, and composition by name
+    # Find or create student and composition by name
     student = find_or_create_record(Student, assignment_params[:student_name])
-    teacher = find_or_create_record(Teacher, assignment_params[:teacher_name])
     composition = find_or_create_record(Composition, assignment_params[:composition_name])
 
     # Update associations using IDs to avoid conflict with string columns
     @assignment.student_id = student&.id
-    @assignment.teacher_id = teacher&.id
     @assignment.composition_id = composition&.id
 
     respond_to do |format|
-      if @assignment.update(assignment_params.except(:student_name, :teacher_name, :composition_name))
+      if @assignment.update(assignment_params.except(:student_name, :composition_name))
         format.html { redirect_to @assignment, notice: "Assignment was successfully updated." }
         format.json { render :show, status: :ok, location: @assignment }
       else
@@ -89,7 +85,7 @@ class AssignmentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def assignment_params
-      params.require(:assignment).permit(:student_id, :teacher_id, :composition_id, :student_name, :teacher_name, :composition_name, :summary_video, :description)
+      params.require(:assignment).permit(:student_id, :composition_id, :student_name, :composition_name, :summary_video, :description)
     end
 
     # Find or create a record by name, skipping validation

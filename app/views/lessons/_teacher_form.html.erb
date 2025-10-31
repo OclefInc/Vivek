@@ -1,0 +1,20 @@
+<%= turbo_frame_tag "lesson_#{@lesson.id}_teacher" do %>
+  <%= form_with(model: @lesson, local: true) do |form| %>
+    <div class="mb-4">
+      <%= form.label :teacher, style: "display: block" %>
+      <select name="lesson[teacher_name]"
+            data-controller="searchable-select"
+            data-searchable-select-placeholder-value="Select or type teacher name..."
+            class="block outline-none">
+        <option value=""></option>
+        <% Teacher.order(:name).each do |teacher| %>
+          <option value="<%= teacher.name %>" <%= 'selected' if @lesson.teacher_id == teacher.id %>><%= teacher.name %></option>
+          <% end %>
+        </select>
+        <div class="mt-2 flex gap-2">
+          <%= form.submit "Save", class: "px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-medium cursor-pointer" %>
+          <%= link_to "Cancel", lesson_path(@lesson), class: "px-4 py-2 bg-gray-100 hover:bg-gray-50 rounded-lg font-medium" %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>

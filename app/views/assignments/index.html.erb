@@ -12,14 +12,12 @@
       <th class="text-left px-3 py-2 border-b border-gray-300">Composition</th>
       <th class="text-left px-3 py-2 border-b border-gray-300">Lessons</th>
       <th class="text-left px-3 py-2 border-b border-gray-300">Student</th>
-      <th class="text-left px-3 py-2 border-b border-gray-300">Teacher</th>
     </tr>
     <% @assignments.each do |assignment| %>
       <tr>
         <td class="px-3 py-2 border-b border-gray-300"><%= link_to assignment.composition.name, assignment, class:"text-blue-500 hover:text-red-500"  %></td>
         <td class="px-3 py-2 border-b border-gray-300"><%= link_to assignment.lessons.count %></td>
         <td class="px-3 py-2 border-b border-gray-300"><%= link_to assignment.student.name%></td>
-        <td class="px-3 py-2 border-b border-gray-300"><%= assignment.teacher.name %></td>
       </tr>
     <% end %>
   </table>

@@ -13,22 +13,34 @@
     <%= form.label :name, style: "display: block" %>
     <%= form.text_field :name, class: ["block shadow-sm rounded-lg border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": lesson.errors[:name].none?, "border-red-400 focus:outline-red-600": lesson.errors[:name].any?}] %>
   </div>
-  <div>
-    <%= form.label :description, style: "display: block" %>
-    <%= form.rich_text_area :description,
+  <div class="mb-4">
+    <%= form.label :teacher, style: "display: block" %>
+    <select name="lesson[teacher_name]"
+            data-controller="searchable-select"
+            data-searchable-select-placeholder-value="Select or type teacher name..."
+            class="block outline-none">
+      <option value=""></option>
+      <% Teacher.order(:name).each do |teacher| %>
+        <option value="<%= teacher.name %>" <%= 'selected' if assignment.teacher_id == teacher.id %>><%= teacher.name %></option>
+        <% end %>
+      </select>
+    </div>
+    <div>
+      <%= form.label :description, style: "display: block" %>
+      <%= form.rich_text_area :description,
       class: "block shadow rounded-2xl border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
-  <div>
-    <%= form.label :skills, style: "display: block" %>
-    <%= select_tag 'lesson[skill_names][]',
+    </div>
+    <div>
+      <%= form.label :skills, style: "display: block" %>
+      <%= select_tag 'lesson[skill_names][]',
       options_for_select(Skill.order(:name).pluck(:name), lesson.skills.pluck(:name)),
       { multiple: true,
         data: { controller: "searchable-select" },
         class: "block outline-none" } %>
-  </div>
-  <%= form.hidden_field :assignment_id %>
-  <div>
-    <div class="inline">
-      <%= form.submit class: "w-full sm:w-auto rounded-lg my-2 px-3 py-2 bg-blue-600 hover:bg-blue-400 text-white inline-block font-medium cursor-pointer" %>
     </div>
-  <% end %>
+    <%= form.hidden_field :assignment_id %>
+    <div>
+      <div class="inline">
+        <%= form.submit class: "w-full sm:w-auto rounded-lg my-2 px-3 py-2 bg-blue-600 hover:bg-blue-400 text-white inline-block font-medium cursor-pointer" %>
+      </div>
+    <% end %>

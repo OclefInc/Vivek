@@ -27,7 +27,11 @@ class LessonsController < ApplicationController
 
   # POST /lessons or /lessons.json
   def create
-    @lesson = Lesson.new(lesson_params.except(:skill_names))
+    @lesson = Lesson.new(lesson_params.except(:skill_names, :teacher_name))
+
+    # Find or create teacher by name
+    teacher = find_or_create_record(Teacher, lesson_params[:teacher_name])
+    @lesson.teacher_id = teacher&.id
 
     # Handle skills - check if skill_names parameter exists (even if empty)
     if params[:lesson] && params[:lesson].key?(:skill_names)
@@ -55,6 +59,10 @@ class LessonsController < ApplicationController
 
   # PATCH/PUT /lessons/1 or /lessons/1.json
   def update
+    # Find or create teacher by name
+    teacher = find_or_create_record(Teacher, lesson_params[:teacher_name])
+    @lesson.teacher_id = teacher&.id
+
     # Handle skills - check if skill_names parameter exists (even if empty)
     if params[:lesson] && params[:lesson].key?(:skill_names)
       if params[:lesson][:skill_names].present?
@@ -69,7 +77,7 @@ class LessonsController < ApplicationController
     end
 
     respond_to do |format|
-      if @lesson.update(lesson_params.except(:skill_names))
+      if @lesson.update(lesson_params.except(:skill_names, :teacher_name))
         format.html { redirect_to @lesson, notice: "Lesson was successfully updated." }
         format.json { render :show, status: :ok, location: @lesson }
       else
@@ -97,6 +105,18 @@ class LessonsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def lesson_params
-      params.expect(lesson: [ :lesson_video, :name, :assignment_id, :description, skill_ids: [], skill_names: [] ])
+      params.expect(lesson: [ :lesson_video, :name, :assignment_id, :description, :teacher_name, skill_ids: [], skill_names: [] ])
+    end
+
+    # Find or create a record by name, skipping validation
+    def find_or_create_record(model, name)
+      return nil unless name.present?
+
+      record = model.find_by(name: name)
+      unless record
+        record = model.new(name: name)
+        record.save(validate: false)
+      end
+      record
     end
 end

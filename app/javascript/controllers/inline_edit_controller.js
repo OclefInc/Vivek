@@ -55,6 +55,18 @@ export default class extends Controller {
         this.displayTarget.textContent = value
         this.displayTarget.classList.remove("hidden")
         this.inputTarget.classList.add("hidden")
+
+        // Update the lesson name in the table if it exists
+        const lessonId = this.urlValue.match(/\/lessons\/(\d+)/)?.[1]
+        if (lessonId && this.fieldValue === "name") {
+          const tableFrame = document.getElementById(`lesson_${lessonId}_name_in_table`)
+          if (tableFrame) {
+            const link = tableFrame.querySelector('a')
+            if (link) {
+              link.textContent = value
+            }
+          }
+        }
       } else {
         alert("Failed to update")
         this.cancel()

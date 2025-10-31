@@ -24,6 +24,7 @@ export default class extends Controller {
   initTomSelect() {
     // Store the original classes from the select element
     const originalClasses = this.element.className
+    const isMultiple = this.element.hasAttribute('multiple')
 
     const options = {
       create: this.createValue,
@@ -38,10 +39,13 @@ export default class extends Controller {
         return input.length >= 1;
       },
       onItemAdd: () => {
-        // Use setTimeout to allow Tom Select to finish processing
-        setTimeout(() => {
-          this.moveToNextField()
-        }, 10)
+        // Only move to next field for single-select dropdowns
+        if (!isMultiple) {
+          // Use setTimeout to allow Tom Select to finish processing
+          setTimeout(() => {
+            this.moveToNextField()
+          }, 10)
+        }
       }
     }
 

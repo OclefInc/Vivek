@@ -27,7 +27,20 @@ class LessonsController < ApplicationController
 
   # POST /lessons or /lessons.json
   def create
-    @lesson = Lesson.new(lesson_params)
+    @lesson = Lesson.new(lesson_params.except(:skill_names))
+
+    # Handle skills - check if skill_names parameter exists (even if empty)
+    if params[:lesson] && params[:lesson].key?(:skill_names)
+      if params[:lesson][:skill_names].present?
+        skill_ids = params[:lesson][:skill_names].reject(&:blank?).map do |skill_name|
+          skill = Skill.find_or_create_by(name: skill_name)
+          skill.id
+        end
+        @lesson.skill_ids = skill_ids
+      else
+        @lesson.skill_ids = []
+      end
+    end
 
     respond_to do |format|
       if @lesson.save
@@ -42,8 +55,21 @@ class LessonsController < ApplicationController
 
   # PATCH/PUT /lessons/1 or /lessons/1.json
   def update
+    # Handle skills - check if skill_names parameter exists (even if empty)
+    if params[:lesson] && params[:lesson].key?(:skill_names)
+      if params[:lesson][:skill_names].present?
+        skill_ids = params[:lesson][:skill_names].reject(&:blank?).map do |skill_name|
+          skill = Skill.find_or_create_by(name: skill_name)
+          skill.id
+        end
+        @lesson.skill_ids = skill_ids
+      else
+        @lesson.skill_ids = []
+      end
+    end
+
     respond_to do |format|
-      if @lesson.update(lesson_params)
+      if @lesson.update(lesson_params.except(:skill_names))
         format.html { redirect_to @lesson, notice: "Lesson was successfully updated." }
         format.json { render :show, status: :ok, location: @lesson }
       else
@@ -71,6 +97,6 @@ class LessonsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def lesson_params
-      params.expect(lesson: [ :lesson_video, :name, :assignment_id, :description, skill_ids: [] ])
+      params.expect(lesson: [ :lesson_video, :name, :assignment_id, :description, skill_ids: [], skill_names: [] ])
     end
 end

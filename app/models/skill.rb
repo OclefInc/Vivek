@@ -9,6 +9,6 @@
 #  skill_category_id :integer
 #
 class Skill < ApplicationRecord
-    belongs_to :skill_category
+    belongs_to :skill_category, optional: true
     has_and_belongs_to_many :lessons
 end

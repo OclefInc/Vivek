@@ -18,7 +18,9 @@ document.addEventListener("turbo:morph", () => {
 document.addEventListener("turbo:before-cache", () => {
     Array.from(document.getElementsByTagName('video')).forEach(video => video.removeAttribute('autoplay'));
 });
-
+document.addEventListener("turbo:before-frame-render", () => {
+    Array.from(document.getElementsByTagName('video')).forEach(video => video.removeAttribute('autoplay'));
+});
 window.getMetaValue = function(name) {
   const element = findElement(document.head, `meta[name="${name}"]`)
   if (element) {

@@ -30,8 +30,29 @@ import "jquery-ui-touch-punch"
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
+    static targets = ["tbody"]
+
     connect() {
-        $(this.element).railsSortable();
-        console.log($(this.element))
+        this.initSortable();
+        // Start with sorting disabled
+        $(this.tbodyTarget).sortable("disable");
+    }
+
+    initSortable() {
+        $(this.tbodyTarget).railsSortable();
+    }
+
+    toggle(event) {
+        if (event.target.checked) {
+            $(this.tbodyTarget).sortable("enable");
+        } else {
+            $(this.tbodyTarget).sortable("disable");
+        }
+    }
+
+    disconnect() {
+        if ($(this.tbodyTarget).sortable("instance")) {
+            $(this.tbodyTarget).sortable("destroy");
+        }
     }
 }

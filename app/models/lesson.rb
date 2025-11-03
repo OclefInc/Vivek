@@ -29,6 +29,7 @@ class Lesson < ApplicationRecord
 
     before_validation :assign_default_name, on: :create
     before_create :assign_sort_position
+    before_create :assign_default_date
 
     validates_presence_of :name
     # validates_presence_of :lesson_video
@@ -76,5 +77,10 @@ class Lesson < ApplicationRecord
         max_sort = assignment.lessons.maximum(:sort) || 0
         self.sort = max_sort + 1
       end
+    end
+
+    def assign_default_date
+      # Set date to today if not already set
+      self.date = Date.today if date.blank?
     end
 end

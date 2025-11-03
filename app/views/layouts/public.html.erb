@@ -14,26 +14,28 @@
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
     <%# Includes all stylesheet files in app/assets/stylesheets %>
-    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
+    <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "actiontext", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.default.min.css">
+    <%= javascript_importmap_tags 'application' %>
   </head>
-  <body class="bg-white dark:bg-zinc-950">
-    <header class="text-zinc-100 bg-linear-to-r from-indigo-600 to-lime-500 body-font">
-      <p class="notice"><%= notice %></p>
-      <p class="alert"><%= alert %></p>
-      <div class="container mx-auto flex flex-wrap justify-between p-5 flex-col md:flex-row items-center">
-        <a class="flex title-font font-medium items-center text-black mb-4 md:mb-0">
-          <span class="ml-3 text-2xl text-white">The Vivek Project.</span>
-        </a>
-        <nav class="md:ml-auto md:mr-auto flex flex-wrap items-center text-base justify-center">
-          <a href="/about" class="mr-5 hover:text-zinc-900">About</a>
-          <a href="/contact" class="mr-5 hover:text-zinc-900">Contact</a>
-        </nav>
+  <body class="bg-white dark:bg-zinc-950 flex h-screen overflow-hidden" data-controller="sidebar">
+    <!-- Sidebar -->
+    <aside class="text-zinc-100 bg-linear-to-r from-indigo-800 to-teal-500 body-font w-64 flex-shrink-0 hidden md:flex flex-col">
+      <div class="p-5 border-b border-indigo-900">
+        <span class="text-2xl font-medium text-white">The Vivek Project.</span>
+      </div>
+      <nav class="flex-col flex-1 overflow-y-auto py-4 text-teal-200">
+        <%= link_to "About", about_path, class: nav_link_class(["/about"]) %>
+        <%= link_to "Contact", contact_path, class: nav_link_class(["/contact"]) %>
+      </nav>
+      <div class="flex-col p-5 border-t border-indigo-900 text-teal-200">
         <% if user_signed_in? %>
           <% if current_user.is_employee? %>
-            <a href="/assignments" class="mr-5 hover:text-zinc-900">Admin</a>
+            <%= link_to "Admin", assignments_path, class: nav_link_class(["/assignments"]) %>
           <% end %>
-          <a href="/users/edit" class="mr-5 hover:text-zinc-900">My Account</a>
+          <%= link_to "My Account", edit_user_registration_path, class: nav_link_class(["/users/edit"]) %>
           <%= button_to "Log out", destroy_user_session_path, method: :delete, class:"inline-flex object-center items-center justify-right bg-white opacity-50 border-lime-600 border-2 py-1 px-3 focus:outline-none hover:border-yellow-500 hover:border-2 rounded-xl text-black mt-4 md:mt-0" %>
         <% else %>
           <a href= <%= new_user_session_path %> class="inline-flex object-center items-center justify-right bg-white opacity-50 border-lime-600 border-2 py-1 px-3 focus:outline-none hover:border-yellow-500 hover:border-2 rounded-xl text-black mt-4 md:mt-0">Login
@@ -43,9 +45,57 @@
           </a>
         <% end %>
       </div>
-    </header>
-    <main class="container mx-auto mt-28 px-5">
-      <%= yield %>
-    </main>
+    </aside>
+    <!-- Mobile header bar -->
+    <div class="md:hidden fixed top-0 left-0 w-full bg-linear-to-r from-indigo-700 to-lime-500 border-b border-zinc-500 z-40 p-4">
+      <div class="relative flex items-center justify-center">
+        <button data-action="click->sidebar#toggle" class="absolute left-0 p-2 rounded-lg hover:bg-sky-200">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+        <span class="text-xl font-medium text-black">
+          <%= content_for?(:page_title) ? content_for(:page_title) : (content_for?(:title) ? content_for(:title) : link_to("The Vivek Project", root_path, class: "text-white")) %>
+        </span>
+      </div>
+    </div>
+    <!-- Mobile sidebar overlay -->
+    <div data-sidebar-target="overlay"
+         class="hidden fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
+         data-action="click->sidebar#close"></div>
+    <!-- Mobile sidebar -->
+    <aside data-sidebar-target="menu"
+           class="fixed top-0 left-0 h-full bg-linear-to-r from-indigo-800 to-teal-500 w-64 z-50 md:hidden flex flex-col"
+           style="transform: translateX(-100%); transition: transform 0.3s ease-in-out;">
+      <div class="p-5 border-b border-zinc-500">
+        <span class="text-2xl font-medium text-white">The Vivek Project</span>
+      </div>
+      <nav class="flex-1 overflow-y-auto py-4">
+        <%= link_to "About", about_path, class: nav_link_class(["/about"]) %>
+        <%= link_to "Contact", contact_path, class: nav_link_class(["/contact"]) %>
+      </nav>
+      <div class="p-5 border-t border-sky-200">
+        <% if user_signed_in? %>
+          <% if current_user.is_employee? %>
+            <%= link_to "Admin", assignments_path, class: nav_link_class(["/assignments"]) %>
+          <% end %>
+          <%= link_to "My Account", edit_user_registration_path, class: nav_link_class(["/users/edit"]) %>
+          <%= button_to "Log out", destroy_user_session_path, method: :delete, class:"inline-flex object-center items-center justify-right bg-white opacity-50 border-lime-600 border-2 py-1 px-3 focus:outline-none hover:border-yellow-500 hover:border-2 rounded-xl text-black mt-4 md:mt-0" %>
+        <% else %>
+          <a href= <%= new_user_session_path %> class="inline-flex object-center items-center justify-right bg-white opacity-50 border-lime-600 border-2 py-1 px-3 focus:outline-none hover:border-yellow-500 hover:border-2 rounded-xl text-black mt-4 md:mt-0">Login
+            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
+              <path d="M5 12h14M12 5l7 7-7 7"></path>
+            </svg>
+          </a>
+        <% end %>
+      </div>
+    </aside>
+    <!-- Main content area -->
+    <div class="flex-1 flex flex-col overflow-hidden">
+      <main class="flex-1 overflow-y-auto px-5 pb-10 pt-18 md:pt-10 md:px-10">
+        <p style="color: green"><%= notice %></p>
+        <%= yield %>
+      </main>
+    </div>
   </body>
 </html>

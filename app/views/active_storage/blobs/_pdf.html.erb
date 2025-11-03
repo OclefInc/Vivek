@@ -1,1 +1,8 @@
-<embed src="<%= blob.url %>" class="border" width="100%" height="800"/>
+<%
+  pdf_url = blob.url
+  # In development, ensure URL uses the correct host
+  if Rails.env.development?
+    pdf_url = rails_blob_url(blob, host: request.base_url)
+  end
+%>
+<iframe src="<%= pdf_url %>" class="border" width="100%" height="800" style="border: 1px solid #ccc;"></iframe>

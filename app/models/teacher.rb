@@ -11,6 +11,7 @@
 #
 class Teacher < ApplicationRecord
     has_many :assignments
+    has_many :lessons
     has_one_attached :profile_picture
     has_rich_text :bio
     belongs_to :user, optional: true

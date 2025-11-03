@@ -10,19 +10,8 @@
     </div>
   <% end %>
   <div class="mb-4">
-    <%= form.label :student, style: "display: block" %>
-    <select name="assignment[student_name]"
-            data-controller="searchable-select"
-            data-searchable-select-placeholder-value="Select or type student name..."
-            class="block outline-none">
-      <option value=""></option>
-      <% Student.order(:name).each do |student| %>
-        <option value="<%= student.name %>" <%= 'selected' if assignment.student_id == student.id %>><%= student.name %></option>
-        <% end %>
-      </select>
-    </div>
     <div class="mb-4">
-      <%= form.label :composition, style: "display: block" %>
+      <%= form.label :name, style: "display: block" %>
       <select name="assignment[composition_name]"
             data-controller="searchable-select"
             data-searchable-select-placeholder-value="Select or type composition name..."
@@ -30,6 +19,17 @@
         <option value=""></option>
         <% Composition.order(:name).each do |composition| %>
           <option value="<%= composition.name %>" <%= 'selected' if assignment.composition_id == composition.id %>><%= composition.name %></option>
+          <% end %>
+        </select>
+      </div>
+      <%= form.label :student, style: "display: block" %>
+      <select name="assignment[student_name]"
+            data-controller="searchable-select"
+            data-searchable-select-placeholder-value="Select or type student name..."
+            class="block outline-none">
+        <option value=""></option>
+        <% Student.order(:name).each do |student| %>
+          <option value="<%= student.name %>" <%= 'selected' if assignment.student_id == student.id %>><%= student.name %></option>
           <% end %>
         </select>
       </div>

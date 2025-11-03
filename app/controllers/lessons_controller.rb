@@ -29,9 +29,13 @@ class LessonsController < ApplicationController
   def create
     @lesson = Lesson.new(lesson_params.except(:skill_names, :teacher_name))
 
-    # Find or create teacher by name
-    teacher = find_or_create_record(Teacher, lesson_params[:teacher_name])
-    @lesson.teacher_id = teacher&.id
+    # Find or create teacher by name, or use assignment's default teacher
+    if lesson_params[:teacher_name].present?
+      teacher = find_or_create_record(Teacher, lesson_params[:teacher_name])
+      @lesson.teacher_id = teacher&.id
+    elsif @lesson.assignment&.teacher_id.present?
+      @lesson.teacher_id = @lesson.assignment.teacher_id
+    end
 
     # Handle skills - check if skill_names parameter exists (even if empty)
     if params[:lesson] && params[:lesson].key?(:skill_names)

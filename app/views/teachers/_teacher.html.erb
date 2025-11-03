@@ -3,15 +3,10 @@
     <%= image_tag teacher.profile_picture, class:"max-w-32" if teacher.profile_picture.attached? %>
   </div>
   <div class="w-auto pb-2 px-4">
-    <div class="font-bold w-35 pb-2"> <%= teacher.name %>
-    </div>
     <p>
       City:
       <%= teacher.city %>
     </p>
-  </div>
-  <div class="flex-auto w-full">
-    <strong>Bio:</strong>
     <%= teacher.bio %>
   </div>
 </div>

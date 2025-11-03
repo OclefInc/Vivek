@@ -1,4 +1,4 @@
-<div id="<%= dom_id assignment %>" class="md:flex-1 md:basis-1/2 md:px-5">
+<div id="<%= dom_id assignment %>" class="md:flex-1 md:basis-1/2 md:px-5 max-w-[640px]">
   <%= turbo_frame_tag "assignment_#{assignment.id}_summary_video" do %>
     <% if assignment.summary_video.attached? %>
       <div class="bg-black flex items-center justify-center" style="width: 640px; height: 480px; max-width: 100%;">
@@ -36,7 +36,7 @@
     </p>
     <p class="mb-2">
       <b><%= 'Teacher'.pluralize(assignment.teachers.count) %>:</b>
-      <% assignment.teachers.each do |teacher| %>
+      <% assignment.teachers.uniq.each do |teacher| %>
         <%= link_to teacher.name, teacher, class:'text-blue-600 hover:text-blue-400' %>
       <% end %>
     </p>

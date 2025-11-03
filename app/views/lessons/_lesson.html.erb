@@ -1,14 +1,60 @@
-<div id="<%= dom_id lesson %>" class="md:flex-1 md:basis-1/2 md:px-5 max-w-[640px]">
+<div id="<%= dom_id lesson %>" class="md:flex-1 md:basis-1/2 md:px-5 max-w-[640px]"
+     data-controller="video-time"
+     data-video-time-url-value="<%= lesson_path(lesson) %>">
   <%= turbo_frame_tag "lesson_#{lesson.id}_lesson_video" do %>
     <div class="bg-black flex items-center justify-center" style="width: 640px; height: 480px; max-width: 100%;">
-      <%= video_tag lesson.lesson_video,
+      <%
+        video_url = lesson.lesson_video
+        if lesson.video_start_time.present? || lesson.video_end_time.present?
+          fragment = "#t="
+          fragment += lesson.video_start_time.to_s if lesson.video_start_time.present?
+          fragment += "," + lesson.video_end_time.to_s if lesson.video_end_time.present?
+          video_url = url_for(lesson.lesson_video) + fragment
+        end
+      %>
+      <%= video_tag video_url,
           controls: true,
           style: "max-width: 100%; max-height: 100%;",
           class: "max-w-full h-auto",
           data: {
             controller: "video-autoplay",
-            video_autoplay_next_url_value: lesson.next_lesson ? lesson_path(lesson.next_lesson) : nil
+            video_autoplay_next_url_value: lesson.next_lesson ? lesson_path(lesson.next_lesson) : nil,
+            video_time_target: "video"
           } %>
+    </div>
+  <% end %>
+  <%= form_with(model: @lesson) do |form| %>
+    <div class="bg-gray-800 text-white p-4">
+      <div class="grid grid-cols-2 gap-4 mb-4">
+        <div>
+          <%= form.label :video_start_time, "Start Time", class: "block text-sm mb-1" %>
+          <div class="flex items-center gap-2">
+            <%= form.hidden_field :video_start_time, data: { video_time_target: "startTime" } %>
+            <button type="button"
+                    data-action="click->video-time#setStartTime"
+              class="px-4 py-2 bg-blue-600 hover:bg-blue-500 rounded-lg text-sm font-medium">
+              Set Start
+            </button>
+            <span data-video-time-target="startDisplay" class="text-sm">
+              <%= lesson.video_start_time ? "#{lesson.video_start_time}s" : "Not set" %>
+            </span>
+          </div>
+        </div>
+        <div>
+          <%= form.label :video_end_time, "End Time", class: "block text-sm mb-1" %>
+          <div class="flex items-center gap-2">
+            <%= form.hidden_field :video_end_time, data: { video_time_target: "endTime" } %>
+            <button type="button"
+                    data-action="click->video-time#setEndTime"
+              class="px-4 py-2 bg-blue-600 hover:bg-blue-500 rounded-lg text-sm font-medium">
+              Set End
+            </button>
+            <span data-video-time-target="endDisplay" class="text-sm">
+              <%= lesson.video_end_time ? "#{lesson.video_end_time}s" : "Not set" %>
+            </span>
+          </div>
+        </div>
+      </div>
     </div>
   <% end %>
   <div class="my-1">

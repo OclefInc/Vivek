@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_03_124729) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_03_135114) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_stat_statements"
@@ -89,6 +89,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_03_124729) do
     t.integer "sort", default: 1000
     t.integer "teacher_id"
     t.date "date"
+    t.integer "video_start_time"
+    t.integer "video_end_time"
   end
 
   create_table "lessons_skills", force: :cascade do |t|

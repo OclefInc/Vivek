@@ -1,0 +1,19 @@
+<span data-controller="inline-edit"
+      data-inline-edit-url-value="<%= lesson_path(lesson) %>"
+      data-inline-edit-field-value="date"
+      class="inline-block">
+  <span data-inline-edit-target="display"
+        data-action="click->inline-edit#edit"
+    class="cursor-pointer hover:bg-gray-100 px-1 rounded inline-flex items-center gap-1">
+    <% if lesson.date.present? %>
+      <%= lesson.date.strftime("%B %d, %Y") %>
+    <% else %>
+      <span class="text-gray-400 italic">Click to add date</span>
+    <% end %>
+  </span>
+  <input data-inline-edit-target="input"
+         type="date"
+         value="<%= lesson.date %>"
+         data-action="keydown->inline-edit#save blur->inline-edit#blur"
+  class="hidden border border-gray-300 rounded px-2 py-1" />
+</span>

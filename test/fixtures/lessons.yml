@@ -5,6 +5,7 @@
 # Table name: lessons
 #
 #  id            :bigint           not null, primary key
+#  date          :date
 #  name          :string
 #  sort          :integer          default(1000)
 #  created_at    :datetime         not null

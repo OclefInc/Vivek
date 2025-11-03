@@ -1,0 +1,4 @@
+<p class="mb-2">
+  <b>From:</b>
+  <%= assignment.lessons.minimum(:date)&.strftime("%b %d, %Y") %> - <%= assignment.lessons.maximum(:date)&.strftime("%b %d, %Y") %>
+</p>

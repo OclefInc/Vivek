@@ -35,7 +35,7 @@
       <%= link_to assignment.student.name, assignment.student, class:'text-blue-600 hover:text-blue-400' %>
     </p>
     <p class="mb-2">
-      <b><%= 'Teacher'.pluralize(assignment.teachers.count) %>:</b>
+      <b><%= 'Teacher'.pluralize(assignment.teachers.uniq.count) %>:</b>
       <% assignment.teachers.uniq.each do |teacher| %>
         <%= link_to teacher.name, teacher, class:'text-blue-600 hover:text-blue-400' %>
       <% end %>
@@ -48,5 +48,19 @@
       <% end %>
       <%= assignment.description.present? ? assignment.description : content_tag(:span, "Click to add description", class: "text-gray-400 italic") %>
     <% end %>
+    <div class="flex justify-between items-center mt-4">
+      <p class="mb-2">
+        <b>Lessons:</b>
+        <%= assignment.lessons.count %>
+      </p>
+      <% if assignment.lessons.any? %>
+        <%= turbo_frame_tag "assignment_#{assignment.id}_date_range" do %>
+          <p class="mb-2">
+            <b>From:</b>
+            <%= assignment.lessons.minimum(:date)&.strftime("%b %d, %Y") %> - <%= assignment.lessons.maximum(:date)&.strftime("%b %d, %Y") %>
+          </p>
+        <% end %>
+      <% end %>
+    </div>
   </div>
 </div>

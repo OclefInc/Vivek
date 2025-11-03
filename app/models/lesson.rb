@@ -3,6 +3,7 @@
 # Table name: lessons
 #
 #  id            :bigint           not null, primary key
+#  date          :date
 #  name          :string
 #  sort          :integer          default(1000)
 #  created_at    :datetime         not null
@@ -25,6 +26,7 @@ class Lesson < ApplicationRecord
     has_one_attached :lesson_video
 
     before_validation :assign_default_name, on: :create
+    before_create :assign_sort_position
 
     validates_presence_of :name
     # validates_presence_of :lesson_video
@@ -64,5 +66,13 @@ class Lesson < ApplicationRecord
     def assign_default_name
       # set name to date if name is blank
       self.name = Date.today.to_s if name.blank? && lesson_video.attached?
+    end
+
+    def assign_sort_position
+      # Set sort to the next position after the last lesson in the assignment
+      if assignment.present?
+        max_sort = assignment.lessons.maximum(:sort) || 0
+        self.sort = max_sort + 1
+      end
     end
 end

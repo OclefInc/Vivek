@@ -42,28 +42,39 @@ export default class extends Controller {
       formData.append("lesson[" + this.fieldValue + "]", value)
       formData.append("_method", "PATCH")
 
+      // Use Turbo Stream for date field to update multiple elements
+      const acceptHeader = this.fieldValue === "date"
+        ? "text/vnd.turbo-stream.html"
+        : "application/json"
+
       const response = await fetch(this.urlValue, {
         method: "POST",
         headers: {
           "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
-          "Accept": "application/json"
+          "Accept": acceptHeader
         },
         body: formData
       })
 
       if (response.ok) {
-        this.displayTarget.textContent = value
-        this.displayTarget.classList.remove("hidden")
-        this.inputTarget.classList.add("hidden")
+        if (this.fieldValue === "date") {
+          // Let Turbo handle the stream response
+          const text = await response.text()
+          Turbo.renderStreamMessage(text)
+        } else {
+          this.displayTarget.textContent = value
+          this.displayTarget.classList.remove("hidden")
+          this.inputTarget.classList.add("hidden")
 
-        // Update the lesson name in the table if it exists
-        const lessonId = this.urlValue.match(/\/lessons\/(\d+)/)?.[1]
-        if (lessonId && this.fieldValue === "name") {
-          const tableFrame = document.getElementById(`lesson_${lessonId}_name_in_table`)
-          if (tableFrame) {
-            const link = tableFrame.querySelector('a')
-            if (link) {
-              link.textContent = value
+          // Update the lesson name in the table if it exists
+          const lessonId = this.urlValue.match(/\/lessons\/(\d+)/)?.[1]
+          if (lessonId && this.fieldValue === "name") {
+            const tableFrame = document.getElementById(`lesson_${lessonId}_name_in_table`)
+            if (tableFrame) {
+              const link = tableFrame.querySelector('a')
+              if (link) {
+                link.textContent = value
+              }
             }
           }
         }

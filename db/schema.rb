@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_31_150203) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_03_124729) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_stat_statements"
@@ -88,6 +88,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_31_150203) do
     t.datetime "updated_at", null: false
     t.integer "sort", default: 1000
     t.integer "teacher_id"
+    t.date "date"
   end
 
   create_table "lessons_skills", force: :cascade do |t|

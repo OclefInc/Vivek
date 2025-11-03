@@ -84,6 +84,22 @@ class LessonsController < ApplicationController
       if @lesson.update(lesson_params.except(:skill_names, :teacher_name))
         format.html { redirect_to @lesson, notice: "Lesson was successfully updated." }
         format.json { render :show, status: :ok, location: @lesson }
+        format.turbo_stream do
+          if params[:lesson][:date].present?
+            render turbo_stream: [
+              turbo_stream.update(
+                "lesson_#{@lesson.id}_date",
+                partial: "lessons/date_display",
+                locals: { lesson: @lesson }
+              ),
+              turbo_stream.update(
+                "assignment_#{@lesson.assignment_id}_date_range",
+                partial: "assignments/date_range",
+                locals: { assignment: @lesson.assignment }
+              )
+            ]
+          end
+        end
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @lesson.errors, status: :unprocessable_entity }
@@ -109,7 +125,7 @@ class LessonsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def lesson_params
-      params.expect(lesson: [ :lesson_video, :name, :assignment_id, :description, :teacher_name, skill_ids: [], skill_names: [] ])
+      params.expect(lesson: [ :date, :lesson_video, :name, :assignment_id, :description, :teacher_name, skill_ids: [], skill_names: [] ])
     end
 
     # Find or create a record by name, skipping validation

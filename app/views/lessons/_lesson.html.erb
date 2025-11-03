@@ -27,32 +27,32 @@
     <div class="bg-gray-800 text-white p-4">
       <div class="grid grid-cols-2 gap-4 mb-4">
         <div>
-          <%= form.label :video_start_time, "Start Time", class: "block text-sm mb-1" %>
           <div class="flex items-center gap-2">
-            <%= form.hidden_field :video_start_time, data: { video_time_target: "startTime" } %>
-            <button type="button"
-                    data-action="click->video-time#setStartTime"
-              class="px-4 py-2 bg-blue-600 hover:bg-blue-500 rounded-lg text-sm font-medium">
-              Set Start
-            </button>
+            <%= form.label :video_start_time, "Start Time:", class: "block text-sm" %>
             <span data-video-time-target="startDisplay" class="text-sm">
               <%= lesson.video_start_time ? "#{lesson.video_start_time}s" : "Not set" %>
             </span>
+            <button type="button"
+                    data-action="click->video-time#setStartTime"
+              class="px-2 py-1 bg-blue-600 hover:bg-blue-500 rounded-lg text-sm font-medium">
+              Set Start
+            </button>
           </div>
+          <%= form.hidden_field :video_start_time, data: { video_time_target: "startTime" } %>
         </div>
         <div>
-          <%= form.label :video_end_time, "End Time", class: "block text-sm mb-1" %>
           <div class="flex items-center gap-2">
-            <%= form.hidden_field :video_end_time, data: { video_time_target: "endTime" } %>
-            <button type="button"
-                    data-action="click->video-time#setEndTime"
-              class="px-4 py-2 bg-blue-600 hover:bg-blue-500 rounded-lg text-sm font-medium">
-              Set End
-            </button>
+            <%= form.label :video_end_time, "End Time:", class: "block text-sm" %>
             <span data-video-time-target="endDisplay" class="text-sm">
               <%= lesson.video_end_time ? "#{lesson.video_end_time}s" : "Not set" %>
             </span>
+            <button type="button"
+                    data-action="click->video-time#setEndTime"
+              class="px-2 py-1 bg-blue-600 hover:bg-blue-500 rounded-lg text-sm font-medium">
+              Set End
+            </button>
           </div>
+          <%= form.hidden_field :video_end_time, data: { video_time_target: "endTime" } %>
         </div>
       </div>
     </div>

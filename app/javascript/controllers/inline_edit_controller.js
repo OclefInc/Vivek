@@ -12,6 +12,13 @@ export default class extends Controller {
     this.inputTarget.classList.remove("hidden")
     this.inputTarget.focus()
     this.inputTarget.select()
+
+    // For date inputs, automatically show the calendar picker after a small delay
+    if (this.inputTarget.type === "date") {
+      setTimeout(() => {
+        this.inputTarget.showPicker()
+      }, 10)
+    }
   }
 
   cancel() {

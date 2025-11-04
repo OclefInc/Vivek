@@ -2,16 +2,18 @@
 #
 # Table name: lessons
 #
-#  id               :bigint           not null, primary key
-#  date             :date
-#  name             :string
-#  sort             :integer          default(1000)
-#  video_end_time   :integer
-#  video_start_time :integer
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
-#  assignment_id    :integer
-#  teacher_id       :integer
+#  id                       :bigint           not null, primary key
+#  date                     :date
+#  description_copyrighted  :boolean
+#  description_purchase_url :string
+#  name                     :string
+#  sort                     :integer          default(1000)
+#  video_end_time           :integer
+#  video_start_time         :integer
+#  created_at               :datetime         not null
+#  updated_at               :datetime         not null
+#  assignment_id            :integer
+#  teacher_id               :integer
 #
 class Lesson < ApplicationRecord
   include RailsSortable::Model

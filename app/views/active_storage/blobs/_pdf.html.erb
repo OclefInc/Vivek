@@ -4,18 +4,31 @@
   if Rails.env.development?
     pdf_url = rails_blob_url(blob, host: request.base_url)
   end
+
+  # Check if this blob is attached to a Lesson's description and if it's copyrighted
+  is_copyrighted = false
+  attachment = blob.attachments.first
+  if attachment && attachment.record_type == "ActionText::RichText"
+    rich_text = attachment.record
+    if rich_text && rich_text.record_type == "Lesson" && rich_text.name == "description"
+      lesson = rich_text.record
+      is_copyrighted = lesson.description_copyrighted?
+    end
+  end
 %>
 <div class="relative inline-block w-full">
-  <iframe src="<%= pdf_url %>" class="border" width="100%" height="800" style="border: 1px solid #ccc; pointer-events: none;" data-copyright-iframe></iframe>
+  <iframe src="<%= pdf_url %>" class="border" width="100%" height="800" style="border: 1px solid #ccc; <%= is_copyrighted ? 'pointer-events: none;' : '' %>" data-copyright-iframe></iframe>
 
-  <!-- Copyright banner overlay -->
-  <div class="absolute top-0 left-0 right-0 bg-amber-100 border-b-2 border-amber-300 px-4 py-2 flex items-center gap-2 shadow-md z-10" data-copyright-overlay>
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-amber-700 flex-shrink-0">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
-    </svg>
-    <span class="text-sm font-semibold text-amber-900">⚠️ COPYRIGHTED MATERIAL - For Educational Use Only - Download Disabled</span>
-  </div>
+  <% if is_copyrighted %>
+    <!-- Copyright banner overlay -->
+    <div class="absolute top-0 left-0 right-0 bg-amber-100 border-b-2 border-amber-300 px-4 py-2 flex items-center gap-2 shadow-md z-10" data-copyright-overlay>
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-amber-700 flex-shrink-0">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
+      </svg>
+      <span class="text-sm font-semibold text-amber-900">⚠️ COPYRIGHTED MATERIAL - For Educational Use Only - Download Disabled</span>
+    </div>
 
-  <!-- Transparent overlay to block interactions -->
-  <div class="absolute inset-0 w-full h-full z-5" data-copyright-blocker style="background: transparent; cursor: not-allowed;"></div>
+    <!-- Transparent overlay to block interactions -->
+    <div class="absolute inset-0 w-full h-full z-5" data-copyright-blocker style="background: transparent; cursor: not-allowed;"></div>
+  <% end %>
 </div>

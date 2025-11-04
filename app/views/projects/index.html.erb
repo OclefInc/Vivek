@@ -3,22 +3,25 @@
 </div>
 <div id="projects" class="min-w-full divide-y divide-zinc-200 space-y-5">
   <% @projects.each do |project| %>
-    <div class="border shadow border-sky-100 rounded-2xl bg-sky-50 dark:border-zinc-800 dark:bg-zinc-900 border-2 px-4 py-3">
-      <h4 class="text-xl ps-4 text-orange-700 hover:text-amber-500 dark:text-orange-600 dark:hover:text-orange-400 italic py-2"> <%= link_to project.name, project_path(project) %> </h4>
+    <div class="flex-col border shadow border-sky-100 rounded-2xl bg-sky-50 dark:border-zinc-800 dark:bg-zinc-900 border-2 px-4 py-3">
+      <div class="flex justify-between">
+        <h4 class="text-xl ps-4 py-2 text-orange-700 hover:text-amber-500 dark:text-orange-600 dark:hover:text-orange-400 italic"> <%= link_to project.name, project_path(project) %> </h4>
+        <div class="flex sm:flex-nowrap mb-2 text-xl pe-4 py-2">
+          <% project.teachers.uniq.each do |teacher| %>
+            <%= link_to teacher.name, display_teacher_path(teacher), class:'text-xl text-bold text-indigo-600 hover:text-indigo-400' %>
+          <% end %>
+        </div>
+      </div>
       <div class="flex sm:flex-nowrap text-zinc-900 dark:text-teal-400">
         <div class="flex-col w-auto px-6 m-2 ">
           <div class="sm:flex-nowrap mb-2">
             <strong> Focus: </strong>
-            <p class="text-right"> <%= project.composition.name %> (<%= project.composition.composer %>) </p>
+            <p class="text-nowrap"> <%= project.composition.name %> (<%= project.composition.composer %>) </p>
           </div>
-          <div class="flex-row sm:flex-nowrap mb-2 ">
-            <strong> Teacher:  </strong>
-            <p> <%= project.teacher.name %> </p>
-          </div>
-          <div class=""> <b> <%= project.lessons.length %> </b> Episodes 
+          <div class="text-nowrap"> <b> <%= project.lessons.length %> </b> Episodes 
           </div>
         </div>
-        <div class="flex-auto px-6 my-2 ">
+        <div class="flex-auto w-auto px-6 my-2 ">
           <strong>Description:</strong>
           <p class=""> <%= project.description %> </p>
         </div>

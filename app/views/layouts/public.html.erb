@@ -23,22 +23,22 @@
   <body class="bg-white dark:bg-zinc-950 flex h-screen overflow-hidden" data-controller="sidebar">
     <!-- Sidebar -->
     <aside class="text-zinc-100 bg-linear-to-r from-indigo-800 to-teal-500 body-font w-64 flex-shrink-0 hidden md:flex flex-col">
-      <div class="p-5 border-b border-indigo-900">
+      <div class="p-5 border-b border-teal-600">
         <span class="text-2xl font-medium text-white">The Vivek Project.</span>
       </div>
       <nav class="flex-col flex-1 overflow-y-auto py-4 text-teal-200">
         <%= link_to "About", about_path, class: nav_link_class(["/about"]) %>
         <%= link_to "Contact", contact_path, class: nav_link_class(["/contact"]) %>
       </nav>
-      <div class="flex-col p-5 border-t border-indigo-900 text-teal-200">
+      <div class="flex-col py-4 border-t border-teal-600 text-teal-200">
         <% if user_signed_in? %>
           <% if current_user.is_employee? %>
             <%= link_to "Admin", assignments_path, class: nav_link_class(["/assignments"]) %>
           <% end %>
           <%= link_to "My Account", edit_user_registration_path, class: nav_link_class(["/users/edit"]) %>
-          <%= button_to "Log out", destroy_user_session_path, method: :delete, class:"inline-flex object-center items-center justify-right bg-white opacity-50 border-lime-600 border-2 py-1 px-3 focus:outline-none hover:border-yellow-500 hover:border-2 rounded-xl text-black mt-4 md:mt-0" %>
+          <%= button_to "Log out", destroy_user_session_path, method: :delete, class:"inline-flex object-center items-center justify-right bg-white opacity-50 border-lime-600 border-2 py-1 px-3 focus:outline-none hover:border-teal-600 hover:border-2 rounded-xl text-black m-4 md:mt-0" %>
         <% else %>
-          <a href= <%= new_user_session_path %> class="inline-flex object-center items-center justify-right bg-white opacity-50 border-lime-600 border-2 py-1 px-3 focus:outline-none hover:border-yellow-500 hover:border-2 rounded-xl text-black mt-4 md:mt-0">Login
+          <a href= <%= new_user_session_path %> class="inline-flex object-center items-center justify-right bg-white opacity-50 border-lime-600 border-2 py-1 px-3 focus:outline-none hover:border-teal-600 hover:border-2 rounded-xl text-black mt-4 md:mt-0">Login
             <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
               <path d="M5 12h14M12 5l7 7-7 7"></path>
             </svg>
@@ -67,22 +67,22 @@
     <aside data-sidebar-target="menu"
            class="fixed top-0 left-0 h-full bg-linear-to-r from-indigo-800 to-teal-500 w-64 z-50 md:hidden flex flex-col"
            style="transform: translateX(-100%); transition: transform 0.3s ease-in-out;">
-      <div class="p-5 border-b border-zinc-500">
+      <div class="p-5 border-b border-teal-600">
         <span class="text-2xl font-medium text-white">The Vivek Project</span>
       </div>
       <nav class="flex-1 overflow-y-auto py-4">
         <%= link_to "About", about_path, class: nav_link_class(["/about"]) %>
         <%= link_to "Contact", contact_path, class: nav_link_class(["/contact"]) %>
       </nav>
-      <div class="p-5 border-t border-sky-200">
+      <div class="py-4 border-t border-teal-600">
         <% if user_signed_in? %>
           <% if current_user.is_employee? %>
             <%= link_to "Admin", assignments_path, class: nav_link_class(["/assignments"]) %>
           <% end %>
           <%= link_to "My Account", edit_user_registration_path, class: nav_link_class(["/users/edit"]) %>
-          <%= button_to "Log out", destroy_user_session_path, method: :delete, class:"inline-flex object-center items-center justify-right bg-white opacity-50 border-lime-600 border-2 py-1 px-3 focus:outline-none hover:border-yellow-500 hover:border-2 rounded-xl text-black mt-4 md:mt-0" %>
+          <%= button_to "Log out", destroy_user_session_path, method: :delete, class:"inline-flex object-center items-center justify-right bg-white opacity-50 border-lime-600 border-2 py-1 px-3 focus:outline-none hover:border-teal-600 hover:border-2 rounded-xl text-black m-4 md:mt-0" %>
         <% else %>
-          <a href= <%= new_user_session_path %> class="inline-flex object-center items-center justify-right bg-white opacity-50 border-lime-600 border-2 py-1 px-3 focus:outline-none hover:border-yellow-500 hover:border-2 rounded-xl text-black mt-4 md:mt-0">Login
+          <a href= <%= new_user_session_path %> class="inline-flex object-center items-center justify-right bg-white opacity-50 border-lime-600 border-2 py-1 px-3 focus:outline-none hover:border-teal-600 hover:border-2 rounded-xl text-black mt-4 md:mt-0">Login
             <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
               <path d="M5 12h14M12 5l7 7-7 7"></path>
             </svg>

@@ -66,7 +66,7 @@
           </svg>
         <% end %>
         <% if lesson.teacher.present? %>
-          <%= link_to lesson.teacher.name, lesson.teacher, class:'text-blue-600 hover:text-blue-400' %>
+          <%= link_to lesson.teacher.name, lesson.teacher, class:'text-blue-600 hover:text-blue-400', data: { turbo_frame: "_top" } %>
         <% else%>
           <span class="text-gray-400 italic">Click to add teacher</span>
         <% end %>
@@ -79,7 +79,7 @@
         </svg>
       <% end %>
       <% if lesson.skills.any? %>
-        <%= lesson.skills.map { |skill| link_to(skill.name, skill, class:"text-blue-700 hover:text-blue-400") }.join(', ').html_safe %>
+        <%= lesson.skills.map { |skill| link_to(skill.name, skill, class:"text-blue-700 hover:text-blue-400", data: { turbo_frame: "_top" }) }.join(', ').html_safe %>
       <% else %>
         <span class="text-gray-400 italic">Click to add skills</span>
       <% end %>

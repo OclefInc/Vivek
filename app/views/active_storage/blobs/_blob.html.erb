@@ -1,6 +1,20 @@
+<%
+  # Check if this blob is attached to a Lesson's description and if it's copyrighted
+  is_copyrighted = false
+  purchase_url = nil
+  attachment = blob.attachments.first
+  if attachment && attachment.record_type == "ActionText::RichText"
+    rich_text = attachment.record
+    if rich_text && rich_text.record_type == "Lesson" && rich_text.name == "description"
+      lesson = rich_text.record
+      is_copyrighted = lesson.description_copyrighted?
+      purchase_url = lesson.description_purchase_url
+    end
+  end
+%>
 <figure class="attachment attachment--<%= blob.representable? ? "preview" : "file" %> attachment--<%= blob.filename.extension %>">
   <% if blob.filename.extension == 'pdf' %>
-    <%= render :partial => '/active_storage/blobs/pdf', locals: {blob: blob} %>
+    <%= render :partial => '/active_storage/blobs/pdf', locals: {blob: blob, is_copyrighted: is_copyrighted, purchase_url: purchase_url} %>
   <% elsif blob.representable? %>
     <%= image_tag blob.representation(resize_to_limit: local_assigns[:in_gallery] ? [ 800, 600 ] : [ 1024, 768 ]) %>
   <% end %>

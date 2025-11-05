@@ -32,6 +32,7 @@ class Lesson < ApplicationRecord
     before_validation :assign_default_name, on: :create
     before_create :assign_sort_position
     before_create :assign_default_date
+    before_create :assign_default_teacher
 
     validates_presence_of :name
     # validates_presence_of :lesson_video
@@ -84,5 +85,12 @@ class Lesson < ApplicationRecord
     def assign_default_date
       # Set date to today if not already set
       self.date = Date.today if date.blank?
+    end
+
+    def assign_default_teacher
+      # Set teacher_id from assignment if not already set
+      if assignment.present? && teacher_id.blank? && assignment.teacher_id.present?
+        self.teacher_id = assignment.teacher_id
+      end
     end
 end

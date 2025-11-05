@@ -1,5 +1,5 @@
 <%= turbo_frame_tag "lesson_#{@lesson.id}_teacher_journal" do %>
-  <%= form_with(model: @lesson, data: { turbo: false }) do |form| %>
+  <%= form_with(model: @lesson, url: lesson_path(@lesson, {format: :html}),local: true) do |form| %>
     <div>
       <strong>Teacher Comment:</strong>
       <%= form.rich_text_area :teacher_journal, class: "trix-content" %>

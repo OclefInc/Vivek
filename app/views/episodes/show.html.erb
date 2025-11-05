@@ -66,8 +66,9 @@
       Episodes:
     </h1>
     <% @episode.project.lessons.order(:sort).each do |lesson| %>
-      <div class="">
+      <div class="flex justify-between items-center">
         <p class="text-lg p-2 border-b border-zinc-300 text-orange-700 hover:text-amber-500 dark:text-orange-600 dark:hover:text-orange-400 italic" > <%= link_to lesson.name, project_episode_path(@episode) %> </p>
+        <p class="text-lg p-2 border-b border-zinc-300 text-orange-700 hover:text-amber-500 dark:text-orange-600 dark:hover:text-orange-400 italic"><%= lesson.date&.strftime('%b %d, %Y') || 'No date' %></p>
       </div>
     <% end %>
   </div>

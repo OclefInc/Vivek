@@ -1,5 +1,5 @@
 <%= turbo_frame_tag "lesson_#{@lesson.id}_description" do %>
-  <%= form_with(model: @lesson, data: { turbo: false, controller: "copyright-toggle", action: "input->copyright-toggle#toggle" }) do |form| %>
+  <%= form_with(model: @lesson, url: lesson_path(@lesson, {format: :html}), data: { controller: "copyright-toggle", action: "input->copyright-toggle#toggle" }) do |form| %>
     <div>
       <strong>Description:</strong>
       <%= form.rich_text_area :description, class: "trix-content" %>

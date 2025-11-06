@@ -1,6 +1,6 @@
 <%= form_with(model: assignment, html: { onkeydown: "return event.key != 'Enter';" }) do |form| %>
   <% if assignment.errors.any? %>
-    <div style="color: red">
+    <div class="bg-red-50 dark:bg-red-900 text-red-500 dark:text-red-200 px-3 py-2 rounded-md">
       <h2><%= pluralize(assignment.errors.count, "error") %> prohibited this assignment from being saved:</h2>
       <ul>
         <% assignment.errors.each do |error| %>
@@ -11,22 +11,22 @@
   <% end %>
   <div class="mb-4">
     <div class="mb-4">
-      <%= form.label :name, style: "display: block" %>
+      <%= form.label :name, class: "dark:text-gray-200", style: "display: block" %>
       <select name="assignment[composition_name]"
             data-controller="searchable-select"
             data-searchable-select-placeholder-value="Select or type composition name..."
-            class="block outline-none">
+            class="block outline-none dark:bg-gray-800 dark:text-gray-200 dark:border-gray-600">
         <option value=""></option>
         <% Composition.order(:name).each do |composition| %>
           <option value="<%= composition.name %>" <%= 'selected' if assignment.composition_id == composition.id %>><%= composition.name %></option>
           <% end %>
         </select>
       </div>
-      <%= form.label :student, style: "display: block" %>
+      <%= form.label :student, class: "dark:text-gray-200", style: "display: block" %>
       <select name="assignment[student_name]"
             data-controller="searchable-select"
             data-searchable-select-placeholder-value="Select or type student name..."
-            class="block outline-none">
+            class="block outline-none dark:bg-gray-800 dark:text-gray-200 dark:border-gray-600">
         <option value=""></option>
         <% Student.order(:name).each do |student| %>
           <option value="<%= student.name %>" <%= 'selected' if assignment.student_id == student.id %>><%= student.name %></option>
@@ -34,9 +34,9 @@
         </select>
       </div>
       <div>
-        <%= form.label :description, style: "display: block" %>
+        <%= form.label :description, class: "dark:text-gray-200", style: "display: block" %>
         <%= form.rich_text_area :description,
-      class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 mb-4 w-full" %>
+      class: "block shadow rounded-md border border-gray-200 dark:border-gray-600 outline-none px-3 py-2 mt-2 mb-4 w-full dark:bg-gray-800 dark:text-gray-200" %>
       </div>
       <div class="my-2">
         <%= form.submit class: "rounded-lg py-2 px-3 bg-blue-600 hover:bg-blue-400 text-white inline-block font-medium cursor-pointer" %>

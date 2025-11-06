@@ -1,16 +1,16 @@
 <%= turbo_frame_tag "lesson_#{@lesson.id}_skills" do %>
   <%= form_with(model: @lesson,url: lesson_path(@lesson, {format: :html}), local: true) do |form| %>
     <div>
-      <strong>Skills:</strong>
+      <strong class="dark:text-gray-200">Skills:</strong>
       <%= hidden_field_tag 'lesson[skill_names][]', '' %>
       <%= select_tag 'lesson[skill_names][]',
       options_for_select(Skill.order(:name).pluck(:name), @lesson.skills.pluck(:name)),
       { multiple: true,
         data: { controller: "searchable-select" },
-        class: "block outline-none" } %>
+        class: "block outline-none dark:bg-gray-800 dark:text-gray-200 dark:border-gray-600" } %>
       <div class="mt-2 flex gap-2">
         <%= form.submit "Save", class: "px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-medium cursor-pointer" %>
-        <%= link_to "Cancel", lesson_path(@lesson), class: "px-4 py-2 bg-gray-100 hover:bg-gray-50 rounded-lg font-medium" %>
+        <%= link_to "Cancel", lesson_path(@lesson), class: "px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-lg font-medium dark:text-gray-200" %>
       </div>
     </div>
   <% end %>

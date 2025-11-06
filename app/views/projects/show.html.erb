@@ -1,4 +1,3 @@
-<h1 class="text-sky-900 dark:text-teal-400 text-2xl mb-2">Project:</h1>
 <div class="border shadow border-sky-100 rounded-2xl bg-sky-50 dark:border-zinc-800 dark:bg-zinc-900 border-2 px-4 py-3">
   <div id="<%= dom_id @project %>">
     <div class="flex mx-auto mx-2 my-2 justify-between">
@@ -10,13 +9,6 @@
       <div class="mx-1 my-1">
         <p class="mb-2 text-sky-800 dark:text-teal-300">
           <%= link_to @project.student.name, display_student_path(@project.student), class:'font-semibold text-indigo-500 hover:text-indigo-300' %>
-          (Student)
-        </p>
-        <p class="mb-2 text-sky-800 dark:text-teal-300">
-          <b><%= 'Teacher'.pluralize(@project.teachers.count) %>:</b>
-          <% @project.teachers.uniq.each do |teacher| %>
-            <%= link_to teacher.name, display_teacher_path(teacher), class:'text-indigo-500 hover:text-indigo-400' %>
-          <% end %>
         </p>
       </div>
     </div>
@@ -38,6 +30,12 @@
             <p class="text-lg p-2 border-b border-zinc-300 text-orange-700 hover:text-amber-500 dark:text-orange-600 dark:hover:text-orange-400 italic" > <%= link_to lesson.name, project_episode_path(@project, lesson) %> </p>
           </div>
         <% end %>
+        <p class="mb-2 text-sky-800 dark:text-teal-300">
+          <b><%= 'Teacher'.pluralize(@project.teachers.uniq.count) %>:</b>
+          <% @project.teachers.uniq.each do |teacher| %>
+            <%= link_to teacher.name, display_teacher_path(teacher), class:'text-indigo-500 hover:text-indigo-400' %>
+          <% end %>
+        </p>
       </div>
     </div>
   </div>

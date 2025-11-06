@@ -39,3 +39,73 @@
   opacity: 1 !important;
   background: transparent !important;
 }
+
+/* Dropzone Dark Mode */
+@media (prefers-color-scheme: dark) {
+  .dropzone {
+    background-color: #1f2937 !important;
+    border-color: #4b5563 !important;
+  }
+
+  .dropzone .dz-message {
+    color: #e5e7eb !important;
+  }
+
+  .dropzone .dz-message .dz-button {
+    color: #e5e7eb !important;
+  }
+}
+
+/* Tom Select Dark Mode */
+@media (prefers-color-scheme: dark) {
+  .ts-wrapper .ts-control {
+    background-color: #1f2937 !important;
+    border-color: #4b5563 !important;
+    color: #e5e7eb !important;
+  }
+
+  .ts-wrapper.single .ts-control {
+    background-color: #1f2937 !important;
+    background-image: none !important;
+    box-shadow: none !important;
+  }
+
+  .ts-wrapper .ts-control input {
+    color: #e5e7eb !important;
+  }
+
+  .ts-wrapper .ts-dropdown {
+    background-color: #1f2937 !important;
+    border-color: #4b5563 !important;
+    color: #e5e7eb !important;
+  }
+
+  .ts-wrapper .ts-dropdown .option {
+    color: #e5e7eb !important;
+  }
+
+  .ts-wrapper .ts-dropdown .option:hover,
+  .ts-wrapper .ts-dropdown .option.active {
+    background-color: #374151 !important;
+    color: #e5e7eb !important;
+  }
+
+  .ts-wrapper .ts-dropdown .optgroup-header {
+    background-color: #111827 !important;
+    color: #9ca3af !important;
+  }
+
+  .ts-wrapper .ts-dropdown .no-results,
+  .ts-wrapper .ts-dropdown .create {
+    color: #9ca3af !important;
+  }
+
+  .ts-wrapper.single .ts-control::after {
+    border-color: #9ca3af transparent transparent transparent !important;
+  }
+
+  .ts-wrapper.focus .ts-control {
+    border-color: #3b82f6 !important;
+    box-shadow: 0 0 0 1px #3b82f6 !important;
+  }
+}

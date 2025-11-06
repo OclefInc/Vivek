@@ -1,6 +1,6 @@
 <%= form_with(model: composition, class: "contents") do |form| %>
   <% if composition.errors.any? %>
-    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-md mt-3">
+    <div id="error_explanation" class="bg-red-50 dark:bg-red-900 text-red-500 dark:text-red-200 px-3 py-2 font-medium rounded-md mt-3">
       <h2><%= pluralize(composition.errors.count, "error") %> prohibited this composition from being saved:</h2>
       <ul class="list-disc ml-6">
         <% composition.errors.each do |error| %>
@@ -10,17 +10,17 @@
     </div>
   <% end %>
   <div class="my-5 max-w-1/3 flex-initial">
-    <%= form.label :name %>
-    <%= form.text_field :name, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": composition.errors[:name].none?, "border-red-400 focus:outline-red-600": composition.errors[:name].any?}] %>
+    <%= form.label :name, class: "dark:text-gray-200" %>
+    <%= form.text_field :name, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full dark:bg-gray-800 dark:text-gray-200", {"border-gray-400 dark:border-gray-600 focus:outline-blue-600": composition.errors[:name].none?, "border-red-400 dark:border-red-600 focus:outline-red-600": composition.errors[:name].any?}] %>
   </div>
   <div class="my-5 max-w-1/3 flex-initial">
-    <%= form.label :composer %>
-    <%= form.text_field :composer, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": composition.errors[:composer].none?, "border-red-400 focus:outline-red-600": composition.errors[:composer].any?}] %>
+    <%= form.label :composer, class: "dark:text-gray-200" %>
+    <%= form.text_field :composer, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full dark:bg-gray-800 dark:text-gray-200", {"border-gray-400 dark:border-gray-600 focus:outline-blue-600": composition.errors[:composer].none?, "border-red-400 dark:border-red-600 focus:outline-red-600": composition.errors[:composer].any?}] %>
   </div>
   <div class="w-full mb-6">
-    <%= form.label :description, style: "display: block" %>
+    <%= form.label :description, class: "dark:text-gray-200", style: "display: block" %>
     <%= form.rich_text_area :description,
-      class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+      class: "block shadow rounded-md border border-gray-200 dark:border-gray-600 outline-none px-3 py-2 mt-2 w-full dark:bg-gray-800 dark:text-gray-200" %>
   </div>
   <div class="inline mt-4">
     <%= form.submit class: "w-full sm:w-auto rounded-lg px-3 py-2 bg-blue-600 hover:bg-blue-400 text-white inline-block font-medium cursor-pointer" %>

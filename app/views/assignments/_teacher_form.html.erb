@@ -1,11 +1,11 @@
 <%= turbo_frame_tag "assignment_#{@assignment.id}_teacher" do %>
   <%= form_with(model: @assignment, local: true) do |form| %>
     <div class="mb-4">
-      <%= form.label :teacher, style: "display: block" %>
+      <%= form.label :teacher, class: "dark:text-gray-200", style: "display: block" %>
       <select name="assignment[teacher_name]"
             data-controller="searchable-select"
             data-searchable-select-placeholder-value="Select or type teacher name..."
-            class="block outline-none">
+            class="block outline-none dark:bg-gray-800 dark:text-gray-200 dark:border-gray-600">
         <option value=""></option>
         <% Teacher.order(:name).each do |teacher| %>
           <option value="<%= teacher.name %>" <%= 'selected' if @assignment.teacher_id == teacher.id %>><%= teacher.name %></option>
@@ -13,7 +13,7 @@
         </select>
         <div class="mt-2 flex gap-2">
           <%= form.submit "Save", class: "px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-medium cursor-pointer" %>
-          <%= link_to "Cancel", assignment_path(@assignment), class: "px-4 py-2 bg-gray-100 hover:bg-gray-50 rounded-lg font-medium" %>
+          <%= link_to "Cancel", assignment_path(@assignment), class: "px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-lg font-medium dark:text-gray-200" %>
         </div>
       </div>
     <% end %>

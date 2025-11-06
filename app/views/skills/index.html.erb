@@ -7,16 +7,16 @@
              new_button_text: "Add new skill",
              new_path: new_skill_path
            } do %>
-  <div id="skills" class="min-w-full divide-y divide-gray-200 space-y-5">
+  <div id="skills" class="min-w-full divide-y divide-gray-200 dark:divide-gray-700 space-y-5">
     <% @skill_categories.each do |skill_category| %>
-      <h4 class="text-3xl ps-4 text-red-600 italic py-5" > <%= skill_category.name %> </h4>
+      <h4 class="text-3xl ps-4 text-red-600 dark:text-red-400 italic py-5" > <%= skill_category.name %> </h4>
       <table class="w-full table-auto border-collapse">
         <tr>
-          <th class="text-left px-3 py-2 border-b border-gray-300">Skill</th>
+          <th class="text-left px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">Skill</th>
         </tr>
         <% skill_category.skills.each do |skill| %>
           <tr>
-            <td class="px-3 py-2 border-b border-gray-300"><%= link_to skill.name, skill, class:"text-blue-500 hover:text-red-500" %></td>
+            <td class="px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-300"><%= link_to skill.name, skill, class:"text-blue-500 hover:text-red-500 dark:text-blue-400 dark:hover:text-red-400" %></td>
           </tr>
         <% end %>
       </table>

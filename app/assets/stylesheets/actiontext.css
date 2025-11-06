@@ -67,6 +67,14 @@ trix-editor {
   outline: none;
 }
 
+@media (prefers-color-scheme: dark) {
+  trix-editor {
+    border-color: #4b5563;
+    background-color: #1f2937;
+    color: #e5e7eb;
+  }
+}
+
 trix-toolbar * {
   box-sizing: border-box;
 }
@@ -124,6 +132,13 @@ trix-toolbar .trix-button {
   background: rgba(130, 217, 255, 0.555);
 }
 
+@media (prefers-color-scheme: dark) {
+  trix-toolbar .trix-button {
+    background: rgba(55, 65, 81, 0.8);
+    color: #d1d5db;
+  }
+}
+
 trix-toolbar .trix-button:not(:first-child) {
   border-left: 0px solid #aeaeae;
 }
@@ -133,12 +148,29 @@ trix-toolbar .trix-button.trix-active {
   color: rgb(183, 246, 243);
 }
 
+@media (prefers-color-scheme: dark) {
+  trix-toolbar .trix-button.trix-active {
+    background: #4b5563;
+    color: #60a5fa;
+  }
+}
+
 trix-toolbar .trix-button:not(:disabled) {
   cursor: pointer;
 }
 
 trix-toolbar .trix-button:disabled {
   color: rgba(184, 209, 232, 0.613);
+}
+
+@media (prefers-color-scheme: dark) {
+  trix-toolbar .trix-button:disabled {
+    color: rgba(107, 114, 128, 0.6);
+  }
+
+  trix-toolbar .trix-button--icon::before {
+    filter: invert(1) brightness(1.2);
+  }
 }
 
 @media (max-width: 768px) {
@@ -268,6 +300,14 @@ trix-toolbar .trix-dialog {
   z-index: 5;
 }
 
+@media (prefers-color-scheme: dark) {
+  trix-toolbar .trix-dialog {
+    background: #374151;
+    box-shadow: 0 0.3em 1em #000;
+    border-top-color: #6b7280;
+  }
+}
+
 trix-toolbar .trix-input--dialog {
   font-size: inherit;
   font-weight: normal;
@@ -280,6 +320,14 @@ trix-toolbar .trix-input--dialog {
   outline: none;
   -webkit-appearance: none;
   -moz-appearance: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  trix-toolbar .trix-input--dialog {
+    background-color: #1f2937;
+    border-color: #6b7280;
+    color: #e5e7eb;
+  }
 }
 
 trix-toolbar .trix-input--dialog.validate:invalid {
@@ -521,6 +569,12 @@ trix-editor .attachment__metadata .attachment__size {
   padding-left: 0.6em;
 }
 
+@media (prefers-color-scheme: dark) {
+  .trix-content blockquote {
+    border-color: #6b7280;
+  }
+}
+
 .trix-content [dir=rtl] blockquote,
 .trix-content blockquote[dir=rtl] {
   border-width: 0;
@@ -547,6 +601,13 @@ trix-editor .attachment__metadata .attachment__size {
   white-space: pre;
   background-color: #eee;
   overflow-x: auto;
+}
+
+@media (prefers-color-scheme: dark) {
+  .trix-content pre {
+    background-color: #374151;
+    color: #e5e7eb;
+  }
 }
 
 .trix-content img {
@@ -583,10 +644,20 @@ trix-editor .attachment__metadata .attachment__size {
   text-align: center;
 }
 
+.attachment--preview img {
+  background-color: white;
+}
+
 .trix-content .attachment--preview .attachment__caption {
   color: #666;
   font-size: 0.9em;
   line-height: 1.2;
+}
+
+@media (prefers-color-scheme: dark) {
+  .trix-content .attachment--preview .attachment__caption {
+    color: #9ca3af;
+  }
 }
 
 .trix-content .attachment--file {
@@ -596,6 +667,14 @@ trix-editor .attachment__metadata .attachment__size {
   padding: 0.4em 1em;
   border: 1px solid #bbb;
   border-radius: 5px;
+}
+
+@media (prefers-color-scheme: dark) {
+  .trix-content .attachment--file {
+    color: #e5e7eb;
+    border-color: #6b7280;
+    background-color: #374151;
+  }
 }
 
 .trix-content .attachment-gallery {

@@ -1,7 +1,7 @@
 <% content_for :title, "Editing lesson" %>
-<h1>Editing lesson</h1>
+<h1 class="dark:text-gray-200">Editing lesson</h1>
 <%= render "form", lesson: @lesson %>
 <div>
-  <%= link_to "Show lesson", @lesson, class: "w-full sm:w-auto text-center mt-2 sm:mt-0 rounded-lg px-3 py-2 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-  <%= link_to "Back to lessons", lessons_path, class: "w-full sm:w-auto text-center mt-2 sm:mt-0 rounded-lg px-3 py-2 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+  <%= link_to "Show lesson", @lesson, class: "w-full sm:w-auto text-center mt-2 sm:mt-0 rounded-lg px-3 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 inline-block font-medium dark:text-gray-200" %>
+  <%= link_to "Back to lessons", lessons_path, class: "w-full sm:w-auto text-center mt-2 sm:mt-0 rounded-lg px-3 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 inline-block font-medium dark:text-gray-200" %>
 </div>

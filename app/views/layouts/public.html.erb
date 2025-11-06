@@ -20,86 +20,102 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.default.min.css">
     <%= javascript_importmap_tags 'application' %>
   </head>
-  <body class="bg-white dark:bg-zinc-950 flex h-screen overflow-hidden" data-controller="sidebar">
-    <!-- Sidebar -->
-    <aside class="text-zinc-100 bg-linear-to-r from-indigo-800 to-teal-500 body-font w-64 flex-shrink-0 hidden md:flex flex-col">
-      <div class="p-5 border-b border-teal-600">
-        <span class="text-xl font-medium">
-          <%= content_for?(:page_title) ? content_for(:page_title) : (content_for?(:title) ? content_for(:title) : link_to("The Vivek Project", root_path, class: "text-white")) %>
-        </span>
-      </div>
-      <nav class="flex-col flex-1 overflow-y-auto py-4 text-teal-200">
-        <%= link_to "About", about_path, class: nav_link_class(["/about"]) %>
-        <%= link_to "Contact", contact_path, class: nav_link_class(["/contact"]) %>
-      </nav>
-      <div class="flex-col py-4 border-t border-teal-600 text-teal-200">
-        <% if user_signed_in? %>
-          <% if current_user.is_employee? %>
-            <%= link_to "Admin", assignments_path, class: nav_link_class(["/assignments"]) %>
-          <% end %>
-          <%= link_to "My Account", edit_user_registration_path, class: nav_link_class(["/users/edit"]) %>
-          <%= button_to "Log out", destroy_user_session_path, method: :delete, class:"inline-flex object-center items-center justify-right bg-white opacity-50 border-lime-600 border-2 py-1 px-3 focus:outline-none hover:border-teal-600 hover:border-2 rounded-xl text-black m-4 md:mt-0" %>
-        <% else %>
-          <a href= <%= new_user_session_path %> class="inline-flex object-center items-center justify-right bg-white opacity-50 border-lime-600 border-2 py-1 px-3 focus:outline-none hover:border-teal-600 hover:border-2 rounded-xl text-black mt-4 md:mt-0">Login
-            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
-              <path d="M5 12h14M12 5l7 7-7 7"></path>
+  <body class="bg-white dark:bg-zinc-950 flex flex-col min-h-screen" data-controller="sidebar">
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-indigo-800 to-teal-500 text-white border-b border-teal-600 sticky top-0 z-50">
+      <div class="container mx-auto px-4 py-4">
+        <div class="flex items-center justify-between">
+          <!-- Logo/Brand -->
+          <div class="text-xl font-medium">
+            <%= content_for?(:page_title) ? content_for(:page_title) : (content_for?(:title) ? content_for(:title) : link_to("The Vivek Project", root_path, class: "text-white hover:text-teal-200")) %>
+          </div>
+          <!-- Desktop Navigation -->
+          <nav class="hidden md:flex items-center gap-6">
+            <%= link_to "About", about_path, class: "text-teal-200 hover:text-white px-3 py-2 rounded-lg transition-colors #{request.path == about_path ? 'bg-white/10' : ''}" %>
+            <%= link_to "Contact", contact_path, class: "text-teal-200 hover:text-white px-3 py-2 rounded-lg transition-colors #{request.path == contact_path ? 'bg-white/10' : ''}" %>
+            <% if user_signed_in? %>
+              <!-- User dropdown -->
+              <div class="relative" data-controller="dropdown">
+                <button data-action="click->dropdown#toggle click@window->dropdown#hide"
+                  class="inline-flex items-center gap-2 bg-white opacity-90 hover:opacity-100 border-lime-600 border-2 py-2 px-4 hover:border-teal-600 rounded-xl text-black transition-all">
+                  <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                  </svg>
+                  <span><%= current_user.name %></span>
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                  </svg>
+                </button>
+                <div data-dropdown-target="menu"
+                     class="hidden absolute right-0 mt-2 w-48 rounded-lg shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black ring-opacity-5 overflow-hidden">
+                  <div class="py-1">
+                    <% if current_user.is_employee? %>
+                      <%= link_to "Admin", assignments_path, class: "block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700" %>
+                    <% end %>
+                    <%= link_to "My Account", edit_user_registration_path, class: "block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700" %>
+                    <hr class="border-gray-200 dark:border-gray-600">
+                    <%= button_to "Log out", destroy_user_session_path, method: :delete, class: "w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-700" %>
+                  </div>
+                </div>
+              </div>
+            <% else %>
+              <%= link_to new_user_session_path, class: "inline-flex items-center bg-white opacity-90 hover:opacity-100 border-lime-600 border-2 py-2 px-4 hover:border-teal-600 rounded-xl text-black transition-all" do %>
+                Login
+                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
+                  <path d="M5 12h14M12 5l7 7-7 7"></path>
+                </svg>
+              <% end %>
+            <% end %>
+          </nav>
+          <!-- Mobile menu button -->
+          <button data-action="click->sidebar#toggle" class="md:hidden p-2 rounded-lg hover:bg-white/10">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
             </svg>
-          </a>
-        <% end %>
+          </button>
+        </div>
       </div>
-    </aside>
-    <!-- Mobile header bar -->
-    <div class="md:hidden fixed top-0 left-0 w-full bg-linear-to-r from-indigo-700 to-lime-500 border-b border-zinc-500 z-40 p-4">
-      <div class="relative flex items-center justify-center">
-        <button data-action="click->sidebar#toggle" class="absolute left-0 p-2 rounded-lg hover:bg-sky-200">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-          </svg>
-        </button>
-        <span class="text-xl font-medium">
-          <%= content_for?(:page_title) ? content_for(:page_title) : (content_for?(:title) ? content_for(:title) : link_to("The Vivek Project", root_path, class: "text-white")) %>
-        </span>
-      </div>
-    </div>
-    <!-- Mobile sidebar overlay -->
+    </header>
+    <!-- Mobile menu overlay -->
     <div data-sidebar-target="overlay"
          class="hidden fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
          data-action="click->sidebar#close"></div>
-    <!-- Mobile sidebar -->
+    <!-- Mobile menu -->
     <aside data-sidebar-target="menu"
-           class="fixed top-0 left-0 h-full bg-linear-to-r from-indigo-800 to-teal-500 w-64 z-50 md:hidden flex flex-col"
+           class="fixed top-0 left-0 h-full bg-gradient-to-b from-indigo-800 to-teal-500 w-64 z-50 md:hidden flex flex-col text-white"
            style="transform: translateX(-100%); transition: transform 0.3s ease-in-out;">
       <div class="p-5 border-b border-teal-600">
         <span class="text-xl font-medium">
-          <%= content_for?(:page_title) ? content_for(:page_title) : (content_for?(:title) ? content_for(:title) : link_to("The Vivek Project", root_path, class: "text-white")) %>
+          <%= content_for?(:page_title) ? content_for(:page_title) : (content_for?(:title) ? content_for(:title) : "The Vivek Project") %>
         </span>
       </div>
-      <nav class="flex-1 overflow-y-auto py-4">
-        <%= link_to "About", about_path, class: nav_link_class(["/about"]) %>
-        <%= link_to "Contact", contact_path, class: nav_link_class(["/contact"]) %>
-      </nav>
-      <div class="py-4 border-t border-teal-600">
+      <nav class="flex-1 overflow-y-auto py-4 px-2">
+        <%= link_to "About", about_path, class: "block text-teal-200 hover:text-white hover:bg-white/10 px-3 py-2 rounded-lg mb-1" %>
+        <%= link_to "Contact", contact_path, class: "block text-teal-200 hover:text-white hover:bg-white/10 px-3 py-2 rounded-lg mb-1" %>
         <% if user_signed_in? %>
           <% if current_user.is_employee? %>
-            <%= link_to "Admin", assignments_path, class: nav_link_class(["/assignments"]) %>
+            <%= link_to "Admin", assignments_path, class: "block text-teal-200 hover:text-white hover:bg-white/10 px-3 py-2 rounded-lg mb-1" %>
           <% end %>
-          <%= link_to "My Account", edit_user_registration_path, class: nav_link_class(["/users/edit"]) %>
-          <%= button_to "Log out", destroy_user_session_path, method: :delete, class:"inline-flex object-center items-center justify-right bg-white opacity-50 border-lime-600 border-2 py-1 px-3 focus:outline-none hover:border-teal-600 hover:border-2 rounded-xl text-black m-4 md:mt-0" %>
+          <%= link_to "My Account", edit_user_registration_path, class: "block text-teal-200 hover:text-white hover:bg-white/10 px-3 py-2 rounded-lg mb-1" %>
+        <% end %>
+      </nav>
+      <div class="py-4 px-2 border-t border-teal-600">
+        <% if user_signed_in? %>
+          <%= button_to "Log out", destroy_user_session_path, method: :delete, class: "w-full inline-flex items-center justify-center bg-white opacity-90 hover:opacity-100 border-lime-600 border-2 py-2 px-4 hover:border-teal-600 rounded-xl text-black" %>
         <% else %>
-          <a href= <%= new_user_session_path %> class="inline-flex object-center items-center justify-right bg-white opacity-50 border-lime-600 border-2 py-1 px-3 focus:outline-none hover:border-teal-600 hover:border-2 rounded-xl text-black mt-4 md:mt-0">Login
+          <%= link_to new_user_session_path, class: "w-full inline-flex items-center justify-center bg-white opacity-90 hover:opacity-100 border-lime-600 border-2 py-2 px-4 hover:border-teal-600 rounded-xl text-black" do %>
+            Login
             <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
               <path d="M5 12h14M12 5l7 7-7 7"></path>
             </svg>
-          </a>
+          <% end %>
         <% end %>
       </div>
     </aside>
     <!-- Main content area -->
-    <div class="flex-1 flex flex-col overflow-hidden">
-      <main class="flex-1 overflow-y-auto px-5 pb-10 pt-18 md:pt-10 md:px-10">
-        <p style="color: green"><%= notice %></p>
-        <%= yield %>
-      </main>
-    </div>
+    <main class="flex-1 overflow-y-auto px-4 py-6 md:px-10 md:py-10 container mx-auto">
+      <p style="color: green"><%= notice %></p>
+      <%= yield %>
+    </main>
   </body>
 </html>

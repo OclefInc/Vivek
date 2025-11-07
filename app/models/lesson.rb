@@ -68,6 +68,32 @@ class Lesson < ApplicationRecord
       assignment
     end
 
+    def existing_description_attachments
+      return [] unless assignment.present?
+
+      # Get all lessons in the same assignment (no eager loading needed for has_rich_text)
+      assignment.lessons.flat_map do |lesson|
+        next [] unless lesson.description.body.present?
+
+        # Get all attachments from the lesson's description
+        lesson.description.body.attachments.map do |attachment|
+          # ActionText::Attachment has attachable which returns the blob
+          blob = attachment.attachable
+          next unless blob.is_a?(ActiveStorage::Blob)
+
+          {
+            blob: blob,
+            sgid: blob.attachable_sgid,
+            filename: blob.filename.to_s,
+            lesson_name: lesson.name,
+            lesson_id: lesson.id,
+            description_copyrighted: blob.metadata["copyrighted"] == true,
+            description_purchase_url: blob.metadata["purchase_url"]
+          }
+        end
+      end.compact
+    end
+
     private
     def assign_default_name
       # set name to date if name is blank

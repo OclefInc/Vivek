@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   namespace :display do
     resources :sheet_musics
     resources :skills
@@ -8,16 +7,16 @@ Rails.application.routes.draw do
     resources :students
   end
   resources :sheet_musics
-  devise_for :users, controllers: { 
-    confirmations: 'users/confirmations',
-    #omniauth_callbacks: 'users/omniauth_callbacks',
-    passwords: 'users/passwords',
-    registrations: 'users/registrations',
-    sessions: 'users/sessions', 
-    unlocks: 'users/unlocks'
-  } 
+  devise_for :users, controllers: {
+    confirmations: "users/confirmations",
+    # omniauth_callbacks: 'users/omniauth_callbacks',
+    passwords: "users/passwords",
+    registrations: "users/registrations",
+    sessions: "users/sessions",
+    unlocks: "users/unlocks"
+  }
   devise_scope :user do
-    authenticate :user, lambda{|u|u.is_employee?} do
+    authenticate :user, lambda { |u|u.is_employee? } do
       mount MissionControl::Jobs::Engine, at: "/jobs"
     end
   end
@@ -33,6 +32,10 @@ Rails.application.routes.draw do
   end
 
   resources :comments
+
+  # Attachments metadata endpoint
+  post "attachments/update_metadata", to: "attachments#update_metadata"
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -45,7 +48,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
-  get "/about", to:"home#about"
-  get "/contact", to:"home#contact"
+  get "/about", to: "home#about"
+  get "/contact", to: "home#contact"
   root to: "home#index"
 end

@@ -60,7 +60,7 @@ input[type=file][data-direct-upload-url][disabled] {
 
 trix-editor {
   border: 1px solid #ace3f7;
-  border-radius: 20px;
+  border-radius: 8px;
   margin: 0;
   padding: 0.4em 0.6em;
   min-height: 5em;

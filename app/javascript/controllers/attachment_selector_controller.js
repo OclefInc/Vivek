@@ -48,8 +48,18 @@ export default class extends Controller {
 
     console.log("Attachment created:", attachment)
 
-    // Insert the attachment at the current cursor position
-    trixEditor.editor.insertAttachment(attachment)
+    // Check if the Trix editor is focused
+    const isFocused = document.activeElement === trixEditor
+
+    if (isFocused) {
+      // Insert at current cursor position
+      trixEditor.editor.insertAttachment(attachment)
+    } else {
+      // If not focused, insert at the end of the content
+      const length = trixEditor.editor.getDocument().toString().length
+      trixEditor.editor.setSelectedRange([length - 1, length - 1])
+      trixEditor.editor.insertAttachment(attachment)
+    }
 
     // Reset the select dropdown
     event.target.value = ""

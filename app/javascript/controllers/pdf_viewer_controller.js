@@ -20,9 +20,6 @@ export default class extends Controller {
     // Set worker path
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js'
 
-    console.log('PDF URL:', this.urlValue)
-    console.log('Has URL:', this.hasUrlValue)
-
     try {
       // Load the PDF document - PDF.js expects an object with url property
       const loadingTask = pdfjsLib.getDocument({ url: this.urlValue })

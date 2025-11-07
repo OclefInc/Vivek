@@ -5,8 +5,6 @@ export default class extends Controller {
   static targets = ["editor", "modal", "copyrightCheckbox", "purchaseUrl", "blobId"]
 
   connect() {
-    console.log("Attachment metadata controller connected")
-
     // Listen for trix-attachment-add events
     if (this.hasEditorTarget) {
       this.editorTarget.addEventListener("trix-attachment-add", this.handleAttachmentAdd.bind(this))
@@ -21,11 +19,9 @@ export default class extends Controller {
 
   handleAttachmentAdd(event) {
     const attachment = event.attachment
-    console.log("Attachment added:", attachment)
 
     // Only handle new file uploads (not existing attachments being inserted)
     if (attachment.file) {
-      console.log("New file upload detected")
       // Store the attachment to update later
       this.currentAttachment = attachment
 
@@ -33,7 +29,6 @@ export default class extends Controller {
       // Listen for trix-attachment-upload event
       const uploadCompleteHandler = (uploadEvent) => {
         if (uploadEvent.attachment === attachment) {
-          console.log("Upload complete for attachment:", uploadEvent.attachment)
           this.editorTarget.removeEventListener("trix-attachment-upload", uploadCompleteHandler)
 
           // Show modal after upload completes
@@ -74,8 +69,6 @@ export default class extends Controller {
       return
     }
 
-    console.log("Saving metadata:", { isCopyrighted, purchaseUrl })
-
     // Get the blob signed ID from the attachment
     if (this.currentAttachment) {
       // Try different ways to get the SGID
@@ -94,13 +87,9 @@ export default class extends Controller {
         sgid = this.currentAttachment.sgid
       }
 
-      console.log("Found SGID:", sgid)
-
       if (sgid) {
         // Send metadata to server
         this.updateBlobMetadata(sgid, isCopyrighted, purchaseUrl)
-      } else {
-        console.error("Could not find SGID for attachment:", this.currentAttachment)
       }
     }
 
@@ -125,8 +114,6 @@ export default class extends Controller {
   }
 
   async updateBlobMetadata(sgid, copyrighted, purchaseUrl) {
-    console.log("Updating blob metadata with:", { sgid, copyrighted, purchaseUrl })
-
     try {
       const response = await fetch('/attachments/update_metadata', {
         method: 'POST',
@@ -142,12 +129,9 @@ export default class extends Controller {
       })
 
       const data = await response.json()
-      console.log("Server response:", data)
 
       if (!response.ok) {
         console.error("Failed to update metadata:", data)
-      } else {
-        console.log("Metadata updated successfully!")
       }
     } catch (error) {
       console.error("Error updating metadata:", error)

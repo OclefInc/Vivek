@@ -4,28 +4,7 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static targets = ["viewMode", "editMode", "editButton", "copyrightCheckbox", "purchaseUrlInput"]
 
-  connect() {
-    console.log("Blob metadata controller connected")
-    console.log("Controller element:", this.element)
-    console.log("Controller element HTML:", this.element.innerHTML.substring(0, 200))
-    console.log("Controller element children:", this.element.children)
-    console.log("Has viewMode target:", this.hasViewModeTarget)
-    console.log("Has editMode target:", this.hasEditModeTarget)
-    console.log("Has editButton target:", this.hasEditButtonTarget)
-
-    // Try to find the targets manually
-    const viewMode = this.element.querySelector('[data-blob-metadata-target="viewMode"]')
-    const editMode = this.element.querySelector('[data-blob-metadata-target="editMode"]')
-    const allTargets = this.element.querySelectorAll('[data-blob-metadata-target]')
-    console.log("Manual viewMode find:", viewMode)
-    console.log("Manual editMode find:", editMode)
-    console.log("All targets found:", allTargets.length, allTargets)
-  }
-
   toggleEdit() {
-    console.log("toggleEdit called")
-    console.log("viewModeTarget:", this.viewModeTarget)
-    console.log("editModeTarget:", this.editModeTarget)
     this.viewModeTarget.classList.add("hidden")
     this.editModeTarget.classList.remove("hidden")
     this.editButtonTarget.classList.add("hidden")

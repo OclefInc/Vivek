@@ -2,6 +2,10 @@
 
 class Users::ConfirmationsController < Devise::ConfirmationsController
   layout "public"
+
+  # Allow all browsers for confirmation links (email clients may use older browsers)
+  allow_browser versions: :all
+
   # GET /resource/confirmation/new
   # def new
   #   super
@@ -13,9 +17,12 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
   # end
 
   # GET /resource/confirmation?confirmation_token=abcdef
-  # def show
-  #   super
-  # end
+  def show
+    Rails.logger.info "=== Confirmation show action started ==="
+    Rails.logger.info "Params: #{params.inspect}"
+    super
+    Rails.logger.info "=== Confirmation show action completed ==="
+  end
 
   # protected
 
@@ -25,7 +32,8 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
   # end
 
   # The path used after confirmation.
-  # def after_confirmation_path_for(resource_name, resource)
-  #   super(resource_name, resource)
-  # end
+  def after_confirmation_path_for(resource_name, resource)
+    Rails.logger.info "=== After confirmation path for #{resource_name} ==="
+    super(resource_name, resource)
+  end
 end

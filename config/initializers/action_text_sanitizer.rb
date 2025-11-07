@@ -48,6 +48,7 @@ attributes << "data-pdf-viewer-pages-value"
 # Other data attributes
 attributes << "data-blob-sgid"
 attributes << "data-key"
+attributes << "data-derived"
 attributes << "id"
 # Form attributes
 attributes << "value"

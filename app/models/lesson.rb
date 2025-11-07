@@ -77,6 +77,9 @@ class Lesson < ApplicationRecord
 
         # Get all attachments from the lesson's description
         lesson.description.body.attachments.map do |attachment|
+          # Skip attachments that were derived (reused from dropdown)
+          next if attachment.node["derived"] == "true"
+
           # ActionText::Attachment has attachable which returns the blob
           blob = attachment.attachable
           next unless blob.is_a?(ActiveStorage::Blob)

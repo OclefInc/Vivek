@@ -31,13 +31,17 @@ export default class extends Controller {
     console.log("Blob details:", { filename, contentType, byteSize, url })
 
     // Create attachment with proper attributes
+    // Note: Metadata (copyrighted, purchase_url, pages) is stored on the blob itself
+    // and will be automatically available when the attachment is rendered
+    // Add 'derived' attribute to indicate this attachment was reused, not uploaded
     const attachment = new Trix.Attachment({
       sgid: sgid,
       contentType: contentType,
       filename: filename,
       filesize: byteSize,
       href: url,
-      url: url
+      url: url,
+      derived: true
     })
 
     console.log("Attachment created:", attachment)

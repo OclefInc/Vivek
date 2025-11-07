@@ -63,7 +63,16 @@ export default class extends Controller {
     event.preventDefault()
 
     const isCopyrighted = this.hasCopyrightCheckboxTarget && this.copyrightCheckboxTarget.checked
-    const purchaseUrl = this.hasPurchaseUrlTarget ? this.purchaseUrlTarget.value : ""
+    const purchaseUrl = this.hasPurchaseUrlTarget ? this.purchaseUrlTarget.value.trim() : ""
+
+    // Validate: require purchase URL if copyrighted
+    if (isCopyrighted && !purchaseUrl) {
+      alert("Purchase link is required for copyrighted materials.")
+      if (this.hasPurchaseUrlTarget) {
+        this.purchaseUrlTarget.focus()
+      }
+      return
+    }
 
     console.log("Saving metadata:", { isCopyrighted, purchaseUrl })
 

@@ -1,37 +1,43 @@
 <%
   # Generate proper URL for PDF viewing with inline disposition
-  pdf_url = rails_blob_url(blob, disposition: "inline")
+  pdf_url = url_for(blob)
 %>
 <div class="relative inline-block w-full">
-  <iframe src="<%= pdf_url %>#view=FitH" class="border" width="100%" height="800" style="border: 1px solid #ccc; <%= is_copyrighted ? 'pointer-events: none;' : '' %>" data-copyright-iframe></iframe>
-
-  <% if is_copyrighted %>
-    <!-- Copyright banner overlay -->
-    <div class="absolute top-0 left-0 right-0 bg-amber-100 border-b-2 border-amber-300 px-4 py-2 flex items-center gap-2 shadow-md z-10" data-copyright-overlay>
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 text-amber-700 flex-shrink-0">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 3.75h.008v.008H12v-.008Z" />
-      </svg>
-      <span class="text-sm font-semibold text-amber-900">⚠️ COPYRIGHTED MATERIAL - For Educational Use Only - Download Disabled</span>
-    </div>
-
-    <!-- Transparent overlay to block interactions -->
-    <div class="absolute inset-0 w-full h-full z-5" data-copyright-blocker style="background: transparent; cursor: not-allowed;"></div>
-  <% end %>
+  <!-- PDF.js viewer container -->
+  <div data-controller="pdf-viewer"
+       data-pdf-viewer-url-value="<%= pdf_url %>"
+       data-pdf-viewer-copyrighted-value="<%= is_copyrighted %>"
+       class="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-600 overflow-auto"
+       style="max-height: 800px; <%= is_copyrighted ? 'user-select: none;' : '' %>">
+    <!-- PDF pages will be rendered here as canvas elements -->
+  </div>
 </div>
-
 <% if is_copyrighted %>
   <div class="mt-3 p-3 bg-amber-50 border border-amber-200">
-      <div class="flex justify-between items-start gap-2">
-        <p class="text-sm font-medium text-amber-800">Copyrighted Material</p>
-        <% if purchase_url.present? %>
-          <p class="text-sm text-amber-700 mt-1">
-            Purchase:
-            <%= link_to "Click Here", purchase_url,
+    <div class="flex justify-between items-start gap-2">
+      <p class="text-sm font-medium text-amber-800">Copyrighted Material</p>
+      <% if purchase_url.present? %>
+        <p class="text-sm text-amber-700 mt-1">
+          Purchase:
+          <%= link_to "Click Here", purchase_url,
                 target: "_blank",
                 rel: "noopener noreferrer",
                 class: "text-blue-600 hover:text-blue-800 underline font-medium" %>
-          </p>
-        <% end %>
-      </div>
+        </p>
+      <% end %>
+    </div>
+  </div>
+<% else %>
+  <div class="mt-3 p-3 bg-amber-50 border border-amber-200">
+    <div class="flex justify-between items-start gap-2">
+      <p class="text-sm font-medium text-amber-800">Non Copyrighted Material</p>
+      <p class="text-sm text-amber-700 mt-1">
+        Download:
+        <%= link_to "Click Here", rails_blob_path(blob, disposition: "attachment"),
+                target: "_blank",
+                rel: "noopener noreferrer",
+                class: "text-blue-600 hover:text-blue-800 underline font-medium" %>
+      </p>
+    </div>
   </div>
 <% end %>

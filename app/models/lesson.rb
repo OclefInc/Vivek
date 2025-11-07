@@ -72,7 +72,7 @@ class Lesson < ApplicationRecord
       return [] unless assignment.present?
 
       # Get all lessons in the same assignment (no eager loading needed for has_rich_text)
-      assignment.lessons.flat_map do |lesson|
+      assignment.lessons.order(:sort).flat_map do |lesson|
         next [] unless lesson.description.body.present?
 
         # Get all attachments from the lesson's description

@@ -18,3 +18,5 @@ pin "dropzone", to: "https://ga.jspm.io/npm:dropzone@5.7.2/dist/dropzone.js"
 pin "@rails/activestorage", to: "activestorage.esm.js"
 
 pin "tom-select", to: "https://ga.jspm.io/npm:tom-select@2.3.1/dist/esm/tom-select.complete.js"
+
+pin "pdfjs-dist", to: "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"

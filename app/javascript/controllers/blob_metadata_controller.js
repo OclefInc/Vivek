@@ -41,9 +41,14 @@ export default class extends Controller {
     const button = event.currentTarget
     const sgid = button.dataset.blobSgid
     const isCopyrighted = this.copyrightCheckboxTarget.checked
-    const purchaseUrl = this.purchaseUrlInputTarget.value
+    const purchaseUrl = this.purchaseUrlInputTarget.value.trim()
 
-    console.log("Saving blob metadata:", { sgid, isCopyrighted, purchaseUrl })
+    // Validate: require purchase URL if copyrighted
+    if (isCopyrighted && !purchaseUrl) {
+      alert("Purchase link is required for copyrighted materials.")
+      this.purchaseUrlInputTarget.focus()
+      return
+    }
 
     try {
       const response = await fetch('/attachments/update_metadata', {

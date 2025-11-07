@@ -41,6 +41,9 @@ attributes << "data-attachment-metadata-target"
 attributes << "data-sidebar-target"
 attributes << "data-dropdown-target"
 attributes << "data-sortable-target"
+# Stimulus value attributes
+attributes << "data-pdf-viewer-url-value"
+attributes << "data-pdf-viewer-copyrighted-value"
 # Other data attributes
 attributes << "data-blob-sgid"
 attributes << "data-key"

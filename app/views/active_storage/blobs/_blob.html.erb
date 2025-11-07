@@ -2,13 +2,10 @@
   # Check if this blob has copyright metadata (blob-level, shared across all attachments)
   is_copyrighted = blob.metadata['copyrighted'] == true
   purchase_url = blob.metadata['purchase_url']
-  # Pages are per-attachment, stored in data-pages attribute on <action-text-attachment>
-  # For the editor, we read from the attachment element via JavaScript
-  pages = "" # Default to empty (show all pages)
 %>
 <figure class="attachment attachment--<%= blob.representable? ? "preview" : "file" %> attachment--<%= blob.filename.extension %>">
   <% if blob.filename.extension == 'pdf' %>
-    <%= render :partial => '/active_storage/blobs/pdf', locals: {blob: blob, is_copyrighted: is_copyrighted, purchase_url: purchase_url, pages: pages} %>
+    <%= render :partial => '/active_storage/blobs/pdf', locals: {blob: blob, is_copyrighted: is_copyrighted, purchase_url: purchase_url} %>
   <% elsif blob.representable? %>
     <%= image_tag blob.representation(resize_to_limit: local_assigns[:in_gallery] ? [ 800, 600 ] : [ 1024, 768 ]) %>
   <% end %>

@@ -51,6 +51,7 @@ attributes << "data-blob-sgid"
 attributes << "data-key"
 attributes << "data-derived"
 attributes << "data-pages"
+attributes << "data-attachment-pages"  # For wrapper div around attachments
 attributes << "id"
 # Form attributes
 attributes << "value"

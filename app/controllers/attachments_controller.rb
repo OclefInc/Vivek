@@ -45,12 +45,47 @@ class AttachmentsController < ApplicationController
         # Parse the HTML content
         doc = Nokogiri::HTML.fragment(content.to_html)
 
-        # Find the div with data-controller="attachment-pages" and data-blob-sgid matching this blob
-        attachment_div = doc.at_css("div[data-controller='attachment-pages'][data-blob-sgid='#{sgid}']")
+        # Action Text stores attachments as <action-text-attachment> elements with an sgid attribute
+        # The sgid contains the attachable SGID, which may have expired
+        # We search by matching the URL (which contains the blob key) or by decoding the SGID
 
-        if attachment_div
-          # Update the data-pages attribute
-          attachment_div["data-pages"] = pages
+        attachment_element = doc.css("action-text-attachment").find do |el|
+          el_sgid = el["sgid"]
+          el_url = el["url"]
+
+          # Try to match by URL containing the blob key
+          if el_url&.include?(blob.key)
+            true
+          # Or try to decode the SGID
+          elsif el_sgid
+            begin
+              # Use locate_signed which handles attachable SGIDs
+              attachable = GlobalID::Locator.locate_signed(el_sgid, for: :attachable)
+              attachable.is_a?(ActiveStorage::Blob) && attachable.id == blob.id
+            rescue
+              false
+            end
+          else
+            false
+          end
+        end
+
+        if attachment_element
+          # Check if already wrapped in a div with data-pages
+          parent = attachment_element.parent
+          if parent.name == "div" && parent["data-attachment-pages"]
+            # Already wrapped, just update the data-pages attribute
+            parent["data-pages"] = pages
+          else
+            # Wrap the action-text-attachment in a div with data-pages attribute
+            wrapper = Nokogiri::XML::Node.new("div", doc)
+            wrapper["data-attachment-pages"] = "true"
+            wrapper["data-pages"] = pages
+
+            # Replace the attachment element with the wrapped version
+            attachment_element.replace(wrapper)
+            wrapper.add_child(attachment_element)
+          end
 
           # Create new ActionText::Content from the modified HTML
           rich_text.update(body: doc.to_html)
@@ -60,6 +95,7 @@ class AttachmentsController < ApplicationController
 
           render json: { success: true }
         else
+          Rails.logger.error "Attachment element not found. Content: #{content.to_html[0..500]}"
           render json: { error: "Attachment not found in content" }, status: :not_found
         end
       else

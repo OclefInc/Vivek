@@ -3,8 +3,8 @@
 class Users::ConfirmationsController < Devise::ConfirmationsController
   layout "public"
 
-  # Allow all browsers for confirmation links (email clients may use older browsers)
-  allow_browser versions: :all
+  # Skip browser version check for confirmation links (email clients may use older browsers)
+  skip_before_action :verify_browser_version, raise: false
 
   # GET /resource/confirmation/new
   # def new

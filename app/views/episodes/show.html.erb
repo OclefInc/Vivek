@@ -8,7 +8,7 @@
         <div class="border border-zinc-300 dark:border-zinc-600 rounded p-4 dark:bg-zinc-800">
           <p class="text-sky-700 dark:text-teal-400 m-2 text-lg">
             <strong>Project:</strong>
-            <%= link_to @episode.project.composition.name, display_composition_path(@episode.project.composition), class:'text-indigo-500 hover:text-indigo-300' %>
+            <%= link_to @episode.project.composition.name, project_path(@episode.project), class:'text-indigo-500 hover:text-indigo-300' %>
           </p>
           <p class="text-sky-700 dark:text-teal-400 m-2">
             <strong>Student:</strong>

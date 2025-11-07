@@ -1,8 +1,9 @@
 import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="blob-metadata"
+// Manages blob-level metadata (copyrighted, purchase_url) shared across all attachments
 export default class extends Controller {
-  static targets = ["viewMode", "editMode", "editButton", "copyrightCheckbox", "purchaseUrlInput", "pagesInput"]
+  static targets = ["viewMode", "editMode", "editButton", "copyrightCheckbox", "purchaseUrlInput"]
 
   toggleEdit() {
     this.viewModeTarget.classList.add("hidden")
@@ -21,7 +22,6 @@ export default class extends Controller {
     const sgid = button.dataset.blobSgid
     const isCopyrighted = this.copyrightCheckboxTarget.checked
     const purchaseUrl = this.purchaseUrlInputTarget.value.trim()
-    const pages = this.hasPagesInputTarget ? this.pagesInputTarget.value.trim() : ''
 
     // Validate: require purchase URL if copyrighted
     if (isCopyrighted && !purchaseUrl) {
@@ -31,6 +31,8 @@ export default class extends Controller {
     }
 
     try {
+      // Only save blob-level metadata (copyrighted and purchase_url)
+      // Pages are handled by attachment-pages controller
       const response = await fetch('/attachments/update_metadata', {
         method: 'POST',
         headers: {
@@ -40,8 +42,7 @@ export default class extends Controller {
         body: JSON.stringify({
           sgid: sgid,
           copyrighted: isCopyrighted,
-          purchase_url: purchaseUrl,
-          pages: pages
+          purchase_url: purchaseUrl
         })
       })
 

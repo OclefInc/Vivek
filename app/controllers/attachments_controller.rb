@@ -4,9 +4,10 @@ class AttachmentsController < ApplicationController
     blob = ActiveStorage::Blob.find_signed(sgid)
 
     if blob
+      # Only save blob-level metadata (shared across all attachments)
       blob.metadata["copyrighted"] = params[:copyrighted]
       blob.metadata["purchase_url"] = params[:purchase_url] if params[:purchase_url].present?
-      blob.metadata["pages"] = params[:pages] if params[:pages].present?
+      # Note: pages are NOT saved here - they're per-attachment via data-pages attribute
       blob.save!
 
       # Touch the associated objects to update their updated_at timestamp
@@ -15,6 +16,55 @@ class AttachmentsController < ApplicationController
       render json: { success: true }
     else
       render json: { error: "Blob not found" }, status: :not_found
+    end
+  rescue => e
+    render json: { error: e.message }, status: :unprocessable_entity
+  end
+
+  def update_pages
+    sgid = params[:sgid]
+    pages = params[:pages]
+    record_type = params[:record_type]
+    record_id = params[:record_id]
+
+    blob = ActiveStorage::Blob.find_signed(sgid)
+
+    if blob && record_type && record_id
+      # Find the specific Action Text rich text record for this record
+      # The name is typically the field name (e.g., "description")
+      rich_text = ActionText::RichText.find_by(
+        record_type: record_type,
+        record_id: record_id,
+        name: "description" # Adjust if you have multiple rich text fields
+      )
+
+      if rich_text
+        # Parse the HTML content
+        doc = Nokogiri::HTML.fragment(rich_text.body.to_s)
+
+        # Find the div with data-controller="attachment-pages" and data-blob-sgid matching this blob
+        attachment_div = doc.at_css("div[data-controller='attachment-pages'][data-blob-sgid='#{sgid}']")
+
+        if attachment_div
+          # Update the data-pages attribute
+          attachment_div["data-pages"] = pages
+
+          # Save the updated HTML back to the rich text
+          rich_text.body = doc.to_html
+          rich_text.save!
+
+          # Touch the parent record
+          rich_text.record.touch if rich_text.record
+
+          render json: { success: true }
+        else
+          render json: { error: "Attachment not found in content" }, status: :not_found
+        end
+      else
+        render json: { error: "Rich text record not found" }, status: :not_found
+      end
+    else
+      render json: { error: "Missing required parameters" }, status: :unprocessable_entity
     end
   rescue => e
     render json: { error: e.message }, status: :unprocessable_entity

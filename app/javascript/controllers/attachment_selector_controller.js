@@ -34,6 +34,7 @@ export default class extends Controller {
     // Note: Metadata (copyrighted, purchase_url, pages) is stored on the blob itself
     // and will be automatically available when the attachment is rendered
     // Add 'derived' attribute to indicate this attachment was reused, not uploaded
+    // Add 'pages' attribute to specify which pages to show (per-attachment, not per-blob)
     const attachment = new Trix.Attachment({
       sgid: sgid,
       contentType: contentType,
@@ -41,7 +42,8 @@ export default class extends Controller {
       filesize: byteSize,
       href: url,
       url: url,
-      derived: true
+      derived: true,
+      pages: "" // Empty string means show all pages; user can edit later
     })
 
     console.log("Attachment created:", attachment)

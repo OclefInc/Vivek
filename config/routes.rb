@@ -35,6 +35,7 @@ Rails.application.routes.draw do
 
   # Attachments metadata endpoint
   post "attachments/update_metadata", to: "attachments#update_metadata"
+  post "attachments/update_pages", to: "attachments#update_pages"
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

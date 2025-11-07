@@ -39,8 +39,11 @@ class AttachmentsController < ApplicationController
       )
 
       if rich_text
+        # Get the body as ActionText::Content
+        content = rich_text.body
+
         # Parse the HTML content
-        doc = Nokogiri::HTML.fragment(rich_text.body.to_s)
+        doc = Nokogiri::HTML.fragment(content.to_html)
 
         # Find the div with data-controller="attachment-pages" and data-blob-sgid matching this blob
         attachment_div = doc.at_css("div[data-controller='attachment-pages'][data-blob-sgid='#{sgid}']")
@@ -49,9 +52,8 @@ class AttachmentsController < ApplicationController
           # Update the data-pages attribute
           attachment_div["data-pages"] = pages
 
-          # Save the updated HTML back to the rich text
-          rich_text.body = doc.to_html
-          rich_text.save!
+          # Create new ActionText::Content from the modified HTML
+          rich_text.update(body: doc.to_html)
 
           # Touch the parent record
           rich_text.record.touch if rich_text.record

@@ -33,12 +33,12 @@
   </div>
   <div class="w-full m-5 md:flex-1 xl:basis-1/2 xl:px-5">
     <h1 class="mb-2 text-xl text-sky-900 dark:text-teal-400">
-      Episodes:
+      <%= @project.lessons.length %> Episodes:
     </h1>
     <div class="overflow-auto" style="max-height: 650px">
       <% @project.lessons.order(:sort).each do |lesson| %>
         <div class="">
-          <p class="text-lg p-2 border-b border-zinc-300 text-orange-700 hover:text-amber-500 dark:text-orange-600 dark:hover:text-orange-400 italic" > <%= link_to lesson.name, project_episode_path(@project, lesson) %> </p>
+          <p class="p-2 border-b border-zinc-300 text-orange-700 hover:text-amber-500 dark:text-orange-600 dark:hover:text-orange-400 italic" > <%= link_to lesson.name, project_episode_path(@project, lesson) %> </p>
         </div>
       <% end %>
     </div>

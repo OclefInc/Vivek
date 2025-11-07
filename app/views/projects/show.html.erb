@@ -1,42 +1,46 @@
-<div class="border shadow border-sky-100 rounded-2xl bg-sky-50 dark:border-zinc-800 dark:bg-zinc-900 border-2 px-4 py-3">
+<div class="xl:flex border shadow border-sky-100 rounded-2xl bg-sky-50 dark:border-zinc-800 dark:bg-zinc-900 border-2 px-6 py-4">
   <div id="<%= dom_id @project %>">
-    <div class="flex mx-auto mx-2 my-2 justify-between">
-      <div class="mx-1 my-1">
-        <p class="mb-2 text-sky-800 dark:text-teal-300">
+    <div class="md:-mx-5 py-4">
+      <div class="mx-6">
+        <p class="text-sky-800 dark:text-teal-300">
           <%= link_to @project.composition.name, display_composition_path(@project.composition), class:'text-indigo-500 hover:text-indigo-300 text-2xl' %>
         </p>
       </div>
-      <div class="mx-1 my-1">
+      <div class="md:flex md:-mx-5 py-4">
+        <div class="md:flex-1 md:basis-1/2 md:px-5 text-sky-800 dark:text-teal-300">
+          <% if @project.summary_video.attached? %>
+            <div class="bg-sky-100 dark:bg-black rounded-2xl flex items-center justify-center" style="width: 640px; height: 480px; max-width: 100%;">
+              <%= video_tag @project.summary_video, style: "max-width: 100%; max-height: 100%;", controls: true, class: "max-w-full max-h-full" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <div class="m-4 text-sky-800 dark:text-teal-300" style="max-width: 640px">
         <p class="mb-2 text-sky-800 dark:text-teal-300">
           <%= link_to @project.student.name, display_student_path(@project.student), class:'font-semibold text-indigo-500 hover:text-indigo-300' %>
         </p>
-      </div>
-    </div>
-    <div class=" md:flex md:-mx-5 py-4">
-      <div class="md:flex-1 md:basis-1/2 md:px-5 text-sky-800 dark:text-teal-300">
-        <% if @project.summary_video.attached? %>
-          <div class="bg-sky-100 dark:bg-black rounded-2xl flex items-center justify-center" style="width: 640px; height: 480px; max-width: 100%;">
-            <%= video_tag @project.summary_video, style: "max-width: 100%; max-height: 100%;", controls: true, class: "max-w-full max-h-full" %>
-          </div>
-        <% end %>
-        <%= @project.description %>
-      </div>
-      <div class="w-full md:flex-1 md:basis-1/2 md:px-5">
-        <h1 class="mb-2 text-xl text-sky-900 dark:text-teal-400">
-          Episodes:
-        </h1>
-        <% @project.lessons.order(:sort).each do |lesson| %>
-          <div class="">
-            <p class="text-lg p-2 border-b border-zinc-300 text-orange-700 hover:text-amber-500 dark:text-orange-600 dark:hover:text-orange-400 italic" > <%= link_to lesson.name, project_episode_path(@project, lesson) %> </p>
-          </div>
-        <% end %>
         <p class="mb-2 text-sky-800 dark:text-teal-300">
           <b><%= 'Teacher'.pluralize(@project.teachers.uniq.count) %>:</b>
           <% @project.teachers.uniq.each do |teacher| %>
             <%= link_to teacher.name, display_teacher_path(teacher), class:'text-indigo-500 hover:text-indigo-400' %>
           <% end %>
         </p>
+        <p class="m-2 text-sky-800 dark:text-teal-300">
+          <%= @project.description %>
+        </p>
       </div>
+    </div>
+  </div>
+  <div class="w-full m-5 md:flex-1 xl:basis-1/2 xl:px-5">
+    <h1 class="mb-2 text-xl text-sky-900 dark:text-teal-400">
+      <%= @project.lessons.length %> Episodes:
+    </h1>
+    <div class="overflow-auto" style="max-height: 650px">
+      <% @project.lessons.order(:sort).each do |lesson| %>
+        <div class="">
+          <p class="p-2 border-b border-zinc-300 text-orange-700 hover:text-amber-500 dark:text-orange-600 dark:hover:text-orange-400 italic" > <%= link_to lesson.name, project_episode_path(@project, lesson) %> </p>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>

@@ -2,10 +2,11 @@
   # Check if this blob has copyright metadata
   is_copyrighted = blob.metadata['copyrighted'] == true
   purchase_url = blob.metadata['purchase_url']
+  pages = blob.metadata['pages']
 %>
 <figure class="attachment attachment--<%= blob.representable? ? "preview" : "file" %> attachment--<%= blob.filename.extension %>">
   <% if blob.filename.extension == 'pdf' %>
-    <%= render :partial => '/active_storage/blobs/pdf', locals: {blob: blob, is_copyrighted: is_copyrighted, purchase_url: purchase_url} %>
+    <%= render :partial => '/active_storage/blobs/pdf', locals: {blob: blob, is_copyrighted: is_copyrighted, purchase_url: purchase_url, pages: pages} %>
   <% elsif blob.representable? %>
     <%= image_tag blob.representation(resize_to_limit: local_assigns[:in_gallery] ? [ 800, 600 ] : [ 1024, 768 ]) %>
   <% end %>
@@ -20,7 +21,7 @@
       <button data-action="click->blob-metadata#toggleEdit"
         data-blob-metadata-target="editButton"
         class="text-xs px-2 py-1 text-white">
-        Edit Copyright Information
+        Edit Copyright & Display Information
       </button>
     </div>
     <!-- View Mode -->
@@ -47,6 +48,19 @@
                  placeholder="https://www.amazon.com/..."
                  class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:text-gray-200">
         </div>
+        <% if blob.filename.extension == 'pdf' %>
+          <div style="padding: 10px;">
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1">
+              Pages to display:
+              <span class="text-xs text-gray-500">(e.g., "2-9, 11, 14" or leave empty for all)</span>
+            </label>
+            <input type="text"
+                 data-blob-metadata-target="pagesInput"
+                 value="<%= pages %>"
+                 placeholder="e.g., 2-9, 11, 14"
+                 class="w-full px-3 py-2 text-sm border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-800 dark:text-gray-200">
+          </div>
+        <% end %>
         <div class="flex gap-2"  style="padding: 10px;">
           <button data-action="click->blob-metadata#save"
             data-blob-sgid="<%= blob.signed_id %>"

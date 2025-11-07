@@ -44,6 +44,7 @@ attributes << "data-sortable-target"
 # Stimulus value attributes
 attributes << "data-pdf-viewer-url-value"
 attributes << "data-pdf-viewer-copyrighted-value"
+attributes << "data-pdf-viewer-pages-value"
 # Other data attributes
 attributes << "data-blob-sgid"
 attributes << "data-key"

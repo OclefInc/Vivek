@@ -6,6 +6,7 @@ class AttachmentsController < ApplicationController
     if blob
       blob.metadata["copyrighted"] = params[:copyrighted]
       blob.metadata["purchase_url"] = params[:purchase_url] if params[:purchase_url].present?
+      blob.metadata["pages"] = params[:pages] if params[:pages].present?
       blob.save!
 
       # Touch the associated objects to update their updated_at timestamp

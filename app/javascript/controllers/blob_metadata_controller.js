@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus"
 
 // Connects to data-controller="blob-metadata"
 export default class extends Controller {
-  static targets = ["viewMode", "editMode", "editButton", "copyrightCheckbox", "purchaseUrlInput"]
+  static targets = ["viewMode", "editMode", "editButton", "copyrightCheckbox", "purchaseUrlInput", "pagesInput"]
 
   toggleEdit() {
     this.viewModeTarget.classList.add("hidden")
@@ -21,6 +21,7 @@ export default class extends Controller {
     const sgid = button.dataset.blobSgid
     const isCopyrighted = this.copyrightCheckboxTarget.checked
     const purchaseUrl = this.purchaseUrlInputTarget.value.trim()
+    const pages = this.hasPagesInputTarget ? this.pagesInputTarget.value.trim() : ''
 
     // Validate: require purchase URL if copyrighted
     if (isCopyrighted && !purchaseUrl) {
@@ -39,7 +40,8 @@ export default class extends Controller {
         body: JSON.stringify({
           sgid: sgid,
           copyrighted: isCopyrighted,
-          purchase_url: purchaseUrl
+          purchase_url: purchaseUrl,
+          pages: pages
         })
       })
 

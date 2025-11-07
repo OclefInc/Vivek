@@ -2,12 +2,13 @@
   # Generate proper URL for PDF viewing with inline disposition
   pdf_url = url_for(blob)
 %>
-<div class="relative inline-block w-full">
+<div data-controller="pdf-viewer"
+     data-pdf-viewer-url-value="<%= pdf_url %>"
+     data-pdf-viewer-copyrighted-value="<%= is_copyrighted %>"
+     data-pdf-viewer-pages-value="<%= pages %>"
+     class="relative inline-block w-full">
   <!-- PDF.js viewer container -->
-  <div data-controller="pdf-viewer"
-       data-pdf-viewer-url-value="<%= pdf_url %>"
-       data-pdf-viewer-copyrighted-value="<%= is_copyrighted %>"
-       class="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-600 overflow-auto"
+  <div class="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-600 overflow-auto"
        style="max-height: 800px; <%= is_copyrighted ? 'user-select: none;' : '' %>">
     <!-- PDF pages will be rendered here as canvas elements -->
   </div>

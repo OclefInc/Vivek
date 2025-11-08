@@ -1,7 +1,12 @@
-# Override ActiveStorage::Blob to include pages in Trix attachment JSON
+# Configuration: Define custom attachment attributes to preserve
+CUSTOM_ATTACHMENT_ATTRIBUTES = %w[
+  pages
+].freeze
+
+# Override ActiveStorage::Blob to include custom attributes in Trix attachment JSON
 Rails.application.config.to_prepare do
   ActiveStorage::Blob.class_eval do
-    # Add pages data when converting blob to Trix attachment attributes
+    # Add custom data when converting blob to Trix attachment attributes
     alias_method :original_trix_attachment_attributes, :trix_attachment_attributes rescue nil
 
     def trix_attachment_attributes
@@ -18,35 +23,40 @@ Rails.application.config.to_prepare do
         }
       end
 
-      # Add pages from the stored data-pages attribute using the blob extension
-      begin
-        pages_value = data_pages
-        attrs[:pages] = pages_value if pages_value.present?
-      rescue => e
-        # Log the error for debugging
-        Rails.logger.error "Error getting data_pages for blob #{id}: #{e.message}"
-        # If data_pages lookup fails, default to empty string
-        attrs[:pages] = "" unless attrs.key?(:pages)
+      # Add custom attributes from stored data-* attributes
+      CUSTOM_ATTACHMENT_ATTRIBUTES.each do |attr_name|
+        begin
+          method_name = "data_#{attr_name}"
+          if respond_to?(method_name)
+            value = send(method_name)
+            attrs[attr_name.to_sym] = value if value.present?
+          end
+        rescue => e
+          Rails.logger.error "Error getting #{method_name} for blob #{id}: #{e.message}"
+          attrs[attr_name.to_sym] = "" unless attrs.key?(attr_name.to_sym)
+        end
       end
 
-      # Ensure pages key always exists
-      attrs[:pages] ||= ""
+      # Ensure all custom attribute keys exist
+      CUSTOM_ATTACHMENT_ATTRIBUTES.each do |attr_name|
+        attrs[attr_name.to_sym] ||= ""
+      end
 
       attrs
     end
   end
 
-  # Override ActionText::Attachment to include pages in full_attributes
+  # Override ActionText::Attachment to include custom attributes in full_attributes
   ActionText::Attachment.class_eval do
     alias_method :original_full_attributes, :full_attributes rescue nil
 
-    def self.sgids_with_pages
-      @sgids_with_pages ||= {}
+    def self.custom_attributes_by_sgid
+      @custom_attributes_by_sgid ||= {}
     end
 
     def full_attributes
-      # Return cached result if available to avoid overwriting pages data
-      return @full_attributes_with_pages if defined?(@full_attributes_with_pages)
+      # Return cached result if available to avoid overwriting custom data
+      return @full_attributes_with_custom if defined?(@full_attributes_with_custom)
 
       attrs = if respond_to?(:original_full_attributes)
         original_full_attributes
@@ -55,21 +65,28 @@ Rails.application.config.to_prepare do
       end
 
       sgid = node&.[]("sgid")
-      data_pages = node&.[]("data-pages")
 
-      # If the node has data-pages, include it and remember this SGID has pages
-      if node.present? && data_pages.present?
-        attrs = attrs.merge("pages" => data_pages)
-        self.class.sgids_with_pages[sgid] = data_pages if sgid
-      elsif sgid && self.class.sgids_with_pages.key?(sgid)
-        # This SGID was already processed with pages data, use that
-        attrs = attrs.merge("pages" => self.class.sgids_with_pages[sgid])
-      elsif attrs.is_a?(Hash) && !attrs.key?("pages") && !attrs.key?(:pages)
-        # Only add empty pages key if it doesn't exist
-        attrs = attrs.merge("pages" => "")
+      # Process each custom attribute
+      CUSTOM_ATTACHMENT_ATTRIBUTES.each do |attr_name|
+        data_attr = node&.[]("data-#{attr_name}")
+
+        # If the node has this data attribute, include it and remember it for this SGID
+        if node.present? && data_attr.present?
+          attrs = attrs.merge(attr_name => data_attr)
+          if sgid
+            self.class.custom_attributes_by_sgid[sgid] ||= {}
+            self.class.custom_attributes_by_sgid[sgid][attr_name] = data_attr
+          end
+        elsif sgid && self.class.custom_attributes_by_sgid.dig(sgid, attr_name)
+          # This SGID was already processed with this attribute, use that cached value
+          attrs = attrs.merge(attr_name => self.class.custom_attributes_by_sgid[sgid][attr_name])
+        elsif attrs.is_a?(Hash) && !attrs.key?(attr_name) && !attrs.key?(attr_name.to_sym)
+          # Only add empty key if it doesn't exist
+          attrs = attrs.merge(attr_name => "")
+        end
       end
 
-      @full_attributes_with_pages = attrs
+      @full_attributes_with_custom = attrs
       attrs
     end
   end

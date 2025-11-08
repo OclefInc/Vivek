@@ -15,7 +15,7 @@
     </thead>
     <tbody data-sortable-target="tbody">
       <% lessons.order(:sort).each_with_sortable_id do |lesson, sortable_id| %>
-        <tr id="<%= sortable_id %>" class="<%= 'bg-yellow-100 dark:bg-yellow-900' if current_lesson && lesson.id == current_lesson.id %>">
+        <tr id="<%= sortable_id %>" class="<%= 'bg-yellow-100 dark:bg-blue-900/30' if current_lesson && lesson.id == current_lesson.id %>">
           <td class="text-left md:px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">
             <span class="inline-flex items-center gap-2">
               <% if lesson.complete? %>

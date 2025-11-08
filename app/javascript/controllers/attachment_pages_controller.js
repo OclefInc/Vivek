@@ -12,21 +12,51 @@ export default class extends Controller {
     }
   }
 
-  toggleEdit() {
+  async toggleEdit() {
     if (this.hasEditFormTarget && this.hasEditButtonTarget) {
+      const isEnteringEditMode = this.editFormTarget.classList.contains("hidden")
+
       this.editFormTarget.classList.toggle("hidden")
       this.editButtonTarget.classList.toggle("hidden")
+
+      // When entering edit mode, show all pages in PDF viewer
+      if (isEnteringEditMode) {
+        const pdfViewerElement = this.element.nextElementSibling
+        if (pdfViewerElement && pdfViewerElement.dataset.controller?.includes('pdf-viewer')) {
+          const pdfViewer = this.application.getControllerForElementAndIdentifier(pdfViewerElement, "pdf-viewer")
+          if (pdfViewer) {
+            // Store original pages value
+            this.originalPages = pdfViewer.pagesValue
+            // Set to empty to show all pages
+            pdfViewer.pagesValue = ""
+            await pdfViewer.rerender()
+          }
+        }
+      }
     }
   }
 
-  cancel() {
+  async cancel() {
     if (this.hasEditFormTarget && this.hasEditButtonTarget) {
       this.editFormTarget.classList.add("hidden")
       this.editButtonTarget.classList.remove("hidden")
+
+      // Restore original pages when canceling
+      if (this.originalPages !== undefined) {
+        const pdfViewerElement = this.element.nextElementSibling
+        if (pdfViewerElement && pdfViewerElement.dataset.controller?.includes('pdf-viewer')) {
+          const pdfViewer = this.application.getControllerForElementAndIdentifier(pdfViewerElement, "pdf-viewer")
+          if (pdfViewer) {
+            pdfViewer.pagesValue = this.originalPages
+            await pdfViewer.rerender()
+            this.originalPages = undefined
+          }
+        }
+      }
     }
   }
 
-  save() {
+  async save() {
     if (!this.hasPagesInputTarget) {
       return
     }
@@ -36,39 +66,40 @@ export default class extends Controller {
     // Get SGID from the controller element
     const sgid = this.element.dataset.blobSgid
 
-    // Extract record type and ID from the nearest turbo-frame
-    const turboFrame = this.element.closest('turbo-frame')
-    let recordType = null
-    let recordId = null
-
-    if (turboFrame && turboFrame.id) {
-      // Parse the turbo-frame id to extract record type and ID
-      // e.g., "lesson_67_description" -> recordType: "Lesson", recordId: 67
-      const match = turboFrame.id.match(/^(\w+)_(\d+)/)
-      if (match) {
-        recordType = match[1].charAt(0).toUpperCase() + match[1].slice(1) // Capitalize
-        recordId = match[2]
-      }
-    }
-
     // Save to database
-    if (sgid && recordType && recordId) {
-      this.saveToDatabase(sgid, pages, recordType, recordId)
+    if (sgid) {
+      this.saveToDatabase(sgid, pages)
     }
+
+    // Update the data-pages attribute so it persists
+    this.element.dataset.pages = pages
+
+    // Clear originalPages so cancel doesn't restore old value
+    this.originalPages = undefined
 
     // Trigger the PDF viewer to re-render with new pages
-    const pdfViewerElement = this.element.parentElement.querySelector('[data-controller*="pdf-viewer"]')
-    if (pdfViewerElement) {
+    // The pdf-viewer is the next sibling element after attachment-pages
+    const pdfViewerElement = this.element.nextElementSibling
+    console.log('Looking for pdf-viewer element:', pdfViewerElement)
+    if (pdfViewerElement && pdfViewerElement.dataset.controller?.includes('pdf-viewer')) {
       const pdfViewer = this.application.getControllerForElementAndIdentifier(pdfViewerElement, "pdf-viewer")
+      console.log('Found pdf-viewer controller:', pdfViewer)
       if (pdfViewer) {
+        console.log('Updating pages from', pdfViewer.pagesValue, 'to', pages)
         pdfViewer.pagesValue = pages
-        pdfViewer.renderPages()
+        console.log('Calling rerender')
+        await pdfViewer.rerender()
       }
     }
 
-    // Hide edit mode
-    this.cancel()
-  }  async saveToDatabase(sgid, pages, recordType, recordId) {
+    // Hide edit mode (won't restore originalPages since we cleared it)
+    if (this.hasEditFormTarget && this.hasEditButtonTarget) {
+      this.editFormTarget.classList.add("hidden")
+      this.editButtonTarget.classList.remove("hidden")
+    }
+  }
+
+  async saveToDatabase(sgid, pages) {
     try {
       const response = await fetch('/attachments/update_pages', {
         method: 'POST',
@@ -78,9 +109,7 @@ export default class extends Controller {
         },
         body: JSON.stringify({
           sgid: sgid,
-          pages: pages,
-          record_type: recordType,
-          record_id: recordId
+          pages: pages
         })
       })
 
@@ -90,8 +119,6 @@ export default class extends Controller {
         console.error("Failed to save pages:", data)
       } else {
         console.log("Pages saved successfully to database")
-        // Reload the page to show updated pdf rendering
-        window.location.reload()
       }
     } catch (error) {
       console.error("Error saving pages:", error)

@@ -52,6 +52,37 @@ export default class extends Controller {
     }
   }
 
+  async rerender() {
+    if (!this.pdf) {
+      console.error('PDF not loaded yet, cannot rerender')
+      return
+    }
+
+    // Find the container
+    const container = this.element.querySelector('.bg-gray-50, .dark\\:bg-gray-900')
+    if (!container) {
+      console.error('Container not found')
+      return
+    }
+
+    console.log('Rerendering PDF with new pages:', this.pagesValue)
+
+    // Clear existing canvases
+    container.innerHTML = ''
+
+    // Re-render with new pages value
+    const pageInput = this.pagesValue ? this.pagesValue.trim() : ''
+    const pagesToRender = this.parsePageInput(pageInput, this.pdf.numPages)
+
+    console.log('Pages to render:', pagesToRender)
+
+    for (const pageNum of pagesToRender) {
+      await this.renderPage(this.pdf, pageNum, container)
+    }
+
+    console.log('Rerender complete')
+  }
+
   parsePageInput(input, totalPages) {
     // If empty, return all pages
     if (!input) {

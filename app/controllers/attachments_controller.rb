@@ -24,70 +24,17 @@ class AttachmentsController < ApplicationController
   def update_pages
     sgid = params[:sgid]
     pages = params[:pages]
-    record_type = params[:record_type]
-    record_id = params[:record_id]
 
     blob = ActiveStorage::Blob.find_signed(sgid)
 
-    if blob && record_type && record_id
-      # Find the specific Action Text rich text record for this record
-      # The name is typically the field name (e.g., "description")
-      rich_text = ActionText::RichText.find_by(
-        record_type: record_type,
-        record_id: record_id,
-        name: "description" # Adjust if you have multiple rich text fields
-      )
-
-      if rich_text
-        # Get the body as ActionText::Content
-        content = rich_text.body
-
-        # Parse the HTML content
-        doc = Nokogiri::HTML.fragment(content.to_html)
-
-        # Action Text stores attachments as <action-text-attachment> elements with an sgid attribute
-        # The sgid contains the attachable SGID, which may have expired
-        # We search by matching the URL (which contains the blob key) or by decoding the SGID
-
-        attachment_element = doc.css("action-text-attachment").find do |el|
-          el_sgid = el["sgid"]
-          el_url = el["url"]
-
-          # Try to match by URL containing the blob key
-          if el_url&.include?(blob.key)
-            true
-          # Or try to decode the SGID
-          elsif el_sgid
-            begin
-              # Use locate_signed which handles attachable SGIDs
-              attachable = GlobalID::Locator.locate_signed(el_sgid, for: :attachable)
-              attachable.is_a?(ActiveStorage::Blob) && attachable.id == blob.id
-            rescue
-              false
-            end
-          else
-            false
-          end
-        end
-
-        if attachment_element
-          # Simply add the data-pages attribute to the action-text-attachment element
-          attachment_element["data-pages"] = pages
-
-          # Create new ActionText::Content from the modified HTML
-          rich_text.update(body: doc.to_html)
-
-          # Touch the parent record
-          rich_text.record.touch if rich_text.record
-
-          render json: { success: true }
-        else
-          Rails.logger.error "Attachment element not found. Content: #{content.to_html[0..500]}"
-          render json: { error: "Attachment not found in content" }, status: :not_found
-        end
-      else
-        render json: { error: "Rich text record not found" }, status: :not_found
+    if blob
+      attachment = blob.attachment
+      if attachment
+        attachment.pages = pages
+        attachment.save!
       end
+
+      render json: { success: true }
     else
       render json: { error: "Missing required parameters" }, status: :unprocessable_entity
     end

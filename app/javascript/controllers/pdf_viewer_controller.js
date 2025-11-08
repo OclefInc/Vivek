@@ -108,10 +108,30 @@ export default class extends Controller {
 
     await page.render(renderContext).promise
 
+    // Add page number in upper right
+    this.addPageNumber(context, pageNum, canvas.width)
+
     // Add watermark if copyrighted
     if (this.copyrightedValue) {
       this.addWatermark(context, canvas.width, canvas.height)
     }
+  }
+
+  addPageNumber(context, pageNum, width) {
+    // Save the current context state
+    context.save()
+
+    // Set page number style
+    context.font = '16px Arial'
+    context.fillStyle = 'rgba(0, 0, 0, 0.7)'
+    context.textAlign = 'right'
+    context.textBaseline = 'top'
+
+    // Draw the page number in upper right corner
+    context.fillText(`Page ${pageNum}`, width - 20, 20)
+
+    // Restore the context state
+    context.restore()
   }
 
   addWatermark(context, width, height) {

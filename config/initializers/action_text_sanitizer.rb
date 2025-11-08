@@ -68,7 +68,7 @@ attributes << "data-turbo-method"
 attributes << "channel"
 attributes << "signed-stream-name"
 attributes << "connected"
-attributes += [ "data-local", "title", "data-localized", "aria-label", "data-format" ]
+attributes += [ "data-local", "title", "data-localized", "aria-label", "data-format", "data-copyright-banner" ]
 
 ActionText::ContentHelper.singleton_class.class_eval do
   def allowed_tags

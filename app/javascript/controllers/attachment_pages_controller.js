@@ -19,9 +19,19 @@ export default class extends Controller {
       this.editFormTarget.classList.toggle("hidden")
       this.editButtonTarget.classList.toggle("hidden")
 
+      // Hide/show the copyright button
+      const copyrightButton = this.element.querySelector('[data-blob-metadata-target="editButton"]')
+      if (copyrightButton) {
+        copyrightButton.classList.toggle("hidden")
+      }
+
       // When entering edit mode, show all pages in PDF viewer
       if (isEnteringEditMode) {
-        const pdfViewerElement = this.element.nextElementSibling
+        // Find the pdf-viewer (go back through siblings to find it)
+        let pdfViewerElement = this.element.previousElementSibling
+        while (pdfViewerElement && !pdfViewerElement.dataset.controller?.includes('pdf-viewer')) {
+          pdfViewerElement = pdfViewerElement.previousElementSibling
+        }
         if (pdfViewerElement && pdfViewerElement.dataset.controller?.includes('pdf-viewer')) {
           const pdfViewer = this.application.getControllerForElementAndIdentifier(pdfViewerElement, "pdf-viewer")
           if (pdfViewer) {
@@ -41,9 +51,19 @@ export default class extends Controller {
       this.editFormTarget.classList.add("hidden")
       this.editButtonTarget.classList.remove("hidden")
 
+      // Show the copyright button again
+      const copyrightButton = this.element.querySelector('[data-blob-metadata-target="editButton"]')
+      if (copyrightButton) {
+        copyrightButton.classList.remove("hidden")
+      }
+
       // Restore original pages when canceling
       if (this.originalPages !== undefined) {
-        const pdfViewerElement = this.element.nextElementSibling
+        // Find the pdf-viewer (go back through siblings to find it)
+        let pdfViewerElement = this.element.previousElementSibling
+        while (pdfViewerElement && !pdfViewerElement.dataset.controller?.includes('pdf-viewer')) {
+          pdfViewerElement = pdfViewerElement.previousElementSibling
+        }
         if (pdfViewerElement && pdfViewerElement.dataset.controller?.includes('pdf-viewer')) {
           const pdfViewer = this.application.getControllerForElementAndIdentifier(pdfViewerElement, "pdf-viewer")
           if (pdfViewer) {
@@ -78,8 +98,11 @@ export default class extends Controller {
     this.originalPages = undefined
 
     // Trigger the PDF viewer to re-render with new pages
-    // The pdf-viewer is the next sibling element after attachment-pages
-    const pdfViewerElement = this.element.nextElementSibling
+    // Find the pdf-viewer by going back through previous siblings
+    let pdfViewerElement = this.element.previousElementSibling
+    while (pdfViewerElement && !pdfViewerElement.dataset.controller?.includes('pdf-viewer')) {
+      pdfViewerElement = pdfViewerElement.previousElementSibling
+    }
     console.log('Looking for pdf-viewer element:', pdfViewerElement)
     if (pdfViewerElement && pdfViewerElement.dataset.controller?.includes('pdf-viewer')) {
       const pdfViewer = this.application.getControllerForElementAndIdentifier(pdfViewerElement, "pdf-viewer")
@@ -96,6 +119,12 @@ export default class extends Controller {
     if (this.hasEditFormTarget && this.hasEditButtonTarget) {
       this.editFormTarget.classList.add("hidden")
       this.editButtonTarget.classList.remove("hidden")
+
+      // Show the copyright button again
+      const copyrightButton = this.element.querySelector('[data-blob-metadata-target="editButton"]')
+      if (copyrightButton) {
+        copyrightButton.classList.remove("hidden")
+      }
     }
   }
 

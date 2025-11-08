@@ -9,12 +9,6 @@ export default class extends Controller {
   }
 
   async connect() {
-    // Check if there's an attachment-pages controller div with pages data
-    // If so, use the pages from that element instead of blob metadata
-    const parentDiv = this.element.parentElement
-    if (parentDiv && parentDiv.dataset.pages !== undefined) {
-      this.pagesValue = parentDiv.dataset.pages
-    }
 
     // Access PDF.js library from global scope
     const pdfjsLib = window.pdfjsLib

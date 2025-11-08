@@ -1,6 +1,8 @@
 <!-- Pages selector (attachment-level, specific to this instance) -->
+<%= blob.id %>
 <div class="admin-only mt-2 p-3 bg-blue-50 dark:bg-blue-900/20"
          data-controller="attachment-pages"
+         data-pages="<%= blob.data_pages %>"
          data-blob-sgid="<%= blob.signed_id %>">
   <div class="flex items-center justify-center mb-2">
     <button data-action="click->attachment-pages#toggleEdit"
@@ -40,7 +42,8 @@
 <div data-controller="pdf-viewer"
      data-pdf-viewer-url-value="<%= url_for(blob) %>"
      data-pdf-viewer-copyrighted-value="<%= is_copyrighted %>"
-     class="relative inline-block w-full">
+     data-pdf-viewer-pages-value="<%= blob.data_pages %>"
+  class="relative inline-block w-full">
   <!-- PDF.js viewer container -->
   <div class="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-600 overflow-auto"
        style="max-height: 800px; <%= is_copyrighted ? 'user-select: none;' : '' %>">

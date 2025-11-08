@@ -8,8 +8,7 @@ export default class extends Controller {
   connect() {
     // Populate the input field from the action-text-attachment element
     if (this.hasPagesInputTarget) {
-      const parent = this.element.parentElement
-      this.pagesInputTarget.value = parent ? parent.dataset.pages || "" : ""
+      this.pagesInputTarget.value = this.element.dataset.pages || ""
     }
   }
 

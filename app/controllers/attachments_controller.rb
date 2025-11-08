@@ -71,21 +71,8 @@ class AttachmentsController < ApplicationController
         end
 
         if attachment_element
-          # Check if already wrapped in a div with data-pages
-          parent = attachment_element.parent
-          if parent.name == "div" && parent["data-attachment-pages"]
-            # Already wrapped, just update the data-pages attribute
-            parent["data-pages"] = pages
-          else
-            # Wrap the action-text-attachment in a div with data-pages attribute
-            wrapper = Nokogiri::XML::Node.new("div", doc)
-            wrapper["data-attachment-pages"] = "true"
-            wrapper["data-pages"] = pages
-
-            # Replace the attachment element with the wrapped version
-            attachment_element.replace(wrapper)
-            wrapper.add_child(attachment_element)
-          end
+          # Simply add the data-pages attribute to the action-text-attachment element
+          attachment_element["data-pages"] = pages
 
           # Create new ActionText::Content from the modified HTML
           rich_text.update(body: doc.to_html)

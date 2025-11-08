@@ -1,10 +1,14 @@
 <%= turbo_frame_tag "lesson_#{@lesson.id}_description" do %>
   <%= form_with(model: @lesson, url: lesson_path(@lesson, {format: :html})) do |form| %>
-    <div data-controller="attachment-selector attachment-metadata">
+    <div data-controller="attachment-selector attachment-metadata trix-pages-sync">
       <strong class="dark:text-gray-200">Description:</strong>
       <%= form.rich_text_area :description,
                               class: "trix-content",
-                              data: { attachment_selector_target: "editor", attachment_metadata_target: "editor" } %>
+                              data: {
+                                attachment_selector_target: "editor",
+                                attachment_metadata_target: "editor",
+                                trix_pages_sync_target: "editor"
+                              } %>
       <% existing_attachments = @lesson.existing_description_attachments %>
       <% if existing_attachments.any? %>
         <div class="mb-2">

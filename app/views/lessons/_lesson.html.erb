@@ -17,8 +17,8 @@
           style: "max-width: 100%; max-height: 100%;",
           class: "max-w-full h-auto",
           data: {
-            controller: "video-autoplay",
-            video_autoplay_next_url_value: lesson.next_lesson ? lesson_path(lesson.next_lesson) : nil,
+            controller: "plyr video-time",
+            plyr_next_url_value: lesson.next_lesson ? lesson_path(lesson.next_lesson) : nil,
             video_time_target: "video"
           } %>
     </div>

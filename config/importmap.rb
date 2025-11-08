@@ -20,3 +20,5 @@ pin "@rails/activestorage", to: "activestorage.esm.js"
 pin "tom-select", to: "https://ga.jspm.io/npm:tom-select@2.3.1/dist/esm/tom-select.complete.js"
 
 pin "pdfjs-dist", to: "https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"
+
+pin "plyr", to: "https://cdn.jsdelivr.net/npm/plyr@3.7.8/dist/plyr.min.js"

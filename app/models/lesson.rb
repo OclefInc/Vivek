@@ -58,6 +58,13 @@ class Lesson < ApplicationRecord
       assignment.lessons.where("sort > ?", sort).order(:sort).first
     end
 
+    def previous_lesson
+      assignment.lessons.where("sort < ?", sort).order(sort: :desc).first
+    end
+
+    alias_method :next, :next_lesson
+    alias_method :previous, :previous_lesson
+
     def lesson_video_is_video_type
         unless lesson_video.content_type.starts_with?("video/")
           errors.add(:lesson_video, "must be a video file")

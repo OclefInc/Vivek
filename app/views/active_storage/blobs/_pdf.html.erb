@@ -2,7 +2,7 @@
 <div data-controller="pdf-viewer"
      data-pdf-viewer-url-value="<%= url_for(blob) %>"
      data-pdf-viewer-copyrighted-value="<%= is_copyrighted %>"
-     data-pdf-viewer-pages-value="<%= blob.attachment.pages %>"
+     data-pdf-viewer-pages-value="<%= attachment.pages %>"
   class="relative inline-block w-full">
   <!-- PDF.js viewer container -->
   <div class="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-600 overflow-auto"
@@ -37,7 +37,7 @@
 </div>
 <div class="admin-only mt-2 p-3 bg-blue-50 dark:bg-blue-900/20"
          data-controller="attachment-pages blob-metadata"
-         data-pages="<%= blob.attachment.pages %>"
+         data-pages="<%= attachment.pages %>"
          data-blob-sgid="<%= blob.signed_id %>">
   <div class="flex items-between justify-center gap-4 mb-2">
     <button data-action="click->blob-metadata#toggleEdit"

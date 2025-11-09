@@ -24,18 +24,17 @@ class AttachmentsController < ApplicationController
   def update_pages
     sgid = params[:sgid]
     pages = params[:pages]
+    record_type = params[:record_type]
+    record_id = params[:record_id]
+    record = record_type.constantize.find_by(id: record_id) if record_type.present? && record_id.present?
 
     blob = ActiveStorage::Blob.find_signed(sgid)
 
-    if blob
-      attachment = blob.attachment
+    if blob && record
+      attachment = blob.attachment(record)
       if attachment
-        sql = <<-SQL
-          UPDATE active_storage_attachments
-          SET metadata = '{"pages":#{pages}}'
-          WHERE id = #{attachment.id}
-        SQL
-        ActiveRecord::Base.connection.execute(sql)
+        attachment.pages = pages
+        attachment.save!
       end
 
       render json: { success: true }

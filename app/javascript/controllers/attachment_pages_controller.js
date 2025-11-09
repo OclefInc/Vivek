@@ -86,10 +86,26 @@ export default class extends Controller {
     // Get SGID from the controller element
     const sgid = this.element.dataset.blobSgid
 
-    // Save to database
-    if (sgid) {
-      this.saveToDatabase(sgid, pages)
+    // Extract record type and ID from the nearest turbo-frame
+    const turboFrame = this.element.closest('turbo-frame')
+    let recordType = null
+    let recordId = null
+
+    if (turboFrame && turboFrame.id) {
+      // Parse the turbo-frame id to extract record type and ID
+      // e.g., "lesson_67_description" -> recordType: "Lesson", recordId: 67
+      const match = turboFrame.id.match(/^(\w+)_(\d+)/)
+      if (match) {
+        recordType = match[1].charAt(0).toUpperCase() + match[1].slice(1) // Capitalize
+        recordId = match[2]
+      }
     }
+
+    // Save to database
+    if (sgid && recordType && recordId) {
+      this.saveToDatabase(sgid, pages, recordType, recordId)
+    }
+
 
     // Update the data-pages attribute so it persists
     this.element.dataset.pages = pages
@@ -128,7 +144,7 @@ export default class extends Controller {
     }
   }
 
-  async saveToDatabase(sgid, pages) {
+  async saveToDatabase(sgid, pages, recordType, recordId) {
     try {
       const response = await fetch('/attachments/update_pages', {
         method: 'POST',
@@ -138,7 +154,9 @@ export default class extends Controller {
         },
         body: JSON.stringify({
           sgid: sgid,
-          pages: pages
+          pages: pages,
+          record_type: recordType,
+          record_id: recordId
         })
       })
 

@@ -2,10 +2,11 @@
   # Check if this blob has copyright metadata (blob-level, shared across all attachments)
   is_copyrighted = blob.metadata['copyrighted'] == true
   purchase_url = blob.metadata['purchase_url']
+  attachment = blob.find_attachment_from_instance_variables(instance_variables.map { |var| instance_variable_get(var) })
 %>
 <figure class="attachment attachment--<%= blob.representable? ? "preview" : "file" %> attachment--<%= blob.filename.extension %>">
   <% if blob.filename.extension == 'pdf' %>
-    <%= render :partial => '/active_storage/blobs/pdf', locals: {blob: blob, is_copyrighted: is_copyrighted, purchase_url: purchase_url} %>
+    <%= render :partial => '/active_storage/blobs/pdf', locals: {attachment: attachment, blob: blob, is_copyrighted: is_copyrighted, purchase_url: purchase_url} %>
   <% elsif blob.representable? %>
     <%= image_tag blob.representation(resize_to_limit: local_assigns[:in_gallery] ? [ 800, 600 ] : [ 1024, 768 ]) %>
   <% end %>

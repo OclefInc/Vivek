@@ -30,8 +30,12 @@ class AttachmentsController < ApplicationController
     if blob
       attachment = blob.attachment
       if attachment
-        attachment.pages = pages
-        attachment.save!
+        sql = <<-SQL
+          UPDATE active_storage_attachments
+          SET metadata = '{"pages":#{pages}}'
+          WHERE id = #{attachment.id}
+        SQL
+        ActiveRecord::Base.connection.execute(sql)
       end
 
       render json: { success: true }

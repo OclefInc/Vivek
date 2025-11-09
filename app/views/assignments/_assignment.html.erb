@@ -10,6 +10,8 @@
           data: {
             controller: "video-autoplay",
             video_autoplay_next_url_value: assignment.first_lesson ? lesson_path(assignment.first_lesson) : nil,
+            video_autoplay_next_name_value: assignment.first_lesson&.name,
+            video_autoplay_next_date_value: assignment.first_lesson&.date&.strftime("%B %d, %Y"),
             video_poster_target: "video"
           } %>
         <div data-video-poster-target="overlay" class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">

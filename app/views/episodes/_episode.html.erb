@@ -2,7 +2,14 @@
   <div class="md:flex-1 md:basis-1/2 md:px-5 text-sky-800 dark:text-teal-300">
     <% if @episode.lesson_video.attached? %>
       <div class="bg-sky-100 dark:bg-black rounded-2xl flex items-center justify-center" style="width: 640px; height: 480px; max-width: 100%;">
-        <%= video_tag @episode.lesson_video, style: "max-width: 100%; max-height: 100%;", controls: true, class: "max-w-full max-h-full" %>
+        <%= video_tag @episode.lesson_video,
+          style: "max-width: 100%; max-height: 100%;",
+          controls: true,
+          class: "max-w-full max-h-full",
+          data: {
+            controller: "video-autoplay",
+            video_autoplay_next_url_value: @episode.next_lesson ? project_episode_path(@episode.project, @episode.next_lesson) : nil
+          } %>
       </div>
     <% end %>
   </div>

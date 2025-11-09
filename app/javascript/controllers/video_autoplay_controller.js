@@ -2,7 +2,9 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static values = {
-    nextUrl: String
+    nextUrl: String,
+    nextName: String,
+    nextDate: String
   }
 
   connect() {
@@ -31,6 +33,13 @@ export default class extends Controller {
       backgroundDiv.style.position = 'relative'
     }
 
+    // Build the next lesson info HTML
+    const nextLessonInfo = this.hasNextNameValue
+      ? `<p class="text-gray-300 text-lg mb-2">Next Lesson</p>
+         <p class="text-white text-2xl font-semibold mb-2">${this.nextNameValue}</p>
+         ${this.hasNextDateValue ? `<p class="text-gray-300 text-lg mb-4">${this.nextDateValue}</p>` : ''}`
+      : '<p class="text-white text-2xl mb-4">Next lesson starting in...</p>'
+
     // Create countdown overlay
     this.countdownElement = document.createElement('div')
     this.countdownElement.className = 'absolute inset-0 bg-black bg-opacity-75 flex items-center justify-center'
@@ -48,24 +57,36 @@ export default class extends Controller {
       z-index: 10;
     `
     this.countdownElement.innerHTML = `
-      <div class="text-center">
-        <p class="text-white text-2xl mb-4">Next lesson starting in...</p>
-        <p class="text-white text-6xl font-bold countdown-number">5</p>
-        <button class="mt-6 px-6 py-3 bg-red-600 hover:bg-red-500 text-white rounded-lg font-medium">
-          Cancel
-        </button>
+      <div class="text-center px-8">
+        ${nextLessonInfo}
+        <p class="text-white text-6xl font-bold countdown-number">10</p>
+        <div class="mt-6 flex gap-4 justify-center">
+          <button class="play-now-btn px-6 py-3 bg-green-600 hover:bg-green-500 text-white rounded-lg font-medium">
+            Play Now
+          </button>
+          <button class="cancel-btn px-6 py-3 bg-red-600 hover:bg-red-500 text-white rounded-lg font-medium">
+            Cancel
+          </button>
+        </div>
       </div>
     `
 
-    // Add cancel button event
-    const cancelButton = this.countdownElement.querySelector('button')
+    // Add button events
+    const playNowButton = this.countdownElement.querySelector('.play-now-btn')
+    const cancelButton = this.countdownElement.querySelector('.cancel-btn')
+
+    playNowButton.addEventListener('click', () => {
+      this.clearCountdown()
+      window.Turbo.visit(this.nextUrlValue)
+    })
+
     cancelButton.addEventListener('click', () => this.clearCountdown())
 
     // Append to the background div to position it on top of the video
     backgroundDiv.appendChild(this.countdownElement)
 
     // Start countdown
-    let count = 5
+    let count = 10
     const numberElement = this.countdownElement.querySelector('.countdown-number')
 
     this.countdownInterval = setInterval(() => {

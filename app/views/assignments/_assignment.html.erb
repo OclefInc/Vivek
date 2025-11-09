@@ -1,16 +1,29 @@
 <div id="<%= dom_id assignment %>" class="md:flex-1 md:basis-1/2 md:px-5 xl:max-w-[640px]">
   <%= turbo_frame_tag "assignment_#{assignment.id}_summary_video" do %>
     <% if assignment.summary_video.attached? %>
-      <div class="bg-black flex items-center justify-center aspect-[4/3] xl:aspect-auto xl:max-w-[640px] xl:h-[480px]">
-        <% if assignment.summary_video.attached? %>
-          <%= video_tag assignment.summary_video,
+      <div class="bg-black flex items-center justify-center aspect-[4/3] xl:aspect-auto xl:max-w-[640px] xl:h-[480px] relative"
+           data-controller="video-poster">
+        <%= video_tag assignment.summary_video,
           controls: true,
+          preload: "metadata",
           class: "w-full h-full object-contain",
           data: {
             controller: "video-autoplay",
-            video_autoplay_next_url_value: assignment.first_lesson ? lesson_path(assignment.first_lesson) : nil
+            video_autoplay_next_url_value: assignment.first_lesson ? lesson_path(assignment.first_lesson) : nil,
+            video_poster_target: "video"
           } %>
-        <% end %>
+        <div data-video-poster-target="overlay" class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+          <h2 class="text-white text-3xl font-bold text-center px-8"><%= assignment.composition.name %></h2>
+          <p class="text-gray-300 text-xl mt-3"><%= assignment.student.name %></p>
+          <% if assignment.lessons.any? %>
+            <p class="text-gray-400 text-lg mt-2">
+              <%= assignment.lessons.minimum(:date)&.strftime("%b %d, %Y") %> - <%= assignment.lessons.maximum(:date)&.strftime("%b %d, %Y") %>
+            </p>
+            <p class="text-gray-400 text-lg mt-1">
+              <%= assignment.lessons.count %> <%= 'Lesson'.pluralize(assignment.lessons.count) %>
+            </p>
+          <% end %>
+        </div>
       </div>
     <% else %>
       <div class="bg-black flex items-center justify-center aspect-[4/3] xl:aspect-auto xl:max-w-[640px] xl:h-[480px]">

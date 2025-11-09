@@ -2,7 +2,19 @@
      data-controller="video-time"
      data-video-time-url-value="<%= lesson_path(lesson) %>">
   <%= turbo_frame_tag "lesson_#{lesson.id}_lesson_video" do %>
-    <div class="bg-black flex items-center justify-center aspect-[4/3] xl:aspect-auto xl:max-w-[640px] xl:h-[480px]">
+    <%
+        video_url = lesson.lesson_video
+        if lesson.video_start_time.present? || lesson.video_end_time.present?
+          fragment = "#t="
+          fragment += lesson.video_start_time.to_s if lesson.video_start_time.present?
+          fragment += "," + lesson.video_end_time.to_s if lesson.video_end_time.present?
+          video_url = url_for(lesson.lesson_video) + fragment
+        end
+      %>
+    <div class="bg-black flex items-center justify-center aspect-[4/3] xl:aspect-auto xl:max-w-[640px] xl:h-[480px] relative"
+         data-controller="video-poster"
+         data-video-poster-title-value="<%= lesson.name %>"
+         data-video-poster-subtitle-value="<%= lesson.date&.strftime('%B %d, %Y') %>">
       <%
         video_url = lesson.lesson_video
         if lesson.video_start_time.present? || lesson.video_end_time.present?
@@ -14,10 +26,18 @@
       %>
       <%= video_tag video_url,
           controls: true,
+          preload: "metadata",
           class: "w-full h-full object-contain",
           data: {
+            video_poster_target: "video",
             video_time_target: "video"
           } %>
+      <div data-video-poster-target="overlay" class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+        <h2 class="text-white text-3xl font-bold text-center px-8"><%= lesson.name %></h2>
+        <% if lesson.date %>
+          <p class="text-gray-400 text-xl mt-4"><%= lesson.date.strftime("%B %d, %Y") %></p>
+        <% end %>
+      </div>
     </div>
   <% end %>
   <%= form_with(model: @lesson) do |form| %>

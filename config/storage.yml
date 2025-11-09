@@ -16,7 +16,6 @@ amazon:
   secret_access_key: <%= ENV['AWS_SECRET_KEY'] %>
   region: us-west-1
   bucket: thevivekproject
-  public: true
 
 # Remember not to checkin your GCS keyfile to a repository
 # google:

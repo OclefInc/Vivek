@@ -1,8 +1,8 @@
-<div id="<%= dom_id lesson %>" class="md:flex-1 md:basis-1/2 md:px-5 max-w-[640px]"
+<div id="<%= dom_id lesson %>" class="md:flex-1 md:basis-1/2 md:px-5 xl:max-w-[640px]"
      data-controller="video-time"
      data-video-time-url-value="<%= lesson_path(lesson) %>">
   <%= turbo_frame_tag "lesson_#{lesson.id}_lesson_video" do %>
-    <div class="bg-black flex items-center justify-center" style="width: 640px; height: 480px; max-width: 100%;">
+    <div class="bg-black flex items-center justify-center aspect-[4/3] xl:aspect-auto xl:max-w-[640px] xl:h-[480px]">
       <%
         video_url = lesson.lesson_video
         if lesson.video_start_time.present? || lesson.video_end_time.present?
@@ -14,11 +14,8 @@
       %>
       <%= video_tag video_url,
           controls: true,
-          style: "max-width: 100%; max-height: 100%;",
-          class: "max-w-full h-auto",
+          class: "w-full h-full object-contain",
           data: {
-            controller: "plyr video-time",
-            plyr_next_url_value: lesson.next_lesson ? lesson_path(lesson.next_lesson) : nil,
             video_time_target: "video"
           } %>
     </div>

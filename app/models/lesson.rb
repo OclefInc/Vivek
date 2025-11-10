@@ -41,7 +41,7 @@ class Lesson < ApplicationRecord
     delegate :existing_description_attachments, to: :assignment
 
     def complete?
-      description.present? &&
+       !description.blank? &&
       teacher.present?
     end
 

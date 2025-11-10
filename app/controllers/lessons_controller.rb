@@ -33,7 +33,7 @@ class LessonsController < ApplicationController
     if lesson_params[:teacher_name].present?
       teacher = find_or_create_record(Teacher, lesson_params[:teacher_name])
       @lesson.teacher_id = teacher&.id
-    elsif @lesson.assignment&.teacher_id.present?
+    elsif @lesson.teacher_id.nil? && @lesson.assignment&.teacher_id.present?
       @lesson.teacher_id = @lesson.assignment.teacher_id
     end
 
@@ -67,7 +67,7 @@ class LessonsController < ApplicationController
     if lesson_params[:teacher_name].present?
       teacher = find_or_create_record(Teacher, lesson_params[:teacher_name])
       @lesson.teacher_id = teacher&.id
-    elsif @lesson.assignment&.teacher_id.present?
+    elsif @lesson.teacher_id.nil? && @lesson.assignment&.teacher_id.present?
       @lesson.teacher_id = @lesson.assignment.teacher_id
     end
 

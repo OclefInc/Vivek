@@ -32,7 +32,7 @@
             video_poster_target: "video",
             video_time_target: "video"
           } %>
-      <div data-video-poster-target="overlay" class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+      <div data-video-poster-target="overlay" class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none bg-black">
         <h2 class="text-white text-3xl font-bold text-center px-8"><%= lesson.name %></h2>
         <% if lesson.date %>
           <p class="text-gray-400 text-xl mt-4"><%= lesson.date.strftime("%B %d, %Y") %></p>

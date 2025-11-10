@@ -109,6 +109,10 @@ export default class extends Controller {
 
     // Update the data-pages attribute so it persists
     this.element.dataset.pages = pages
+    const pagesDisplay = document.getElementById("pages-display")
+    if (pagesDisplay) {
+      pagesDisplay.textContent = pages || "All"
+    }
 
     // Clear originalPages so cancel doesn't restore old value
     this.originalPages = undefined

@@ -10,10 +10,17 @@
     <!-- PDF pages will be rendered here as canvas elements -->
   </div>
 </div>
+<% display_all_pages = attachment.pages.blank? %>
 <div data-copyright-banner class="mt-3 p-3 bg-amber-50 border border-amber-200">
   <div class="flex justify-between items-start gap-2">
     <% if is_copyrighted %>
       <p class="text-sm font-medium text-amber-800">Copyrighted Material</p>
+      <p class="text-sm font-medium text-amber-800">
+        Pages:
+        <span id="pages-display">
+          <%= display_all_pages ? "All" : attachment.pages %>
+        </span>
+      </p>
       <% if purchase_url.present? %>
         <p class="text-sm text-amber-700 mt-1">
           Purchase:
@@ -25,6 +32,12 @@
       <% end %>
     <% else %>
       <p class="text-sm font-medium text-amber-800">Non Copyrighted Material</p>
+      <p class="text-sm font-medium text-amber-800">
+        Pages:
+        <span id="pages-display">
+          <%= display_all_pages ? "All" : attachment.pages %>
+        </span>
+      </p>
       <p class="text-sm text-amber-700 mt-1">
         Download:
         <%= link_to "Click Here", rails_blob_path(blob, disposition: "attachment"),

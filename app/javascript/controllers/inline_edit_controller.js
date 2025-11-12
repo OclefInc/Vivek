@@ -36,6 +36,40 @@ export default class extends Controller {
     }
   }
 
+  submitInputAsForm() {
+  // Create a form element
+  const form = document.createElement("form");
+  form.action = this.urlValue;
+  form.method = "POST";
+
+  // Add CSRF token
+  const csrf = document.querySelector('meta[name="csrf-token"]');
+  if (csrf) {
+    const csrfInput = document.createElement("input");
+    csrfInput.type = "hidden";
+    csrfInput.name = "authenticity_token";
+    csrfInput.value = csrf.content;
+    form.appendChild(csrfInput);
+  }
+
+  // Clone the input target and append to form
+  const inputClone = this.inputTarget.cloneNode(true);
+  inputClone.name = `lesson[${this.fieldValue}]`;
+  form.appendChild(inputClone);
+
+  // Optionally add _method for PATCH
+  const methodInput = document.createElement("input");
+  methodInput.type = "hidden";
+  methodInput.name = "_method";
+  methodInput.value = "PATCH";
+  form.appendChild(methodInput);
+
+  // Append form to body, submit, and remove after
+  document.body.appendChild(form);
+  form.submit();
+  document.body.removeChild(form);
+}
+
   async update() {
     const value = this.inputTarget.value.trim()
 
@@ -72,18 +106,6 @@ export default class extends Controller {
           this.displayTarget.textContent = value
           this.displayTarget.classList.remove("hidden")
           this.inputTarget.classList.add("hidden")
-
-          // Update the lesson name in the table if it exists
-          const lessonId = this.urlValue.match(/\/lessons\/(\d+)/)?.[1]
-          if (lessonId && this.fieldValue === "name") {
-            const tableFrame = document.getElementById(`lesson_${lessonId}_name_in_table`)
-            if (tableFrame) {
-              const link = tableFrame.querySelector('a')
-              if (link) {
-                link.textContent = value
-              }
-            }
-          }
         }
       } else {
         alert("Failed to update")

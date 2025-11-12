@@ -30,19 +30,14 @@ export default class extends Controller {
   async save(event) {
     if (event.key === "Enter") {
       event.preventDefault()
-      // await this.update()
-      this.submitInputAsForm()
+      this.formTarget.requestSubmit()
     } else if (event.key === "Escape") {
       this.cancel()
     }
   }
 
-  submitInputAsForm() {
-    this.formTarget.requestSubmit()
-  }
-
   blur() {
     // Small delay to allow clicking cancel button
-    setTimeout(() => this.submitInputAsForm(), 200)
+    setTimeout(() => this.formTarget.requestSubmit(), 100)
   }
 }

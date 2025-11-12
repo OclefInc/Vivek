@@ -47,11 +47,15 @@
                   <span class="text-gray-400 dark:text-gray-500 italic">Click to add date</span>
                 <% end %>
               </span>
-              <input data-inline-edit-target="input"
+              <%= form_with(model: lesson, url: lesson_path(lesson), data:{ inline_edit_target: 'form', turbo_frame: '_top', turbo_stream: true}) do |form| %>
+                <input type="hidden" name="return_url" value="<%= request.fullpath %>">
+                <input data-inline-edit-target="input"
+                    name="lesson[date]"
                      type="date"
                      value="<%= lesson.date %>"
                      data-action="keydown->inline-edit#save blur->inline-edit#blur"
-              class="hidden border border-gray-300 dark:border-gray-600 rounded px-2 py-1 dark:bg-gray-800 dark:text-gray-200" />
+                class="hidden border border-gray-300 dark:border-gray-600 rounded px-2 py-1 dark:bg-gray-800 dark:text-gray-200" />
+              <% end %>
             </span>
           </td>
         </tr>

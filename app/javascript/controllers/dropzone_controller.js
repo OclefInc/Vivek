@@ -11,7 +11,21 @@ export default class extends Controller {
   }
 
   connect() {
-    // console.log(Dropzone(this.element, { }))
+    this.initializeDropzone();
+    document.addEventListener("turbo:frame-load", () => {
+      this.initializeDropzone();
+    });
+    document.addEventListener("turbo:render", () => {
+      this.initializeDropzone();
+    });
+  }
+
+  initializeDropzone() {
+    if (this.dropZone) {
+      this.dropZone.removeAllFiles(true); // true = remove files and previews
+      this.dropZone.destroy(); // Remove previous Dropzone instance
+      this.dropZone = null;
+    }
     this.dropZone = createDropZone(this)
     this.hideFileInput()
     this.bindEvents()

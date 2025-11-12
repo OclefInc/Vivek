@@ -1,5 +1,5 @@
 <%= turbo_frame_tag "lesson_#{@lesson.id}_description" do %>
-  <%= form_with(model: @lesson, url: lesson_path(@lesson, {format: :html})) do |form| %>
+  <%= form_with(model: @lesson, url: lesson_path(@lesson, {format: :html}), data:{ turbo_frame: '_top'}) do |form| %>
     <div data-controller="attachment-selector attachment-metadata trix-pages-sync">
       <strong class="dark:text-gray-200">Description:</strong>
       <%= form.rich_text_area :description,
@@ -33,9 +33,9 @@
           </select>
         </div>
       <% end %>
-      <div class="mt-4 flex gap-2">
-        <%= form.submit "Save", class: "px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-medium cursor-pointer" %>
-        <%= link_to "Cancel", lesson_path(@lesson), class: "px-4 py-2 bg-gray-100 hover:bg-gray-50 rounded-lg font-medium" %>
+      <div class="mt-2 flex gap-2">
+        <%= form.submit "Save", class: "px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-sm font-medium cursor-pointer" %>
+        <%= link_to "Cancel", lesson_path(@lesson), class: "px-2 py-1 bg-gray-100 dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-lg text-sm font-medium dark:text-gray-200" %>
       </div>
       <!-- Copyright Modal for new attachments -->
       <div data-attachment-metadata-target="modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">

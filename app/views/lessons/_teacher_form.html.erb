@@ -1,5 +1,5 @@
 <%= turbo_frame_tag "lesson_#{@lesson.id}_teacher" do %>
-  <%= form_with(model: @lesson, url: lesson_path(@lesson, {format: :html}),local: true) do |form| %>
+  <%= form_with(model: @lesson, url: lesson_path(@lesson, {format: :html}), data:{ turbo_frame: '_top'}) do |form| %>
     <div class="mb-4">
       <%= form.label :teacher, class: "dark:text-gray-200", style: "display: block" %>
       <select name="lesson[teacher_name]"
@@ -12,8 +12,8 @@
           <% end %>
         </select>
         <div class="mt-2 flex gap-2">
-          <%= form.submit "Save", class: "px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-medium cursor-pointer" %>
-          <%= link_to "Cancel", lesson_path(@lesson), class: "px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-lg font-medium dark:text-gray-200" %>
+          <%= form.submit "Save", class: "px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-sm font-medium cursor-pointer" %>
+          <%= link_to "Cancel", lesson_path(@lesson), class: "px-2 py-1 bg-gray-100 dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-lg text-sm font-medium dark:text-gray-200" %>
         </div>
       </div>
     <% end %>

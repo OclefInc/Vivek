@@ -1,9 +1,9 @@
 <div id="<%= dom_id @episode %>">
-  <div class="md:m-5 xl:px-5 xl:py-5 xl:mt-0">
-    <div class=" md:flex ">
+  <div class="md:-mx-5 px-6 xl:px-5 xl:pb-5 xl:mt-5">
+    <div class="md:flex md:-mx-5">
       <div class="md:flex-1 md:basis-1/2 md:px-5 text-sky-800 dark:text-teal-300">
         <% if @episode.lesson_video.attached? %>
-          <div class="bg-black rounded-2xl flex items-center justify-center" style="width: 640px; height: 480px; max-width: 100%;">
+          <div class="bg-black p-2 rounded-2xl flex items-center justify-center" style="width: 640px; height: 480px; max-width: 100%;">
             <%= video_tag @episode.lesson_video, style: "max-width: 100%; max-height: 100%;", controls: true, class: "max-w-full max-h-full" %>
           </div>
         <% end %>

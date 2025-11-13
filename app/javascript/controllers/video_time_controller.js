@@ -1,8 +1,12 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["video", "startTime", "endTime", "startDisplay", "endDisplay"]
+  static targets = ["video", "startTime", "endTime", "startDisplay", "endDisplay","form"]
   static values = { url: String }
+
+  toggleForm() {
+  this.formTarget.classList.toggle("hidden")
+}
 
   async setStartTime() {
     const currentTime = Math.floor(this.videoTarget.currentTime)

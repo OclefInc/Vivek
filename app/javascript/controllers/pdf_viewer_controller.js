@@ -10,6 +10,18 @@ export default class extends Controller {
 
   async connect() {
 
+    this.initializePdf();
+    document.addEventListener("turbo:frame-load", () => {
+      this.initializePdf();
+    });
+    document.addEventListener("turbo:render", () => {
+      this.initializePdf();
+    });
+
+
+  }
+
+  async initializePdf() {
     // Access PDF.js library from global scope
     const pdfjsLib = window.pdfjsLib
 

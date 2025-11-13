@@ -20,7 +20,7 @@ class AssignmentsController < ApplicationController
   # GET /assignments/1/edit
   def edit
     if params[:field].present?
-      render partial: "#{params[:field]}_form", layout: false
+      render partial: "form_#{params[:field]}", layout: false
     end
   end
 

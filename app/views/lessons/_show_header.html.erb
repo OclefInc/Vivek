@@ -76,9 +76,6 @@
           <%= link_to edit_lesson_path(@lesson), class: "block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700" do %>
             Edit Lesson
           <% end %>
-          <%= link_to edit_lesson_path(@lesson, field: :lesson_video), class: "block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700", data: { turbo_frame: "lesson_#{@lesson.id}_lesson_video", action: "click->dropdown#toggle" } do %>
-            Edit Video
-          <% end %>
           <%= button_to @lesson, method: :delete, class: "block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700", data: { turbo_confirm: "Are you sure?" }, title: "Delete", form_class: "w-full" do %>
             Delete
           <% end %>

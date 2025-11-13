@@ -26,9 +26,6 @@
           <%= link_to edit_assignment_path(@assignment), class: "block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700" do %>
             Edit Assignment
           <% end %>
-          <%= link_to edit_assignment_path(@assignment, field: :summary_video), class: "block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700", data: { turbo_frame: "assignment_#{@assignment.id}_summary_video", action: "click->dropdown#toggle" } do %>
-            Edit Video
-          <% end %>
           <%  if @assignment.lessons.empty?%>
             <%= button_to @assignment, method: :delete, class: "block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700", data: { turbo_confirm: "Are you sure?" }, title: "Delete", form_class: "w-full" do %>
               Delete

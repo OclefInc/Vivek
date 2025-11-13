@@ -1,5 +1,5 @@
-<div class="w-full m-5 md:flex-2 xl:basis-1/2 xl:px-5 xl:mt-5">
-  <table class="w-full overflow-auto flex-auto bg-sky-50 text-sky-800 dark:text-teal-400 shadow dark:bg-zinc-800 bg-opacity-50 rounded-2xl m-2 p-6" style="max-height: 620px">
+<div class="w-full m-5 md:flex-2 xl:basis-1/2 xl:px-5 xl:mt-5" style="max-height:480px; overflow:auto">
+  <table class="w-full flex-auto bg-sky-50 text-sky-800 dark:text-teal-400 shadow dark:bg-zinc-800 bg-opacity-50 rounded-2xl m-2 p-6">
     <thead>
       <tr>
         <th class="text-left md:px-3 py-2 border-b border-zinc-300 dark:border-zinc-600 text-sky-900 dark:text-teal-400">Episode</th>
@@ -12,19 +12,23 @@
         </th>
       </tr>
     </thead>
-    <tbody data-sortable-target="tbody overflow-auto">
+    <tbody data-sortable-target="tbody">
       <% @episode.project.lessons.order(:sort).each_with_sortable_id do |lesson, sortable_id| %>
         <tr >
-          <td class="text-left md:px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-indigo-500 hover:indigo-300">
-            <span class="inline-flex items-center gap-2">
-              <%= link_to lesson.name, project_episode_path(@episode, lesson), class: 'text-indigo-500 hover:text-indigo-300 hover:text-bold' %>
-            </span>
-          </td>
-          <td class="text-left md:px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">
-            <%= lesson.date&.strftime('%b %d, %Y') || 'No date' %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  </table>
-</div>
+          <% if @episode.id == lesson.id %>
+            <td class="m-2 bg-white text-left px-3 py-2 md:px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-indigo-500">
+            <% else %>
+              <td class="m-2 text-left px-3 py-2 md:px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-indigo-500 hover:indigo-300">
+              <% end %>
+              <span class="inline-flex items-center gap-2">
+                <%= link_to lesson.name, project_episode_path(@episode, lesson), class: 'text-indigo-500 hover:text-indigo-300 hover:text-bold' %>
+              </span>
+            </td>
+            <td class="m-2 text-left px-3 py-2 md:px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">
+              <%= lesson.date&.strftime('%b %d, %Y') || 'No date' %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>

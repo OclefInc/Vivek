@@ -1,14 +1,14 @@
-<%= turbo_frame_tag "assignment_#{@assignment.id}_teacher" do %>
+<%= turbo_frame_tag "assignment_#{@assignment.id}_student" do %>
   <%= form_with(model: @assignment, local: true) do |form| %>
     <div class="mb-4">
-      <%= form.label :teacher, class: "dark:text-gray-200", style: "display: block" %>
-      <select name="assignment[teacher_name]"
+      <%= form.label :student, class: "dark:text-gray-200", style: "display: block" %>
+      <select name="assignment[student_name]"
             data-controller="searchable-select"
-            data-searchable-select-placeholder-value="Select or type teacher name..."
+            data-searchable-select-placeholder-value="Select or type student name..."
             class="block outline-none dark:bg-gray-800 dark:text-gray-200 dark:border-gray-600">
         <option value=""></option>
-        <% Teacher.order(:name).each do |teacher| %>
-          <option value="<%= teacher.name %>" <%= 'selected' if @assignment.teacher_id == teacher.id %>><%= teacher.name %></option>
+        <% Student.order(:name).each do |student| %>
+          <option value="<%= student.name %>" <%= 'selected' if @assignment.student_id == student.id %>><%= student.name %></option>
           <% end %>
         </select>
         <div class="mt-2 flex gap-2">

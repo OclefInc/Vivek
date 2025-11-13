@@ -4,8 +4,8 @@
       <strong class="dark:text-gray-200">Description:</strong>
       <%= form.rich_text_area :description, class: "trix-content" %>
       <div class="mt-2 flex gap-2">
-        <%= form.submit "Save", class: "px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-medium cursor-pointer" %>
-        <%= link_to "Cancel", assignment_path(@assignment), class: "px-4 py-2 bg-gray-100 dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-lg font-medium dark:text-gray-200" %>
+        <%= form.submit "Save", class: "px-2 py-1 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-sm font-medium cursor-pointer" %>
+        <%= link_to "Cancel", assignment_path(@assignment), class: "px-2 py-1 bg-gray-100 dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 rounded-lg text-sm font-medium dark:text-gray-200" %>
       </div>
     </div>
   <% end %>

@@ -19,6 +19,9 @@ class TeachersController < ApplicationController
 
   # GET /teachers/1/edit
   def edit
+    if params[:field].present?
+      render partial: "form_#{params[:field]}", layout: false
+    end
   end
 
   # POST /teachers or /teachers.json

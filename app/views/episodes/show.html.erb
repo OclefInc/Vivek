@@ -1,70 +1,10 @@
-<div class="border shadow border-sky-100 rounded-2xl bg-sky-50 dark:border-zinc-800 dark:bg-zinc-900 border-2 px-6 py-4">
-  <div class="mx-6 flex justify-between items-center">
-    <p class="text-sky-800 dark:text-teal-300 text-2xl m-2 underline underline-offset-8">
-      <%= @episode.name %>
-    </p>
-    <div class="border border-zinc-300 dark:border-zinc-600 rounded p-4 dark:bg-zinc-800">
-      <p class="text-sky-700 dark:text-teal-400 m-2 text-lg">
-        <strong>Project:</strong>
-        <%= link_to @episode.project.composition.name, project_path(@episode.project), class:'text-indigo-500 hover:text-indigo-300' %>
-      </p>
-      <p class="text-sky-700 dark:text-teal-400 m-2">
-        <strong>Student:</strong>
-        <%= link_to @episode.project.student.name, display_student_path(@episode.project.student), class:'font-semibold text-indigo-500 hover:text-indigo-300' %>
-      </p>
-    </div>
+<div>
+  <div class="bg-sky-500 dark:bg-zinc-900">
+    <%= render 'header' %>
   </div>
-  <div class="xl:flex">
-    <div id="<%= dom_id @episode %>">
-      <div class="md:-mx-5 py-4">
-        <div class=" md:flex md:-mx-5 py-4">
-          <div class="md:flex-1 md:basis-1/2 md:px-5 text-sky-800 dark:text-teal-300">
-            <% if @episode.lesson_video.attached? %>
-              <div class="bg-sky-100 dark:bg-black rounded-2xl flex items-center justify-center" style="width: 640px; height: 480px; max-width: 100%;">
-                <%= video_tag @episode.lesson_video,
-                  style: "max-width: 100%; max-height: 100%;",
-                  controls: true,
-                  autoplay: true,
-                  class: "max-w-full max-h-full",
-                  data: {
-                    controller: "video-autoplay",
-                    video_autoplay_next_url_value: @episode.next_lesson ? project_episode_path(@episode.project, @episode.next_lesson) : nil,
-                    video_autoplay_next_name_value: @episode.next_lesson&.name,
-                    video_autoplay_next_date_value: @episode.next_lesson&.date&.strftime("%B %d, %Y")
-                  } %>
-              </div>
-            <% end %>
-          </div>
-        </div>
-        <div class="text-bold text-sky-700 dark:text-teal-400 px-4 py-2">
-          <p class="text-sky-800 dark:text-teal-300 mb-2">
-            <% if @episode.teacher.present? %>
-              <%= link_to @episode.teacher.name, display_teacher_path(@episode.teacher), class:'text-blue-600 hover:text-blue-400' %> (Teacher)
-            <% end %>
-          </p>
-          <div class="mx-4 my-2 text-sky-900 dark:text-teal-300">
-            <p class="font-bold"> Skills: </p>
-            <%= @episode.skills.map{|skill| link_to(skill.name, display_skill_path(skill), class:"text-indigo-600 pl-4 hover:text-indigo-400")}.join(', ').html_safe %>
-          </div>
-          <p class="text-sky-800 dark:text-teal-300">
-            <%= @episode.description %>
-          </p>
-        </div>
-      </div>
-    </div>
-    <div class="w-full m-5 md:flex-2 xl:basis-1/2 xl:px-5 xl:mt-5">
-      <h1 class="mb-2 text-xl text-sky-900 dark:text-teal-400">
-        Episodes:
-      </h1>
-      <div class="overflow-auto flex-auto bg-sky-50 text-sky-800 dark:text-teal-300 border shadow border-sky-100 dark:border-sky-800 dark:bg-zinc-800 bg-opacity-50 rounded-2xl m-2 p-6" style="max-height: 620px">
-        <% @episode.project.lessons.order(:sort).each_with_sortable_id do |lesson, sortable_id| %>
-          <div class="flex justify-between items-center">
-            <p class="m-2 border-b border-zinc-300 text-orange-700 hover:text-amber-500 dark:text-orange-600 dark:hover:text-orange-400 italic" > <%= link_to lesson.name, project_episode_path(@episode, lesson) %> </p>
-            <p class="text-sm p-2 text-sky-900 dark:text-teal-300"><%= lesson.date&.strftime('%b %d, %Y') || 'No date' %></p>
-          </div>
-        <% end %>
-      </div>
-    </div>
+  <div class="bg-sky-500 dark:bg-zinc-900 xl:flex">
+    <%= render 'video_description' %>
+    <%= render 'episode_table' %>
   </div>
 </div>
 <%= render partial:"/comments/module", locals:{annotation:@episode} %>

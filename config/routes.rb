@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :tutorials
   namespace :display do
     resources :sheet_musics
     resources :skills

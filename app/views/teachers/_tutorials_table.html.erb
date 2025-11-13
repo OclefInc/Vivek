@@ -1,0 +1,17 @@
+<h4 class="font-bold text-2xl dark:text-gray-200">Tutorials</h4>
+<table class="w-full table-auto border-collapse">
+  <thead>
+    <tr>
+      <th class="text-left md:px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">Name</th>
+      <th class="text-left md:px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">Views</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @teacher.tutorials.sort_by(&:name).each do |tutorial| %>
+      <tr>
+        <td class="text-left md:px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-300"><%= link_to tutorial.name, tutorial, class:"text-blue-500 hover:text-red-500 dark:text-blue-400 dark:hover:text-red-400" %></td>
+        <td class="text-left md:px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-300"><%= tutorial.views %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

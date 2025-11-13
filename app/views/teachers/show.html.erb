@@ -1,30 +1,13 @@
 <% content_for :title, "Teacher" %>
-<div class="flex justify-between items-center">
-  <span class="font-bold text-2xl dark:text-gray-200">
-    <%= @teacher.name %>
-  </span>
-  <div class="ml-2 flex items-center justify-end gap-1">
-    <%= link_to edit_teacher_path(@teacher), class: "rounded-lg px-3 py-2 mx-1 bg-gray-100 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600 inline-flex items-center gap-1 font-medium", title: "Edit" do %>
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 dark:text-gray-300">
-        <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-      </svg>
-    <% end %>
+<%= render 'show_header' %>
+<div class="xl:flex gap-5">
+  <div>
+    <%= render @teacher %>
+  </div>
+  <div>
+    <%= render 'projects_table' %>
+    <div class="mt-10">
+      <%= render 'tutorials_table' %>
+    </div>
   </div>
 </div>
-<%= render @teacher %>
-<table class="w-full table-auto border-collapse">
-  <thead>
-    <tr>
-      <th class="text-left md:px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">Project</th>
-      <th class="text-left md:px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">Lessons</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @teacher.projects.sort_by(&:name).each do |project| %>
-      <tr>
-        <td class="text-left md:px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-300"><%= link_to project.name, project, class:"text-blue-500 hover:text-red-500 dark:text-blue-400 dark:hover:text-red-400" %></td>
-        <td class="text-left md:px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-300"><%= project.lessons.where(teacher: @teacher).count %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>

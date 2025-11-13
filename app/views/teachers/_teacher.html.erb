@@ -1,6 +1,6 @@
-<div id="<%= dom_id teacher %>" class="flex w-auto my-2 space-y-2 items-start">
-  <div class="py-2 px-4">
-    <%= image_tag teacher.profile_picture, class:"max-w-32" if teacher.profile_picture.attached? %>
+<div id="<%= dom_id teacher %>">
+  <div class="py-2 max-w-200">
+    <%= image_tag teacher.profile_picture, class:"" if teacher.profile_picture.attached? %>
   </div>
   <div class="w-auto pb-2 px-4 dark:text-gray-300">
     <p>

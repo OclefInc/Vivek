@@ -10,6 +10,7 @@
 #  user_id    :integer
 #
 class Teacher < ApplicationRecord
+    has_many :tutorials
     has_many :lessons
     has_many :assignments, through: :lessons
     has_one_attached :profile_picture

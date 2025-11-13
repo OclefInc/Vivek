@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_08_154853) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_13_170452) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_stat_statements"
@@ -139,6 +139,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_08_154853) do
     t.integer "user_id"
   end
 
+  create_table "tutorials", force: :cascade do |t|
+    t.string "name"
+    t.bigint "teacher_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["teacher_id"], name: "index_tutorials_on_teacher_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -161,4 +169,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_08_154853) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "tutorials", "teachers"
 end

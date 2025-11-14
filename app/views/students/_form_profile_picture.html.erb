@@ -1,0 +1,17 @@
+<%= turbo_frame_tag "student_#{@student.id}_profile_picture" do %>
+  <div class="bg-black flex items-center justify-center" style="width: 480px; height: 326px; max-width: 100%;">
+    <%= form_with(model: @student) do |form| %>
+      <div class="dropzone dropzone-default dz-clickable border  border-gray-300 rounded p-4" data-controller="dropzone" data-dropzone-max-file-size="10000000" data-dropzone-accepted-files="image/*" data-turbo-permanent>
+        <%= form.file_field :profile_picture, direct_upload: true, data: { 'dropzone-target': "input", 'dropzone-capture-mode-value': 'environment', autosubmit: true, turbosubmit: nil, camera: false } %>
+        <div class="dropzone-msg dz-message needsclick">
+          <h3 class="dropzone-msg-title">Drag Profile Picture Here</h3>
+          <span class="dropzone-msg-desc">Click To Browse</span>
+        </div>
+      </div>
+      <div class="text-center p-4">
+        <%= link_to("Cancel", student_path(@student), class: "inline-block rounded-lg px-4 py-2 text-sm text-white bg-red-600 hover:bg-red-400") %>
+        <%= form.submit class: "w-full sm:w-auto rounded-lg my-2 px-3 py-2 bg-blue-600 hover:bg-blue-400 text-white inline-block font-medium cursor-pointer" %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

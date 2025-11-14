@@ -17,6 +17,9 @@ class TutorialsController < ApplicationController
 
   # GET /tutorials/1/edit
   def edit
+    if params[:field].present?
+      render partial: "form_#{params[:field]}", layout: false
+    end
   end
 
   # POST /tutorials or /tutorials.json
@@ -25,7 +28,7 @@ class TutorialsController < ApplicationController
 
     respond_to do |format|
       if @tutorial.save
-        format.html { redirect_to @tutorial, notice: "Tutorial was successfully created." }
+        format.html { redirect_to params[:return_url] || @tutorial, notice: "Tutorial was successfully created." }
         format.json { render :show, status: :created, location: @tutorial }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -65,6 +68,6 @@ class TutorialsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def tutorial_params
-      params.expect(tutorial: [ :name, :teacher_id ])
+      params.expect(tutorial: [ :name, :teacher_id, :video_file, :description ])
     end
 end

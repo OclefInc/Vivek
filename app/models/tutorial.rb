@@ -18,7 +18,19 @@
 #
 class Tutorial < ApplicationRecord
   belongs_to :teacher
+  has_one_attached :video_file
+  has_rich_text :description
+
+  before_validation :assign_default_name, on: :create
+
+  validates_presence_of :name
 
   def views
   end
+
+  private
+    def assign_default_name
+      # set name to date if name is blank
+      self.name = Date.today.to_s if name.blank? && video_file.attached?
+    end
 end

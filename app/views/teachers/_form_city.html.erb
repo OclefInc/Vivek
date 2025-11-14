@@ -1,6 +1,7 @@
 <%= turbo_frame_tag "teacher_#{@teacher.id}_city" do %>
   <%= form_with(model: @teacher, url: teacher_path(@teacher, {format: :html}), data:{ turbo_frame: '_top'}) do |form| %>
     <div class="mb-4">
+      <%= form.label :city, class: "dark:text-gray-200" %>
       <%= form.text_field :city,
                 class: "block shadow rounded-md border border-gray-200 dark:border-gray-600 outline-none px-3 py-2 mt-2 mb-4 w-full dark:bg-gray-800 dark:text-gray-200" %>
       <div class="mt-2 flex gap-2">

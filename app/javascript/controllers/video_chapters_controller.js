@@ -50,6 +50,7 @@ export default class extends Controller {
 
   updateCurrentChapter() {
     if (!this.video || !this.hasChaptersListTarget) return
+    if (this.video.paused) return
 
     const currentTime = this.video.currentTime
     const chapterItems = this.chaptersListTarget.querySelectorAll("[data-chapter-item]")

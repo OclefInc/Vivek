@@ -1,0 +1,3 @@
+<%# app/views/chapters/update.turbo_stream.erb %>
+<%= turbo_stream.replace "chapter_form", "" %>
+<%= turbo_stream.replace dom_id(@chapter), partial: "chapters/chapter", locals: { chapter: @chapter } %>

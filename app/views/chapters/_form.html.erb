@@ -1,0 +1,40 @@
+<%# app/views/chapters/_form.html.erb %>
+<%= turbo_frame_tag "chapter_form" do %>
+  <div class="bg-gray-700 p-4 rounded-lg">
+    <%= form_with(model: [lesson, chapter],
+                  data: { controller: "video-chapters",
+                          video_chapters_target: "form" }) do |form| %>
+
+      <div class="mb-3">
+        <%= form.label :name, "Chapter Name", class: "block text-sm mb-1" %>
+        <%= form.text_field :name,
+            class: "w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white",
+            placeholder: "e.g., Introduction",
+            data: { video_chapters_target: "nameInput" } %>
+      </div>
+
+      <div class="mb-3">
+        <div class="flex justify-between items-center mb-1">
+          <%= form.label :start_time, "Start Time (seconds)", class: "block text-sm" %>
+          <button type="button"
+                  data-action="click->video-chapters#captureCurrentTime"
+                  class="px-2 py-1 bg-blue-600 hover:bg-blue-500 rounded text-xs">
+            Use Current Time
+          </button>
+        </div>
+        <%= form.number_field :start_time,
+            class: "w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white",
+            min: 0,
+            data: { video_chapters_target: "startTimeInput" } %>
+      </div>
+
+      <div class="flex gap-2">
+        <%= form.submit "Save Chapter",
+            class: "px-4 py-2 bg-blue-600 hover:bg-blue-500 rounded-lg font-medium" %>
+        <%= link_to "Cancel", lesson_path(lesson),
+            class: "px-4 py-2 bg-gray-600 hover:bg-gray-500 rounded-lg font-medium",
+            data: { turbo_frame: "_top" } %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

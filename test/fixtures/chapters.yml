@@ -1,0 +1,33 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# == Schema Information
+#
+# Table name: chapters
+#
+#  id         :bigint           not null, primary key
+#  name       :string
+#  start_time :integer
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  lesson_id  :bigint           not null
+#
+# Indexes
+#
+#  index_chapters_on_lesson_id                 (lesson_id)
+#  index_chapters_on_lesson_id_and_start_time  (lesson_id,start_time)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (lesson_id => lessons.id)
+#
+one:
+  lesson: one
+  name: MyString
+  start_time: 1
+  sort: 1
+
+two:
+  lesson: two
+  name: MyString
+  start_time: 1
+  sort: 1

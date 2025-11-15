@@ -57,8 +57,9 @@ group :development do
   gem "annotaterb"
   gem "htmlbeautifier"
   gem "rufo"
-  gem "ruby-lsp"
+  gem "ruby-lsp", "0.26.3"
   gem "rubocop"
+  gem "rubocop-lsp"
   gem "dotenv-rails"
 end
 

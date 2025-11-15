@@ -16,89 +16,89 @@
 #  teacher_id               :integer
 #
 class Lesson < ApplicationRecord
+  has_many :chapters, -> { order(:start_time) }, dependent: :destroy
   include RailsSortable::Model
-    set_sortable :sort  # Indicate a sort column
 
-    belongs_to :assignment
-    belongs_to :teacher, optional: true
+  set_sortable :sort  # Indicate a sort column
 
-    has_and_belongs_to_many :skills
-    has_many :comments, as: :annotation
-    has_rich_text :description
-    has_rich_text :student_journal
-    has_rich_text :teacher_journal
-    has_one_attached :lesson_video
+  belongs_to :assignment
+  belongs_to :teacher, optional: true
 
-    before_validation :assign_default_name, on: :create
-    before_create :assign_sort_position
-    before_create :assign_default_date
-    before_create :assign_default_teacher
+  has_and_belongs_to_many :skills
+  has_many :comments, as: :annotation
+  has_rich_text :description
+  has_rich_text :student_journal
+  has_rich_text :teacher_journal
+  has_one_attached :lesson_video
 
-    validates_presence_of :name
-    # validates_presence_of :lesson_video
-    # validate :lesson_video_is_video_type
+  before_validation :assign_default_name, on: :create
+  before_create :assign_sort_position
+  before_create :assign_default_date
+  before_create :assign_default_teacher
 
-    delegate :existing_description_attachments, to: :assignment
+  validates_presence_of :name
+  # validates_presence_of :lesson_video
+  # validate :lesson_video_is_video_type
 
-    def complete?
-       !description.blank? &&
-      teacher.present?
+  delegate :existing_description_attachments, to: :assignment
+
+  def complete?
+    !description.blank? &&
+    teacher.present?
+  end
+
+  def status
+    if complete?
+      "Complete"
+    else
+      "Incomplete"
     end
+  end
 
-    def status
-      if complete?
-        "Complete"
-      else
-        "Incomplete"
-      end
+  def next_lesson
+    assignment.lessons.where("sort > ?", sort).order(:sort).first
+  end
+
+  def previous_lesson
+    assignment.lessons.where("sort < ?", sort).order(sort: :desc).first
+  end
+
+  alias_method :next, :next_lesson
+  alias_method :previous, :previous_lesson
+
+  def lesson_video_is_video_type
+    unless lesson_video.content_type.starts_with?("video/")
+      errors.add(:lesson_video, "must be a video file")
     end
+  end
 
-    def next_lesson
-      assignment.lessons.where("sort > ?", sort).order(:sort).first
-    end
-
-    def previous_lesson
-      assignment.lessons.where("sort < ?", sort).order(sort: :desc).first
-    end
-
-    alias_method :next, :next_lesson
-    alias_method :previous, :previous_lesson
-
-    def lesson_video_is_video_type
-        unless lesson_video.content_type.starts_with?("video/")
-          errors.add(:lesson_video, "must be a video file")
-        end
-    end
-
-    def project
-      assignment
-    end
-
-
+  def project
+    assignment
+  end
 
     private
-    def assign_default_name
-      # set name to date if name is blank
-      self.name = Date.today.to_s if name.blank? && lesson_video.attached?
-    end
-
-    def assign_sort_position
-      # Set sort to the next position after the last lesson in the assignment
-      if assignment.present?
-        max_sort = assignment.lessons.maximum(:sort) || 0
-        self.sort = max_sort + 1
+      def assign_default_name
+        # set name to date if name is blank
+        self.name = Date.today.to_s if name.blank? && lesson_video.attached?
       end
-    end
 
-    def assign_default_date
-      # Set date to today if not already set
-      self.date = Date.today if date.blank?
-    end
-
-    def assign_default_teacher
-      # Set teacher_id from assignment if not already set
-      if assignment.present? && teacher_id.blank? && assignment.teacher_id.present?
-        self.teacher_id = assignment.teacher_id
+      def assign_sort_position
+        # Set sort to the next position after the last lesson in the assignment
+        if assignment.present?
+          max_sort = assignment.lessons.maximum(:sort) || 0
+          self.sort = max_sort + 1
+        end
       end
-    end
+
+      def assign_default_date
+        # Set date to today if not already set
+        self.date = Date.today if date.blank?
+      end
+
+      def assign_default_teacher
+        # Set teacher_id from assignment if not already set
+        if assignment.present? && teacher_id.blank? && assignment.teacher_id.present?
+          self.teacher_id = assignment.teacher_id
+        end
+      end
 end

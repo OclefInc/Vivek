@@ -26,7 +26,9 @@ Rails.application.routes.draw do
   resources :compositions
   resources :teachers
   resources :students
-  resources :lessons
+  resources :lessons do
+    resources :chapters, only: [ :new, :create, :edit, :update, :destroy ]
+  end
   resources :assignments
   resources :projects do
     resources :episodes

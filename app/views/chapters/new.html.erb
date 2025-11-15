@@ -1,0 +1,7 @@
+<%# app/views/chapters/new.html.erb %>
+<%= turbo_frame_tag "chapter_form" do %>
+  <div class="bg-gray-700 p-4 rounded-lg">
+    <h3 class="text-lg font-semibold mb-3">New Chapter</h3>
+    <%= render "form", lesson: @lesson, chapter: @chapter %>
+  </div>
+<% end %>

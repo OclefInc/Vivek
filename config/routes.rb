@@ -35,6 +35,7 @@ Rails.application.routes.draw do
   resources :comments
 
   # Attachments metadata endpoint
+  get "attachments/:sgid/edit_metadata", to: "attachments#edit_metadata"
   post "attachments/update_metadata", to: "attachments#update_metadata"
   post "attachments/update_pages", to: "attachments#update_pages"
 

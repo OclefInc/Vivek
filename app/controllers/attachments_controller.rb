@@ -1,4 +1,9 @@
 class AttachmentsController < ApplicationController
+  def edit_metadata
+    sgid = params[:sgid]
+    @blob = ActiveStorage::Blob.find_signed(sgid)
+  end
+
   def update_metadata
     sgid = params[:sgid]
     blob = ActiveStorage::Blob.find_signed(sgid)

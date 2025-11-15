@@ -6,7 +6,7 @@
 %>
 <figure class="attachment attachment--<%= blob.representable? ? "preview" : "file" %> attachment--<%= blob.filename.extension %>">
   <% if blob.filename.extension == 'pdf' %>
-    <%= render :partial => '/active_storage/blobs/pdf', locals: {attachment: attachment, blob: blob, is_copyrighted: is_copyrighted, purchase_url: purchase_url} %>
+    <%= render :partial => '/active_storage/blobs/pdf', locals: {attachment: attachment, blob: blob, is_copyrighted: is_copyrighted, purchase_url: purchase_url, allow_edit_pages: true} %>
   <% elsif blob.representable? %>
     <%= image_tag blob.representation(resize_to_limit: local_assigns[:in_gallery] ? [ 800, 600 ] : [ 1024, 768 ]) %>
   <% end %>

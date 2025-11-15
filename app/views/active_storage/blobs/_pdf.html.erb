@@ -58,11 +58,13 @@
       class="text-xs px-2 py-1 text-white">
       Edit Copyright Information
     </button>
-    <button data-action="click->attachment-pages#toggleEdit"
-      data-attachment-pages-target="editButton"
-      class="text-xs px-2 py-1 text-white">
-      Edit Pages to Display
-    </button>
+    <% if allow_edit_pages %>
+      <button data-action="click->attachment-pages#toggleEdit"
+        data-attachment-pages-target="editButton"
+        class="text-xs px-2 py-1 text-white">
+        Edit Pages to Display
+      </button>
+    <% end %>
   </div>
   <!-- Edit Form -->
   <div data-attachment-pages-target="editForm" class="hidden">

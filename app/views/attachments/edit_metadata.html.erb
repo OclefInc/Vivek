@@ -1,0 +1,13 @@
+<%
+  # Check if this blob has copyright metadata (blob-level, shared across all attachments)
+  is_copyrighted = @blob.metadata['copyrighted'] == true
+  purchase_url = @blob.metadata['purchase_url']
+  attachment = @blob.attachments.first
+%>
+<turbo-frame id="<%= "copyright_modal_#{@blob.signed_id }" %>">
+  <div class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50" data-action="click->copyright-modal#close">
+    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 w-1/2 min-w-[400px] max-w-3xl relative" style="min-width:50vw;" data-action="click->copyright-modal#stopPropagation">
+      <%= render :partial => '/active_storage/blobs/pdf', locals: {attachment: attachment, blob: @blob, is_copyrighted: is_copyrighted, purchase_url: purchase_url, allow_edit_pages: false} %>
+    </div>
+  </div>
+</turbo-frame>

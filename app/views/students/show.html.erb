@@ -2,6 +2,7 @@
 <%= render 'show_header' %>
 <div class="xl:flex xl:gap-8">
   <div class="py-4 xl:min-w-[480px]  xl:max-w-[480px]">
+    <%= render 'profile_picture', student: @student %>
     <%= render @student %>
   </div>
   <div class="w-full py-4 xl:flex-1 xl:basis-1/2 xl:px-5 md:-mx-5 ">

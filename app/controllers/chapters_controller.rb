@@ -10,7 +10,6 @@ class ChaptersController < ApplicationController
 
   def create
     @chapter = @lesson.chapters.build(chapter_params)
-    @chapter.sort = @lesson.chapters.maximum(:sort).to_i + 1
 
     if @chapter.save
       respond_to do |format|

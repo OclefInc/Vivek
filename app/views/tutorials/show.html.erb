@@ -2,6 +2,7 @@
 <%= render 'show_header' %>
 <div class="xl:flex xl:gap-8">
   <div class="md:-mx-5 py-4 xl:min-w-[640px] ">
+    <%= render 'video_file', tutorial: @tutorial %>
     <%= render @tutorial %>
   </div>
   <div class="hidden xl:block w-full py-4 xl:flex-1 xl:basis-1/2 xl:px-5  md:-mx-5 ">

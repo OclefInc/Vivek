@@ -1,0 +1,8 @@
+<div data-controller="video-time"
+     data-video-time-url-value="<%= lesson_path(lesson) %>">
+  <%= turbo_frame_tag "lesson_#{lesson.id}_lesson_video" do %>
+    <%= render 'video_player', lesson: lesson %>
+    <%= render 'video_replace_trim', lesson: lesson %>
+    <%= render 'video_chapters', lesson: lesson %>
+  <% end %>
+</div>

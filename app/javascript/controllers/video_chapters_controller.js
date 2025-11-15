@@ -24,13 +24,13 @@ export default class extends Controller {
   }
 
   addChapterWithTime(event) {
-  if (this.video) {
-    const currentTime = Math.floor(this.video.currentTime)
-    const url = new URL(event.currentTarget.href)
-    url.searchParams.set('start_time', currentTime)
-    event.currentTarget.href = url.toString()
+    if (this.video) {
+      const currentTime = Math.floor(this.video.currentTime)
+      const url = new URL(event.currentTarget.href)
+      url.searchParams.set('start_time', currentTime)
+      event.currentTarget.href = url.toString()
+    }
   }
-}
 
   setCurrentTime(event) {
     event.preventDefault()

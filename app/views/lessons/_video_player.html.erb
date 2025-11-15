@@ -1,0 +1,22 @@
+<%
+        video_url = lesson.lesson_video
+        if lesson.video_start_time.present? || lesson.video_end_time.present?
+          fragment = "#t="
+          fragment += lesson.video_start_time.to_s if lesson.video_start_time.present?
+          fragment += "," + lesson.video_end_time.to_s if lesson.video_end_time.present?
+          video_url = url_for(lesson.lesson_video) + fragment
+        end
+      %>
+<div class="bg-black flex items-center justify-center aspect-[4/3] xl:aspect-auto xl:max-w-[640px] xl:h-[480px] relative"
+         data-controller="video-poster">
+  <%= video_tag video_url,
+          id: 'lesson-video',
+          controls: true,
+          preload: "metadata",
+          class: "w-full h-full object-contain",
+          data: {
+            video_poster_target: "video",
+            video_time_target: "video"
+          } %>
+  <%= render 'video_poster', lesson: lesson %>
+</div>

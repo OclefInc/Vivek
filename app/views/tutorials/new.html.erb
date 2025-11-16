@@ -1,9 +1,8 @@
 <% content_for :title, "New tutorial" %>
-
-<div class="md:w-2/3 w-full">
-  <h1 class="font-bold text-4xl">New tutorial</h1>
-
-  <%= render "form", tutorial: @tutorial %>
-
-  <%= link_to "Back to tutorials", tutorials_path, class: "w-full sm:w-auto text-center mt-2 sm:mt-0 sm:ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+<div class="flex flex-col md:flex-row md:gap-8 justify-center items-start md:items-center py-4">
+  <div class="md:w-2/3 w-full">
+    <div class="font-bold text-2xl dark:text-gray-200 mb-4">New Tutorial</div>
+    <%= render "form", tutorial: @tutorial %>
+    <%= link_to "Back", teacher_path(@tutorial.teacher), class: "w-full sm:w-auto text-center mt-2 sm:mt-0 sm:ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+  </div>
 </div>

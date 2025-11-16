@@ -10,6 +10,10 @@
  */
 
 /* Tom Select Pill Styling */
+.ts-wrapper.plugin-remove_button:not(.rtl) .item {
+  padding-right: 0.75rem !important;
+}
+
 .ts-wrapper.has-items .ts-control > .item {
   background: #3b82f6 !important;
   color: white !important;

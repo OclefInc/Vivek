@@ -44,13 +44,6 @@ class ChaptersController < ApplicationController
     end
   end
 
-  def test
-    respond_to do
-      format.turbo_stream
-      format.html { redirect_to @lesson }
-    end
-  end
-
   private
 
     def set_lesson

@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :tutorials
   namespace :display do
     resources :sheet_musics
     resources :skills
@@ -35,6 +34,10 @@ Rails.application.routes.draw do
   end
 
   resources :comments
+
+  resources :tutorials do
+    resources :chapters, only: [ :show ], controller: "tutorials/chapters"
+  end
 
   # Attachments metadata endpoint
   get "attachments/:sgid/edit_metadata", to: "attachments#edit_metadata"

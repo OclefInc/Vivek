@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_15_175738) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_16_162433) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_stat_statements"
@@ -74,6 +74,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_15_175738) do
     t.datetime "updated_at", null: false
     t.index ["lesson_id", "start_time"], name: "index_chapters_on_lesson_id_and_start_time"
     t.index ["lesson_id"], name: "index_chapters_on_lesson_id"
+  end
+
+  create_table "chapters_tutorials", force: :cascade do |t|
+    t.bigint "chapter_id", null: false
+    t.bigint "tutorial_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "sort"
+    t.index ["chapter_id"], name: "index_chapters_tutorials_on_chapter_id"
+    t.index ["tutorial_id"], name: "index_chapters_tutorials_on_tutorial_id"
   end
 
   create_table "comments", force: :cascade do |t|
@@ -154,6 +164,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_15_175738) do
     t.bigint "teacher_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "sort"
     t.index ["teacher_id"], name: "index_tutorials_on_teacher_id"
   end
 
@@ -180,5 +191,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_15_175738) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "chapters", "lessons"
+  add_foreign_key "chapters_tutorials", "chapters"
+  add_foreign_key "chapters_tutorials", "tutorials"
   add_foreign_key "tutorials", "teachers"
 end

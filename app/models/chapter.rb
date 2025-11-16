@@ -20,9 +20,11 @@
 #
 class Chapter < ApplicationRecord
   belongs_to :lesson
+  has_many :chapters_tutorials, dependent: :destroy
+  has_many :tutorials, through: :chapters_tutorials
 
   validates :name, presence: true
   validates :start_time, presence: true, numericality: { greater_than_or_equal_to: 0 }
 
-    default_scope { order(:start_time) }
+  default_scope { order(:start_time) }
 end

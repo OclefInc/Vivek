@@ -3,7 +3,7 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static targets = ["chaptersList", "nameInput", "startTimeInput"]
-  static values = { url: String }
+  static values = { url: String, startTime: Number }
 
   connect() {
     // Find the video element by ID
@@ -11,6 +11,15 @@ export default class extends Controller {
 
     if (this.video) {
       this.video.addEventListener("timeupdate", () => this.updateCurrentChapter())
+
+      // Seek to start time if specified
+      if (this.hasStartTimeValue) {
+        this.video.addEventListener('loadedmetadata', () => {
+          this.video.currentTime = this.startTimeValue
+          this.video.play()
+        }, { once: true })
+      }
+
       this.updateCurrentChapter()
     } else {
       console.error("Video element not found!")

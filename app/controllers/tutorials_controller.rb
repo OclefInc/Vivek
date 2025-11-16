@@ -12,7 +12,7 @@ class TutorialsController < ApplicationController
 
   # GET /tutorials/new
   def new
-    @tutorial = Tutorial.new
+    @tutorial = Tutorial.new(teacher_id: params[:teacher_id])
   end
 
   # GET /tutorials/1/edit
@@ -28,7 +28,7 @@ class TutorialsController < ApplicationController
 
     respond_to do |format|
       if @tutorial.save
-        format.html { redirect_to params[:return_url] || @tutorial, notice: "Tutorial was successfully created." }
+        format.html { redirect_to @tutorial, notice: "Tutorial was successfully created." }
         format.json { render :show, status: :created, location: @tutorial }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -68,6 +68,6 @@ class TutorialsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def tutorial_params
-      params.expect(tutorial: [ :name, :teacher_id, :video_file, :description ])
+      params.expect(tutorial: [ :name, :teacher_id, :video_file, :description, chapter_ids: [] ])
     end
 end

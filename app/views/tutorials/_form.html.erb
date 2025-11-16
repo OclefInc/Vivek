@@ -1,8 +1,7 @@
 <%= form_with(model: tutorial, class: "contents") do |form| %>
   <% if tutorial.errors.any? %>
-    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-md mt-3">
+    <div id="error_explanation" class="bg-red-50 dark:bg-red-900/30 text-red-500 dark:text-red-300 px-3 py-2 font-medium rounded-md mt-3">
       <h2><%= pluralize(tutorial.errors.count, "error") %> prohibited this tutorial from being saved:</h2>
-
       <ul class="list-disc ml-6">
         <% tutorial.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -10,17 +9,26 @@
       </ul>
     </div>
   <% end %>
-
-  <div class="my-5">
-    <%= form.label :name %>
-    <%= form.text_field :name, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": tutorial.errors[:name].none?, "border-red-400 focus:outline-red-600": tutorial.errors[:name].any?}] %>
+  <div class="dropzone dropzone-default dz-clickable border border-gray-300 dark:border-gray-600 rounded p-4 dark:bg-gray-800" data-controller="dropzone" data-dropzone-max-file-size="10000000" data-dropzone-accepted-files="video/*" data-turbo-permanent>
+    <%= form.file_field :video_file, direct_upload: true, data: { 'dropzone-target': "input", 'dropzone-capture-mode-value': 'environment', autosubmit: false, turbosubmit: true, camera: false } %>
+    <div class="dropzone-msg dz-message needsclick">
+      <h3 class="dropzone-msg-title dark:text-gray-200">Drag Video Tutorial File Here</h3>
+      <span class="dropzone-msg-desc dark:text-gray-300">Click To Browse</span>
+    </div>
   </div>
-
   <div class="my-5">
-    <%= form.label :teacher_id %>
-    <%= form.text_field :teacher_id, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": tutorial.errors[:teacher_id].none?, "border-red-400 focus:outline-red-600": tutorial.errors[:teacher_id].any?}] %>
+    <%= form.label :name, class: "dark:text-gray-200" %>
+    <%= form.text_field :name, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full dark:bg-gray-800 dark:text-white", {"border-gray-400 dark:border-gray-600 focus:outline-blue-600 dark:focus:outline-blue-400": tutorial.errors[:name].none?, "border-red-400 dark:border-red-500 focus:outline-red-600 dark:focus:outline-red-400": tutorial.errors[:name].any?}] %>
   </div>
-
+  <div class="my-5">
+    <%= form.label :description, class: "dark:text-gray-200" %>
+    <%= form.rich_text_area :description, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full dark:bg-gray-800 dark:text-white", {"border-gray-400 dark:border-gray-600 focus:outline-blue-600 dark:focus:outline-blue-400": tutorial.errors[:description].none?, "border-red-400 dark:border-red-500 focus:outline-red-600 dark:focus:outline-red-400": tutorial.errors[:description].any?}] %>
+  </div>
+  <div class="my-5">
+    <%= form.label :chapter_ids, "Chapter Videos From Lessons", class: "dark:text-gray-200" %>
+    <%= form.collection_select :chapter_ids, Chapter.joins(:lesson).where(lessons: { teacher_id: tutorial.teacher_id }), :id, :name, { prompt: "Select One or More" }, { multiple: true, class: "block outline-none dark:bg-gray-800 dark:text-gray-200 dark:border-gray-600", data: { controller: "multi-select", multi_select_placeholder_value: "Select one or more chapters..." } } %>
+  </div>
+  <%= form.hidden_field :teacher_id %>
   <div class="inline">
     <%= form.submit class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
   </div>

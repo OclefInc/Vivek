@@ -35,6 +35,8 @@ Rails.application.routes.draw do
 
   resources :comments
 
+  resources :chapters_tutorials, only: [ :destroy ]
+
   resources :tutorials do
     resources :chapters, only: [ :show ], controller: "tutorials/chapters"
   end

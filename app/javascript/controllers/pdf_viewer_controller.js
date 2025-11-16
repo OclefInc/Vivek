@@ -9,16 +9,47 @@ export default class extends Controller {
   }
 
   async connect() {
-
     this.initializePdf();
-    document.addEventListener("turbo:frame-load", () => {
-      this.initializePdf();
-    });
-    document.addEventListener("turbo:render", () => {
-      this.initializePdf();
-    });
 
+    // Bind event handlers to this instance
+    this.handleTurboFrameLoad = this.handleTurboFrameLoad.bind(this)
+    this.handleTurboRender = this.handleTurboRender.bind(this)
 
+    document.addEventListener("turbo:frame-load", this.handleTurboFrameLoad);
+    document.addEventListener("turbo:render", this.handleTurboRender);
+  }
+
+  disconnect() {
+    // Clean up event listeners
+    document.removeEventListener("turbo:frame-load", this.handleTurboFrameLoad);
+    document.removeEventListener("turbo:render", this.handleTurboRender);
+
+    // Clean up PDF
+    this.pdf = null
+  }
+
+  async handleTurboFrameLoad(event) {
+    // Only handle if the event target is within this element
+    if (!this.element.contains(event.target)) return
+
+    // Clear and re-initialize on frame load
+    const container = this.element.querySelector('.bg-gray-50, .dark\\:bg-gray-900')
+    if (container) {
+      container.innerHTML = ''
+    }
+    await this.initializePdf();
+  }
+
+  async handleTurboRender(event) {
+    // Only handle if the event target is within this element
+    if (event.target && !this.element.contains(event.target)) return
+
+    // Clear and re-initialize on render
+    const container = this.element.querySelector('.bg-gray-50, .dark\\:bg-gray-900')
+    if (container) {
+      container.innerHTML = ''
+    }
+    await this.initializePdf();
   }
 
   async initializePdf() {

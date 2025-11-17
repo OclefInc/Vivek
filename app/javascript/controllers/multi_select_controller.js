@@ -3,7 +3,9 @@ import TomSelect from "tom-select"
 
 export default class extends Controller {
     static values = {
-        placeholder: String
+        placeholder: String,
+        teacherId: Number,
+        endpoint: String
     }
 
     connect() {
@@ -20,15 +22,51 @@ export default class extends Controller {
         const originalClasses = this.element.className
 
         const options = {
-            create: false, // Don't allow custom input
+            create: false,
             sortField: {
                 field: "text",
                 direction: "asc"
             },
             placeholder: this.placeholderValue || "Select one or more...",
             maxOptions: null,
-            plugins: ['remove_button'], // Add x button to remove selected items
-            closeAfterSelect: false // Keep dropdown open for multiple selections
+            plugins: ['remove_button'],
+            closeAfterSelect: false,
+            optgroups: [],
+            optgroupField: 'optgroup',
+            labelField: 'text',
+            valueField: 'value',
+            searchField: ['text'],
+            selectOnTab: true,
+            hideSelected: true,
+            allowEmptyOption: false
+        }
+
+        // Only load from server if teacherId is provided
+        if (this.hasTeacherIdValue && this.teacherIdValue) {
+            // Determine endpoint based on the endpoint value or default to chapters
+            const endpoint = this.hasEndpointValue ? this.endpointValue : 'chapters'
+
+            options.load = (query, callback) => {
+                const url = `/teachers/${this.teacherIdValue}/${endpoint}?q=${encodeURIComponent(query)}`
+
+                fetch(url)
+                    .then(response => response.json())
+                    .then(json => {
+                        // If optgroups exist, use them (for chapters)
+                        if (json.optgroups && json.optgroups.length > 0) {
+                            this.tomSelect.clearOptionGroups()
+                            json.optgroups.forEach(optgroup => {
+                                this.tomSelect.addOptionGroup(optgroup.value, optgroup)
+                            })
+                        }
+
+                        // Return filtered options
+                        callback(json.options)
+                    })
+                    .catch(() => {
+                        callback()
+                    })
+            }
         }
 
         this.tomSelect = new TomSelect(this.element, options)
@@ -42,6 +80,11 @@ export default class extends Controller {
         if (originalClasses) {
             const control = this.tomSelect.control
             control.className = `ts-control ${originalClasses}`
+        }
+
+        // Trigger initial load after TomSelect is initialized
+        if (this.hasTeacherIdValue && this.teacherIdValue) {
+            this.tomSelect.load('')
         }
     }
 }

@@ -25,8 +25,11 @@
     <%= form.rich_text_area :description, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full dark:bg-gray-800 dark:text-white", {"border-gray-400 dark:border-gray-600 focus:outline-blue-600 dark:focus:outline-blue-400": tutorial.errors[:description].none?, "border-red-400 dark:border-red-500 focus:outline-red-600 dark:focus:outline-red-400": tutorial.errors[:description].any?}] %>
   </div>
   <div class="my-5">
-    <%= form.label :chapter_ids, "Chapter Videos From Lessons", class: "dark:text-gray-200" %>
-    <%= form.collection_select :chapter_ids, Chapter.joins(:lesson).where(lessons: { teacher_id: tutorial.teacher_id }), :id, :name, { prompt: "Select One or More" }, { multiple: true, class: "block outline-none dark:bg-gray-800 dark:text-gray-200 dark:border-gray-600", data: { controller: "multi-select", multi_select_placeholder_value: "Select one or more chapters..." } } %>
+    <%= form.label :chapter_ids, "Chapter Clips From Lessons", class: "dark:text-gray-200" %>
+    <%= form.select :chapter_ids,
+        options_for_select(tutorial.chapters.map { |c| [c.name, c.id] }, tutorial.chapter_ids),
+        {},
+        { multiple: true, class: "block outline-none dark:bg-gray-800 dark:text-gray-200 dark:border-gray-600", data: { controller: "multi-select", multi_select_placeholder_value: "Select one or more chapters...", multi_select_teacher_id_value: tutorial.teacher_id } } %>
   </div>
   <%= form.hidden_field :teacher_id %>
   <div class="inline">

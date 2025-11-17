@@ -2,21 +2,21 @@
   <table class="w-full table-auto border-collapse">
     <thead>
       <tr>
-        <th class="text-left  py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">Clip</th>
-        <th class="text-left  py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">Lesson</th>
-        <th class="text-left  py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200"></th>
+        <th class="text-left px-2 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">Clip</th>
+        <th class="text-left px-2 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">Lesson</th>
+        <th class="text-left px-2 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200"></th>
       </tr>
     </thead>
     <tbody data-sortable-target="tbody">
       <% chapters_tutorials.each_with_sortable_id do |chapters_tutorial, sortable_id| %>
         <tr id="<%= sortable_id %>" data-chapter-highlight-target="row">
-          <td class="text-left py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-300">
+          <td class="text-left px-2 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-300">
             <%= link_to chapters_tutorial.chapter.name,
                 tutorial_chapter_path(chapters_tutorial.tutorial, chapters_tutorial.chapter),
                 class: "text-blue-500 hover:text-red-500 dark:text-blue-400 dark:hover:text-red-400",
                 data: { turbo_stream: true, action: "click->chapter-highlight#highlight" } %>
           </td>
-          <td class="text-left py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-300">
+          <td class="text-left px-2 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-300">
             <%= chapters_tutorial.chapter.lesson.name %>
           </td>
           <td class="text-right py-2 border-b border-gray-300 dark:border-gray-600">

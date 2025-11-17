@@ -1,8 +1,9 @@
 <%= turbo_stream.replace "tutorial_#{@tutorial.id}_video_file" do %>
-  <div class="bg-black flex items-center justify-center aspect-[4/3] xl:aspect-auto xl:max-w-[640px] xl:h-[480px] relative"
+  <%= turbo_frame_tag "tutorial_#{@tutorial.id}_video_file" do %>
+    <div class="bg-black flex items-center justify-center aspect-[4/3] xl:aspect-auto xl:max-w-[640px] xl:h-[480px] relative"
          data-controller="video-chapters"
          data-video-chapters-start-time-value="<%= @chapter.start_time %>">
-    <%= video_tag @lesson.lesson_video,
+      <%= video_tag @lesson.lesson_video,
         id: "lesson-video",
         controls: true,
         preload: "metadata",
@@ -10,13 +11,21 @@
         data: {
           video_chapters_target: "video"
         } %>
-  </div>
-  <div class="text-center">
-    <%= link_to tutorial_path(@tutorial), class: "text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300 text-sm" do %>
-      <span>
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 inline">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
-        </svg> Back to Tutorial</span>
-    <% end %>
-  </div>
+    </div>
+    <div class="text-center space-x-12">
+      <%= link_to tutorial_path(@tutorial), class: "text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300 text-sm" do %>
+        <span>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 inline">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
+          </svg> Back to Tutorial</span>
+      <% end %>
+      <%= link_to lesson_path(@lesson), data: { turbo_frame: "_top" }, class: "text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300 text-sm" do %>
+        <span>Go to Lesson
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 inline">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m15 15 6-6m0 0-6-6m6 6H9a6 6 0 0 0 0 12h3" />
+          </svg>
+        </span>
+      <% end %>
+    </div>
+  <% end %>
 <% end %>

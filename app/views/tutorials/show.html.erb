@@ -2,11 +2,14 @@
 <%= render 'show_header' %>
 <div class="xl:flex xl:gap-8">
   <div class="md:-mx-5 py-4 xl:min-w-[640px]  xl:max-w-[640px] md:flex-1 md:basis-1/2 md:px-5">
-    <%= render 'video_file', tutorial: @tutorial %>
+    <% if @tutorial.video_file.attached? %>
+      <%= render 'video_file', tutorial: @tutorial %>
+    <% else %>
+      <%= render 'form_video_file', tutorial: @tutorial %>
+    <% end %>
     <%= render @tutorial %>
   </div>
   <div class="w-full py-4 xl:flex-1 xl:basis-1/2 xl:px-5  md:-mx-5 ">
-    <h4 class="font-bold text-xl dark:text-gray-200">Examples</h4>
     <%= render 'chapters_table', chapters_tutorials: @tutorial.chapters_tutorials %>
   </div>
 </div>

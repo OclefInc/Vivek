@@ -24,6 +24,13 @@
             min: 0,
             data: { video_chapters_target: "startTimeInput" } %>
     </div>
+    <div class="mb-3">
+      <%= form.label :tutorial_ids, "Add to Tutorials", class: "block text-sm mb-1" %>
+      <%= form.select :tutorial_ids,
+            options_for_select(chapter.tutorials.map { |t| [t.name, t.id] }, chapter.tutorial_ids),
+            {},
+            { multiple: true, class: "w-full bg-gray-800 rounded-lg text-white outline-none", data: { controller: "multi-select", multi_select_placeholder_value: "Select one or more tutorials...", multi_select_teacher_id_value: lesson.teacher_id, multi_select_endpoint_value: "tutorials" } } %>
+    </div>
     <div class="flex gap-2 justify-center">
       <%= form.submit "Save Chapter",
             class: "px-3 py-1 bg-blue-600 hover:bg-blue-500 rounded-lg font-medium text-sm" %>

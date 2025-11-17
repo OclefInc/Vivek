@@ -14,7 +14,7 @@
         </div>
       <% end %>
       <div class="my-5">
-        <%= form.label :chapter_ids, "Chapter Videos From Lessons", class: "dark:text-gray-200" %>
+        <%= form.label :chapter_ids, "Chapter Clips From Lessons", class: "dark:text-gray-200" %>
         <%= form.collection_select :chapter_ids, Chapter.joins(:lesson).where(lessons: { teacher_id: @tutorial.teacher_id }), :id, :name, { prompt: "Select One or More" }, { multiple: true, class: "block outline-none dark:bg-gray-800 dark:text-gray-200 dark:border-gray-600", data: { controller: "multi-select", multi_select_placeholder_value: "Select one or more chapters..." } } %>
       </div>
       <%= form.hidden_field :teacher_id %>

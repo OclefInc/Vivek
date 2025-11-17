@@ -23,7 +23,10 @@ Rails.application.routes.draw do
   resources :accounts
   resources :skills
   resources :compositions
-  resources :teachers
+  resources :teachers do
+    resources :chapters, only: [ :index ], controller: "teachers/chapters"
+    resources :tutorials, only: [ :index ], controller: "teachers/tutorials"
+  end
   resources :students
   resources :lessons do
     resources :chapters, only: [ :new, :create, :edit, :update, :destroy ]

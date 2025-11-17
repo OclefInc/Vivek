@@ -5,11 +5,16 @@
      class="flex justify-between items-center p-2 hover:bg-gray-700 rounded cursor-pointer">
   <div class="flex-1"
        data-action="click->video-chapters#setCurrentTime"
-       data-start-time="<%= chapter.start_time %>">
-    <span class="font-medium"><%= chapter.name %></span>
-    <span class="text-sm text-gray-400 ml-2">
+    data-start-time="<%= chapter.start_time %>">
+    <span class="text-sm text-gray-400">
       <%= Time.at(chapter.start_time).utc.strftime("%M:%S") %>
     </span>
+    <span class="font-medium"><%= chapter.name %></span>
+    <% if chapter.tutorials.any? %>
+      <span class="ml-2 px-2 py-0.5 bg-gray-600 text-xs rounded-full text-gray-300">
+        <%= chapter.tutorials.count %> Tutorial<%= "s" if chapter.tutorials.count > 1 %>
+      </span>
+    <% end %>
   </div>
   <div class="flex gap-2">
     <%= link_to edit_lesson_chapter_path(chapter.lesson, chapter),
@@ -20,9 +25,9 @@
       </svg>
     <% end %>
     <button data-action="click->video-chapters#deleteChapter"
-            data-chapter-id="<%= chapter.id %>"
-            data-lesson-id="<%= chapter.lesson_id %>"
-            class="text-red-400 hover:text-red-300">
+      data-chapter-id="<%= chapter.id %>"
+      data-lesson-id="<%= chapter.lesson_id %>"
+      class="text-red-400 hover:text-red-300">
       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
       </svg>

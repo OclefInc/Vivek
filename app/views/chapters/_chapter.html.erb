@@ -34,3 +34,18 @@
     </button>
   </div>
 </div>
+<% if chapter.tutorials.any? %>
+  <div id="<%= dom_id(chapter, :tutorials) %>"
+       data-chapter-tutorials
+       data-chapter-id="<%= chapter.id %>"
+       class="hidden ml-4 mt-1 mb-2 space-y-1">
+    <% chapter.tutorials.each do |tutorial| %>
+      <%= link_to tutorial_path(tutorial), class: "block text-sm text-blue-400 hover:text-blue-300 py-1" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-3 h-3 inline">
+          <path stroke-linecap="round" stroke-linejoin="round" d="m5.25 4.5 7.5 7.5-7.5 7.5m6-15 7.5 7.5-7.5 7.5" />
+        </svg>
+        <%= tutorial.name %>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>

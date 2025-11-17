@@ -48,6 +48,8 @@ export default class extends Controller {
       this.video.currentTime = startTime
       this.video.play()
     }
+    // Manually trigger highlight update
+    this.updateCurrentChapter()
   }
 
   captureCurrentTime(event) {
@@ -59,20 +61,38 @@ export default class extends Controller {
 
   updateCurrentChapter() {
     if (!this.video || !this.hasChaptersListTarget) return
-    if (this.video.paused) return
 
     const currentTime = this.video.currentTime
     const chapterItems = this.chaptersListTarget.querySelectorAll("[data-chapter-item]")
 
     chapterItems.forEach(item => {
       const startTime = parseFloat(item.dataset.startTime)
-      const nextItem = item.nextElementSibling
-      const endTime = nextItem ? parseFloat(nextItem.dataset.startTime) : Infinity
+
+      // Check if next sibling is tutorials div
+      const tutorialsDiv = item.nextElementSibling?.hasAttribute('data-chapter-tutorials')
+        ? item.nextElementSibling
+        : null
+
+      // Skip the tutorials div when looking for next chapter
+      let actualNextItem = item.nextElementSibling
+      while (actualNextItem && actualNextItem.hasAttribute('data-chapter-tutorials')) {
+        actualNextItem = actualNextItem.nextElementSibling
+      }
+
+      const endTime = actualNextItem ? parseFloat(actualNextItem.dataset.startTime) : Infinity
 
       if (currentTime >= startTime && currentTime < endTime) {
         item.classList.add("bg-blue-100", "dark:bg-blue-900")
+        // Show tutorials for highlighted chapter
+        if (tutorialsDiv) {
+          tutorialsDiv.classList.remove("hidden")
+        }
       } else {
         item.classList.remove("bg-blue-100", "dark:bg-blue-900")
+        // Hide tutorials for non-highlighted chapters
+        if (tutorialsDiv) {
+          tutorialsDiv.classList.add("hidden")
+        }
       }
     })
   }

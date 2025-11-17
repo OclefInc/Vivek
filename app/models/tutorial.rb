@@ -2,19 +2,22 @@
 #
 # Table name: tutorials
 #
-#  id         :bigint           not null, primary key
-#  name       :string
-#  sort       :integer
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  teacher_id :bigint           not null
+#  id                :bigint           not null, primary key
+#  name              :string
+#  sort              :integer
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  skill_category_id :bigint
+#  teacher_id        :bigint           not null
 #
 # Indexes
 #
-#  index_tutorials_on_teacher_id  (teacher_id)
+#  index_tutorials_on_skill_category_id  (skill_category_id)
+#  index_tutorials_on_teacher_id         (teacher_id)
 #
 # Foreign Keys
 #
+#  fk_rails_...  (skill_category_id => skill_categories.id)
 #  fk_rails_...  (teacher_id => teachers.id)
 #
 class Tutorial < ApplicationRecord
@@ -23,6 +26,7 @@ class Tutorial < ApplicationRecord
   set_sortable :sort  # Indicate a sort column
 
   belongs_to :teacher
+  belongs_to :skill_category, optional: true
   has_many :chapters_tutorials, -> { order(:sort) }, dependent: :destroy
   has_many :chapters, through: :chapters_tutorials
   has_one_attached :video_file

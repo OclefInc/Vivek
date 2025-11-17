@@ -10,16 +10,16 @@
 #  user_id    :integer
 #
 class Teacher < ApplicationRecord
-    has_many :tutorials
-    has_many :lessons
-    has_many :assignments, through: :lessons
-    has_one_attached :profile_picture
-    has_rich_text :bio
-    belongs_to :user, optional: true
-    validates_presence_of :name
+  has_many :tutorials
+  has_many :skill_categories, through: :tutorials
+  has_many :lessons
+  has_many :assignments, through: :lessons
+  has_one_attached :profile_picture
+  has_rich_text :bio
+  belongs_to :user, optional: true
+  validates_presence_of :name
 
-
-    def projects
-        assignments.uniq
-    end
+  def projects
+    assignments.uniq
+  end
 end

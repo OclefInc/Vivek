@@ -68,6 +68,6 @@ class TutorialsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def tutorial_params
-      params.expect(tutorial: [ :name, :teacher_id, :video_file, :description, chapter_ids: [] ])
+      params.expect(tutorial: [ :name, :teacher_id, :video_file, :description, :skill_category_id, chapter_ids: [] ])
     end
 end

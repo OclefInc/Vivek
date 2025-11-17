@@ -8,5 +8,6 @@
 #  updated_at :datetime         not null
 #
 class SkillCategory < ApplicationRecord
-    has_many :skills
+  has_many :skills
+  has_many :tutorials
 end

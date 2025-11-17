@@ -25,6 +25,10 @@
     <%= form.rich_text_area :description, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full dark:bg-gray-800 dark:text-white", {"border-gray-400 dark:border-gray-600 focus:outline-blue-600 dark:focus:outline-blue-400": tutorial.errors[:description].none?, "border-red-400 dark:border-red-500 focus:outline-red-600 dark:focus:outline-red-400": tutorial.errors[:description].any?}] %>
   </div>
   <div class="my-5">
+    <%= form.label :skill_category_id, "Skill Category", class: "dark:text-gray-200" %>
+    <%= form.collection_select :skill_category_id, SkillCategory.order(:name), :id, :name, { prompt: "Select a skill category..." }, { class: "block shadow-sm rounded-md border px-3 py-2 mt-2 w-full dark:bg-gray-800 dark:text-white dark:border-gray-600 focus:outline-blue-600 dark:focus:outline-blue-400" } %>
+  </div>
+  <div class="my-5">
     <%= form.label :chapter_ids, "Chapter Clips From Lessons", class: "dark:text-gray-200" %>
     <%= form.select :chapter_ids,
         options_for_select(tutorial.chapters.map { |c| [c.name, c.id] }, tutorial.chapter_ids),

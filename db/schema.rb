@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_17_144113) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_17_212953) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_stat_statements"
@@ -166,6 +166,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_17_144113) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "sort"
+    t.bigint "skill_category_id"
+    t.index ["skill_category_id"], name: "index_tutorials_on_skill_category_id"
     t.index ["teacher_id"], name: "index_tutorials_on_teacher_id"
   end
 
@@ -194,5 +196,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_17_144113) do
   add_foreign_key "chapters", "lessons"
   add_foreign_key "chapters_tutorials", "chapters"
   add_foreign_key "chapters_tutorials", "tutorials"
+  add_foreign_key "tutorials", "skill_categories"
   add_foreign_key "tutorials", "teachers"
 end

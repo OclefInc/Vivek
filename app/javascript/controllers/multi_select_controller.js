@@ -71,15 +71,17 @@ export default class extends Controller {
 
         this.tomSelect = new TomSelect(this.element, options)
 
-        // Apply the original classes to the wrapper element
+        // Don't override the wrapper classes, just add to them
         if (originalClasses) {
-            this.tomSelect.wrapper.className = `ts-wrapper ${originalClasses} multi plugin-remove_button`
-        }
+            const wrapperClasses = this.tomSelect.wrapper.className.split(' ')
+            const originalClassArray = originalClasses.split(' ')
 
-        // Apply original classes to the control input
-        if (originalClasses) {
-            const control = this.tomSelect.control
-            control.className = `ts-control ${originalClasses}`
+            // Add original classes that aren't already present
+            originalClassArray.forEach(cls => {
+                if (!wrapperClasses.includes(cls)) {
+                    this.tomSelect.wrapper.classList.add(cls)
+                }
+            })
         }
 
         // Trigger initial load after TomSelect is initialized

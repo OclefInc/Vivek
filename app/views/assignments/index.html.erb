@@ -14,11 +14,13 @@
       <th class="text-left px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">Student</th>
     </tr>
     <% @assignments.each do |assignment| %>
-      <tr>
-        <td class="px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-300"><%= link_to assignment.composition.name, assignment, class:"text-blue-500 hover:text-red-500 dark:text-blue-400 dark:hover:text-red-400"  %></td>
-        <td class="px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-300"><%= link_to assignment.lessons.count %></td>
-        <td class="px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-300"><%= link_to assignment.student.name%></td>
-      </tr>
+      <% cache assignment do %>
+        <tr>
+          <td class="px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-300"><%= link_to assignment.composition.name, assignment, class:"text-blue-500 hover:text-red-500 dark:text-blue-400 dark:hover:text-red-400"  %></td>
+          <td class="px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-300"><%= link_to assignment.lessons.count %></td>
+          <td class="px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-300"><%= link_to assignment.student.name%></td>
+        </tr>
+      <% end %>
     <% end %>
   </table>
 <% end %>

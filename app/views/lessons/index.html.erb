@@ -1,25 +1,3 @@
-<% content_for :title, "Lessons" %>
-<% if notice.present? %>
-  <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
+<%= turbo_frame_tag "lesson_table" do %>
+  <%= render 'lesson_table', lessons: @lessons, assignment: @assignment, current_lesson_id: nil %>
 <% end %>
-<div class="flex justify-between items-center mx-2 my-4">
-  <h1 class="font-semibold text-3xl">All Lessons</h1>
-  <%= link_to "Add new lesson", new_lesson_path, class: "rounded-lg px-3 py-2 bg-blue-600 hover:bg-blue-400 text-white block font-medium" %>
-</div>
-<div id="lessons" class="min-w-full divide-y divide-gray-200 space-y-5 mx-4 my-4">
-  <% @lessons.each do |lesson| %>
-    <div class="flex flex-col sm:flex-row justify-between items-center pb-5 sm:pb-0">
-      <div class="flex-auto">
-        <%= link_to lesson.name, lesson, class:"text-lg text-blue-600 text-semibold hover:text-blue-400 px-1 py-1" %>
-      </div>
-      <div class="flex-auto">
-        Assignment: <span> <%= link_to lesson.assignment.name, lesson.assignment, class:"text-blue-600 text-semibold hover:text-blue-400 px-1 py-1" %> </span>
-      </div>
-      <div class="w-full sm:w-auto flex flex-col sm:flex-row py-4 gap-2">
-        <%= link_to "View", lesson, class: "w-full sm:w-auto text-center rounded-lg px-3 py-2 mx-1 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-        <%= link_to "Edit", edit_lesson_path(lesson), class: "w-full sm:w-auto text-center rounded-lg px-3 py-2 mx-1 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-        <%= button_to "Delete", lesson, method: :delete, class: "w-full sm:w-auto rounded-lg px-3 py-2 mx-1 text-white bg-red-600 hover:bg-red-500 font-medium cursor-pointer", data: { turbo_confirm: "Are you sure?" } %>
-      </div>
-    </div>
-  <% end %>
-</div>

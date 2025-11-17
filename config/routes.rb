@@ -28,7 +28,9 @@ Rails.application.routes.draw do
   resources :lessons do
     resources :chapters, only: [ :new, :create, :edit, :update, :destroy ]
   end
-  resources :assignments
+  resources :assignments do
+    resources :lessons, shallow: true
+  end
   resources :projects do
     resources :episodes
   end

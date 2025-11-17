@@ -5,7 +5,8 @@ class LessonsController < ApplicationController
 
   # GET /lessons or /lessons.json
   def index
-    @lessons = Lesson.all
+    @assignment = Assignment.find(params[:assignment_id])
+    @lessons = @assignment.lessons
   end
 
   # GET /lessons/1 or /lessons/1.json

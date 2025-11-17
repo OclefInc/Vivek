@@ -20,7 +20,7 @@
 #  fk_rails_...  (lesson_id => lessons.id)
 #
 class Chapter < ApplicationRecord
-  belongs_to :lesson
+  belongs_to :lesson, touch: true
   has_many :chapters_tutorials, dependent: :destroy
   has_many :tutorials, through: :chapters_tutorials
 
@@ -30,6 +30,8 @@ class Chapter < ApplicationRecord
   default_scope { order(:start_time) }
 
   after_create :update_previous_chapter_stop_time
+  after_save :touch_assignment
+  after_destroy :touch_assignment
 
   private
 
@@ -44,5 +46,9 @@ class Chapter < ApplicationRecord
       if previous_chapter
         previous_chapter.update_column(:stop_time, start_time)
       end
+    end
+
+    def touch_assignment
+      lesson.assignment.touch if lesson.assignment
     end
 end

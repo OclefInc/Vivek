@@ -21,8 +21,8 @@ class Lesson < ApplicationRecord
 
   set_sortable :sort  # Indicate a sort column
 
-  belongs_to :assignment
-  belongs_to :teacher, optional: true
+  belongs_to :assignment, touch: true
+  belongs_to :teacher, optional: true, touch: true
 
   has_and_belongs_to_many :skills
   has_many :comments, as: :annotation

@@ -134,3 +134,85 @@ select {
   background-size: 1.5em 1.5em;
   padding-right: 2.5rem;
 }
+
+/* Action Text Lists */
+.trix-content ol,
+trix-editor ol {
+  list-style-type: decimal;
+  margin-left: 2rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.trix-content ul,
+trix-editor ul {
+  list-style-type: disc;
+  margin-left: 2rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.trix-content li,
+trix-editor li {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  .trix-content ol,
+  .trix-content ul,
+  trix-editor ol,
+  trix-editor ul {
+    color: #e5e7eb;
+  }
+}
+
+/* Trix Editor Headings */
+.trix-content h1,
+trix-editor h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+
+.trix-content h2,
+trix-editor h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-top: 0.875rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+
+.trix-content h3,
+trix-editor h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 0.75rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+.trix-content h4,
+trix-editor h4 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  line-height: 1.4;
+}
+
+@media (prefers-color-scheme: dark) {
+  .trix-content h1,
+  .trix-content h2,
+  .trix-content h3,
+  .trix-content h4,
+  trix-editor h1,
+  trix-editor h2,
+  trix-editor h3,
+  trix-editor h4 {
+    color: #e5e7eb;
+  }
+}

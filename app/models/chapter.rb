@@ -5,6 +5,7 @@
 #  id         :bigint           not null, primary key
 #  name       :string
 #  start_time :integer
+#  stop_time  :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #  lesson_id  :bigint           not null
@@ -27,4 +28,21 @@ class Chapter < ApplicationRecord
   validates :start_time, presence: true, numericality: { greater_than_or_equal_to: 0 }
 
   default_scope { order(:start_time) }
+
+  after_create :update_previous_chapter_stop_time
+
+  private
+
+    def update_previous_chapter_stop_time
+      # Find the previous chapter in the same lesson
+      previous_chapter = lesson.chapters.unscoped
+                               .where("start_time < ?", start_time)
+                               .order(start_time: :desc)
+                               .first
+
+      # Update its stop_time to this chapter's start_time
+      if previous_chapter
+        previous_chapter.update_column(:stop_time, start_time)
+      end
+    end
 end

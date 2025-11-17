@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_16_162433) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_17_144113) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_stat_statements"
@@ -72,6 +72,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_16_162433) do
     t.integer "start_time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "stop_time"
     t.index ["lesson_id", "start_time"], name: "index_chapters_on_lesson_id_and_start_time"
     t.index ["lesson_id"], name: "index_chapters_on_lesson_id"
   end

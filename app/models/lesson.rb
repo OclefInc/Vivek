@@ -43,8 +43,7 @@ class Lesson < ApplicationRecord
   delegate :existing_description_attachments, to: :assignment
 
   def complete?
-    !description.blank? &&
-    teacher.present?
+    teacher.present? && chapters.exists? && lesson_video.attached? && !description.blank?
   end
 
   def status
@@ -65,6 +64,23 @@ class Lesson < ApplicationRecord
 
   alias_method :next, :next_lesson
   alias_method :previous, :previous_lesson
+
+  def update_all_chapter_stop_times
+    # Get all chapters ordered by start_time
+    ordered_chapters = chapters.order(:start_time).to_a
+
+    # Update each chapter's stop_time to the next chapter's start_time
+    ordered_chapters.each_with_index do |chapter, index|
+      next_chapter = ordered_chapters[index + 1]
+
+      if next_chapter
+        chapter.update_column(:stop_time, next_chapter.start_time)
+      else
+        # Last chapter - set stop_time to nil or video end time
+        chapter.update_column(:stop_time, nil)
+      end
+    end
+  end
 
   def lesson_video_is_video_type
     unless lesson_video.content_type.starts_with?("video/")

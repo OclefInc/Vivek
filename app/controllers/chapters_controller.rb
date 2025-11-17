@@ -55,6 +55,6 @@ class ChaptersController < ApplicationController
     end
 
     def chapter_params
-      params.require(:chapter).permit(:name, :start_time, :sort)
+      params.require(:chapter).permit(:name, :start_time, :sort, tutorial_ids: [])
     end
 end

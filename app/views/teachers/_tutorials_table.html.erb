@@ -1,4 +1,4 @@
-<% teacher.skill_categories.sort_by(&:name).each do |skill_category| %>
+<% teacher.skill_categories.uniq.sort_by(&:name).each do |skill_category| %>
   <div data-controller="sortable">
     <table class="w-full table-auto border-collapse">
       <thead>

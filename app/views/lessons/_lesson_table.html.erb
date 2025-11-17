@@ -1,68 +1,70 @@
 <div data-controller="sortable lesson-highlight" data-lesson-highlight-current-id-value="<%= current_lesson_id %>">
-  <table class="w-full">
-    <thead>
-      <tr>
-        <th class="text-left md:px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">Lesson</th>
-        <th class="text-left md:px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">Chapters</th>
-        <th class="text-left md:px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">
-          <span class="inline-flex items-center gap-1">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-gray-500 dark:text-gray-400">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
-            </svg>Date
-          </span>
-        </th>
-      </tr>
-    </thead>
-    <tbody data-sortable-target="tbody">
-      <% lessons.order(:sort).each_with_sortable_id do |lesson, sortable_id| %>
-        <% cache lesson do %>
-          <tr id="<%= sortable_id %>" data-lesson-id="<%= lesson.id %>" data-lesson-highlight-target="row">
-            <td class="text-left md:px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">
-              <span class="inline-flex items-center gap-2">
-                <% if lesson.complete? %>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-2.5 h-2.5 text-green-500 dark:text-green-400 flex-shrink-0">
-                    <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd" />
-                  </svg>
-                <% else %>
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-2.5 h-2.5 text-gray-400 dark:text-gray-500 flex-shrink-0">
-                    <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25z" clip-rule="evenodd" />
-                  </svg>
-                <% end %>
-                <span id="lesson_<%= lesson.id %>_name_in_table">
-                  <%= link_to lesson.name, lesson, class:"text-blue-500 hover:text-red-500 dark:text-blue-400 dark:hover:text-red-400" %>
+  <% cache ['lesson_table', assignment, lessons.maximum(:updated_at)] do %>
+    <table class="w-full">
+      <thead>
+        <tr>
+          <th class="text-left md:px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">Lesson</th>
+          <th class="text-left md:px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">Chapters</th>
+          <th class="text-left md:px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">
+            <span class="inline-flex items-center gap-1">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-gray-500 dark:text-gray-400">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+              </svg>Date
+            </span>
+          </th>
+        </tr>
+      </thead>
+      <tbody data-sortable-target="tbody">
+        <% lessons.order(:sort).each_with_sortable_id do |lesson, sortable_id| %>
+          <% cache lesson do %>
+            <tr id="<%= sortable_id %>" data-lesson-id="<%= lesson.id %>" data-lesson-highlight-target="row">
+              <td class="text-left md:px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">
+                <span class="inline-flex items-center gap-2">
+                  <% if lesson.complete? %>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-2.5 h-2.5 text-green-500 dark:text-green-400 flex-shrink-0">
+                      <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd" />
+                    </svg>
+                  <% else %>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-2.5 h-2.5 text-gray-400 dark:text-gray-500 flex-shrink-0">
+                      <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25z" clip-rule="evenodd" />
+                    </svg>
+                  <% end %>
+                  <span id="lesson_<%= lesson.id %>_name_in_table">
+                    <%= link_to lesson.name, lesson, class:"text-blue-500 hover:text-red-500 dark:text-blue-400 dark:hover:text-red-400" %>
+                  </span>
                 </span>
-              </span>
-            </td>
-            <td class="text-left md:px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">
-              <%= lesson.chapters.count %>
-            </td>
-            <td class="text-left md:px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">
-              <span id="lesson_<%= lesson.id %>_date"
+              </td>
+              <td class="text-left md:px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">
+                <%= lesson.chapters.count %>
+              </td>
+              <td class="text-left md:px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">
+                <span id="lesson_<%= lesson.id %>_date"
                     data-controller="inline-edit"
                     data-inline-edit-url-value="<%= lesson_path(lesson) %>"
                     data-inline-edit-field-value="date"
                     class="inline-block">
-                <span data-inline-edit-target="display"
+                  <span data-inline-edit-target="display"
                       data-action="click->inline-edit#edit"
-                  class="cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 px-1 rounded items-center gap-1">
-                  <%= lesson.date.strftime("%b %d, %Y") %>
-                </span>
-                <%= form_with(model: lesson, url: lesson_path(lesson), data:{ inline_edit_target: 'form', turbo_frame: '_top', turbo_stream: true}) do |form| %>
-                  <input type="hidden" name="return_url" value="<%= request.fullpath %>">
-                  <input data-inline-edit-target="input"
+                    class="cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 px-1 rounded items-center gap-1">
+                    <%= lesson.date.strftime("%b %d, %Y") %>
+                  </span>
+                  <%= form_with(model: lesson, url: lesson_path(lesson), data:{ inline_edit_target: 'form', turbo_frame: '_top', turbo_stream: true}) do |form| %>
+                    <input type="hidden" name="return_url" value="<%= request.fullpath %>">
+                    <input data-inline-edit-target="input"
                       name="lesson[date]"
                        type="date"
                        value="<%= lesson.date %>"
                        data-action="keydown->inline-edit#save blur->inline-edit#blur"
-                  class="hidden border border-gray-300 dark:border-gray-600 rounded px-2 py-1 dark:bg-gray-800 dark:text-gray-200" />
-                <% end %>
-              </span>
-            </td>
-          </tr>
+                    class="hidden border border-gray-300 dark:border-gray-600 rounded px-2 py-1 dark:bg-gray-800 dark:text-gray-200" />
+                  <% end %>
+                </span>
+              </td>
+            </tr>
+          <% end %>
         <% end %>
-      <% end %>
-    </tbody>
-  </table>
+      </tbody>
+    </table>
+  <% end %>
   <div class="mt-3 mb-3 flex justify-between items-center gap-2">
     <label class="relative inline-flex items-center cursor-pointer">
       <input type="checkbox" class="sr-only peer" data-action="change->sortable#toggle">

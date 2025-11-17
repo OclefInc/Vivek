@@ -1,30 +1,25 @@
-<% content_for :title, "Editing tutorial" %>
-<div class="flex flex-col md:flex-row md:gap-8 justify-center items-start md:items-center py-4">
-  <div class="md:w-2/3 w-full">
-    <div class="font-bold text-2xl dark:text-gray-200 mb-4">Edit Examples</div>
-    <%= form_with(model: @tutorial, class: "contents") do |form| %>
-      <% if @tutorial.errors.any? %>
-        <div id="error_explanation" class="bg-red-50 dark:bg-red-900/30 text-red-500 dark:text-red-300 px-3 py-2 font-medium rounded-md mt-3">
-          <h2><%= pluralize(tutorial.errors.count, "error") %> prohibited this tutorial from being saved:</h2>
-          <ul class="list-disc ml-6">
-            <% tutorial.errors.each do |error| %>
-              <li><%= error.full_message %></li>
-            <% end %>
-          </ul>
-        </div>
-      <% end %>
-      <div class="my-5">
-        <%= form.label :chapter_ids, "Chapter Clips From Lessons", class: "dark:text-gray-200" %>
-        <%= form.select :chapter_ids,
+<turbo-frame id="edit_form">
+  <%= form_with(model: @tutorial, class: "contents", data: { turbo_frame: "_top" }) do |form| %>
+    <% if @tutorial.errors.any? %>
+      <div id="error_explanation" class="bg-red-50 dark:bg-red-900/30 text-red-500 dark:text-red-300 px-3 py-2 font-medium rounded-md mt-3">
+        <h2><%= pluralize(tutorial.errors.count, "error") %> prohibited this tutorial from being saved:</h2>
+        <ul class="list-disc ml-6">
+          <% tutorial.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <div class="my-5">
+      <%= form.label :chapter_ids, "Chapter Clips From Lessons", class: "dark:text-gray-200" %>
+      <%= form.select :chapter_ids,
         options_for_select(@tutorial.chapters.map { |c| [c.name, c.id] }, @tutorial.chapter_ids),
         {},
         { multiple: true, class: "block outline-none dark:bg-gray-800 dark:text-gray-200 dark:border-gray-600", data: { controller: "multi-select", multi_select_placeholder_value: "Select one or more chapters...", multi_select_teacher_id_value: @tutorial.teacher_id } } %>
-      </div>
-      <%= form.hidden_field :teacher_id %>
-      <div class="inline">
-        <%= form.submit class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
-      </div>
-    <% end %>
-    <%= link_to "Back", tutorial_path(@tutorial), class: "w-full sm:w-auto text-center mt-2 sm:mt-0 sm:ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-  </div>
-</div>
+    </div>
+    <div class="text-center p-4">
+      <%= link_to("Cancel", tutorial_path(@tutorial), data: { turbo_frame: "_top" }, class: "inline-block rounded-lg px-4 py-2 text-sm text-white bg-red-600 hover:bg-red-400") %>
+      <%= form.submit "Update", class: "w-full sm:w-auto rounded-lg bg-blue-600 hover:bg-blue-400 px-4 py-2 text-sm text-white inline-block font-medium cursor-pointer" %>
+    </div>
+  <% end %>
+</turbo-frame>

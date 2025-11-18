@@ -1,52 +1,8 @@
-<%= render layout: "shared/index_layout",
-           locals: {
-             title: "Skills",
-             search_url: skill_categories_path,
-             turbo_frame: "skills-table",
-             search_placeholder: "Search for skills",
-             new_button_text: "Add new skill",
-             new_path: nil
-           } do %>
+<%= render 'index_header' %>
+<turbo-frame id="skills-table">
   <div id="skills" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     <% @skill_categories.each do |skill_category| %>
-      <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden flex flex-col">
-        <!-- Category Header -->
-        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 px-6 py-4 border-b border-blue-200 dark:border-blue-800">
-          <h2 class="text-xl font-semibold text-blue-700 dark:text-blue-300">
-            <%= skill_category.name %>
-          </h2>
-          <p class="text-sm text-blue-600 dark:text-blue-400 mt-1">
-            <%= pluralize(skill_category.tutorials.count, 'tutorial') %>
-          </p>
-        </div>
-        <!-- Tutorials List -->
-        <% if skill_category.tutorials.any? %>
-          <div class="divide-y divide-gray-200 dark:divide-gray-700 flex-1">
-            <% skill_category.tutorials.each do |tutorial| %>
-              <div class="px-6 py-3 hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
-                <div class="flex justify-between items-start gap-3">
-                  <div class="flex-1 min-w-0">
-                    <%= link_to tutorial.name, tutorial, class: "text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300 font-medium block truncate" %>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                      <%= tutorial.teacher.user.name %>
-                    </p>
-                  </div>
-                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 flex-shrink-0" title="<%= pluralize(tutorial.chapters.count, 'clip') %>">
-                    <%= tutorial.chapters.count %> <%= tutorial.chapters.count == 1 ? 'clip' : 'clips' %>
-                  </span>
-                </div>
-              </div>
-            <% end %>
-          </div>
-        <% else %>
-          <div class="px-6 py-8 text-center text-gray-500 dark:text-gray-400 flex-1 flex flex-col items-center justify-center">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-12 h-12 mb-3 opacity-50">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M3.375 19.5h17.25m-17.25 0a1.125 1.125 0 0 1-1.125-1.125M3.375 19.5h7.5c.621 0 1.125-.504 1.125-1.125m-9.75 0V5.625m0 12.75v-1.5c0-.621.504-1.125 1.125-1.125m18.375 2.625V5.625m0 12.75c0 .621-.504 1.125-1.125 1.125m1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125m0 3.75h-7.5A1.125 1.125 0 0 1 12 18.375m9.75-12.75c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125m19.5 0v1.5c0 .621-.504 1.125-1.125 1.125M2.25 5.625v1.5c0 .621.504 1.125 1.125 1.125m0 0h17.25m-17.25 0h7.5c.621 0 1.125.504 1.125 1.125M3.375 8.25c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125m17.25-3.75h-7.5c-.621 0-1.125.504-1.125 1.125m8.625-1.125c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h7.5m-7.5 0c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125M12 10.875v-1.5m0 1.5c0 .621-.504 1.125-1.125 1.125M12 10.875c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125M13.125 12h7.5m-7.5 0c-.621 0-1.125.504-1.125 1.125M20.625 12c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h7.5M12 14.625v-1.5m0 1.5c0 .621-.504 1.125-1.125 1.125M12 14.625c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125m0 1.5v-1.5m0 0c0-.621.504-1.125 1.125-1.125m0 0h7.5" />
-            </svg>
-            <p class="text-sm font-medium">No tutorials yet</p>
-          </div>
-        <% end %>
-      </div>
+      <%= render 'skill_category', skill_category: skill_category %>
     <% end %>
   </div>
-<% end %>
+</turbo-frame>

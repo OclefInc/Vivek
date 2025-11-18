@@ -6,6 +6,8 @@ class SkillCategoriesController < ApplicationController
   # GET /skills or /skills.json
   def index
     @skill_categories = SkillCategory.order(:name)
+    @teachers = Teacher.includes(:user).joins(:user).order("users.name")
+    @selected_teacher_id = params[:teacher_id]
   end
 
   # GET /skills/1 or /skills/1.json

@@ -30,13 +30,16 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :confirmable, :lockable
 
+  has_one :teacher
+  has_one :student
+
   validates_presence_of :name
 
   def roles
-    array=[]
-    array<<"Employee" if is_employee?
-    array<<"Student" if is_student?
-    array<<"Teacher" if is_teacher?
+    array = []
+    array << "Employee" if is_employee?
+    array << "Student" if is_student?
+    array << "Teacher" if is_teacher?
     array
   end
 
@@ -54,15 +57,15 @@ class User < ApplicationRecord
     @account_type ||= begin
     array = []
 
-        array << "Employee" if is_employee?
-        array << "Teacher" if is_teacher?
-        array << "Student" if is_student?
+    array << "Employee" if is_employee?
+    array << "Teacher" if is_teacher?
+    array << "Student" if is_student?
 
-      if array.empty?
-        "Guest"
-      else
-        array.join(", ")
-      end
+    if array.empty?
+      "Guest"
+    else
+      array.join(", ")
+    end
   end
   end
 end

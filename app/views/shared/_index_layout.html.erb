@@ -17,10 +17,12 @@
                 oninput: "this.form.requestSubmit()" %>
       </div>
     <% end %>
-    <%= link_to new_path, class: "p-2 bg-blue-600 hover:bg-blue-400 text-white rounded-lg" do %>
-      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
-      </svg>
+    <% if new_path.present? %>
+      <%= link_to new_path, class: "p-2 bg-blue-600 hover:bg-blue-400 text-white rounded-lg" do %>
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+        </svg>
+      <% end %>
     <% end %>
   </div>
 </div>

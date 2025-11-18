@@ -21,7 +21,7 @@ Rails.application.routes.draw do
     end
   end
   resources :accounts
-  resources :skills
+  resources :skill_categories, only: [ :index, :show ]
   resources :compositions
   resources :teachers do
     resources :chapters, only: [ :index ], controller: "teachers/chapters"

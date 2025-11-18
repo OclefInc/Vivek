@@ -19,7 +19,16 @@ class Teacher < ApplicationRecord
   belongs_to :user, optional: true
   validates_presence_of :name
 
+  after_save :touch_assignments
+
   def projects
     assignments.uniq
   end
+
+  private
+
+    def touch_assignments
+      # Touch all assignments where this teacher taught a lesson to bust cache
+      assignments.distinct.find_each(&:touch)
+    end
 end

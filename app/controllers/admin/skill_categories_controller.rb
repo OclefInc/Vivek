@@ -5,7 +5,17 @@ class Admin::SkillCategoriesController < ApplicationController
 
   # GET /skills or /skills.json
   def index
-    @skill_categories = SkillCategory.order(:name)
+    @skill_categories = SkillCategory.includes(:tutorials)
+
+    if params[:query].present?
+      query = "%#{params[:query]}%"
+      @skill_categories = @skill_categories
+        .left_joins(tutorials: :chapters)
+        .where("skill_categories.name ILIKE ? OR tutorials.name ILIKE ? OR chapters.name ILIKE ?", query, query, query)
+        .distinct
+    end
+
+    @skill_categories = @skill_categories.order(:name)
     @teachers = Teacher.includes(:user).joins(:user).order("users.name")
     @selected_teacher_id = params[:teacher_id]
   end
@@ -15,6 +25,7 @@ class Admin::SkillCategoriesController < ApplicationController
   end
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_skill_category
       @skill_category = SkillCategory.find(params.expect(:id))

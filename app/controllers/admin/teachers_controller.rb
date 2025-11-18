@@ -6,6 +6,13 @@ class Admin::TeachersController < ApplicationController
   # GET /teachers or /teachers.json
   def index
     @teachers = Teacher.all
+
+    if params[:query].present?
+      query = "%#{params[:query]}%"
+      @teachers = @teachers.where("name ILIKE ?", query)
+    end
+
+    @teachers = @teachers.order(:name)
   end
 
   # GET /teachers/1 or /teachers/1.json

@@ -4,6 +4,13 @@ class Admin::AccountsController < ApplicationController
 
   def index
     @accounts = User.all
+
+    if params[:query].present?
+      query = "%#{params[:query]}%"
+      @accounts = @accounts.where("name ILIKE ? OR email ILIKE ?", query, query)
+    end
+
+    @accounts = @accounts.order(:name)
   end
 
   def show

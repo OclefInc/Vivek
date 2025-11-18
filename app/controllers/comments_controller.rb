@@ -2,7 +2,14 @@ class CommentsController < ApplicationController
   before_action :authenticate_user!
   def index
     redirect_to_root_path unless current_user.is_employee?
-    @comments = Comment.order(created_at: :desc)
+    @comments = Comment.includes(:user, :annotation)
+
+    if params[:query].present?
+      query = "%#{params[:query]}%"
+      @comments = @comments.joins(:user).where("users.name ILIKE ? OR comments.body ILIKE ?", query, query)
+    end
+
+    @comments = @comments.order(created_at: :desc)
   end
   def show
     redirect_to_root_path unless current_user.is_employee?

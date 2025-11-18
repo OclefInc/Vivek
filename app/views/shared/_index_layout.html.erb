@@ -27,5 +27,7 @@
   </div>
 </div>
 <div class="mx-auto py-4">
-  <%= yield %>
+  <turbo-frame id="<%= turbo_frame %>">
+    <%= yield %>
+  </turbo-frame>
 </div>

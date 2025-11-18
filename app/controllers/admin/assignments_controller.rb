@@ -5,7 +5,20 @@ class Admin::AssignmentsController < ApplicationController
 
   # GET /assignments or /assignments.json
   def index
-    @assignments = Assignment.all
+    @assignments = Assignment.includes(:student, :teacher, :composition)
+
+    if params[:query].present?
+      query = "%#{params[:query]}%"
+      @assignments = @assignments
+        .joins(:student)
+        .joins("LEFT JOIN teachers ON teachers.id = assignments.teacher_id")
+        .joins("LEFT JOIN compositions ON compositions.id = assignments.composition_id")
+        .where("students.name ILIKE ? OR teachers.name ILIKE ? OR compositions.name ILIKE ?",
+               query, query, query)
+        .distinct
+    end
+
+    @assignments = @assignments.order(created_at: :desc)
   end
 
   # GET /assignments/1 or /assignments/1.json

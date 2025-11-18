@@ -6,6 +6,13 @@ class Admin::CompositionsController < ApplicationController
   # GET /compositions or /compositions.json
   def index
     @compositions = Composition.all
+
+    if params[:query].present?
+      query = "%#{params[:query]}%"
+      @compositions = @compositions.where("name ILIKE ? OR composer ILIKE ?", query, query)
+    end
+
+    @compositions = @compositions.order(:name)
   end
 
   # GET /compositions/1 or /compositions/1.json

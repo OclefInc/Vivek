@@ -28,7 +28,7 @@
         <div class="flex items-center justify-between">
           <!-- Logo/Brand -->
           <div class="text-xl font-medium">
-            <%= content_for?(:page_title) ? content_for(:page_title) : (content_for?(:title) ? content_for(:title) : link_to("The Vivek Project", root_path, class: "text-white hover:text-teal-200")) %>
+            <%= link_to "The Vivek Project", root_path, class: "text-white hover:text-teal-200" %>
           </div>
           <!-- Desktop Navigation -->
           <nav class="hidden md:flex items-center gap-6">
@@ -87,7 +87,7 @@
            style="transform: translateX(-100%); transition: transform 0.3s ease-in-out;">
       <div class="p-5 border-b border-teal-600">
         <span class="text-xl font-medium">
-          <%= content_for?(:page_title) ? content_for(:page_title) : (content_for?(:title) ? content_for(:title) : "The Vivek Project") %>
+          The Vivek Project
         </span>
       </div>
       <nav class="flex-1 overflow-y-auto py-4 px-2">

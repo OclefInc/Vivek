@@ -14,26 +14,32 @@
     <% end %>
   </div>
 </div>
-<div class="text-bold text-sky-700 dark:text-teal-400">
-  <p class="mb-2 text-sky-800 dark:text-teal-300">
-    <% if @episode.teacher.present? %>
-      <%= link_to @episode.teacher.name, display_teacher_path(@episode.teacher), class:'text-blue-600 hover:text-blue-400' %> (Teacher)
-    <% end %>
-  </p>
-  <p class="m-2 text-sky-800 dark:text-teal-300">
+<!-- Description first -->
+<div class="mb-4">
+  <p class="text-sky-800 dark:text-teal-300 px-4 py-2">
     <%= @episode.description %>
   </p>
 </div>
-<div class="text-sky-900 dark:text-teal-300">
-  <p class="font-bold"> Skills: </p>
-  <%= @episode.skills.map{|skill| link_to(skill.name, display_skill_path(skill), class:"text-indigo-600 pl-4 hover:text-indigo-400")}.join(', ').html_safe %>
+<!-- Teacher and Skills in one row -->
+<div class="flex flex-col sm:flex-row sm:gap-6 mb-4 px-4">
+  <div class="text-sky-700 dark:text-teal-400 mb-3 sm:mb-0">
+    <% if @episode.teacher.present? %>
+      <span class="font-semibold">Teacher:</span>
+      <%= link_to @episode.teacher.name, display_teacher_path(@episode.teacher), class:'text-blue-600 hover:text-blue-400' %>
+    <% end %>
+  </div>
+  <div class="text-sky-900 dark:text-teal-300">
+    <span class="font-semibold">Skills:</span>
+    <%= @episode.skills.map{|skill| link_to(skill.name, display_skill_path(skill), class:"text-indigo-600 ml-2 hover:text-indigo-400")}.join(', ').html_safe %>
+  </div>
 </div>
-<div class="flex">
-  <div class="flex-auto">
-    <p class="text-sky-800 dark:text-teal-300 m-2">
+<!-- Student and Teacher Reflections - side by side on large, stacked on small -->
+<div class="flex flex-col lg:flex-row lg:gap-4">
+  <div class="flex-1 mb-4 lg:mb-0">
+    <p class="text-sky-800 dark:text-teal-300 m-2 font-semibold">
       Student Reflection:
     </p>
-    <div class="flex-auto bg-white text-sky-800 dark:text-teal-300 border shadow border-2 border-sky-100 dark:border-zinc-800 dark:bg-zinc-800 bg-opacity-50 dark:text-teal-300 rounded-2xl m-2 p-6">
+    <div class="bg-white text-sky-800 dark:text-teal-300 border shadow border-2 border-sky-100 dark:border-zinc-800 dark:bg-zinc-800 bg-opacity-50 dark:text-teal-300 rounded-2xl m-2 p-6">
       <%= @episode.student_journal %>
     </div>
     <div class="justify-self-end m-4">
@@ -45,11 +51,11 @@
       <% end %>
     </div>
   </div>
-  <div class="flex-auto">
-    <p class="text-sky-800 dark:text-teal-300 m-2">
+  <div class="flex-1">
+    <p class="text-sky-800 dark:text-teal-300 m-2 font-semibold">
       Teacher Notes:
     </p>
-    <div class="flex-auto bg-white text-sky-800 dark:text-teal-300 border shadow border-sky-100 dark:border-sky-800 dark:bg-zinc-900 bg-opacity-50 dark:text-teal-300 rounded-2xl m-2 p-6">
+    <div class="bg-white text-sky-800 dark:text-teal-300 border shadow border-sky-100 dark:border-sky-800 dark:bg-zinc-900 bg-opacity-50 dark:text-teal-300 rounded-2xl m-2 p-6">
       <%= @episode.teacher_journal %>
     </div>
     <div class="justify-self-end m-4">

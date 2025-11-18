@@ -1,26 +1,44 @@
 <% content_for :title, "Showing composition" %>
-<h1 class="font-bold text-2xl text-sky-800 dark:text-teal-400">Composition Details:</h1>
-<div class="flex justify-between items-start">
+<div class="max-w-7xl mx-auto space-y-6 font-sans">
   <% if notice.present? %>
     <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
   <% end %>
-  <%= render @composition %>
-</div>
-<div class="flex justify-end">
-  <%= link_to "All compositions", display_compositions_path, 
-  class: "rounded-xl px-3 py-2 mt-2 border-2 border-white dark:border-indigo-300 bg-indigo-500 dark:border-zinc-900 hover:bg-indigo-400 hover:border-indigo-100 text-white font-medium whitespace-nowrap"
-   %>
-</div>
-<h1 class="text-2xl text-sky-800 dark:text-teal-300">Assignments</h1>
-<div class="max-w-5xl mx-auto px-8 py-4">
-  <table class="w-full table-auto border-collapse">
-    <tr>
-      <th class="text-left px-3 py-2 border-b border-sky-500 text-sky-800 dark:text-teal-400">Student</th>
-      <th class="text-left px-3 py-2 border-b border-sky-500 text-sky-800 dark:text-teal-400">Teacher</th>
-    </tr>
-    <% @composition.assignments.each do |assignment| %>
-      <td class="text-left text-sky-900 dark:text-teal-300 px-3 py-2 border-b border-sky-500"><%= link_to assignment.student.name, project_path(assignment), class:"text-indigo-400 text-normal hover:text-indigo-300 hover:text-bold "  %></td>
-      <td class="text-left text-sky-900 dark:text-teal-300 px-3 py-2 border-b border-sky-500"><%= assignment.teacher.name %></td>
-    <% end %>
-  </table>
+  <div class="bg-white dark:bg-zinc-800 rounded-2xl shadow-lg overflow-hidden">
+    <div class="bg-gradient-to-r from-sky-50 to-blue-50 dark:from-zinc-900 dark:to-zinc-800 px-6 pt-6 pb-3">
+      <div class="flex justify-between items-start">
+        <h1 class="text-2xl text-sky-800 dark:text-teal-300 font-semibold">Composition Details:</h1>
+        <div class="flex items-start justify-end gap-2">
+          <%= link_to "All compositions", display_compositions_path, 
+          class: "rounded-xl px-3 py-2 border-2 border-indigo-300 bg-indigo-500 hover:bg-indigo-400 hover:border-indigo-100 text-white font-medium whitespace-nowrap"
+           %>
+        </div>
+      </div>
+    </div>
+    <div class="bg-sky-50 dark:bg-zinc-900 p-6">
+      <%= render @composition %>
+    </div>
+  </div>
+  <div class="bg-white dark:bg-zinc-800 rounded-2xl shadow-lg overflow-hidden">
+    <div class="bg-gradient-to-r from-sky-50 to-blue-50 dark:from-zinc-900 dark:to-zinc-800 px-6 pt-6 pb-3">
+      <h1 class="text-2xl text-sky-800 dark:text-teal-300 font-semibold">Assignments</h1>
+    </div>
+    <div class="bg-sky-50 dark:bg-zinc-900 p-6">
+      <table class="w-full bg-white dark:bg-zinc-800 shadow rounded-2xl overflow-hidden">
+        <thead class="bg-sky-100 dark:bg-zinc-700">
+          <tr>
+            <th class="text-left text-sky-900 dark:text-teal-400 px-3 py-2 border-b border-zinc-300 dark:border-zinc-600">Student</th>
+            <th class="text-left text-sky-900 dark:text-teal-400 px-3 py-2 border-b border-zinc-300 dark:border-zinc-600">Teacher</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @composition.assignments.each do |assignment| %>
+            <tr>
+              <td class="px-3 py-2 border-b border-gray-300 dark:border-gray-600"><%= link_to assignment.student.name, project_path(assignment), class:"text-indigo-500 hover:text-indigo-300"  %></td>
+              <td class="px-3 py-2 border-b border-gray-300 dark:border-gray-600 text-sky-800 dark:text-teal-300"><%= assignment.teacher.name %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>

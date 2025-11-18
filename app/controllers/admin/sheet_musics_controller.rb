@@ -1,4 +1,4 @@
-class SheetMusicsController < ApplicationController
+class Admin::SheetMusicsController < ApplicationController
   before_action :set_sheet_music, only: %i[ show edit update destroy ]
 
   # GET /sheet_musics or /sheet_musics.json
@@ -13,7 +13,7 @@ class SheetMusicsController < ApplicationController
 
   # GET /sheet_musics/new
   def new
-    @sheet_music = SheetMusic.new(composition_id:params[:composition_id])
+    @sheet_music = SheetMusic.new(composition_id: params[:composition_id])
   end
 
   # GET /sheet_musics/1/edit

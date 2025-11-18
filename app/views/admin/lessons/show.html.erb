@@ -1,7 +1,7 @@
 <% content_for :title, 'Lesson' %>
 <%= render 'show_header' %>
 <div class="xl:hidden mt-5">
-  <%= render '/assignments/summary', assignment: @assignment %>
+  <%= render '/admin/assignments/summary', assignment: @assignment %>
 </div>
 <div class="xl:flex xl:gap-8">
   <div class="md:-mx-5 py-4 xl:min-w-[640px] md:flex-1 md:basis-1/2 md:px-5 xl:max-w-[640px]">
@@ -9,7 +9,7 @@
     <%= render @lesson %>
   </div>
   <div class="hidden xl:block w-full py-4 xl:flex-1 xl:basis-1/2 xl:px-5 md:-mx-5 ">
-    <%= render '/assignments/summary', assignment: @assignment %>
+    <%= render '/admin/assignments/summary', assignment: @assignment %>
     <%= render 'lesson_table',  lessons: @assignment.lessons, current_lesson: @lesson, assignment: @assignment, current_lesson_id: @lesson.id  %>
   </div>
 </div>

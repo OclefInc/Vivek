@@ -1,4 +1,4 @@
-class AssignmentsController < ApplicationController
+class Admin::AssignmentsController < ApplicationController
   before_action :authenticate_user!
   before_action :authorize_user
   before_action :set_assignment, only: %i[ show edit update destroy ]

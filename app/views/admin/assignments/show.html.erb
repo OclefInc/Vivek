@@ -6,6 +6,6 @@
     <%= render @assignment %>
   </div>
   <div class=" w-full py-4 xl:flex-1 xl:basis-1/2 xl:px-5 md:-mx-5 ">
-    <%= render '/lessons/lesson_table',  lessons: @assignment.lessons, current_lesson: @lesson, assignment: @assignment, current_lesson_id: nil  %>
+    <%= render '/admin/lessons/lesson_table',  lessons: @assignment.lessons, current_lesson: @lesson, assignment: @assignment, current_lesson_id: nil  %>
   </div>
 </div>

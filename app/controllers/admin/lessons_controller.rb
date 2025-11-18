@@ -1,4 +1,4 @@
-class LessonsController < ApplicationController
+class Admin::LessonsController < ApplicationController
   before_action :authenticate_user!
   before_action :authorize_user
   before_action :set_lesson, only: %i[ show edit update destroy ]

@@ -1,4 +1,4 @@
-class Teachers::TutorialsController < ApplicationController
+class Admin::Teachers::TutorialsController < ApplicationController
   def index
     @teacher = Teacher.find(params[:teacher_id])
     query = params[:q].to_s.strip

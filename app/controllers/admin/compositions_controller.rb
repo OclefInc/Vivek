@@ -1,4 +1,4 @@
-class CompositionsController < ApplicationController
+class Admin::CompositionsController < ApplicationController
   before_action :authenticate_user!
   before_action :authorize_user
   before_action :set_composition, only: %i[ show edit update destroy ]

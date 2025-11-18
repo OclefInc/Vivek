@@ -6,7 +6,7 @@ export default class extends Controller {
     const frameId = event.currentTarget.closest("[data-attachment-id]")?.getAttribute("data-attachment-id") || event.currentTarget.closest("span")?.nextElementSibling?.id;
     if (!frameId) return;
     // Replace with your actual Rails path for the copyright edit form
-    const url = `/attachments/${frameId}/edit_metadata`;
+    const url = `/admin/attachments/${frameId}/edit_metadata`;
     const frame = document.getElementById(`copyright_modal_${frameId}`);
     if (frame) {
       frame.src = url;

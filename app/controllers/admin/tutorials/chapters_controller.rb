@@ -1,4 +1,4 @@
-class Tutorials::ChaptersController < ApplicationController
+class Admin::Tutorials::ChaptersController < ApplicationController
   before_action :set_tutorial
   before_action :set_chapter
 

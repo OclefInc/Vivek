@@ -1,4 +1,4 @@
-class TutorialsController < ApplicationController
+class Admin::TutorialsController < ApplicationController
   before_action :set_tutorial, only: %i[ show edit update destroy ]
 
   # GET /tutorials or /tutorials.json

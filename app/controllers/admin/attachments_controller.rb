@@ -1,4 +1,4 @@
-class AttachmentsController < ApplicationController
+class Admin::AttachmentsController < ApplicationController
   def edit_metadata
     sgid = params[:sgid]
     @blob = ActiveStorage::Blob.find_signed(sgid)
@@ -52,11 +52,11 @@ class AttachmentsController < ApplicationController
 
   private
 
-  def touch_associated_objects(blob)
-    # Find all records that have this blob attached in their Action Text rich text fields
-    ActionText::RichText.where("body LIKE ?", "%#{blob.key}%").find_each do |rich_text|
-      # Touch the associated record (could be Lesson, Assignment, or any other model)
-      rich_text.record.touch if rich_text.record
+    def touch_associated_objects(blob)
+      # Find all records that have this blob attached in their Action Text rich text fields
+      ActionText::RichText.where("body LIKE ?", "%#{blob.key}%").find_each do |rich_text|
+        # Touch the associated record (could be Lesson, Assignment, or any other model)
+        rich_text.record.touch if rich_text.record
+      end
     end
-  end
 end

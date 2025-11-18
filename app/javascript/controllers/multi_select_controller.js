@@ -47,7 +47,7 @@ export default class extends Controller {
             const endpoint = this.hasEndpointValue ? this.endpointValue : 'chapters'
 
             options.load = (query, callback) => {
-                const url = `/teachers/${this.teacherIdValue}/${endpoint}?q=${encodeURIComponent(query)}`
+                const url = `/admin/teachers/${this.teacherIdValue}/${endpoint}?q=${encodeURIComponent(query)}`
 
                 fetch(url)
                     .then(response => response.json())

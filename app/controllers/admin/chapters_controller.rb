@@ -1,5 +1,5 @@
 # app/controllers/chapters_controller.rb
-class ChaptersController < ApplicationController
+class Admin::ChaptersController < ApplicationController
   before_action :set_lesson
   before_action :set_chapter, only: [ :edit, :update, :destroy ]
 

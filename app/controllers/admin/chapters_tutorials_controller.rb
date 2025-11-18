@@ -1,4 +1,4 @@
-class ChaptersTutorialsController < ApplicationController
+class Admin::ChaptersTutorialsController < ApplicationController
   def destroy
     @chapters_tutorial = ChaptersTutorial.find(params[:id])
     @chapters_tutorial.destroy

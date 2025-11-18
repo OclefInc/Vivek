@@ -16,7 +16,7 @@
       </thead>
       <tbody data-sortable-target="tbody">
         <% lessons.order(:sort).each_with_sortable_id do |lesson, sortable_id| %>
-          <%= render '/lessons/lesson_row', lesson: lesson, sortable_id: sortable_id %>
+          <%= render '/admin/lessons/lesson_row', lesson: lesson, sortable_id: sortable_id %>
         <% end %>
       </tbody>
     </table>
@@ -31,4 +31,4 @@
     </div>
   <% end %>
 </div>
-<%= render '/lessons/lesson_upload', assignment: assignment %>
+<%= render '/admin/lessons/lesson_upload', assignment: assignment %>

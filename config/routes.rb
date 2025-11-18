@@ -6,7 +6,7 @@ Rails.application.routes.draw do
     resources :teachers
     resources :students
   end
-  resources :sheet_musics
+
   devise_for :users, controllers: {
     confirmations: "users/confirmations",
     # omniauth_callbacks: 'users/omniauth_callbacks',
@@ -20,36 +20,35 @@ Rails.application.routes.draw do
       mount MissionControl::Jobs::Engine, at: "/jobs"
     end
   end
-  resources :accounts
-  resources :skill_categories, only: [ :index, :show ]
-  resources :compositions
-  resources :teachers do
-    resources :chapters, only: [ :index ], controller: "teachers/chapters"
-    resources :tutorials, only: [ :index ], controller: "teachers/tutorials"
-  end
-  resources :students
-  resources :lessons do
-    resources :chapters, only: [ :new, :create, :edit, :update, :destroy ]
-  end
-  resources :assignments do
-    resources :lessons, shallow: true
-  end
-  resources :projects do
-    resources :episodes
-  end
 
-  resources :comments
+  scope path: "/admin", module: "admin" do
+    resources :accounts
+    resources :skill_categories, only: [ :index, :show ]
+    resources :compositions
+    resources :teachers do
+      resources :chapters, only: [ :index ], controller: "teachers/chapters"
+      resources :tutorials, only: [ :index ], controller: "teachers/tutorials"
+    end
+    resources :sheet_musics
+    resources :students
+    resources :lessons do
+      resources :chapters, only: [ :new, :create, :edit, :update, :destroy ]
+    end
+    resources :assignments do
+      resources :lessons, shallow: true
+    end
 
-  resources :chapters_tutorials, only: [ :destroy ]
+    resources :chapters_tutorials, only: [ :destroy ]
 
-  resources :tutorials do
-    resources :chapters, only: [ :show ], controller: "tutorials/chapters"
+    resources :tutorials do
+      resources :chapters, only: [ :show ], controller: "tutorials/chapters"
+    end
+
+    # Attachments metadata endpoint
+    get "attachments/:sgid/edit_metadata", to: "attachments#edit_metadata"
+    post "attachments/update_metadata", to: "attachments#update_metadata"
+    post "attachments/update_pages", to: "attachments#update_pages"
   end
-
-  # Attachments metadata endpoint
-  get "attachments/:sgid/edit_metadata", to: "attachments#edit_metadata"
-  post "attachments/update_metadata", to: "attachments#update_metadata"
-  post "attachments/update_pages", to: "attachments#update_pages"
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -63,6 +62,12 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+  resources :projects do
+    resources :episodes
+  end
+
+  resources :comments
+
   get "/about", to: "home#about"
   get "/contact", to: "home#contact"
   root to: "home#index"

@@ -1,4 +1,4 @@
-class SkillCategoriesController < ApplicationController
+class Admin::SkillCategoriesController < ApplicationController
   before_action :authenticate_user!
   before_action :authorize_user
   before_action :set_skill_category, only: %i[ show ]

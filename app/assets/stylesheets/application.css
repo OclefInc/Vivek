@@ -217,34 +217,33 @@ trix-editor h4 {
   }
 }
 
-/* Animated scrolling lesson names - movie credits style */
-@keyframes scroll-up {
+/* Animated lesson names - fade in/out */
+@keyframes fade-in-out {
   0% {
-    transform: translateY(100%);
     opacity: 0;
   }
-  5% {
+  2% {
     opacity: 1;
   }
-  95% {
+  8% {
     opacity: 1;
+  }
+  10% {
+    opacity: 0;
   }
   100% {
-    transform: translateY(-100%);
     opacity: 0;
   }
 }
 
 .animate-scroll-0 {
-  animation: scroll-up 20s linear infinite;
+  animation: fade-in-out 3s ease-in-out infinite;
 }
 
 .animate-scroll-1 {
-  animation: scroll-up 20s linear infinite;
-  animation-delay: 2s;
+  animation: fade-in-out 3s ease-in-out infinite;
 }
 
 .animate-scroll-2 {
-  animation: scroll-up 20s linear infinite;
-  animation-delay: 4s;
+  animation: fade-in-out 3s ease-in-out infinite;
 }

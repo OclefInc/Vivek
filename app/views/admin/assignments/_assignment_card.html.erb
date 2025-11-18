@@ -5,11 +5,12 @@
       <div class="relative bg-gradient-to-br from-gray-600 to-gray-700 flex flex-col items-center justify-center py-8 overflow-hidden" style="min-height: 240px;">
         <!-- Animated lesson names background -->
         <% if assignment.lessons.any? %>
-          <div class="absolute inset-0 overflow-hidden opacity-15 flex flex-col items-center justify-center">
+          <div class="absolute inset-0 overflow-hidden opacity-20">
             <% lesson_names = assignment.lessons.order(:sort).pluck(:name) %>
+            <% total_duration = lesson_names.length * 3 %>
             <% lesson_names.each_with_index do |lesson_name, index| %>
-              <div class="text-white font-semibold text-center animate-scroll-<%= index % 3 %>"
-                       style="animation-delay: <%= index * 0.8 %>s; font-size: 18px; margin: 12px 0;">
+              <div class="absolute text-white font-semibold text-center opacity-0"
+                   style="animation: fade-in-out <%= total_duration %>s ease-in-out infinite; animation-delay: <%= index * 3 %>s; font-size: 18px; top: <%= 20 + (index * 37) % 60 %>%; left: <%= 10 + (index * 43) % 80 %>%; transform: translate(-50%, -50%);">
                 <%= lesson_name %>
               </div>
             <% end %>

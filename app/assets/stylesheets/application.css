@@ -216,3 +216,35 @@ trix-editor h4 {
     color: #e5e7eb;
   }
 }
+
+/* Animated scrolling lesson names - movie credits style */
+@keyframes scroll-up {
+  0% {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  5% {
+    opacity: 1;
+  }
+  95% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+}
+
+.animate-scroll-0 {
+  animation: scroll-up 20s linear infinite;
+}
+
+.animate-scroll-1 {
+  animation: scroll-up 20s linear infinite;
+  animation-delay: 2s;
+}
+
+.animate-scroll-2 {
+  animation: scroll-up 20s linear infinite;
+  animation-delay: 4s;
+}

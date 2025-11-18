@@ -18,6 +18,16 @@ class Admin::AssignmentsController < ApplicationController
         .distinct
     end
 
+    @teachers = Teacher.all.order(:name)
+    @selected_teacher_id = params[:teacher_id]
+
+    if @selected_teacher_id.present?
+      @assignments = @assignments
+        .joins(:lessons)
+        .where(lessons: { teacher_id: @selected_teacher_id })
+        .distinct
+    end
+
     @assignments = @assignments.order(created_at: :desc)
   end
 

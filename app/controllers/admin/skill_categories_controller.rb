@@ -16,7 +16,7 @@ class Admin::SkillCategoriesController < ApplicationController
     end
 
     @skill_categories = @skill_categories.order(:name)
-    @teachers = Teacher.includes(:user).joins(:user).order("users.name")
+    @teachers = Teacher.all.order(:name)
     @selected_teacher_id = params[:teacher_id]
   end
 

@@ -1,6 +1,5 @@
-<% new_path = current_user.teacher.present? ? new_tutorial_path(teacher_id: current_user.teacher.id) : nil %>
 <div data-controller="search-toggle">
-  <%= form_with url: skill_categories_path, method: :get, data: { turbo_frame: "skills-table", turbo_action: "advance" } do |form| %>
+  <%= form_with url: assignments_path, method: :get, data: { turbo_frame: "assignments-table", turbo_action: "advance" } do |form| %>
     <div class="flex flex-col xl:flex-row justify-between items-start xl:items-center gap-4 mb-4">
       <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 flex-1 w-full">
         <div class="relative w-full sm:w-auto">
@@ -25,7 +24,7 @@
           { id: "teacher_filter", class: "block rounded-md border border-gray-300 dark:border-gray-600 px-3 py-2 text-sm dark:bg-gray-800 dark:text-gray-200", onchange: "this.form.requestSubmit()" } %>
         </div>
       </div>
-      <%= link_to new_path, class: "p-2 bg-blue-600 hover:bg-blue-400 text-white rounded-lg self-start xl:self-auto" do %>
+      <%= link_to new_assignment_path, class: "p-2 bg-blue-600 hover:bg-blue-400 text-white rounded-lg self-start xl:self-auto" do %>
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
         </svg>

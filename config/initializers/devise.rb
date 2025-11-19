@@ -286,13 +286,7 @@ Devise.setup do |config|
     scope: "email name",
     team_id: ENV["APPLE_TEAM_ID"],
     key_id: ENV["APPLE_KEY_ID"],
-    pem: ENV["APPLE_PRIVATE_KEY"],
-    response_mode: "form_post",
-    authorize_params: {
-      response_mode: "form_post"
-    },
-    provider_ignores_state: true,
-    skip_nonce_verification: true
+    pem: ENV["APPLE_PRIVATE_KEY"]
 
   # Facebook OAuth
   config.omniauth :facebook, ENV["FACEBOOK_APP_ID"], ENV["FACEBOOK_APP_SECRET"], {

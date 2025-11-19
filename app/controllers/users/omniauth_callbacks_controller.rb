@@ -3,12 +3,6 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   layout "public"
   skip_before_action :verify_authenticity_token, only: [ :google_oauth2, :apple, :facebook ]
-  skip_forgery_protection only: [ :apple ]
-
-  # Override to allow Apple's origin
-  def verified_request?
-    super || request.path == "/users/auth/apple/callback"
-  end
 
   def google_oauth2
     handle_auth "Google"

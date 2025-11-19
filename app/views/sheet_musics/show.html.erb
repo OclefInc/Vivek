@@ -8,7 +8,7 @@
       <div class="flex justify-between items-start">
         <h1 class="text-2xl text-slate-900 dark:text-teal-200 font-semibold">Score</h1>
         <div class="flex items-start justify-end gap-2">
-          <%= link_to "All scores", display_sheet_musics_path({composition_id:@sheet_music.composition_id}),
+          <%= link_to "All scores", sheet_musics_path({composition_id:@sheet_music.composition_id}),
           class: "rounded-xl px-3 py-2 border-2 border-indigo-300 bg-indigo-500 hover:bg-indigo-400 hover:border-indigo-100 text-white font-medium whitespace-nowrap"
           %>
         </div>

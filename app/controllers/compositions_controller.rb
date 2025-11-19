@@ -1,4 +1,4 @@
-class Display::CompositionsController < ApplicationController
+class CompositionsController < ApplicationController
   layout "public"
   def index
     @compositions = Composition.all
@@ -7,6 +7,6 @@ class Display::CompositionsController < ApplicationController
     @composition = Composition.find(params.expect(:id))
   end
   def composition_params
-      params.expect(composition: [ :sheet_music, :name, :composer, :description ])
+    params.expect(composition: [ :sheet_music, :name, :composer, :description ])
   end
 end

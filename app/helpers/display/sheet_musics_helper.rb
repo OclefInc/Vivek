@@ -1,2 +1,0 @@
-module Display::SheetMusicsHelper
-end

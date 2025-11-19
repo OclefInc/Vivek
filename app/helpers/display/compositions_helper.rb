@@ -1,2 +1,0 @@
-module Display::CompositionsHelper
-end

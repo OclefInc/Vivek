@@ -25,12 +25,12 @@
   <div class="text-sky-700 dark:text-teal-400 mb-3 sm:mb-0">
     <% if @episode.teacher.present? %>
       <span class="font-semibold">Teacher:</span>
-      <%= link_to @episode.teacher.name, display_teacher_path(@episode.teacher), class:'text-blue-600 hover:text-blue-400' %>
+      <%= link_to @episode.teacher.name, teacher_path(@episode.teacher), class:'text-blue-600 hover:text-blue-400' %>
     <% end %>
   </div>
   <div class="text-sky-900 dark:text-teal-300">
     <span class="font-semibold">Skills:</span>
-    <%= @episode.skills.map{|skill| link_to(skill.name, display_skill_path(skill), class:"text-indigo-600 ml-2 hover:text-indigo-400")}.join(', ').html_safe %>
+    <%= @episode.skills.map{|skill| link_to(skill.name, skill_path(skill), class:"text-indigo-600 ml-2 hover:text-indigo-400")}.join(', ').html_safe %>
   </div>
 </div>
 <!-- Student and Teacher Reflections - side by side on large, stacked on small -->

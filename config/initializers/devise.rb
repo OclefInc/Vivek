@@ -287,7 +287,8 @@ Devise.setup do |config|
     team_id: ENV["APPLE_TEAM_ID"],
     key_id: ENV["APPLE_KEY_ID"],
     pem: ENV["APPLE_PRIVATE_KEY"],
-    provider_ignores_state: true
+    provider_ignores_state: true,
+    auth_scheme: :request_body
   }
 
   # Facebook OAuth

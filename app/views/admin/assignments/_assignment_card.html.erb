@@ -6,12 +6,22 @@
         <!-- Animated lesson names background -->
         <% if assignment.lessons.any? %>
           <div class="absolute inset-0 overflow-hidden opacity-20">
-            <% lesson_names = assignment.lessons.order(:sort).pluck(:name) %>
-            <% total_duration = lesson_names.length * 3 %>
-            <% lesson_names.each_with_index do |lesson_name, index| %>
+            <%
+              all_names = []
+              assignment.lessons.order(:sort).each do |lesson|
+                all_names << lesson.name
+                lesson.chapters.each do |chapter|
+                  all_names << chapter.name
+                  all_names += chapter.tutorials.pluck(:name) if chapter.tutorials.any?
+                end
+              end
+              all_names.uniq!
+              total_duration = all_names.length * 3
+            %>
+            <% all_names.each_with_index do |name, index| %>
               <div class="absolute text-white font-semibold text-center opacity-0"
                    style="animation: fade-in-out <%= total_duration %>s ease-in-out infinite; animation-delay: <%= index * 3 %>s; font-size: 18px; top: <%= 20 + (index * 37) % 60 %>%; left: <%= 10 + (index * 43) % 80 %>%; transform: translate(-50%, -50%);">
-                <%= lesson_name %>
+                <%= name %>
               </div>
             <% end %>
           </div>

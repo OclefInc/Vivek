@@ -11,9 +11,11 @@
 #  failed_attempts        :integer          default(0), not null
 #  locked_at              :datetime
 #  name                   :string
+#  provider               :string
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
+#  uid                    :string
 #  unconfirmed_email      :string
 #  unlock_token           :string
 #  created_at             :datetime         not null
@@ -28,12 +30,24 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable, :confirmable, :lockable
+         :recoverable, :rememberable, :validatable, :confirmable, :lockable, :omniauthable,
+         omniauth_providers: [ :google_oauth2, :apple, :facebook ]
 
   has_one :teacher
   has_one :student
 
   validates_presence_of :name
+
+  # OmniAuth callback method
+  def self.from_omniauth(auth)
+    where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+      user.email = auth.info.email
+      user.password = Devise.friendly_token[0, 20]
+      user.name = auth.info.name || "#{auth.info.first_name} #{auth.info.last_name}".strip
+      # Skip confirmation for OAuth users
+      user.skip_confirmation!
+    end
+  end
 
   def roles
     array = []

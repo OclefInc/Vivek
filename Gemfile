@@ -73,6 +73,13 @@ gem "tailwindcss-rails", "~> 4.3"
 
 gem "devise", "~> 4.9"
 
+# OmniAuth for OAuth authentication
+gem "omniauth"
+gem "omniauth-google-oauth2"
+gem "omniauth-apple"
+gem "omniauth-facebook"
+gem "omniauth-rails_csrf_protection"
+
 gem "mailgun-rails"
 
 gem "aws-sdk-s3", "1.94.0"

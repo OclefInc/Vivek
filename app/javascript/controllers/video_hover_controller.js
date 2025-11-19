@@ -1,17 +1,19 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-    static targets = ["video", "muteButton", "mutedIcon", "unmutedIcon"]
+    static targets = ["video", "muteButton", "mutedIcon", "unmutedIcon", "progressBar"]
 
     connect() {
         this.loaded = false
         this.element.addEventListener('mouseenter', this.play.bind(this))
         this.element.addEventListener('mouseleave', this.pause.bind(this))
+        this.videoTarget.addEventListener('timeupdate', this.updateProgress.bind(this))
     }
 
     disconnect() {
         this.element.removeEventListener('mouseenter', this.play.bind(this))
         this.element.removeEventListener('mouseleave', this.pause.bind(this))
+        this.videoTarget.removeEventListener('timeupdate', this.updateProgress.bind(this))
     }
 
     play() {
@@ -26,6 +28,12 @@ export default class extends Controller {
     pause() {
         this.videoTarget.pause()
         this.videoTarget.currentTime = 0
+        this.progressBarTarget.style.width = '0%'
+    }
+
+    updateProgress() {
+        const progress = (this.videoTarget.currentTime / this.videoTarget.duration) * 100
+        this.progressBarTarget.style.width = `${progress}%`
     }
 
     toggleMute(event) {

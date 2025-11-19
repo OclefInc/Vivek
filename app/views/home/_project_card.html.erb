@@ -13,6 +13,10 @@
                     preload: "none",
                     class: "w-full h-full object-cover",
                     data: { video_hover_target: "video" } %>
+            <!-- Progress Bar -->
+            <div class="absolute bottom-0 left-0 right-0 h-1 bg-white/20 z-30">
+              <div data-video-hover-target="progressBar" class="h-full bg-white transition-all duration-100" style="width: 0%"></div>
+            </div>
             <!-- Mute/Unmute Button -->
             <button type="button"
                   data-action="click->video-hover#toggleMute:stop"

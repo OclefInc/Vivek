@@ -1,18 +1,25 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-    static targets = ["video", "muteButton", "mutedIcon", "unmutedIcon", "progressBar", "progressContainer"]
+    static targets = ["video", "videoContainer", "muteButton", "mutedIcon", "unmutedIcon", "progressBar", "progressContainer"]
 
     connect() {
         this.loaded = false
+        this.playing = false
+        // Hide video container initially
+        if (this.hasVideoContainerTarget) {
+            this.videoContainerTarget.style.opacity = '0'
+        }
         this.element.addEventListener('mouseenter', this.play.bind(this))
         this.element.addEventListener('mouseleave', this.pause.bind(this))
+        this.element.addEventListener('click', this.togglePlay.bind(this))
         this.videoTarget.addEventListener('timeupdate', this.updateProgress.bind(this))
     }
 
     disconnect() {
         this.element.removeEventListener('mouseenter', this.play.bind(this))
         this.element.removeEventListener('mouseleave', this.pause.bind(this))
+        this.element.removeEventListener('click', this.togglePlay.bind(this))
         this.videoTarget.removeEventListener('timeupdate', this.updateProgress.bind(this))
     }
 
@@ -22,13 +29,34 @@ export default class extends Controller {
             this.videoTarget.load()
             this.loaded = true
         }
+        this.playing = true
+        if (this.hasVideoContainerTarget) {
+            this.videoContainerTarget.style.opacity = '1'
+        }
         this.videoTarget.play()
     }
 
     pause() {
+        this.playing = false
+        if (this.hasVideoContainerTarget) {
+            this.videoContainerTarget.style.opacity = '0'
+        }
         this.videoTarget.pause()
         this.videoTarget.currentTime = 0
         this.progressBarTarget.style.width = '0%'
+    }
+
+    togglePlay(event) {
+        // Don't toggle if clicking mute button or progress bar
+        if (event.target.closest('[data-action]')) {
+            return
+        }
+
+        if (this.playing) {
+            this.pause()
+        } else {
+            this.play()
+        }
     }
 
     updateProgress() {

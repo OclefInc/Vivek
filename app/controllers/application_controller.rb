@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   allow_browser versions: :modern
   def authorize_user
     if current_user.is_employee?
-      return
+      nil
     else
       redirect_to root_path
     end

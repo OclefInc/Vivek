@@ -11,6 +11,7 @@
 #  failed_attempts        :integer          default(0), not null
 #  locked_at              :datetime
 #  name                   :string
+#  picture_url            :string
 #  provider               :string
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime

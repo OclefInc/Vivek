@@ -11,6 +11,7 @@
 #  failed_attempts        :integer          default(0), not null
 #  locked_at              :datetime
 #  name                   :string
+#  picture_url            :string
 #  provider               :string
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
@@ -44,6 +45,7 @@ class User < ApplicationRecord
       user.email = auth.info.email
       user.password = Devise.friendly_token[0, 20]
       user.name = auth.info.name || "#{auth.info.first_name} #{auth.info.last_name}".strip
+      user.picture_url = auth.info.image
       # Skip confirmation for OAuth users
       user.skip_confirmation!
     end

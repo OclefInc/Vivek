@@ -274,24 +274,24 @@ Devise.setup do |config|
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
 
   # Google OAuth
-  config.omniauth :google_oauth2, ENV['GOOGLE_CLIENT_ID'], ENV['GOOGLE_CLIENT_SECRET'], {
-    scope: 'email,profile',
-    prompt: 'select_account',
-    image_aspect_ratio: 'square',
+  config.omniauth :google_oauth2, ENV["GOOGLE_CLIENT_ID"], ENV["GOOGLE_CLIENT_SECRET"], {
+    scope: "email,profile",
+    prompt: "select_account",
+    image_aspect_ratio: "square",
     image_size: 50
   }
 
   # Apple OAuth
-  config.omniauth :apple, ENV['APPLE_CLIENT_ID'], '',
-    scope: 'email name',
-    team_id: ENV['APPLE_TEAM_ID'],
-    key_id: ENV['APPLE_KEY_ID'],
-    pem: ENV['APPLE_PRIVATE_KEY']
+  config.omniauth :apple, ENV["APPLE_CLIENT_ID"], "",
+    scope: "email name",
+    team_id: ENV["APPLE_TEAM_ID"],
+    key_id: ENV["APPLE_KEY_ID"],
+    pem: ENV["APPLE_PRIVATE_KEY"]
 
   # Facebook OAuth
-  config.omniauth :facebook, ENV['FACEBOOK_APP_ID'], ENV['FACEBOOK_APP_SECRET'], {
-    scope: 'email,public_profile',
-    info_fields: 'email,name,first_name,last_name'
+  config.omniauth :facebook, ENV["FACEBOOK_APP_ID"], ENV["FACEBOOK_APP_SECRET"], {
+    scope: "email,public_profile",
+    info_fields: "email,name,first_name,last_name"
   }
 
   # ==> Warden configuration

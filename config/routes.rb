@@ -1,10 +1,4 @@
 Rails.application.routes.draw do
-  resources :sheet_musics
-  resources :skills
-  resources :compositions
-  resources :teachers
-  resources :students
-
   devise_for :users, controllers: {
     confirmations: "users/confirmations",
     omniauth_callbacks: "users/omniauth_callbacks",
@@ -16,6 +10,7 @@ Rails.application.routes.draw do
   devise_scope :user do
     authenticate :user, lambda { |u|u.is_employee? } do
       mount MissionControl::Jobs::Engine, at: "/jobs"
+      get "/admin", to: "admin/assignments#index", as: :admin
     end
   end
 
@@ -48,6 +43,11 @@ Rails.application.routes.draw do
     post "attachments/update_pages", to: "attachments#update_pages"
   end
 
+  resources :sheet_musics, path: "sheet_musics", as: "public_sheet_musics"
+  resources :skills, path: "skills", as: "public_skills"
+  resources :compositions, path: "compositions", as: "public_compositions"
+  resources :teachers, path: "teachers", as: "public_teachers"
+  resources :students, path: "students", as: "public_students"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.

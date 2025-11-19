@@ -7,7 +7,7 @@
     <div class="bg-gradient-to-r from-slate-50 to-blue-50 dark:from-zinc-900 dark:to-zinc-800 px-6 pt-6 pb-3">
       <div class="flex justify-between items-center">
         <h1 class="text-2xl text-slate-900 dark:text-teal-200 font-semibold">Teachers</h1>
-        <%= form_with url: teachers_path, method: :get, data: { turbo_frame: "teachers-table", turbo_action: "advance" } do |form| %>
+        <%= form_with url: public_teachers_path, method: :get, data: { turbo_frame: "teachers-table", turbo_action: "advance" } do |form| %>
           <%= form.text_field :query,
                 value: params[:query],
                 id: "table-search",
@@ -25,7 +25,7 @@
               <div class="flex justify-between items-start">
                 <%= render teacher %>
                 <div class="ml-4 flex items-start justify-end gap-2">
-                  <%= link_to "Full Info", teacher_path(teacher), class: "rounded-xl px-3 py-2 border-2 border-indigo-300 bg-indigo-500 hover:bg-indigo-400 hover:border-indigo-100 text-white font-medium whitespace-nowrap" %>
+                  <%= link_to "Full Info", public_teacher_path(teacher), class: "rounded-xl px-3 py-2 border-2 border-indigo-300 bg-indigo-500 hover:bg-indigo-400 hover:border-indigo-100 text-white font-medium whitespace-nowrap" %>
                 </div>
               </div>
             </div>

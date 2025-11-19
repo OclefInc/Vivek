@@ -1,5 +1,8 @@
 import { Controller } from "@hotwired/stimulus"
 
+// Keep track of currently playing controller
+let currentlyPlaying = null
+
 export default class extends Controller {
     static targets = ["video", "videoContainer", "muteButton", "mutedIcon", "unmutedIcon", "progressBar", "progressContainer"]
 
@@ -23,6 +26,9 @@ export default class extends Controller {
     }
 
     disconnect() {
+        if (currentlyPlaying === this) {
+            currentlyPlaying = null
+        }
         if (!this.isMobile) {
             this.element.removeEventListener('mouseenter', this.play.bind(this))
             this.element.removeEventListener('mouseleave', this.pause.bind(this))
@@ -32,12 +38,18 @@ export default class extends Controller {
     }
 
     play() {
+        // Stop any other currently playing video
+        if (currentlyPlaying && currentlyPlaying !== this) {
+            currentlyPlaying.pause()
+        }
+
         // Load video on first hover if not already loaded
         if (!this.loaded) {
             this.videoTarget.load()
             this.loaded = true
         }
         this.playing = true
+        currentlyPlaying = this
         if (this.hasVideoContainerTarget) {
             this.videoContainerTarget.style.opacity = '1'
         }
@@ -46,6 +58,9 @@ export default class extends Controller {
 
     pause() {
         this.playing = false
+        if (currentlyPlaying === this) {
+            currentlyPlaying = null
+        }
         if (this.hasVideoContainerTarget) {
             this.videoContainerTarget.style.opacity = '0'
         }

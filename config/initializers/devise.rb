@@ -282,11 +282,13 @@ Devise.setup do |config|
   }
 
   # Apple OAuth
-  config.omniauth :apple, ENV["APPLE_CLIENT_ID"], "",
+  config.omniauth :apple, ENV["APPLE_CLIENT_ID"], "", {
     scope: "email name",
     team_id: ENV["APPLE_TEAM_ID"],
     key_id: ENV["APPLE_KEY_ID"],
-    pem: ENV["APPLE_PRIVATE_KEY"]
+    pem: ENV["APPLE_PRIVATE_KEY"],
+    provider_ignores_state: true
+  }
 
   # Facebook OAuth
   config.omniauth :facebook, ENV["FACEBOOK_APP_ID"], ENV["FACEBOOK_APP_SECRET"], {

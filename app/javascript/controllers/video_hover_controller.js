@@ -6,19 +6,27 @@ export default class extends Controller {
     connect() {
         this.loaded = false
         this.playing = false
+        this.isMobile = 'ontouchstart' in window
         // Hide video container initially
         if (this.hasVideoContainerTarget) {
             this.videoContainerTarget.style.opacity = '0'
         }
-        this.element.addEventListener('mouseenter', this.play.bind(this))
-        this.element.addEventListener('mouseleave', this.pause.bind(this))
+
+        // Only add mouse events on desktop
+        if (!this.isMobile) {
+            this.element.addEventListener('mouseenter', this.play.bind(this))
+            this.element.addEventListener('mouseleave', this.pause.bind(this))
+        }
+
         this.element.addEventListener('click', this.togglePlay.bind(this))
         this.videoTarget.addEventListener('timeupdate', this.updateProgress.bind(this))
     }
 
     disconnect() {
-        this.element.removeEventListener('mouseenter', this.play.bind(this))
-        this.element.removeEventListener('mouseleave', this.pause.bind(this))
+        if (!this.isMobile) {
+            this.element.removeEventListener('mouseenter', this.play.bind(this))
+            this.element.removeEventListener('mouseleave', this.pause.bind(this))
+        }
         this.element.removeEventListener('click', this.togglePlay.bind(this))
         this.videoTarget.removeEventListener('timeupdate', this.updateProgress.bind(this))
     }
@@ -47,6 +55,15 @@ export default class extends Controller {
     }
 
     togglePlay(event) {
+        // On desktop, don't interfere with hover - only work on mobile
+        if (!this.isMobile) {
+            return
+        }
+
+        // Prevent navigation when clicking video area
+        event.preventDefault()
+        event.stopPropagation()
+
         // Don't toggle if clicking mute button or progress bar
         if (event.target.closest('[data-action]')) {
             return

@@ -4,7 +4,7 @@ import { Controller } from "@hotwired/stimulus"
 let currentlyPlaying = null
 
 export default class extends Controller {
-    static targets = ["video", "videoContainer", "muteButton", "mutedIcon", "unmutedIcon", "progressBar", "progressContainer"]
+    static targets = ["video", "videoContainer", "muteButton", "mutedIcon", "unmutedIcon", "progressBar", "progressContainer", "timeTooltip"]
 
     connect() {
         this.loaded = false
@@ -103,6 +103,32 @@ export default class extends Controller {
         const percentage = clickX / rect.width
         const newTime = percentage * this.videoTarget.duration
         this.videoTarget.currentTime = newTime
+    }
+
+    showTime(event) {
+        if (!this.hasTimeTooltipTarget) return
+
+        const rect = this.progressContainerTarget.getBoundingClientRect()
+        const mouseX = event.clientX - rect.left
+        const percentage = mouseX / rect.width
+        const time = percentage * this.videoTarget.duration
+
+        // Format time as MM:SS
+        const minutes = Math.floor(time / 60)
+        const seconds = Math.floor(time % 60)
+        const formattedTime = `${minutes}:${seconds.toString().padStart(2, '0')}`
+
+        // Position and show tooltip
+        this.timeTooltipTarget.textContent = formattedTime
+        this.timeTooltipTarget.style.left = `${mouseX}px`
+        this.timeTooltipTarget.style.transform = 'translateX(-50%)'
+        this.timeTooltipTarget.classList.remove('hidden')
+    }
+
+    hideTime() {
+        if (this.hasTimeTooltipTarget) {
+            this.timeTooltipTarget.classList.add('hidden')
+        }
     }
 
     toggleMute(event) {

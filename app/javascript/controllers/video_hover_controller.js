@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-    static targets = ["video", "muteButton", "mutedIcon", "unmutedIcon", "progressBar"]
+    static targets = ["video", "muteButton", "mutedIcon", "unmutedIcon", "progressBar", "progressContainer"]
 
     connect() {
         this.loaded = false
@@ -34,6 +34,15 @@ export default class extends Controller {
     updateProgress() {
         const progress = (this.videoTarget.currentTime / this.videoTarget.duration) * 100
         this.progressBarTarget.style.width = `${progress}%`
+    }
+
+    seekVideo(event) {
+        event.preventDefault()
+        const rect = this.progressContainerTarget.getBoundingClientRect()
+        const clickX = event.clientX - rect.left
+        const percentage = clickX / rect.width
+        const newTime = percentage * this.videoTarget.duration
+        this.videoTarget.currentTime = newTime
     }
 
     toggleMute(event) {

@@ -5,13 +5,13 @@ export default class extends Controller {
 
     connect() {
         this.loaded = false
-        this.videoTarget.addEventListener('mouseenter', this.play.bind(this))
-        this.videoTarget.addEventListener('mouseleave', this.pause.bind(this))
+        this.element.addEventListener('mouseenter', this.play.bind(this))
+        this.element.addEventListener('mouseleave', this.pause.bind(this))
     }
 
     disconnect() {
-        this.videoTarget.removeEventListener('mouseenter', this.play.bind(this))
-        this.videoTarget.removeEventListener('mouseleave', this.pause.bind(this))
+        this.element.removeEventListener('mouseenter', this.play.bind(this))
+        this.element.removeEventListener('mouseleave', this.pause.bind(this))
     }
 
     play() {

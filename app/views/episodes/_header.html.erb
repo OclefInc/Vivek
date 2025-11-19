@@ -1,19 +1,19 @@
 <div class="mx-4 md:mx-6">
   <!-- Episode Name - Full width on mobile -->
   <div class="mb-4">
-    <p class="text-sky-800 dark:text-teal-300 text-xl sm:text-2xl font-medium underline underline-offset-8 break-words">
+    <p class="text-slate-900 dark:text-teal-200 text-xl sm:text-2xl font-medium underline underline-offset-8 break-words">
       <%= @episode.name %>
     </p>
   </div>
   <!-- Project and Student Info - Stack on mobile, side by side on larger screens -->
   <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-4">
-    <p class="text-sky-700 dark:text-teal-400 text-sm sm:text-base lg:text-lg">
+    <p class="text-slate-700 dark:text-slate-300 text-sm sm:text-base lg:text-lg">
       <strong class="font-semibold">Project:</strong>
-      <%= link_to @episode.project.composition.name, project_path(@episode.project), class:'text-indigo-500 hover:text-indigo-300 break-words' %>
+      <%= link_to @episode.project.composition.name, project_path(@episode.project), class:'text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300 break-words' %>
     </p>
-    <p class="text-sky-700 dark:text-teal-400 text-sm sm:text-base">
+    <p class="text-slate-700 dark:text-slate-300 text-sm sm:text-base">
       <strong class="font-semibold">Student:</strong>
-      <%= link_to @episode.project.student.name, display_student_path(@episode.project.student), class:'font-semibold text-indigo-500 hover:text-indigo-300 whitespace-nowrap' %>
+      <%= link_to @episode.project.student.name, display_student_path(@episode.project.student), class:'font-semibold text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300 whitespace-nowrap' %>
     </p>
   </div>
 </div>

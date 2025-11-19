@@ -2,7 +2,7 @@
   <%= link_to project_path(project), class: "block" do %>
     <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300">
       <!-- Profile Picture Section with Animated Lesson Names Background -->
-      <div class="group relative bg-gradient-to-br from-sky-400 to-blue-500 dark:from-gray-600 dark:to-gray-700 flex flex-col items-center justify-center py-4 md:py-8 overflow-hidden" style="min-height: 180px;">
+      <div class="group relative bg-gradient-to-br from-sky-400 to-blue-500 dark:from-gray-600 dark:to-gray-700 flex flex-col items-center justify-center py-4 md:py-8 overflow-hidden" style="aspect-ratio: 1 / 1;">
         <!-- Summary Video (shown on hover) -->
         <% if project.summary_video.attached? %>
           <div class="absolute inset-0 bg-black transition-opacity duration-300 z-20"

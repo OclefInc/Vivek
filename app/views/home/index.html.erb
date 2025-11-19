@@ -3,7 +3,7 @@
     <p class="text-center text-xl text-sky-800 dark:text-teal-200 text-bold" > Welcome to The Vivek Project! </p>
     <p class="text-center text-md text-sky-800 dark:text-teal-300 " > Bringing teachers together to document real-life pedagogy. </p>
   </div>
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-7xl px-1 md:px-4">
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-6 w-full max-w-7xl px-1 md:px-4">
     <% @projects.each do |project| %>
       <%= render 'project_card', project: project %>
     <% end %>

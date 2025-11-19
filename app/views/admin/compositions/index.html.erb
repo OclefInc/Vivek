@@ -1,0 +1,24 @@
+<%= render layout: "shared/index_layout",
+           locals: {
+             title: "Compositions",
+             search_url: compositions_path,
+             turbo_frame: "compositions-table",
+             search_placeholder: "Search for music",
+             new_button_text: "Add new music",
+             new_path: nil
+           } do %>
+  <table class="w-full table-auto border-collapse">
+    <tr>
+      <th class="text-left px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">Name</th>
+      <th class="text-left px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">Composer</th>
+      <th class="text-left px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">Scores</th>
+    </tr>
+    <% @compositions.each do |composition| %>
+      <tr>
+        <td class="px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-300"><%= link_to composition.name, composition, class:"text-blue-500 hover:text-red-500 dark:text-blue-400 dark:hover:text-red-400" %></td>
+        <td class="px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-300"><%= composition.composer %></td>
+        <td class="px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-300"><%= composition.sheet_musics.count %></td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>

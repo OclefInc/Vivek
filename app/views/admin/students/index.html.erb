@@ -1,0 +1,43 @@
+<%= render layout: "shared/index_layout",
+           locals: {
+             title: "Students",
+             search_url: students_path,
+             turbo_frame: "students-table",
+             search_placeholder: "Search for students",
+             new_button_text: "Add new student",
+             new_path: nil
+           } do %>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+    <% @students.each do |student| %>
+      <%= link_to student, class: "block" do %>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 overflow-hidden border border-gray-200 dark:border-gray-700">
+          <div class="p-6">
+            <div class="flex flex-col items-center">
+              <div class="rounded-full overflow-hidden w-24 h-24 mb-4 border border-gray-200 dark:border-gray-600 flex items-center justify-center">
+                <% if student.profile_picture.attached? %>
+                  <%= image_tag student.profile_picture.variant(resize_to_fill: [96, 96]), class: "w-full h-full object-cover" %>
+                <% else %>
+                  <div class="aspect-square w-[300px]  overflow-hidden ">
+                    <svg class="text-gray-400" fill="currentColor" viewBox="0 0 24 24">
+                      <circle cx="12" cy="8" r="4"/>
+                      <path d="M2 19c0-2.5 4-5 10-5s10 2.5 10 5v5H2v-5z"/>
+                    </svg>
+                  </div>
+                <% end %>
+              </div>
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 text-center mb-3">
+                <%= student.name %>
+              </h3>
+              <div class="text-sm text-gray-600 dark:text-gray-400">
+                <div class="flex flex-col items-center">
+                  <span class="font-semibold text-xl text-blue-600 dark:text-blue-400"><%= student.assignments.length %></span>
+                  <span class="text-xs">Projects</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>

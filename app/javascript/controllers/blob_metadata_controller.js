@@ -89,7 +89,7 @@ export default class extends Controller {
     }
 
     console.log('Banner updated, new HTML:', innerDiv.innerHTML)
-  }  async updatePdfWatermark(isCopyrighted) {
+  } async updatePdfWatermark(isCopyrighted) {
     // Find the PDF viewer by going back through siblings
     let pdfViewerElement = this.element.previousElementSibling
     while (pdfViewerElement && !pdfViewerElement.dataset.controller?.includes('pdf-viewer')) {
@@ -120,7 +120,7 @@ export default class extends Controller {
     try {
       // Only save blob-level metadata (copyrighted and purchase_url)
       // Pages are handled by attachment-pages controller
-      const response = await fetch('/attachments/update_metadata', {
+      const response = await fetch('/admin/attachments/update_metadata', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

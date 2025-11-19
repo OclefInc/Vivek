@@ -105,7 +105,7 @@ export default class extends Controller {
     if (!confirm("Are you sure you want to delete this chapter?")) return
 
     try {
-      const response = await fetch(`/lessons/${lessonId}/chapters/${chapterId}`, {
+      const response = await fetch(`/admin/lessons/${lessonId}/chapters/${chapterId}`, {
         method: "DELETE",
         headers: {
           "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,

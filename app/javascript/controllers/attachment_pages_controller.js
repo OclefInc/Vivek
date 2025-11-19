@@ -150,7 +150,7 @@ export default class extends Controller {
 
   async saveToDatabase(sgid, pages, recordType, recordId) {
     try {
-      const response = await fetch('/attachments/update_pages', {
+      const response = await fetch('/admin/attachments/update_pages', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

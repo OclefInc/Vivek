@@ -1,0 +1,29 @@
+<div class="bg-gray-800 text-white p-4"
+       data-controller="video-chapters"
+       data-video-chapters-url-value="<%= lesson_path(lesson) %>"
+       data-video-chapters-video-target="video">
+  <div class="">
+    <div class="flex justify-between items-center mb-2">
+      <h3 class="text-lg font-semibold">Chapters</h3>
+      <%= link_to new_lesson_chapter_path(lesson),
+      class: "text-blue-600 hover:text-blue-500",
+      title: "Add Chapter",
+      data: {
+        turbo_frame: "chapter_form",
+        action: "click->video-chapters#addChapterWithTime"
+      } do %>
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+        </svg>
+      <% end %>
+    </div>
+    <%= turbo_frame_tag "chapter_form" %>
+    <%= turbo_frame_tag "chapters_list" do %>
+      <div data-video-chapters-target="chaptersList" class="space-y-1">
+        <% lesson.chapters.each do |chapter| %>
+          <%= render 'admin/chapters/chapter', chapter: chapter %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -7,3 +7,4 @@ IF tailwind is uncooperative for test site, run this command: bin/rails tailwind
 K
 
 ## TODO
+nngrok http https://vivek.test --host-header=rewrite

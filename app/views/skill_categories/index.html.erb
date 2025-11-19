@@ -1,8 +1,0 @@
-<%= render 'index_header' %>
-<turbo-frame id="skills-table">
-  <div id="skills" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    <% @skill_categories.each do |skill_category| %>
-      <%= render 'skill_category', skill_category: skill_category %>
-    <% end %>
-  </div>
-</turbo-frame>

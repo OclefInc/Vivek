@@ -115,7 +115,7 @@ export default class extends Controller {
 
   async updateBlobMetadata(sgid, copyrighted, purchaseUrl) {
     try {
-      const response = await fetch('/attachments/update_metadata', {
+      const response = await fetch('/admin/attachments/update_metadata', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

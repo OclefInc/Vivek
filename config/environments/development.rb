@@ -6,6 +6,7 @@ Rails.application.configure do
   Dotenv.load(Rails.root.to_s + "/env")
 
   config.hosts << "vivek.test"
+  config.hosts << "loftless-chirpy-doretha.ngrok-free.dev"
 
   # Make code changes take effect immediately without server restart.
   config.enable_reloading = true

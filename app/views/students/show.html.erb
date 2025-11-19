@@ -1,12 +1,12 @@
 <% content_for :title, "Showing student" %>
-<div class="max-w-7xl mx-auto space-y-6 font-sans">
+<div class="max-w-7xl mx-auto space-y-6">
   <% if notice.present? %>
     <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
   <% end %>
   <div class="bg-white dark:bg-zinc-800 rounded-2xl shadow-lg overflow-hidden">
-    <div class="bg-gradient-to-r from-slate-50 to-blue-50 dark:from-zinc-900 dark:to-zinc-800 px-6 pt-6 pb-3">
+    <div class="bg-sky-50 dark:bg-zinc-900 px-6 pt-6 pb-3">
       <div class="flex justify-between items-start">
-        <h1 class="text-2xl text-slate-900 dark:text-teal-200 font-semibold">Student Info:</h1>
+        <h1 class="text-2xl text-sky-800 dark:text-teal-200 font-bold">Student Info:</h1>
         <div class="flex items-start justify-end gap-2">
           <%= link_to "All students", students_path, 
           class: "rounded-xl px-3 py-2 border-2 border-indigo-300 bg-indigo-500 hover:bg-indigo-400 hover:border-indigo-100 text-white font-medium whitespace-nowrap"
@@ -14,27 +14,27 @@
         </div>
       </div>
     </div>
-    <div class="bg-slate-50 dark:bg-zinc-900 p-6">
+    <div class="bg-sky-50 dark:bg-zinc-900 p-6">
       <%= render @student %>
     </div>
   </div>
   <div class="bg-white dark:bg-zinc-800 rounded-2xl shadow-lg overflow-hidden">
-    <div class="bg-gradient-to-r from-slate-50 to-blue-50 dark:from-zinc-900 dark:to-zinc-800 px-6 pt-6 pb-3">
-      <h1 class="text-2xl text-slate-900 dark:text-teal-200 font-semibold">Projects</h1>
+    <div class="bg-sky-50 dark:bg-zinc-900 px-6 pt-6 pb-3">
+      <h1 class="text-2xl text-sky-800 dark:text-teal-200 font-bold">Projects</h1>
     </div>
-    <div class="bg-slate-50 dark:bg-zinc-900 p-6">
+    <div class="bg-sky-50 dark:bg-zinc-900 p-6">
       <table class="w-full bg-white dark:bg-zinc-800 shadow rounded-2xl overflow-hidden">
-        <thead class="bg-slate-100 dark:bg-zinc-700">
+        <thead class="bg-sky-100 dark:bg-zinc-700">
           <tr>
-            <th class="text-left text-slate-900 dark:text-teal-200 px-3 py-2 border-b border-slate-200 dark:border-zinc-600">Composition</th>
-            <th class="text-left text-slate-900 dark:text-teal-200 px-3 py-2 border-b border-slate-200 dark:border-zinc-600">Teacher</th>
+            <th class="text-left text-sky-800 dark:text-teal-200 font-semibold px-3 py-2 border-b border-sky-200 dark:border-zinc-600">Composition</th>
+            <th class="text-left text-sky-800 dark:text-teal-200 font-semibold px-3 py-2 border-b border-sky-200 dark:border-zinc-600">Teacher</th>
           </tr>
         </thead>
         <tbody>
           <% @student.assignments.each do |assignment| %>
             <tr>
-              <td class="px-3 py-2 border-b border-slate-200 dark:border-zinc-600"><%= link_to assignment.composition.name, project_path(assignment), class:"text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300 px-1 py-1"   %></td>
-              <td class="px-3 py-2 border-b border-slate-200 dark:border-zinc-600 text-slate-700 dark:text-slate-300"><%= assignment.teacher.name  %></td>
+              <td class="px-3 py-2 border-b border-sky-200 dark:border-zinc-600"><%= link_to assignment.composition.name, project_path(assignment), class:"text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300 px-1 py-1 font-medium"   %></td>
+              <td class="px-3 py-2 border-b border-sky-200 dark:border-zinc-600 text-slate-700 dark:text-slate-300 font-normal"><%= assignment.teacher.name  %></td>
             </tr>
           <% end %>
         </tbody>

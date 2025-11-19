@@ -1,31 +1,36 @@
-<div class="max-w-7xl mx-auto space-y-6 font-sans">
+<div class="max-w-7xl mx-auto space-y-6">
   <!-- Main Project Card -->
   <div class="bg-white dark:bg-zinc-800 rounded-2xl shadow-lg overflow-hidden">
-    <div class="bg-gradient-to-r from-slate-50 to-blue-50 dark:from-zinc-900 dark:to-zinc-800 px-6 pt-6 pb-1">
+    <div class="bg-sky-50 dark:bg-zinc-900 px-6 pt-6 pb-1">
       <!-- Project Header -->
       <div class="mx-4 md:mx-6">
-        <!-- Composition Name - Full width on mobile -->
-        <div class="mb-4">
-          <p class="text-slate-900 dark:text-teal-200 text-xl sm:text-2xl font-medium underline underline-offset-8 break-words">
-            <%= link_to @project.composition.name, composition_path(@project.composition), class:'text-slate-900 dark:text-teal-200 hover:text-indigo-600 dark:hover:text-indigo-400' %>
-          </p>
-        </div>
-        <!-- Student and Teachers Info - Stack on mobile, side by side on larger screens -->
-        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-4">
-          <p class="text-slate-700 dark:text-slate-300 text-sm sm:text-base lg:text-lg">
-            <strong class="font-semibold">Student:</strong>
-            <%= link_to @project.student.name, student_path(@project.student), class:'text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300 break-words' %>
-          </p>
-          <p class="text-slate-700 dark:text-slate-300 text-sm sm:text-base">
-            <strong class="font-semibold"><%= 'Teacher'.pluralize(@project.teachers.uniq.count) %>:</strong>
-            <% @project.teachers.uniq.each do |teacher| %>
-              <%= link_to teacher.name, teacher_path(teacher), class:'text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300' %>
-            <% end %>
-          </p>
+        <!-- Composition Name and Badges - Flex container that wraps on small screens -->
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+          <!-- Composition Name -->
+          <div class="flex-shrink min-w-0">
+            <p class="text-sky-800 dark:text-teal-200 text-xl sm:text-2xl font-bold underline underline-offset-8 break-words">
+              <%= link_to @project.composition.name, composition_path(@project.composition), class:'text-sky-800 dark:text-teal-200 hover:text-indigo-600 dark:hover:text-indigo-400' %>
+            </p>
+          </div>
+          <!-- Student and Teacher Info - Badge style -->
+          <div class="flex flex-wrap gap-3">
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-sky-100 dark:bg-zinc-800 border-2 border-sky-200 dark:border-zinc-700 rounded-lg hover:border-lime-400/60 dark:hover:border-lime-400/60 transition-colors">
+              <span class="text-xs font-semibold text-sky-700 dark:text-sky-300 uppercase tracking-wide">Student:</span>
+              <%= link_to @project.student.name, student_path(@project.student), class:'text-sm font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300 whitespace-nowrap' %>
+            </div>
+            <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-sky-100 dark:bg-zinc-800 border-2 border-sky-200 dark:border-zinc-700 rounded-lg hover:border-lime-400/60 dark:hover:border-lime-400/60 transition-colors">
+              <span class="text-xs font-semibold text-sky-700 dark:text-sky-300 uppercase tracking-wide"><%= 'Teacher'.pluralize(@project.teachers.uniq.count) %>:</span>
+              <span class="text-sm font-medium">
+                <% @project.teachers.uniq.each_with_index do |teacher, index| %>
+                  <%= link_to teacher.name, teacher_path(teacher), class:'text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300 whitespace-nowrap' %><%= ', ' unless index == @project.teachers.uniq.count - 1 %>
+                <% end %>
+              </span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-    <div class="bg-slate-50 dark:bg-zinc-900 xl:flex xl:gap-6 p-6">
+    <div class="bg-sky-50 dark:bg-zinc-900 xl:flex xl:gap-6 p-6">
       <!-- Video and Description Section -->
       <div id="<%= dom_id @project %>">
         <div class="md:-mx-5 px-6 xl:px-5 xl:pb-5 xl:mt-5">
@@ -49,12 +54,12 @@
       <div class="md:-mx-5 px-6 xl:px-5 xl:mt-5">
         <div class="md:flex md:-mx-5">
           <div class="md:flex-1 md:basis-1/2 md:px-5">
-            <div class="border-slate-300 border-2 dark:border-zinc-800 rounded-2xl w-full overflow-auto" style="max-width: 640px; aspect-ratio: 4/3;">
-              <table class="w-full flex-auto bg-slate-50 text-slate-700 dark:text-slate-300 shadow dark:bg-zinc-800 bg-opacity-50 rounded-2xl">
-                <thead class="sticky top-0 bg-slate-100 dark:bg-zinc-800 z-10">
+            <div class="border-sky-300 border-2 dark:border-zinc-800 rounded-2xl w-full overflow-auto" style="max-width: 640px; aspect-ratio: 4/3;">
+              <table class="w-full flex-auto bg-blue-50 text-slate-700 dark:text-slate-300 shadow dark:bg-zinc-800 bg-opacity-50 rounded-2xl">
+                <thead class="sticky top-0 bg-indigo-100 dark:bg-zinc-800 z-10">
                   <tr>
-                    <th class="pl-2 text-left md:px-3 py-2 border-b border-slate-200 dark:border-zinc-600 text-slate-900 dark:text-teal-200">Episodes</th>
-                    <th class="text-left md:px-3 py-2 border-b border-slate-200 dark:border-zinc-600 text-slate-900 dark:text-teal-200 whitespace-nowrap">
+                    <th class="pl-2 text-left font-semibold md:px-3 py-2 border-b border-sky-200 dark:border-zinc-600 text-sky-800 dark:text-teal-200">Episodes</th>
+                    <th class="text-left font-semibold md:px-3 py-2 border-b border-sky-200 dark:border-zinc-600 text-sky-800 dark:text-teal-200 whitespace-nowrap">
                       <span class="inline-flex items-center gap-1">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-gray-500 dark:text-gray-400">
                           <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
@@ -66,12 +71,12 @@
                 <tbody>
                   <% @project.lessons.order(:sort).each do |lesson| %>
                     <tr>
-                      <td class="m-2 text-left px-3 py-2 md:px-3 py-2 border-b border-slate-200 dark:border-zinc-600 dark:text-indigo-400 hover:indigo-300">
+                      <td class="m-2 text-left px-3 py-2 md:px-3 py-2 border-b border-sky-200 dark:border-zinc-600 dark:text-indigo-400 hover:indigo-300">
                         <span class="inline-flex items-center gap-2">
                           <%= link_to lesson.name, project_episode_path(@project, lesson), class: 'text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300' %>
                         </span>
                       </td>
-                      <td class="m-2 text-left text-sm px-3 py-2 md:px-3 py-2 border-b border-slate-200 dark:border-zinc-600 text-slate-700 dark:text-slate-300 whitespace-nowrap">
+                      <td class="m-2 text-left text-sm px-3 py-2 md:px-3 py-2 border-b border-sky-200 dark:border-zinc-600 text-slate-700 dark:text-slate-300 whitespace-nowrap">
                         <%= lesson.date&.strftime('%b %d, %Y') || 'No date' %>
                       </td>
                     </tr>

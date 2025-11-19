@@ -291,7 +291,8 @@ Devise.setup do |config|
     authorize_params: {
       response_mode: "form_post"
     },
-    provider_ignores_state: true
+    provider_ignores_state: true,
+    skip_nonce_verification: true
 
   # Facebook OAuth
   config.omniauth :facebook, ENV["FACEBOOK_APP_ID"], ENV["FACEBOOK_APP_SECRET"], {

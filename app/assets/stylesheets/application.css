@@ -247,3 +247,58 @@ trix-editor h4 {
 .animate-scroll-2 {
   animation: fade-in-out 3s ease-in-out infinite;
 }
+
+/* Pulsing glow effect */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.4), 0 0 30px rgba(147, 197, 253, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.6), 0 0 40px rgba(147, 197, 253, 0.5);
+  }
+}
+
+@keyframes pulse-glow-dark {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3), 0 0 30px rgba(96, 165, 250, 0.25);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.5), 0 0 40px rgba(96, 165, 250, 0.4);
+  }
+}
+
+@keyframes pulse-glow-text {
+  0%, 100% {
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.4), 0 0 20px rgba(147, 197, 253, 0.3);
+  }
+  50% {
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.6), 0 0 30px rgba(147, 197, 253, 0.5);
+  }
+}
+
+@keyframes pulse-glow-text-dark {
+  0%, 100% {
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3), 0 0 20px rgba(96, 165, 250, 0.25);
+  }
+  50% {
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.5), 0 0 30px rgba(96, 165, 250, 0.4);
+  }
+}
+
+.glow-pulse {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.glow-pulse-text {
+  animation: pulse-glow-text 2s ease-in-out infinite;
+}
+
+@media (prefers-color-scheme: dark) {
+  .glow-pulse {
+    animation: pulse-glow-dark 2s ease-in-out infinite;
+  }
+
+  .glow-pulse-text {
+    animation: pulse-glow-text-dark 2s ease-in-out infinite;
+  }
+}

@@ -64,7 +64,7 @@
         <!-- Student profile (above background) -->
         <div class="relative z-10 group-hover:opacity-0 transition-opacity duration-300">
           <div class="flex flex-col items-center">
-            <div class="rounded-full overflow-hidden w-16 h-16 md:w-20 md:h-20 border-2 border-white shadow-2xl drop-shadow-2xl flex items-center justify-center">
+            <div class="rounded-full overflow-hidden w-16 h-16 md:w-20 md:h-20 border-2 border-white glow-pulse flex items-center justify-center">
               <% if project.student.profile_picture&.attached? %>
                 <%= image_tag project.student.profile_picture.variant(resize_to_fill: [80, 80]), class: "w-full h-full object-cover" %>
               <% else %>
@@ -78,7 +78,7 @@
                 </div>
               <% end %>
             </div>
-            <p class="text-white font-semibold text-center text-xs md:text-sm mt-1 md:mt-2 drop-shadow-lg">
+            <p class="text-white font-semibold text-center text-xs md:text-sm mt-1 md:mt-2 glow-pulse-text">
               <%= project.student.name %>
             </p>
           </div>

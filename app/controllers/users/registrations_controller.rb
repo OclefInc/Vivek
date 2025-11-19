@@ -2,8 +2,8 @@
 
 class Users::RegistrationsController < Devise::RegistrationsController
   layout "public"
-  before_action :configure_sign_up_params, only: [:create]
-  before_action :configure_account_update_params, only: [:update]
+  before_action :configure_sign_up_params, only: [ :create ]
+  before_action :configure_account_update_params, only: [ :update ]
 
   # GET /resource/sign_up
   # def new
@@ -21,9 +21,20 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # PUT /resource
-  # def update
-  #   super
-  # end
+  def update
+    if resource.provider.present?
+      # OAuth users can only update their name, no password required
+      if resource.update(name: params[:user][:name])
+        bypass_sign_in resource, scope: :user
+        redirect_to edit_user_registration_path, notice: "Name updated successfully."
+      else
+        render :edit, status: :unprocessable_entity
+      end
+    else
+      # Regular users go through normal Devise update flow
+      super
+    end
+  end
 
   # DELETE /resource
   # def destroy
@@ -43,12 +54,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:email, :name, :password, :password_confirmantion, :current_password])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [ :email, :name, :password, :password_confirmantion, :current_password ])
   end
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_account_update_params
-    devise_parameter_sanitizer.permit(:account_update, keys: [:email, :name, :password, :password_confirmantion, :current_password])
+    devise_parameter_sanitizer.permit(:account_update, keys: [ :email, :name, :password, :password_confirmantion, :current_password ])
   end
 
   # The path used after sign up.

@@ -27,8 +27,9 @@
       <div class="container mx-auto px-4 py-4">
         <div class="flex items-center justify-between">
           <!-- Logo/Brand -->
-          <div class="text-xl font-medium">
-            <%= link_to "The Vivek Project", root_path, class: "text-white hover:text-teal-200" %>
+          <div class="flex items-center gap-3">
+            <%= image_tag "favicon.svg", alt: "Oclef", class: "h-8 w-auto" %>
+            <%= link_to "The Vivek Project", root_path, class: "text-xl font-medium text-white hover:text-teal-200" %>
           </div>
           <!-- Desktop Navigation -->
           <nav class="hidden md:flex items-center gap-6">

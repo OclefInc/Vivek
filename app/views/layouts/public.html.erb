@@ -67,11 +67,8 @@
                 </div>
               </div>
             <% else %>
-              <%= link_to new_user_session_path, class: "inline-flex items-center bg-white opacity-90 hover:opacity-100 border-lime-600 border-2 py-2 px-4 hover:border-teal-600 rounded-xl text-black transition-all" do %>
+              <%= link_to new_user_session_path, class: "text-teal-200 hover:text-white px-3 py-2 rounded-lg transition-colors #{request.path == new_user_session_path ? 'bg-white/10' : ''}" do %>
                 Login
-                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
-                  <path d="M5 12h14M12 5l7 7-7 7"></path>
-                </svg>
               <% end %>
             <% end %>
           </nav>
@@ -113,9 +110,6 @@
         <% else %>
           <%= link_to new_user_session_path, class: "w-full inline-flex items-center justify-center bg-white opacity-90 hover:opacity-100 border-lime-600 border-2 py-2 px-4 hover:border-teal-600 rounded-xl text-black" do %>
             Login
-            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 ml-1" viewBox="0 0 24 24">
-              <path d="M5 12h14M12 5l7 7-7 7"></path>
-            </svg>
           <% end %>
         <% end %>
       </div>

@@ -4,7 +4,8 @@ class Users::PasswordsController < Devise::PasswordsController
   layout "public"
 
   # Skip CSRF verification for password reset to handle same_site: none session issues
-  skip_before_action :verify_authenticity_token, only: [ :update ]
+  skip_before_action :verify_authenticity_token, only: [ :update, :create ]
+  protect_from_forgery with: :null_session, only: [ :update ]
 
   # GET /resource/password/new
   # def new

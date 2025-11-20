@@ -25,6 +25,10 @@ class Teacher < ApplicationRecord
     assignments.uniq
   end
 
+  def initials
+    name.split.map { |part| part[0] }.join.upcase if name.present?
+  end
+
   private
 
     def touch_assignments

@@ -1,29 +1,42 @@
-<% content_for :title, "Accounts" %>
-<div class="flex justify-between items-center">
-  <h1 class="text-3xl text-left text-red-600 dark:text-red-400 px-3 py-2">Accounts</h1>
-  <%= form_with url: accounts_path, method: :get, data: { turbo_frame: "accounts-table", turbo_action: "advance" } do |form| %>
-    <%= form.text_field :query,
-            value: params[:query],
-            id: "table-search",
-            class: "block p-2 ps-10 text-sm text-gray-700 border border-gray-300 rounded-xl w-80 flex-initial min-w-50 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
-            placeholder: "Search accounts",
-            oninput: "this.form.requestSubmit()" %>
-  <% end %>
-  <span></span>
-</div>
-<div class="mx-auto py-4">
-  <table class="w-full table-auto border-collapse">
-    <tr>
-      <th class="text-left px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">Name</th>
-      <th class="text-left px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">Email</th>
-      <th class="text-left px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">Account Type</th>
-    </tr>
-    <% @accounts.each do |user| %>
-      <tr>
-        <td class="px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-300"><%= link_to (user.name || 'Edit'), account_path(user), class:"text-blue-500 text-semibold hover:text-red-500 dark:text-blue-400 dark:hover:text-red-400 px-1 py-1" %></td>
-        <td class="px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-300"><%= user.email %></td>
-        <td class="px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-300"><%= user.account_type %></td>
-      </tr>
-    <% end %>
-  </table>
-</div>
+<%= render layout: "shared/index_layout",
+           locals: {
+             title: "Accounts",
+             search_url: accounts_path,
+             turbo_frame: "accounts-table",
+             search_placeholder: "Search for accounts",
+             new_button_text: "Add new account",
+             new_path: nil
+           } do %>
+  <div class="mx-auto py-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <% @accounts.each do |user| %>
+        <%= link_to account_path(user), class: "block" do %>
+          <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-200 dark:border-gray-700 hover:border-blue-400 dark:hover:border-blue-500">
+            <div class="p-6">
+              <div class="flex flex-col items-center">
+                <div class="w-24 h-24 rounded-full overflow-hidden mb-4 border border-gray-200 dark:border-gray-700">
+                  <% if user.picture_url.present? %>
+                    <%= image_tag user.picture_url, alt: user.name, class: "w-full h-full object-cover" %>
+                  <% else %>
+                    <div class="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
+                      <span class="text-white text-3xl font-bold"><%= user.initials || user.email&.first&.upcase %></span>
+                    </div>
+                  <% end %>
+                </div>
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 text-center mb-2">
+                  <%= user.name || 'No Name' %>
+                </h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400 text-center mb-3 truncate w-full px-2">
+                  <%= user.email %>
+                </p>
+                <span class="inline-block px-3 py-1 text-xs font-medium rounded-full <%= user.account_type == 'admin' ? 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200' : 'bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200' %>">
+                  <%= user.account_type&.titleize || 'User' %>
+                </span>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

@@ -24,4 +24,8 @@ class Student < ApplicationRecord
       errors.add(:profile_picture, "must be an image file")
     end
   end
+
+  def initials
+    name.split.map { |part| part[0] }.join.upcase if name.present?
+  end
 end

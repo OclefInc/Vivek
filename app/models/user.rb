@@ -51,6 +51,10 @@ class User < ApplicationRecord
     end
   end
 
+  def initials
+    name.split.map { |part| part[0] }.join.upcase if name.present?
+  end
+
   def roles
     array = []
     array << "Employee" if is_employee?

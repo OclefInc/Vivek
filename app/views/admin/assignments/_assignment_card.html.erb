@@ -37,13 +37,8 @@
                     <% if teacher.profile_picture&.attached? %>
                       <%= image_tag teacher.profile_picture.variant(resize_to_fill: [80, 80]), class: "w-full h-full object-cover" %>
                     <% else %>
-                      <div class="w-full h-full flex items-center justify-center bg-gray-100">
-                        <div class="aspect-square w-[80px]  overflow-hidden ">
-                          <svg class="text-gray-400" fill="currentColor" viewBox="0 0 24 24">
-                            <circle cx="12" cy="8" r="4"/>
-                            <path d="M2 19c0-2.5 4-5 10-5s10 2.5 10 5v5H2v-5z"/>
-                          </svg>
-                        </div>
+                      <div class="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
+                        <span class="text-white text-3xl font-bold"><%= teacher.initials || teacher.email&.first&.upcase %></span>
                       </div>
                     <% end %>
                   </div>

@@ -78,6 +78,7 @@ gem "omniauth"
 gem "omniauth-google-oauth2"
 gem "omniauth-apple"
 gem "omniauth-facebook"
+gem "omniauth-github"
 gem "omniauth-rails_csrf_protection"
 
 gem "mailgun-rails"

@@ -1,4 +1,4 @@
-class TeachersController < ApplicationController
+class ProfessorsController < ApplicationController
   layout "public"
   def index
     @teachers = Teacher.all

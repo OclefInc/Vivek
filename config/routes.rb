@@ -46,7 +46,7 @@ Rails.application.routes.draw do
   resources :sheet_musics, path: "sheet_musics", as: "public_sheet_musics"
   resources :skills, path: "skills", as: "public_skills"
   resources :compositions, path: "compositions", as: "public_compositions"
-  resources :teachers, path: "teachers", as: "public_teachers"
+  resources :professors
   resources :students, path: "students", as: "public_students"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

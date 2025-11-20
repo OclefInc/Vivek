@@ -32,6 +32,7 @@
           </div>
           <!-- Desktop Navigation -->
           <nav class="hidden md:flex items-center gap-6">
+            <%= link_to "Professors", professors_path, class: "text-teal-200 hover:text-white px-3 py-2 rounded-lg transition-colors #{request.path == professors_path ? 'bg-white/10' : ''}" %>
             <%= link_to "About", about_path, class: "text-teal-200 hover:text-white px-3 py-2 rounded-lg transition-colors #{request.path == about_path ? 'bg-white/10' : ''}" %>
             <%= link_to "Contact", contact_path, class: "text-teal-200 hover:text-white px-3 py-2 rounded-lg transition-colors #{request.path == contact_path ? 'bg-white/10' : ''}" %>
             <% if user_signed_in? %>

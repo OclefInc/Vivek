@@ -8,7 +8,7 @@
         <h4 class="text-xl ps-4 py-2 text-orange-700 hover:text-amber-500 dark:text-orange-600 dark:hover:text-orange-400 italic"> <%= link_to project.name, project_path(project) %> </h4>
         <div class="flex sm:flex-nowrap mb-2 text-xl pe-4 py-2">
           <% project.teachers.uniq.each do |teacher| %>
-            <%= link_to teacher.name, teacher_path(teacher), class:'text-xl text-bold text-indigo-600 hover:text-indigo-400' %>
+            <%= link_to teacher.name, professor_path(teacher), class:'text-xl text-bold text-indigo-600 hover:text-indigo-400' %>
           <% end %>
         </div>
       </div>
@@ -18,7 +18,7 @@
             <strong> Focus: </strong>
             <p class="text-nowrap"> <%= project.composition.name %> (<%= project.composition.composer %>) </p>
           </div>
-          <div class="text-nowrap"> <b> <%= project.lessons.length %> </b> Episodes 
+          <div class="text-nowrap"> <b> <%= project.lessons.length %> </b> Episodes
           </div>
         </div>
         <div class="flex-auto w-auto px-6 my-2 ">

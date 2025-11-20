@@ -17,8 +17,8 @@
           </thead>
           <tbody data-sortable-target="tbody">
             <% @episode.project.lessons.order(:sort).each_with_sortable_id do |lesson, sortable_id| %>
-              <tr>
-                <% is_current = @episode.id == lesson.id %>
+              <% is_current = @episode.id == lesson.id %>
+              <tr class="<%= is_current ? '' : 'hover:bg-sky-50 dark:hover:bg-zinc-700/50' %> transition-colors">
                 <td class="m-2 <%= is_current ? 'bg-yellow-50 dark:bg-teal-900' : '' %> text-left px-3 py-2 md:px-3 py-2 border-b border-sky-200 dark:border-zinc-600 dark:text-indigo-400 <%= is_current ? '' : 'hover:indigo-300' %>">
                   <span class="inline-flex items-center gap-2">
                     <%= link_to lesson.name, project_episode_path(@episode, lesson), class: 'text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300' %>

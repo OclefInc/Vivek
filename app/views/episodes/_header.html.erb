@@ -3,22 +3,22 @@
   <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
     <!-- Episode Name -->
     <div class="flex-shrink min-w-0">
-      <p class="text-sky-800 dark:text-teal-200 text-xl sm:text-2xl font-bold underline underline-offset-8 break-words">
+      <p class="text-sky-800 dark:text-teal-200 text-xl sm:text-2xl font-bold break-words">
         <%= @episode.name %>
       </p>
     </div>
     <!-- Project, Student, and Teacher Info - Badge style -->
     <div class="flex flex-wrap gap-3">
-      <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-sky-100 dark:bg-zinc-800 border-2 border-sky-200 dark:border-zinc-700 rounded-lg hover:border-lime-400/60 dark:hover:border-lime-400/60 transition-colors">
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-sky-100 dark:bg-zinc-800 border-2 border-sky-200 dark:border-zinc-700 rounded-lg hover:border-green-400/60 dark:hover:border-green-400/60 transition-colors">
         <span class="text-xs font-semibold text-sky-700 dark:text-sky-300 uppercase tracking-wide">Project:</span>
         <%= link_to @episode.project.composition.name, project_path(@episode.project), class:'text-sm font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300' %>
       </div>
-      <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-sky-100 dark:bg-zinc-800 border-2 border-sky-200 dark:border-zinc-700 rounded-lg hover:border-lime-400/60 dark:hover:border-lime-400/60 transition-colors">
+      <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-sky-100 dark:bg-zinc-800 border-2 border-sky-200 dark:border-zinc-700 rounded-lg hover:border-green-400/60 dark:hover:border-green-400/60 transition-colors">
         <span class="text-xs font-semibold text-sky-700 dark:text-sky-300 uppercase tracking-wide">Student:</span>
         <%= link_to @episode.project.student.name, student_path(@episode.project.student), class:'text-sm font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300 whitespace-nowrap' %>
       </div>
       <% if @episode.teacher.present? %>
-        <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-sky-100 dark:bg-zinc-800 border-2 border-sky-200 dark:border-zinc-700 rounded-lg hover:border-lime-400/60 dark:hover:border-lime-400/60 transition-colors">
+        <div class="inline-flex items-center gap-2 px-3 py-1.5 bg-sky-100 dark:bg-zinc-800 border-2 border-sky-200 dark:border-zinc-700 rounded-lg hover:border-green-400/60 dark:hover:border-green-400/60 transition-colors">
           <span class="text-xs font-semibold text-sky-700 dark:text-sky-300 uppercase tracking-wide">Teacher:</span>
           <%= link_to @episode.teacher.name, teacher_path(@episode.teacher), class:'text-sm font-medium text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300 whitespace-nowrap' %>
         </div>

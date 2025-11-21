@@ -138,7 +138,7 @@ class User < ApplicationRecord
 
   def send_magic_link
     generate_magic_link_token!
-    MagicLinkMailer.login_link(self).deliver_later
+    MagicLinkMailer.login_link(self).deliver_now
   end
 
   def oauth_user?

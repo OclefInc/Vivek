@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_19_200316) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_21_211627) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_stat_statements"
@@ -190,6 +190,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_19_200316) do
     t.string "provider"
     t.string "uid"
     t.string "picture_url"
+    t.integer "avatar_crop_x"
+    t.integer "avatar_crop_y"
+    t.integer "avatar_crop_width"
+    t.integer "avatar_crop_height"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

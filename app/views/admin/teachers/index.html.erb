@@ -14,8 +14,8 @@
           <div class="p-6">
             <div class="flex flex-col items-center">
               <div class="rounded-full overflow-hidden w-24 h-24 mb-4 border border-gray-200 dark:border-gray-600 flex items-center justify-center">
-                <% if teacher.profile_picture.attached? %>
-                  <%= image_tag teacher.profile_picture.variant(resize_to_fill: [300, 300]), class:"object-cover" %>
+                <% if teacher.display_avatar(size: 300) %>
+                  <%= image_tag teacher.display_avatar(size: 300), class:"object-cover" %>
                 <% else %>
                   <div class="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
                     <span class="text-white text-3xl font-bold"><%= teacher.initials || teacher.email&.first&.upcase %></span>

@@ -9,6 +9,43 @@
             <%= f.label :name %><br />
             <%= f.text_field :name, class: "block w-full bg-cyan-800 text-gray-300 shadow-sm rounded-xl px-3 py-2 outline focus:outline-2 outline-teal-300" %>
           </div>
+          <div class="field text-gray-300 mb-4" data-controller="avatar-crop">
+            <%= f.label :avatar, "Profile Picture" %><br />
+            <% if resource.avatar.attached? && resource.avatar.blob.persisted? %>
+              <div class="mb-2 flex flex-col items-center">
+                <%= image_tag resource.cropped_avatar(size: 128), class: "rounded-full border-2 border-teal-400 mb-2", data: { avatar_crop_target: "existingAvatar", original_url: url_for(resource.avatar) } %>
+                <button type="button" data-action="click->avatar-crop#editExisting" class="px-3 py-1 bg-indigo-600 hover:bg-indigo-500 text-white text-sm rounded-lg">Crop</button>
+              </div>
+            <% elsif resource.picture_url.present? %>
+              <div class="mb-2 flex justify-center">
+                <%= image_tag resource.picture_url, class: "rounded-full border-2 border-teal-400 w-32 h-32 object-cover" %>
+              </div>
+            <% end %>
+            <img data-avatar-crop-target="preview" class="hidden mb-2 mx-auto rounded-full border-2 border-teal-400 w-32 h-32 object-cover" />
+            <%= f.file_field :avatar, accept: "image/*", class: "block w-full bg-cyan-800 text-gray-300 shadow-sm rounded-xl px-3 py-2 outline focus:outline-2 outline-teal-300", data: { avatar_crop_target: "input", action: "change->avatar-crop#openCropper" } %>
+
+            <%= f.hidden_field :avatar_crop_x, data: { avatar_crop_target: "cropXField" } %>
+            <%= f.hidden_field :avatar_crop_y, data: { avatar_crop_target: "cropYField" } %>
+            <%= f.hidden_field :avatar_crop_width, data: { avatar_crop_target: "cropWidthField" } %>
+            <%= f.hidden_field :avatar_crop_height, data: { avatar_crop_target: "cropHeightField" } %>
+
+            <!-- Crop Modal -->
+            <div data-avatar-crop-target="modal" class="hidden fixed inset-0 z-50 overflow-auto bg-black bg-opacity-75 flex items-center justify-center p-4">
+              <div class="bg-cyan-950 rounded-xl p-6 max-w-2xl w-full border-2 border-teal-800">
+                <h3 class="text-xl font-semibold text-teal-100 mb-4">Crop Your Profile Picture</h3>
+                <div class="mb-4 flex justify-center">
+                  <canvas data-avatar-crop-target="canvas"
+                          class="border-2 border-teal-600 cursor-move"
+                          data-action="mousedown->avatar-crop#startDrag mousemove->avatar-crop#drag mouseup->avatar-crop#stopDrag mouseleave->avatar-crop#stopDrag wheel->avatar-crop#zoom"></canvas>
+                </div>
+                <p class="text-sm text-gray-400 mb-4 text-center">Drag to reposition • Scroll to zoom</p>
+                <div class="flex gap-3 justify-end">
+                  <button type="button" data-action="click->avatar-crop#cancel" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg">Cancel</button>
+                  <button type="button" data-action="click->avatar-crop#applyCrop" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg">Apply Crop</button>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="bg-cyan-900/50 border border-teal-700 rounded-xl p-4 mb-4">
             <div class="flex items-start">
               <svg class="w-5 h-5 text-teal-400 mr-2 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -16,13 +53,13 @@
               </svg>
               <div class="text-sm text-gray-300">
                 <p class="font-medium mb-1">Account managed by <%= resource.provider.titleize %></p>
-                <p class="text-gray-400">Email and password are managed through <%= resource.provider.titleize %>. You can only update your display name here.</p>
+                <p class="text-gray-400">Email and password are managed through <%= resource.provider.titleize %>. You can update your display name and profile picture here.</p>
               </div>
             </div>
           </div>
           <div class="flex text-gray-300 mb-4 justify-between items-center">
             <div>
-              <%= f.submit "Update Name", class: "w-full sm:w-auto rounded-xl px-3 py-2 bg-indigo-600 hover:bg-indigo-400 text-white inline-block font-medium cursor-pointer text-center tracking-wider" %>
+              <%= f.submit "Update Profile", class: "w-full sm:w-auto rounded-xl px-3 py-2 bg-indigo-600 hover:bg-indigo-400 text-white inline-block font-medium cursor-pointer text-center tracking-wider" %>
             </div>
             <div>
               <%= link_to "Back", :back, class: "text-sm text-teal-300 hover:text-teal-100 hover:underline" %>
@@ -39,6 +76,39 @@
           <div class="field text-gray-300 mb-4">
             <%= f.label :name %><br />
             <%= f.text_field :name, class: "block w-full bg-cyan-800 text-gray-300 shadow-sm rounded-xl px-3 py-2 outline focus:outline-2 outline-teal-300" %>
+          </div>
+          <div class="field text-gray-300 mb-4" data-controller="avatar-crop">
+            <% if resource.avatar.attached? && resource.avatar.blob.persisted? %>
+              <div class="mb-2 flex flex-col items-center">
+                <%= image_tag resource.cropped_avatar(size: 128), class: "rounded-full border-2 border-teal-400 mb-2", data: { avatar_crop_target: "existingAvatar", original_url: url_for(resource.avatar) } %>
+                <button type="button" data-action="click->avatar-crop#editExisting" class="px-3 py-1 bg-indigo-600 hover:bg-indigo-500 text-white text-sm rounded-lg">Crop</button>
+              </div>
+            <% end %>
+            <img data-avatar-crop-target="preview" class="hidden mb-2 mx-auto rounded-full border-2 border-teal-400 w-32 h-32 object-cover" />
+            <%= f.label :avatar, "Profile Picture" %><br />
+            <%= f.file_field :avatar, accept: "image/*", class: "block w-full bg-cyan-800 text-gray-300 shadow-sm rounded-xl px-3 py-2 outline focus:outline-2 outline-teal-300", data: { avatar_crop_target: "input", action: "change->avatar-crop#openCropper" } %>
+
+            <%= f.hidden_field :avatar_crop_x, data: { avatar_crop_target: "cropXField" } %>
+            <%= f.hidden_field :avatar_crop_y, data: { avatar_crop_target: "cropYField" } %>
+            <%= f.hidden_field :avatar_crop_width, data: { avatar_crop_target: "cropWidthField" } %>
+            <%= f.hidden_field :avatar_crop_height, data: { avatar_crop_target: "cropHeightField" } %>
+
+            <!-- Crop Modal -->
+            <div data-avatar-crop-target="modal" class="hidden fixed inset-0 z-50 overflow-auto bg-black bg-opacity-75 flex items-center justify-center p-4">
+              <div class="bg-cyan-950 rounded-xl p-6 w-full md:w-1/2 xl:w-1/4 aspect-square border-2 border-teal-800">
+                <h3 class="text-xl font-semibold text-teal-100 mb-4 text-center">Crop Your Profile Picture</h3>
+                <div class="mb-4 flex justify-center">
+                  <canvas data-avatar-crop-target="canvas"
+                          class="border-2 border-teal-600 cursor-move"
+                          data-action="mousedown->avatar-crop#startDrag mousemove->avatar-crop#drag mouseup->avatar-crop#stopDrag mouseleave->avatar-crop#stopDrag wheel->avatar-crop#zoom"></canvas>
+                </div>
+                <p class="text-sm text-gray-400 mb-4 text-center">Drag to reposition • Scroll to zoom</p>
+                <div class="flex gap-3 justify-center">
+                  <button type="button" data-action="click->avatar-crop#cancel" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg">Cancel</button>
+                  <button type="button" data-action="click->avatar-crop#applyCrop" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg">Apply Crop</button>
+                </div>
+              </div>
+            </div>
           </div>
           <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
             <div class="text-gray-400 text-sm mb-4">Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>

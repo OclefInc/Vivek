@@ -22,11 +22,24 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # PUT /resource
   def update
+    # Handle avatar attachment for all users before update
+    if params[:user][:avatar].present?
+      resource.avatar.attach(params[:user][:avatar])
+    end
+
     if resource.provider.present?
-      # OAuth users can only update their name, no password required
-      if resource.update(name: params[:user][:name])
+      # OAuth users can only update their name and avatar, no password required
+      update_params = {
+        name: params[:user][:name],
+        avatar_crop_x: params[:user][:avatar_crop_x],
+        avatar_crop_y: params[:user][:avatar_crop_y],
+        avatar_crop_width: params[:user][:avatar_crop_width],
+        avatar_crop_height: params[:user][:avatar_crop_height]
+      }
+
+      if resource.update(update_params)
         bypass_sign_in resource, scope: :user
-        redirect_to edit_user_registration_path, notice: "Name updated successfully."
+        redirect_to edit_user_registration_path, notice: "Profile updated successfully."
       else
         render :edit, status: :unprocessable_entity
       end
@@ -54,12 +67,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [ :email, :name, :password, :password_confirmantion, :current_password ])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [ :email, :name, :password, :password_confirmantion, :current_password, :avatar ])
   end
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_account_update_params
-    devise_parameter_sanitizer.permit(:account_update, keys: [ :email, :name, :password, :password_confirmantion, :current_password ])
+    devise_parameter_sanitizer.permit(:account_update, keys: [ :email, :name, :password, :password_confirmation, :current_password, :avatar, :avatar_crop_x, :avatar_crop_y, :avatar_crop_width, :avatar_crop_height ])
   end
 
   # The path used after sign up.

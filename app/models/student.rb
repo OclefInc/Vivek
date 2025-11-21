@@ -28,4 +28,21 @@ class Student < ApplicationRecord
   def initials
     name.split.map { |part| part[0] }.join.upcase if name.present?
   end
+
+  def display_avatar(size: 400)
+    # Use user's avatar if student belongs to a user and avatar is attached
+    if user.present? && user.avatar.attached?
+      user.cropped_avatar(size: size)
+    elsif user.present? && user.picture_url.present?
+      user.picture_url
+    elsif profile_picture.attached?
+      profile_picture.variant(resize_to_fill: [ size, size ])
+    else
+      nil
+    end
+  end
+
+  def using_user_avatar?
+    user.present? && (user.avatar.attached? || user.picture_url.present?)
+  end
 end

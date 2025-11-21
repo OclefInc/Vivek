@@ -45,7 +45,9 @@
                 <button data-action="click->dropdown#toggle click@window->dropdown#hide"
                   class="inline-flex items-center gap-2border-lime-600  py-2 px-4 hover:border-teal-600 rounded-xl text-black transition-all">
                   <div class="rounded-full overflow-hidden w-6 h-6 ">
-                    <% if current_user.picture_url.present? %>
+                    <% if current_user.avatar.attached? %>
+                      <%= image_tag current_user.cropped_avatar(size: 48), class: "w-6 h-6 rounded-full object-cover" %>
+                    <% elsif current_user.picture_url.present? %>
                       <%= image_tag current_user.picture_url, class: "w-6 h-6 rounded-full object-cover" %>
                     <% else %>
                       <div class="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">

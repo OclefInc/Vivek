@@ -3,6 +3,10 @@
 # Table name: users
 #
 #  id                     :bigint           not null, primary key
+#  avatar_crop_height     :integer
+#  avatar_crop_width      :integer
+#  avatar_crop_x          :integer
+#  avatar_crop_y          :integer
 #  confirmation_sent_at   :datetime
 #  confirmation_token     :string
 #  confirmed_at           :datetime
@@ -36,6 +40,7 @@ class User < ApplicationRecord
 
   has_one :teacher
   has_one :student
+  has_one_attached :avatar
 
   validates_presence_of :name
 
@@ -53,6 +58,20 @@ class User < ApplicationRecord
 
   def initials
     name.split.map { |part| part[0] }.join.upcase if name.present?
+  end
+
+  def cropped_avatar(size: 400)
+    return nil unless avatar.attached?
+
+    if avatar_crop_x.present? && avatar_crop_y.present? && avatar_crop_width.present? && avatar_crop_height.present?
+      # Use Vips operations for cropping
+      avatar.variant(
+        crop: [ avatar_crop_x, avatar_crop_y, avatar_crop_width, avatar_crop_height ],
+        resize_to_fill: [ size, size ]
+      )
+    else
+      avatar.variant(resize_to_fill: [ size, size ])
+    end
   end
 
   def roles

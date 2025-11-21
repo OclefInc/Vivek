@@ -14,6 +14,8 @@
 #  encrypted_password     :string           default(""), not null
 #  failed_attempts        :integer          default(0), not null
 #  locked_at              :datetime
+#  magic_link_sent_at     :datetime
+#  magic_link_token       :string
 #  name                   :string
 #  picture_url            :string
 #  provider               :string
@@ -29,6 +31,7 @@
 # Indexes
 #
 #  index_users_on_email                 (email) UNIQUE
+#  index_users_on_magic_link_token      (magic_link_token) UNIQUE
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
 require "test_helper"

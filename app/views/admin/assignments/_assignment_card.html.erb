@@ -33,7 +33,7 @@
             <div class="flex gap-4 mb-3 justify-center">
               <% teachers.first(3).each do |teacher| %>
                 <div class="flex flex-col items-center">
-                  <div class="rounded-full overflow-hidden w-20 h-20 border border-white shadow-lg flex items-center justify-center">
+                  <div class="rounded-full overflow-hidden w-20 h-20 border border-gray-600 shadow-lg flex items-center justify-center">
                     <% if teacher.display_avatar(size: 80) %>
                       <%= image_tag teacher.display_avatar(size: 80), class: "w-full h-full object-cover" %>
                     <% else %>

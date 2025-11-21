@@ -1,0 +1,9 @@
+Login to <%= ENV.fetch('APP_NAME', 'Vivek') %>
+=====================================
+Hi <%= @user.name || 'there' %>,
+Click the link below to log in to your account:
+<%= @magic_link_url %>
+This link will expire in 15 minutes.
+If you didn't request this login link, you can safely ignore this email.
+Thanks,
+The <%= ENV.fetch('APP_NAME', 'Vivek') %> Team

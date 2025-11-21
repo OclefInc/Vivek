@@ -121,7 +121,7 @@
     </aside>
     <!-- Main content area -->
     <main class="flex-1 overflow-y-auto px-2 py-4 md:px-10 md:py-10 container mx-auto">
-      <p style="color: green"><%= notice %></p>
+      <p style="color: green"><%= notice.html_safe if notice %></p>
       <%= yield %>
     </main>
   </body>

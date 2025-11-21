@@ -15,7 +15,9 @@
             <div class="p-6">
               <div class="flex flex-col items-center">
                 <div class="w-24 h-24 rounded-full overflow-hidden mb-4 border border-gray-200 dark:border-gray-700">
-                  <% if user.picture_url.present? %>
+                  <% if user.cropped_avatar(size: 200) %>
+                    <%= image_tag user.cropped_avatar(size: 200), alt: user.name, class: "w-full h-full object-cover" %>
+                  <% elsif user.picture_url.present? %>
                     <%= image_tag user.picture_url, alt: user.name, class: "w-full h-full object-cover" %>
                   <% else %>
                     <div class="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">

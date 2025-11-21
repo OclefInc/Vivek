@@ -1,28 +1,19 @@
 <div class="flex flex-row justify-center px-4">
   <div class="flex flex-col lg:flex-row gap-6 w-full max-w-6xl">
-    <!-- Sign In Form -->
+    <!-- Sign In with Magic Link -->
     <div class="border-sky-300 bg-sky-50 dark:border-sky-800 border-2 shadow-lg dark:bg-zinc-900 rounded-xl px-5 py-5 flex-1">
-      <h2 class="text-center text-sky-800 dark:text-sky-300 text-2xl tracking-wider mb-6">Sign In</h2>
-      <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-        <div class="field text-sky-800 dark:text-sky-300 mb-4">
-          <%= f.label :email %><br />
-          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: ["block w-full dark:bg-zinc-900 dark:text-zinc-300 shadow-sm rounded-xl px-3 py-2 outline-sky-400 dark:border dark:border-zinc-700 focus:outline-2 dark:outline-sky-500" ]  %>
+      <h2 class="text-center text-sky-800 dark:text-sky-300 text-2xl tracking-wider mb-6">Sign In with Email</h2>
+      <%= form_with url: users_magic_links_path, method: :post, class: "space-y-4" do |f| %>
+        <div class="field text-sky-800 dark:text-sky-300">
+          <%= label_tag :email, "Email" %><br />
+          <%= email_field_tag :email, "", autofocus: true, autocomplete: "email", class: "block w-full dark:bg-zinc-900 dark:text-zinc-300 shadow-sm rounded-xl px-3 py-2 outline-sky-400 dark:border dark:border-zinc-700 focus:outline-2 dark:outline-sky-500", placeholder: "your@email.com" %>
         </div>
-        <div class="field text-sky-800 dark:text-sky-300 mb-4">
-          <%= f.label :password %><br />
-          <%= f.password_field :password, autocomplete: "current-password", class: ["block w-full dark:bg-zinc-900 dark:text-zinc-300 shadow-sm rounded-xl px-3 py-2 outline-sky-400 dark:border dark:border-zinc-700 focus:outline-2 dark:outline-sky-500"] %>
-        </div>
-        <% if devise_mapping.rememberable? %>
-          <div class="field text-sky-800 dark:text-sky-300 mb-4">
-            <%= f.check_box :remember_me %>
-            <%= f.label :remember_me %>
-          </div>
-        <% end %>
+        <p class="text-sm text-gray-600 dark:text-gray-400">We'll send you a magic link to sign in instantly—no password needed!</p>
         <div class="actions text-center">
-          <%= f.submit "Submit", class: "w-auto rounded-xl px-3 py-2 bg-indigo-600 hover:bg-indigo-400 text-white inline-block font-medium cursor-pointer text-center tracking-wider"  %>
+          <%= submit_tag "Send Magic Link", class: "w-auto rounded-xl px-3 py-2 bg-indigo-600 hover:bg-indigo-400 text-white inline-block font-medium cursor-pointer text-center tracking-wider" %>
         </div>
       <% end %>
-      <div class="flex-col justify-items-center">
+      <div class="flex-col justify-items-center mt-4">
         <%= render "devise/shared/links" %>
       </div>
     </div>

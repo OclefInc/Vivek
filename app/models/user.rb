@@ -14,6 +14,8 @@
 #  encrypted_password     :string           default(""), not null
 #  failed_attempts        :integer          default(0), not null
 #  locked_at              :datetime
+#  magic_link_sent_at     :datetime
+#  magic_link_token       :string
 #  name                   :string
 #  picture_url            :string
 #  provider               :string
@@ -29,6 +31,7 @@
 # Indexes
 #
 #  index_users_on_email                 (email) UNIQUE
+#  index_users_on_magic_link_token      (magic_link_token) UNIQUE
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
 class User < ApplicationRecord
@@ -43,6 +46,20 @@ class User < ApplicationRecord
   has_one_attached :avatar
 
   validates_presence_of :name
+  # Make password optional for non-OAuth users (they use magic links)
+  validates :password, presence: true, if: :password_required?
+
+  after_save :touch_related_assignments
+
+  # Override Devise's password_required? method
+  def password_required?
+    # Password required for OAuth users on creation, or when explicitly setting password
+    oauth_user? && !persisted? || password.present? || password_confirmation.present?
+  end
+
+  def email_required?
+    true
+  end
 
   # OmniAuth callback method
   def self.from_omniauth(auth)
@@ -107,4 +124,40 @@ class User < ApplicationRecord
     end
   end
   end
+
+  # Magic link authentication methods
+  def generate_magic_link_token!
+    self.magic_link_token = Devise.friendly_token(48)
+    self.magic_link_sent_at = Time.current
+    save(validate: false)
+  end
+
+  def magic_link_valid?
+    magic_link_sent_at.present? && magic_link_sent_at > 15.minutes.ago
+  end
+
+  def send_magic_link
+    generate_magic_link_token!
+    MagicLinkMailer.login_link(self).deliver_later
+  end
+
+  def oauth_user?
+    provider.present? && uid.present?
+  end
+
+  private
+
+    def touch_related_assignments
+      # Touch student's assignments if user has a student profile
+      if student.present?
+        student.touch
+        student.assignments.find_each(&:touch)
+      end
+
+      # Touch teacher's assignments if user has a teacher profile
+      if teacher.present?
+        teacher.touch
+        teacher.assignments.distinct.find_each(&:touch)
+      end
+    end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_21_211627) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_21_223728) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_stat_statements"
@@ -194,7 +194,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_21_211627) do
     t.integer "avatar_crop_y"
     t.integer "avatar_crop_width"
     t.integer "avatar_crop_height"
+    t.string "magic_link_token"
+    t.datetime "magic_link_sent_at"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["magic_link_token"], name: "index_users_on_magic_link_token", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 

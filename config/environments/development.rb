@@ -45,6 +45,9 @@ Rails.application.configure do
   # Set localhost to be used by links generated in mailer templates.
   config.action_mailer.default_url_options = { host: "Vivek.test" }
 
+  # In development, don't actually send emails
+  config.action_mailer.perform_deliveries = false
+
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 

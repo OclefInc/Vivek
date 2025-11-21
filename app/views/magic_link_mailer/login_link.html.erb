@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Login to <%= ENV.fetch('APP_NAME', 'Vivek') %></h1>
+    <p>Hi <%= @user.name || 'there' %>,</p>
+    <p>Click the link below to log in to your account:</p>
+    <p>
+      <%= link_to 'Log in now', @magic_link_url, style: 'display: inline-block; padding: 12px 24px; background-color: #3b82f6; color: white; text-decoration: none; border-radius: 6px; font-weight: bold;' %>
+    </p>
+    <p>This link will expire in 15 minutes.</p>
+    <p>If you didn't request this login link, you can safely ignore this email.</p>
+    <p>
+      Thanks,<br>
+      The <%= ENV.fetch('APP_NAME', 'Vivek') %> Team
+    </p>
+  </body>
+</html>

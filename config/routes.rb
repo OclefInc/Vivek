@@ -7,6 +7,13 @@ Rails.application.routes.draw do
     sessions: "users/sessions",
     unlocks: "users/unlocks"
   }
+
+  # Magic link routes
+  namespace :users do
+    resource :magic_links, only: [ :create ]
+    get "magic_links/:token", to: "magic_links#show", as: :magic_link
+  end
+
   devise_scope :user do
     authenticate :user, lambda { |u|u.is_employee? } do
       mount MissionControl::Jobs::Engine, at: "/jobs"

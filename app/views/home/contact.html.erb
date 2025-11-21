@@ -1,6 +1,83 @@
-<div class="flex flex-row place-content-between justify-center">
-  <div class="flex-row place-content-between">
-    <p class="text-center text-sky-800 dark:text-teal-300 text-xl text-bold" > Contact </p>
-    <p class="text-center text-md text-sky-800 dark:text-teal-300" > Contact info. </p>
+<div class="max-w-4xl mx-auto px-3">
+  <div class="mb-8">
+    <h1 class="text-4xl font-bold text-center text-sky-800 dark:text-teal-300 mb-4">Contact Us</h1>
+    <p class="text-center text-lg text-gray-600 dark:text-gray-400 italic">Get in Touch with The Vivek Project</p>
+  </div>
+
+  <div class="space-y-6">
+    <!-- General Contact -->
+    <section class="bg-gray-50 dark:bg-gray-800 p-6 rounded-lg">
+      <h2 class="text-2xl font-semibold text-sky-800 dark:text-teal-300 mb-4">General Inquiries</h2>
+      <div class="flex items-center gap-3 text-gray-800 dark:text-gray-200">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-sky-600 dark:text-teal-400">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75" />
+        </svg>
+        <a href="mailto:info@oclef.com" class="text-lg text-sky-600 dark:text-teal-400 hover:underline">info@oclef.com</a>
+      </div>
+    </section>
+
+    <!-- For Researchers -->
+    <section class="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-gray-800 dark:to-gray-700 p-6 rounded-lg border-2 border-blue-200 dark:border-indigo-700">
+      <div class="flex items-start gap-3 mb-4">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 text-blue-600 dark:text-indigo-400 flex-shrink-0">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.438 60.438 0 0 0-.491 6.347A48.62 48.62 0 0 1 12 20.904a48.62 48.62 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.636 50.636 0 0 0-2.658-.813A59.906 59.906 0 0 1 12 3.493a59.903 59.903 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.717 50.717 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.981 5.981 0 0 0 6.75 15.75v-1.5" />
+        </svg>
+        <div>
+          <h2 class="text-2xl font-semibold text-sky-800 dark:text-teal-300 mb-2">For Researchers</h2>
+          <p class="text-gray-700 dark:text-gray-300 mb-3">
+            Are you conducting research in music education, pedagogy, or learning sciences? The Vivek Project maintains extensive data about student lessons, progress patterns, teaching methodologies, and learning outcomes.
+          </p>
+          <p class="text-gray-700 dark:text-gray-300 mb-3">
+            We welcome collaboration with researchers who are interested in:
+          </p>
+          <ul class="list-disc pl-6 space-y-1 text-gray-700 dark:text-gray-300 mb-3">
+            <li>Analyzing teaching effectiveness and student progress metrics</li>
+            <li>Understanding learning patterns and breakthrough moments</li>
+            <li>Studying pedagogical approaches across different compositions</li>
+            <li>Examining the relationship between student variables and outcomes</li>
+          </ul>
+          <p class="text-gray-700 dark:text-gray-300">
+            <strong class="text-sky-700 dark:text-teal-400">Contact us at <%= link_to "info@oclef.com", "mailto:info@oclef.com", class: "text-sky-600 dark:text-teal-400 hover:underline" %></strong> to discuss access to additional data for your research project.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- For Contributors -->
+    <section class="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-gray-800 dark:to-gray-700 p-6 rounded-lg border-2 border-purple-200 dark:border-purple-700">
+      <div class="flex items-start gap-3 mb-4">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 text-purple-600 dark:text-purple-400 flex-shrink-0">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15.59 14.37a6 6 0 0 1-5.84 7.38v-4.8m5.84-2.58a14.98 14.98 0 0 0 6.16-12.12A14.98 14.98 0 0 0 9.631 8.41m5.96 5.96a14.926 14.926 0 0 1-5.841 2.58m-.119-8.54a6 6 0 0 0-7.381 5.84h4.8m2.581-5.84a14.927 14.927 0 0 0-2.58 5.84m2.699 2.7c-.103.021-.207.041-.311.06a15.09 15.09 0 0 1-2.448-2.448 14.9 14.9 0 0 1 .06-.312m-2.24 2.39a4.493 4.493 0 0 0-1.757 4.306 4.493 4.493 0 0 0 4.306-1.758M16.5 9a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z" />
+        </svg>
+        <div>
+          <h2 class="text-2xl font-semibold text-sky-800 dark:text-teal-300 mb-2">For Contributors</h2>
+          <p class="text-gray-700 dark:text-gray-300 mb-3">
+            Are you a piano teacher interested in documenting your own teaching journey? We welcome contributors who wish to showcase their own Vivek Project—documenting the progress of their students from first lesson through mastery of pieces.
+          </p>
+          <div class="bg-white/50 dark:bg-gray-900/30 border-l-4 border-purple-500 dark:border-purple-400 p-4 mb-3">
+            <p class="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-2">Project Requirements:</p>
+            <ul class="list-disc pl-6 space-y-1 text-sm text-gray-700 dark:text-gray-300">
+              <li><strong>Video documentation:</strong> All projects must include comprehensive video documentation of lessons and practice sessions</li>
+              <li><strong>Student-focused:</strong> Videos should capture the student's learning process and progress over time</li>
+              <li><strong>Minimal teacher demonstration:</strong> Teachers should focus on instruction and guidance rather than extensive playing demonstration—the emphasis is on how students learn, not teacher performance</li>
+              <li><strong>Consistent documentation:</strong> Regular recording throughout the learning journey, from initial introduction through final performance</li>
+            </ul>
+          </div>
+          <p class="text-gray-700 dark:text-gray-300 mb-3">
+            Contributing to The Vivek Project means joining a community of educators committed to transparency and continuous improvement in piano pedagogy. Your documentation will help teachers and students worldwide understand what effective learning looks like.
+          </p>
+          <p class="text-gray-700 dark:text-gray-300">
+            <strong class="text-sky-700 dark:text-teal-400">Interested in contributing? Email us at <%= link_to "info@oclef.com", "mailto:info@oclef.com", class: "text-sky-600 dark:text-teal-400 hover:underline" %></strong> to learn more about how to get started.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer Note -->
+    <section class="text-center bg-sky-50 dark:bg-gray-800 p-6 rounded-lg border-2 border-sky-200 dark:border-teal-700">
+      <p class="text-gray-700 dark:text-gray-300">
+        Whether you're a researcher, teacher, student, or simply passionate about piano education, we'd love to hear from you. Together, we can make piano learning more transparent, effective, and accessible.
+      </p>
+    </section>
   </div>
 </div>

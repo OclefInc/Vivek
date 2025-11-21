@@ -13,6 +13,9 @@
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "actiontext", "data-turbo-track": "reload" %>
@@ -21,7 +24,7 @@
     <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
     <%= javascript_importmap_tags 'application' %>
   </head>
-  <body class="bg-white dark:bg-zinc-950 flex flex-col min-h-screen" data-controller="sidebar">
+  <body class="bg-white dark:bg-zinc-950 flex flex-col min-h-screen" style="font-family: 'Inter', sans-serif;" data-controller="sidebar">
     <!-- Header -->
     <header class="bg-gradient-to-r from-indigo-800 to-teal-500 text-white border-b border-teal-600 sticky top-0 z-50">
       <div class="container mx-auto px-4 py-4">

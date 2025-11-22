@@ -1,7 +1,8 @@
 <%= turbo_stream.update "tutorial_#{@tutorial.id}_video_file" do %>
   <div class="bg-black flex items-center justify-center aspect-[4/3] xl:aspect-auto xl:max-w-[640px] xl:h-[480px] relative"
          data-controller="video-chapters"
-         data-video-chapters-start-time-value="<%= @chapter.start_time %>">
+         data-video-chapters-start-time-value="<%= @chapter.start_time %>"
+         data-video-chapters-end-time-value="<%= @chapter.stop_time %>">
     <%= video_tag @lesson.lesson_video,
         id: "lesson-video",
         controls: true,
@@ -10,6 +11,9 @@
         data: {
           video_chapters_target: "video"
         } %>
+  </div>
+  <div class="text-center text-sm text-gray-600 dark:text-gray-400 mb-2">
+    Playing from <%= Time.at(@chapter.start_time).utc.strftime("%M:%S") %> to <%= @chapter.stop_time ? Time.at(@chapter.stop_time).utc.strftime("%M:%S") : "end" %>
   </div>
   <div class="text-center space-x-12">
     <%= link_to tutorial_path(@tutorial), class: "text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300 text-sm" do %>

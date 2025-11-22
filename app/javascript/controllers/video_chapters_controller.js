@@ -3,7 +3,7 @@ import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static targets = ["chaptersList", "nameInput", "startTimeInput"]
-  static values = { url: String, startTime: Number }
+  static values = { url: String, startTime: Number, endTime: Number }
 
   connect() {
     // Find the video element by ID
@@ -11,6 +11,7 @@ export default class extends Controller {
 
     if (this.video) {
       this.video.addEventListener("timeupdate", () => this.updateCurrentChapter())
+      this.video.addEventListener("timeupdate", () => this.checkEndTime())
 
       // Seek to start time if specified
       if (this.hasStartTimeValue) {
@@ -29,6 +30,7 @@ export default class extends Controller {
   disconnect() {
     if (this.video) {
       this.video.removeEventListener("timeupdate", () => this.updateCurrentChapter())
+      this.video.removeEventListener("timeupdate", () => this.checkEndTime())
     }
   }
 
@@ -56,6 +58,14 @@ export default class extends Controller {
     event.preventDefault()
     if (this.video && this.hasStartTimeInputTarget) {
       this.startTimeInputTarget.value = Math.floor(this.video.currentTime)
+    }
+  }
+
+  checkEndTime() {
+    if (!this.video || !this.hasEndTimeValue) return
+
+    if (this.video.currentTime >= this.endTimeValue) {
+      this.video.pause()
     }
   }
 

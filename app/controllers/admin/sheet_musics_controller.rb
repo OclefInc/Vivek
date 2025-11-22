@@ -1,4 +1,6 @@
 class Admin::SheetMusicsController < ApplicationController
+  before_action :authenticate_user!
+  before_action :authorize_user
   before_action :set_sheet_music, only: %i[ show edit update destroy ]
 
   # GET /sheet_musics or /sheet_musics.json

@@ -1,4 +1,6 @@
 class Admin::TutorialsController < ApplicationController
+  before_action :authenticate_user!
+  before_action :authorize_user
   before_action :set_tutorial, only: %i[ show edit update destroy ]
 
   # GET /tutorials or /tutorials.json

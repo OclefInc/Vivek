@@ -1,4 +1,6 @@
 class Admin::ChaptersTutorialsController < ApplicationController
+  before_action :authenticate_user!
+  before_action :authorize_user
   def destroy
     @chapters_tutorial = ChaptersTutorial.find(params[:id])
     @chapters_tutorial.destroy

@@ -11,15 +11,6 @@ export default class extends Controller {
 
     if (this.video) {
       this.video.addEventListener("timeupdate", () => this.updateCurrentChapter())
-      this.video.addEventListener("timeupdate", () => this.checkEndTime())
-
-      // Seek to start time if specified
-      if (this.hasStartTimeValue) {
-        this.video.addEventListener('loadedmetadata', () => {
-          this.video.currentTime = this.startTimeValue
-          this.video.play()
-        }, { once: true })
-      }
 
       this.updateCurrentChapter()
     } else {
@@ -30,7 +21,6 @@ export default class extends Controller {
   disconnect() {
     if (this.video) {
       this.video.removeEventListener("timeupdate", () => this.updateCurrentChapter())
-      this.video.removeEventListener("timeupdate", () => this.checkEndTime())
     }
   }
 
@@ -58,14 +48,6 @@ export default class extends Controller {
     event.preventDefault()
     if (this.video && this.hasStartTimeInputTarget) {
       this.startTimeInputTarget.value = Math.floor(this.video.currentTime)
-    }
-  }
-
-  checkEndTime() {
-    if (!this.video || !this.hasEndTimeValue) return
-
-    if (this.video.currentTime >= this.endTimeValue) {
-      this.video.pause()
     }
   }
 

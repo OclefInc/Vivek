@@ -3,7 +3,13 @@
          data-controller="video-chapters"
          data-video-chapters-start-time-value="<%= @chapter.start_time %>"
          data-video-chapters-end-time-value="<%= @chapter.stop_time %>">
-    <%= video_tag @lesson.lesson_video,
+    <%
+      video_url = url_for(@lesson.lesson_video)
+      fragment = "#t=#{@chapter.start_time}"
+      fragment += ",#{@chapter.stop_time}" if @chapter.stop_time
+      video_url_with_fragment = video_url + fragment
+    %>
+    <%= video_tag video_url_with_fragment,
         id: "lesson-video",
         controls: true,
         preload: "metadata",

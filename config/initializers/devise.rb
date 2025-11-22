@@ -278,7 +278,7 @@ Devise.setup do |config|
     scope: "email,profile",
     prompt: "select_account",
     image_aspect_ratio: "square",
-    image_size: 50
+    image_size: 400
   }
 
   # Apple OAuth
@@ -294,7 +294,8 @@ Devise.setup do |config|
   # Facebook OAuth
   config.omniauth :facebook, ENV["FACEBOOK_APP_ID"], ENV["FACEBOOK_APP_SECRET"], {
     scope: "email,public_profile",
-    info_fields: "email,name,first_name,last_name"
+    info_fields: "email,name,first_name,last_name",
+    image_size: { width: 400, height: 400 }
   }
 
   # GitHub OAuth

@@ -63,14 +63,19 @@ class User < ApplicationRecord
 
   # OmniAuth callback method
   def self.from_omniauth(auth)
-    where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
-      user.email = auth.info.email
-      user.password = Devise.friendly_token[0, 20]
-      user.name = auth.info.name || "#{auth.info.first_name} #{auth.info.last_name}".strip
-      user.picture_url = auth.info.image
+    user = where(provider: auth.provider, uid: auth.uid).first_or_initialize do |u|
+      u.email = auth.info.email
+      u.password = Devise.friendly_token[0, 20]
+      u.name = auth.info.name || "#{auth.info.first_name} #{auth.info.last_name}".strip
       # Skip confirmation for OAuth users
-      user.skip_confirmation!
+      u.skip_confirmation!
     end
+
+    # Always update picture_url on login to get latest/higher quality image
+    user.picture_url = auth.info.image
+    user.save!
+
+    user
   end
 
   def initials

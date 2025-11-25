@@ -6,7 +6,7 @@
   <div class="bg-white dark:bg-zinc-800 rounded-2xl shadow-lg overflow-hidden">
     <div class="bg-sky-50 dark:bg-zinc-900 px-6 pt-6 pb-3">
       <div class="flex justify-between items-center">
-        <h1 class="text-2xl text-slate-900 dark:text-teal-200 font-semibold">Students</h1>
+        <h1 class="text-2xl text-sky-800 dark:text-teal-200 font-bold border-l-4 border-teal-400 pl-3">Students</h1>
         <%= form_with url: public_students_path, method: :get, data: { turbo_frame: "students-table", turbo_action: "advance" } do |form| %>
           <%= form.text_field :query,
                 value: params[:query],
@@ -17,21 +17,21 @@
         <% end %>
       </div>
     </div>
-    <div class="bg-slate-50 dark:bg-zinc-900 p-6">
-      <table class="w-full bg-white dark:bg-zinc-800 shadow rounded-2xl overflow-hidden">
-        <thead class="bg-slate-100 dark:bg-zinc-700">
-          <tr>
-            <th class="text-left text-slate-900 dark:text-teal-200 px-3 py-2 border-b border-slate-200 dark:border-zinc-600">Name</th>
-            <th class="text-left text-slate-900 dark:text-teal-200 px-3 py-2 border-b border-slate-200 dark:border-zinc-600">Number of Assignments</th>
-          </tr>
-        </thead>
-        <tbody>
+    <div class="bg-sky-50 dark:bg-zinc-900 p-6 md:p-8">
+      <div class="space-y-5">
+        <% if @students.any? %>
           <% @students.each do |student| %>
-            <tr>
-              <td class="px-3 py-2 border-b border-slate-200 dark:border-zinc-600"><%= link_to student.name, public_student_path(student), class:"text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300 px-1 py-1" %></td>
-              <td class="px-3 py-2 border-b border-slate-200 dark:border-zinc-600 text-slate-700 dark:text-slate-300"><%= student.assignments.length %></td>
-            </tr>
+            <div class="bg-white dark:bg-zinc-800 rounded-2xl shadow hover:shadow-lg transition-shadow p-4 border-2 border-transparent hover:border-green-400/60 dark:hover:border-green-400/60">
+              <div class="flex justify-between items-start">
+                <%= render student %>
+                <div class="ml-4 flex items-start justify-end gap-2">
+                  <%= link_to "Full Info", public_student_path(student), class: "rounded-xl px-3 py-2 border-2 border-indigo-300 bg-indigo-500 hover:bg-indigo-400 hover:border-indigo-100 text-white font-medium whitespace-nowrap" %>
+                </div>
+              </div>
+            </div>
           <% end %>
+        <% else %>
+          <p class="text-center my-10 text-slate-700 dark:text-slate-300">No students found.</p>
         <% end %>
       </div>
     </div>

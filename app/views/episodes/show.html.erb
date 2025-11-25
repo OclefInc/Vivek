@@ -4,9 +4,13 @@
     <div class="bg-sky-50 dark:bg-zinc-900 px-6 pt-6 pb-1">
       <%= render 'header' %>
     </div>
-    <div class="bg-sky-50 dark:bg-zinc-900 xl:flex xl:gap-6 p-6 space-y-8 xl:space-y-0">
-      <%= render 'video_description' %>
-      <%= render 'episode_table' %>
+    <div class="bg-sky-50 dark:bg-zinc-900 xl:flex xl:gap-6 p-6 space-y-8 xl:space-y-0" style="min-height: 600px;">
+      <div class="xl:flex-1 xl:h-full">
+        <%= render 'video_description' %>
+      </div>
+      <div class="xl:flex-1 xl:h-full">
+        <%= render 'episode_table' %>
+      </div>
     </div>
   </div>
   <!-- Comments Section -->

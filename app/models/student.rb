@@ -11,6 +11,8 @@
 #
 class Student < ApplicationRecord
   has_many :assignments
+
+  after_save :touch_assignments
   has_one_attached :profile_picture
   has_rich_text :bio
   belongs_to :user, optional: true
@@ -45,4 +47,10 @@ class Student < ApplicationRecord
   def using_user_avatar?
     user.present? && (user.avatar.attached? || user.picture_url.present?)
   end
+
+  private
+
+    def touch_assignments
+      assignments.find_each(&:touch)
+    end
 end

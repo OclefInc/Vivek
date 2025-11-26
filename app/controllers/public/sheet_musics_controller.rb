@@ -1,4 +1,4 @@
-class SheetMusicsController < ApplicationController
+class Public::SheetMusicsController < ApplicationController
   layout "public"
   def index
     @composition = Composition.find(params[:composition_id])

@@ -1,4 +1,4 @@
-class ProjectsController < ApplicationController
+class Public::ProjectsController < ApplicationController
   layout "public"
   def index
     @projects = Assignment.all

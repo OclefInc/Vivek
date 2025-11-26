@@ -1,4 +1,4 @@
-class SkillsController < ApplicationController
+class Public::SkillsController < ApplicationController
   layout "public"
   def index
     @skill_categories = SkillCategory.order(:name)

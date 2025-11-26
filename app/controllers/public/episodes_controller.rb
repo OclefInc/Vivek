@@ -1,4 +1,4 @@
-class EpisodesController < ApplicationController
+class Public::EpisodesController < ApplicationController
   before_action :authenticate_user!, only: [ :edit, :update ]
   before_action :authorize_user, only: [ :edit, :update ]
 

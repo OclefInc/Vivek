@@ -49,12 +49,19 @@ Rails.application.routes.draw do
     post "attachments/update_metadata", to: "attachments#update_metadata"
     post "attachments/update_pages", to: "attachments#update_pages"
   end
+  scope path: "/public", module: "public" do
+    resources :sheet_musics, path: "sheet_musics", as: "public_sheet_musics"
+    resources :skills, path: "skills", as: "public_skills"
+    resources :compositions, path: "compositions", as: "public_compositions"
+    resources :professors
+    resources :students, path: "students", as: "public_students"
+    resources :projects do
+      resources :episodes
+    end
 
-  resources :sheet_musics, path: "sheet_musics", as: "public_sheet_musics"
-  resources :skills, path: "skills", as: "public_skills"
-  resources :compositions, path: "compositions", as: "public_compositions"
-  resources :professors
-  resources :students, path: "students", as: "public_students"
+    resources :comments
+  end
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -67,11 +74,6 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
-  resources :projects do
-    resources :episodes
-  end
-
-  resources :comments
 
   get "/about", to: "home#about"
   get "/contact", to: "home#contact"

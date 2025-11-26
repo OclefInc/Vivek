@@ -1,4 +1,4 @@
-class CommentsController < ApplicationController
+class Public::CommentsController < ApplicationController
   before_action :authenticate_user!
   def index
     redirect_to_root_path unless current_user.is_employee?

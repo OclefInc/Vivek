@@ -1,4 +1,4 @@
-class CompositionsController < ApplicationController
+class Public::CompositionsController < ApplicationController
   layout "public"
   def index
     @compositions = Composition.all

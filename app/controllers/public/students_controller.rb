@@ -1,4 +1,4 @@
-class StudentsController < ApplicationController
+class Public::StudentsController < ApplicationController
   layout "public"
   def index
     @students = Student.all

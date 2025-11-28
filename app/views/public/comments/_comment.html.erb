@@ -12,7 +12,7 @@
         <% else %>
           <div class="text-sm text-bold text-sky-700 dark:text-teal-500"> <%= comment.user.name %> </div>
         <% end %>
-        <div class="text-zinc-400 text-xs"> <%= time_ago_in_words(comment.created_at) %> ago </div>
+        <div class="text-zinc-400 text-xs"> <%= time_ago_in_words(comment.created_at).gsub("about ", "") %> ago </div>
       </div>
       <div class="flex items-center gap-3">
         <% if signed_in? %>

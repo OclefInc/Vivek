@@ -23,9 +23,9 @@ class Public::CommentsController < ApplicationController
     if @comment.annotation_type == "Lesson"
       @episode = @comment.annotation
       @project = @episode.assignment
-      redirect_to project_episode_path(@project, @episode)
-    else
-      redirect_to @comment.annotation
+      redirect_to episode_path(@project, @episode)
+    elsif @comment.annotation_type == "Assignment"
+      redirect_to project_path(@comment.annotation)
     end
   end
   def destroy

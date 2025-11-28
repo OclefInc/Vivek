@@ -215,6 +215,11 @@ trix-editor h4 {
   trix-editor h4 {
     color: #e5e7eb;
   }
+
+  /* Trix Editor Placeholder Dark Mode */
+  trix-editor:empty::before {
+    color: #9ca3af !important; /* gray-400 */
+  }
 }
 
 /* Animated lesson names - fade in/out */

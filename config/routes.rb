@@ -58,6 +58,9 @@ Rails.application.routes.draw do
     resources :projects do
       resources :episodes
     end
+    resources :tutorials do
+      resources :chapters, only: [ :show ], controller: "tutorials/chapters"
+    end
 
     resources :comments
   end

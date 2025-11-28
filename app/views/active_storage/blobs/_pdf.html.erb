@@ -3,15 +3,16 @@
      data-pdf-viewer-url-value="<%= url_for(blob) %>"
      data-pdf-viewer-copyrighted-value="<%= is_copyrighted %>"
      data-pdf-viewer-pages-value="<%= attachment.pages %>"
-  class="relative inline-block w-full">
+  class="admin-only relative inline-block w-full">
   <!-- PDF.js viewer container -->
-  <div class="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-600 overflow-auto"
+  <div data-pdf-viewer-target="viewerContainer"
+       class="bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-600 overflow-auto"
        style="max-height: 800px; <%= is_copyrighted ? 'user-select: none;' : '' %>">
     <!-- PDF pages will be rendered here as canvas elements -->
   </div>
 </div>
 <% display_all_pages = attachment.pages.blank? %>
-<div data-copyright-banner class="mt-3 p-3 bg-amber-50 border border-amber-200">
+<div data-copyright-banner class="admin-only mt-3 p-3 bg-amber-50 border border-amber-200">
   <div class="flex justify-between items-start gap-2">
     <% if is_copyrighted %>
       <p class="text-sm font-medium text-amber-800">Copyrighted Material</p>

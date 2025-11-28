@@ -74,13 +74,13 @@ export default class extends Controller {
       const endTime = actualNextItem ? parseFloat(actualNextItem.dataset.startTime) : Infinity
 
       if (currentTime >= startTime && currentTime < endTime) {
-        item.classList.add("bg-blue-100", "dark:bg-blue-900")
+        item.classList.add("bg-blue-900", "text-white")
         // Show tutorials for highlighted chapter
         if (tutorialsDiv) {
           tutorialsDiv.classList.remove("hidden")
         }
       } else {
-        item.classList.remove("bg-blue-100", "dark:bg-blue-900")
+        item.classList.remove("bg-blue-900", "text-white")
         // Hide tutorials for non-highlighted chapters
         if (tutorialsDiv) {
           tutorialsDiv.classList.add("hidden")

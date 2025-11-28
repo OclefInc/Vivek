@@ -1,16 +1,14 @@
-<div class="max-w-7xl mx-auto space-y-6">
-  <!-- Main Episode Card -->
-  <div class="bg-white dark:bg-zinc-800 rounded-2xl shadow-lg overflow-hidden">
-    <div class="bg-sky-50 dark:bg-zinc-900 px-6 pt-6 pb-1">
-      <%= render 'header' %>
-    </div>
-    <div class="bg-sky-50 dark:bg-zinc-900 xl:flex xl:gap-6 p-6 space-y-8 xl:space-y-0">
-      <%= render 'video_description' %>
-      <%= render 'episode_table' %>
-    </div>
+<% content_for :title, 'Episode' %>
+<%= render 'header' %>
+<div class="xl:flex xl:gap-8 py-4" data-controller="episode-layout">
+  <div class="xl:min-w-[640px] xl:max-w-[640px] md:flex-1 md:basis-1/2 mb-4 xl:mb-0" data-episode-layout-target="videoDescription">
+    <%= render 'video_description' %>
   </div>
-  <!-- Comments Section -->
-  <div class="bg-white dark:bg-zinc-800 rounded-2xl shadow-lg overflow-hidden">
-    <%= render partial:"/public/comments/module", locals:{annotation:@episode} %>
+  <div class="w-full xl:flex-1 xl:basis-1/2 xl:self-start overflow-y-auto" data-episode-layout-target="episodeTable">
+    <%= render 'episode_table' %>
   </div>
+</div>
+<!-- Comments Section -->
+<div class="bg-white dark:bg-zinc-800 rounded-2xl shadow-lg overflow-hidden">
+  <%= render partial:"/public/comments/module", locals:{annotation:@episode} %>
 </div>

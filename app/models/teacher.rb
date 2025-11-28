@@ -49,6 +49,8 @@ class Teacher < ApplicationRecord
   private
 
     def touch_assignments
+      tutorials.find_each(&:touch)
+      lessons.find_each(&:touch)
       # Touch all assignments where this teacher taught a lesson to bust cache
       assignments.distinct.find_each(&:touch)
     end

@@ -1,0 +1,19 @@
+<% if @episode.chapters.any?  %>
+  <div
+     data-controller="video-chapters"
+     data-video-chapters-url-value="<%= project_episode_path(@episode.project, @episode) %>"
+     data-video-chapters-video-target="video">
+    <div class="">
+      <div class="flex justify-between items-center mb-2">
+        <h3 class="text-md font-semibold">Chapters</h3>
+      </div>
+      <%= turbo_frame_tag "chapters_list" do %>
+        <div data-video-chapters-target="chaptersList" class="space-y-1">
+          <% @episode.chapters.each do |chapter| %>
+            <%= render 'chapter', chapter: chapter %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

@@ -2,7 +2,13 @@
   <% if @episode.lesson_video.attached? %>
     <div style="aspect-ratio: 4/3;">
       <div class=" w-full relative bg-black" style="max-width: 640px; aspect-ratio: 4/3;" data-controller="video-poster">
-        <%= video_tag @episode.lesson_video, id: "lesson-video", style: "width: 100%; height: 100%; object-fit: contain;", controls: true, preload: "metadata", data: { video_poster_target: "video" } %>
+        <%= video_tag @episode.lesson_video, id: "lesson-video", style: "width: 100%; height: 100%; object-fit: contain;", controls: true, autoplay: true, preload: "metadata", data: {
+              video_poster_target: "video",
+              controller: "video-autoplay",
+              video_autoplay_next_url_value: (@episode.next_lesson ? project_episode_path(@episode.project, @episode.next_lesson) : nil),
+              video_autoplay_next_name_value: @episode.next_lesson&.name,
+              video_autoplay_next_date_value: @episode.next_lesson&.date&.strftime("%B %d, %Y")
+            } %>
         <div data-video-poster-target="overlay" class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none bg-black">
           <h2 class="text-white text-3xl font-bold text-center px-8"><%= @episode.name %></h2>
           <p class="text-gray-400 text-xl mt-4"><%= @episode.date.strftime("%B %d, %Y") %></p>

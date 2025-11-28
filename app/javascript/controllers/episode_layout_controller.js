@@ -20,5 +20,9 @@ export default class extends Controller {
         const innerDiv = this.videoDescriptionTarget.querySelector('#' + this.videoDescriptionTarget.querySelector('[id]').id)
         const videoDescriptionHeight = innerDiv ? innerDiv.offsetHeight : this.videoDescriptionTarget.offsetHeight
         this.episodeTableTarget.style.maxHeight = `${videoDescriptionHeight}px`
+
+        if (this.resizeObserver) {
+            this.resizeObserver.disconnect()
+        }
     }
 }

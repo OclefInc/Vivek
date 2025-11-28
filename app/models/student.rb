@@ -22,7 +22,7 @@ class Student < ApplicationRecord
   belongs_to :user, optional: true
 
   validates_presence_of :profile_picture
-  validates_presence_of :name, :year_of_birth
+  validates_presence_of :name
   validate :profile_picture_is_image_type
 
   def profile_picture_is_image_type

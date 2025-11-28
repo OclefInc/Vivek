@@ -115,7 +115,7 @@ class Admin::AssignmentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def assignment_params
-      params.require(:assignment).permit(:student_id, :teacher_name,  :composition_id, :student_name, :composition_name, :summary_video, :description)
+      params.require(:assignment).permit(:student_id, :teacher_name,  :composition_id, :student_name, :composition_name, :summary_video, :description, :project_type_id)
     end
 
     # Find or create a record by name, skipping validation

@@ -33,6 +33,10 @@
           <% end %>
         </select>
       </div>
+      <div class="mb-4">
+        <%= form.label :project_type, class: "dark:text-gray-200", style: "display: block" %>
+        <%= form.collection_select :project_type_id, ProjectType.order(:name), :id, :name, { include_blank: true }, { class: "block shadow rounded-md border border-gray-200 dark:border-gray-600 outline-none px-3 py-2 mt-2 w-full dark:bg-gray-800 dark:text-gray-200" } %>
+      </div>
       <div>
         <%= form.label :description, class: "dark:text-gray-200", style: "display: block" %>
         <%= form.rich_text_area :description,

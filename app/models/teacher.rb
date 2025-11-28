@@ -2,12 +2,16 @@
 #
 # Table name: teachers
 #
-#  id         :bigint           not null, primary key
-#  city       :string
-#  name       :string
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#  user_id    :integer
+#  id                 :bigint           not null, primary key
+#  avatar_crop_height :integer
+#  avatar_crop_width  :integer
+#  avatar_crop_x      :integer
+#  avatar_crop_y      :integer
+#  city               :string
+#  name               :string
+#  created_at         :datetime         not null
+#  updated_at         :datetime         not null
+#  user_id            :integer
 #
 class Teacher < ApplicationRecord
   has_many :tutorials
@@ -30,15 +34,28 @@ class Teacher < ApplicationRecord
   end
 
   def display_avatar(size: 400)
-    # Use user's avatar if teacher belongs to a user and avatar is attached
-    if user.present? && user.avatar.attached?
+    if profile_picture.attached?
+      cropped_avatar(size: size)
+    elsif user.present? && user.avatar.attached?
       user.cropped_avatar(size: size)
     elsif user.present? && user.picture_url.present?
       user.picture_url
-    elsif profile_picture.attached?
-      profile_picture.variant(resize_to_fill: [ size, size ])
     else
       nil
+    end
+  end
+
+  def cropped_avatar(size: 400)
+    return nil unless profile_picture.attached?
+
+    if avatar_crop_x.present? && avatar_crop_y.present? && avatar_crop_width.present? && avatar_crop_height.present?
+      # Use Vips operations for cropping
+      profile_picture.variant(
+        crop: [ avatar_crop_x, avatar_crop_y, avatar_crop_width, avatar_crop_height ],
+        resize_to_fill: [ size, size ]
+      )
+    else
+      profile_picture.variant(resize_to_fill: [ size, size ])
     end
   end
 

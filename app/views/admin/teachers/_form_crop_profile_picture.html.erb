@@ -1,0 +1,43 @@
+<%= turbo_frame_tag "teacher_#{@teacher.id}_profile_picture" do %>
+  <div class="bg-black flex items-center justify-center" style="width: 480px; height: 326px; max-width: 100%;">
+    <%= form_with(model: @teacher) do |form| %>
+      <div class="p-4 w-full" data-controller="avatar-crop">
+        <div class="mb-4 flex flex-col items-center" data-avatar-crop-target="existingContainer">
+            <%= image_tag @teacher.cropped_avatar(size: 128), class: "rounded-full border-2 border-teal-400 mb-2", data: { avatar_crop_target: "existingAvatar", original_url: url_for(@teacher.profile_picture) } %>
+            <button type="button" data-action="click->avatar-crop#editExisting" class="px-3 py-1 bg-indigo-600 hover:bg-indigo-500 text-white text-sm rounded-lg mb-4">Open Cropper</button>
+        </div>
+
+        <img data-avatar-crop-target="preview" class="hidden mb-4 mx-auto rounded-full border-2 border-teal-400 w-32 h-32 object-cover" />
+
+        <%= form.file_field :profile_picture, class: "hidden", data: { avatar_crop_target: "input", action: "change->avatar-crop#openCropper" } %>
+
+        <%= form.hidden_field :avatar_crop_x, data: { avatar_crop_target: "cropXField" } %>
+        <%= form.hidden_field :avatar_crop_y, data: { avatar_crop_target: "cropYField" } %>
+        <%= form.hidden_field :avatar_crop_width, data: { avatar_crop_target: "cropWidthField" } %>
+        <%= form.hidden_field :avatar_crop_height, data: { avatar_crop_target: "cropHeightField" } %>
+
+        <!-- Crop Modal -->
+        <div data-avatar-crop-target="modal" class="hidden fixed inset-0 z-50 overflow-auto bg-black bg-opacity-75 flex items-center justify-center p-4">
+          <div class="bg-gray-900 rounded-xl p-6 w-full md:w-1/2 xl:w-1/4 aspect-square border-2 border-gray-700">
+            <h3 class="text-xl font-semibold text-white mb-4 text-center">Crop Profile Picture</h3>
+            <div class="mb-4 flex justify-center">
+              <canvas data-avatar-crop-target="canvas"
+                      class="border-2 border-teal-600 cursor-move"
+                      data-action="mousedown->avatar-crop#startDrag mousemove->avatar-crop#drag mouseup->avatar-crop#stopDrag mouseleave->avatar-crop#stopDrag wheel->avatar-crop#zoom"></canvas>
+            </div>
+            <p class="text-sm text-gray-400 mb-4 text-center">Drag to reposition • Scroll to zoom</p>
+            <div class="flex gap-3 justify-center">
+              <button type="button" data-action="click->avatar-crop#cancel" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg">Cancel</button>
+              <button type="button" data-action="click->avatar-crop#applyCrop" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg">Apply Crop</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-center">
+          <%= link_to("Cancel", teacher_path(@teacher), class: "inline-block rounded-lg px-4 py-2 text-sm text-white bg-red-600 hover:bg-red-400") %>
+          <%= form.submit "Save Crop", class: "w-full sm:w-auto rounded-lg my-2 px-3 py-2 bg-blue-600 hover:bg-blue-400 text-white inline-block font-medium cursor-pointer" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>

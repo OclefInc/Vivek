@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-    static targets = ["input", "preview", "modal", "canvas", "existingAvatar", "cropXField", "cropYField", "cropWidthField", "cropHeightField"]
+    static targets = ["input", "preview", "modal", "canvas", "existingAvatar", "existingContainer", "cropXField", "cropYField", "cropWidthField", "cropHeightField"]
     static values = {
         aspectRatio: { type: Number, default: 1 }
     }
@@ -84,10 +84,21 @@ export default class extends Controller {
         // Draw image
         ctx.drawImage(this.image, 0, 0, width, height)
 
-        // Initialize crop area in center
-        this.cropSize = Math.min(width, height) * 0.7
-        this.cropX = (width - this.cropSize) / 2
-        this.cropY = (height - this.cropSize) / 2
+        // Initialize crop area
+        const existingX = parseFloat(this.cropXFieldTarget.value)
+        const existingY = parseFloat(this.cropYFieldTarget.value)
+        const existingWidth = parseFloat(this.cropWidthFieldTarget.value)
+
+        if (this.isEditingExisting && !isNaN(existingX) && !isNaN(existingY) && !isNaN(existingWidth)) {
+            this.cropX = existingX * this.scale
+            this.cropY = existingY * this.scale
+            this.cropSize = existingWidth * this.scale
+        } else {
+            // Initialize crop area in center
+            this.cropSize = Math.min(width, height) * 0.7
+            this.cropX = (width - this.cropSize) / 2
+            this.cropY = (height - this.cropSize) / 2
+        }
 
         this.drawCropArea()
     }
@@ -295,6 +306,11 @@ export default class extends Controller {
         // Show preview
         this.previewTarget.src = previewCanvas.toDataURL("image/jpeg", 0.9)
         this.previewTarget.classList.remove("hidden")
+
+        // Hide existing avatar container if present
+        if (this.hasExistingContainerTarget) {
+            this.existingContainerTarget.classList.add("hidden")
+        }
 
         this.hideModal()
     }

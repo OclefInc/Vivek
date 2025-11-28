@@ -92,3 +92,5 @@ gem "airbrake"
 gem "rails_sortable"
 
 gem "mission_control-jobs"
+
+gem "ruby-openai", "~> 8.3"

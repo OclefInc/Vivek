@@ -17,7 +17,9 @@ class Public::CommentsController < ApplicationController
     if @comment.save
       redirect_to comments_path(annotation_type: @comment.annotation.class.name, annotation_id: @comment.annotation.id)
     else
-      redirect_to root_path, alert: @comment.errors.full_messages.to_sentence
+      @annotation = @comment.annotation
+      flash.now[:alert] = @comment.errors.full_messages.to_sentence
+      render partial: "public/comments/module", locals: { annotation: @annotation, new_comment: @comment }, status: :unprocessable_entity
     end
   end
 
@@ -32,15 +34,7 @@ class Public::CommentsController < ApplicationController
       if @comment.update(comment_params)
         respond_to do |format|
           format.turbo_stream { render turbo_stream: turbo_stream.replace("comment_#{@comment.id}", partial: "public/comments/comment", locals: { comment: @comment }) }
-          format.html {
-            if @comment.annotation_type == "Lesson"
-              @episode = @comment.annotation
-              @project = @episode.assignment
-              redirect_to episode_path(@project, @episode), notice: "Comment updated."
-            elsif @comment.annotation_type == "Assignment"
-              redirect_to project_path(@comment.annotation), notice: "Comment updated."
-            end
-          }
+          format.html { redirect_to comments_path(annotation_type: @comment.annotation.class.name, annotation_id: @comment.annotation.id) }
         end
       else
         render :edit, status: :unprocessable_entity

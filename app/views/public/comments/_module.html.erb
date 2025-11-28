@@ -1,8 +1,19 @@
+<% new_comment = local_assigns[:new_comment] || Comment.new(annotation: annotation) %>
 <turbo-frame id="comments_module">
   <div class="block w-full">
+    <% if flash[:alert].present? %>
+      <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+        <%= flash[:alert] %>
+      </div>
+    <% end %>
     <% if signed_in? %>
-      <%= form_with(model: Comment.new(annotation:annotation)) do |form| %>
-        <div >
+      <%= form_with(model: new_comment) do |form| %>
+        <div class="comment-trix-wrapper">
+          <style>
+            .comment-trix-wrapper trix-toolbar {
+              display: none !important;
+            }
+          </style>
           <%= form.rich_text_area :note,
       class: "block shadow border rounded-3xl border-sky-100 dark:border-sky-900 mr-5 mb-2 p-4 mt-2 w-full text-sky-800 dark:text-teal-400", placeholder: "Add a comment or ask a question.  Teachers will be notified via email." %>
         </div>
@@ -10,7 +21,7 @@
         <%= form.hidden_field :annotation_type %>
         <div>
           <div class="flex justify-end">
-            <%= form.submit "Submit", class: "rounded-xl px-3 py-2 mt-2 border-2 border-white dark:border-indigo-300 bg-indigo-500 dark:border-zinc-900 hover:bg-indigo-400 hover:border-indigo-100 text-white font-medium whitespace-nowrap" %>
+            <%= form.submit "Submit", class: "rounded-xl px-3 py-2 mt-2 border-2 border-white dark:border-indigo-300 bg-indigo-500 dark:border-zinc-900 hover:bg-indigo-400 hover:border-indigo-100 text-white font-medium whitespace-nowrap cursor-pointer disabled:opacity-75 disabled:cursor-wait", data: { turbo_submits_with: "Validating..." } %>
           </div>
         </div>
       <% end %>

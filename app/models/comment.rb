@@ -48,22 +48,18 @@ class Comment < ApplicationRecord
   private
 
     def content_validity
-      return unless note.present?
       text = note.to_plain_text.to_s.strip
-
-      if text.blank?
-        errors.add(:note, "can't be empty")
+      unless text.present?
+        errors.add(:note, "cannot be blank")
       end
 
-      # Check for keyboard smashing (long strings of consonants)
-      # We treat 'y' as a vowel to avoid flagging words like "rhythms"
-      if text.match?(/[bcdfghjklmnpqrstvwxz]{7,}/i)
-        errors.add(:note, "doesn't look like a real word")
-      end
-
-      # Check for repeated characters (e.g. "aaaaa")
-      if text.match?(/(.)\1{4,}/)
-        errors.add(:note, "contains too many repeated characters")
+      # AI Content Validation
+      # Skip if we are just publishing/unpublishing or if other validations failed
+      if errors.blank? && !unpublished_date_changed? && !admin_id_changed?
+        is_valid, reason = AiContentValidator.validate(text)
+        unless is_valid
+          errors.add(:base, reason)
+        end
       end
     end
 

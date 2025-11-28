@@ -49,15 +49,23 @@
     <% end %>
   </div>
   <div class="bg-gray-800 text-white p-4">
-    <div class="flex justify-between items-center mb-2">
+    <div class="flex justify-between items-center">
       <h3 class="text-lg font-semibold">About This Project:</h3>
     </div>
-    <%= @project.description %>
-    <p class="text-slate-700 dark:text-slate-300 text-sm sm:text-base mt-4">
-      <strong class="font-semibold text-white"><%= 'Teacher'.pluralize(@project.teachers.uniq.count) %>:</strong>
-      <% @project.teachers.uniq.each do |teacher| %>
-        <%= link_to teacher.name, professor_path(teacher), class:'text-indigo-300 hover:text-indigo-200' %>
+    <div class="flex justify-between">
+      <p class="text-slate-700 dark:text-slate-300 text-sm sm:text-base">
+        <strong class="font-semibold text-white"><%= 'Teacher'.pluralize(@project.teachers.uniq.count) %>:</strong>
+        <% @project.teachers.uniq.each do |teacher| %>
+          <%= link_to teacher.name, professor_path(teacher), class:'text-indigo-300 hover:text-indigo-200' %>
+        <% end %>
+      </p>
+      <% if @project.project_type %>
+        <p class="text-slate-700 dark:text-slate-300 text-sm sm:text-base">
+          <strong class="font-semibold text-white">Type:</strong>
+          <span><%= @project.project_type.name %></span>
+        </p>
       <% end %>
-    </p>
+    </div>
+    <%= @project.description %>
   </div>
 </div>

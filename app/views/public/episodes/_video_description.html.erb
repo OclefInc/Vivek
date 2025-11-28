@@ -26,11 +26,9 @@
         <%= link_to @episode.teacher.name, professor_path(@episode.teacher), class:'text-indigo-300 hover:text-indigo-200' %>
       </p>
     </div>
-    <div>
-      <%= @episode.description %>
-    </div>
     <div class="mt-4">
       <%= render 'chapter_list', episode: @episode %>
     </div>
+    <%= @episode.description %>
   </div>
 </div>

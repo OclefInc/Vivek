@@ -15,15 +15,9 @@ class Public::CommentsController < ApplicationController
     @comment.user = current_user
 
     if @comment.save
-      if @comment.annotation_type == "Lesson"
-        @episode = @comment.annotation
-        @project = @episode.assignment
-        redirect_to episode_path(@project, @episode), notice: "Comment posted."
-      elsif @comment.annotation_type == "Assignment"
-        redirect_to project_path(@comment.annotation), notice: "Comment posted."
-      end
+      redirect_to comments_path(annotation_type: @comment.annotation.class.name, annotation_id: @comment.annotation.id)
     else
-      redirect_back fallback_location: root_path, alert: @comment.errors.full_messages.to_sentence
+      redirect_to root_path, alert: @comment.errors.full_messages.to_sentence
     end
   end
 
@@ -58,15 +52,12 @@ class Public::CommentsController < ApplicationController
 
   def destroy
     @comment = Comment.find(params[:id])
+    @annotation = @comment.annotation
     if @comment.user == current_user
       @comment.destroy
-      redirect_back fallback_location: root_path, notice: "Comment deleted."
+      redirect_to comments_path(annotation_type: @annotation.class.name, annotation_id: @annotation.id)
     else
-      @comment.toggle_publish(current_user.id)
-      respond_to do |format|
-        format.html { redirect_to @comment, status: :see_other, notice: "Comment was successfully #{ @comment.published_status}." }
-        format.json { head :no_content }
-      end
+      redirect_to root_path, alert: "Not authorized"
     end
   end
   private

@@ -18,15 +18,10 @@ class Admin::CommentsController < ApplicationController
 
   def destroy
     @comment = Comment.find(params[:id])
-    if @comment.user == current_user
-      @comment.destroy
-      redirect_back fallback_location: root_path, notice: "Comment deleted."
-    else
-      @comment.toggle_publish(current_user.id)
-      respond_to do |format|
-        format.html { redirect_to [ :admin, @comment ], status: :see_other, notice: "Comment was successfully #{ @comment.published_status}." }
-        format.json { head :no_content }
-      end
+    @comment.toggle_publish(current_user.id)
+    respond_to do |format|
+      format.html { redirect_to [ :admin, @comment ], status: :see_other, notice: "Comment was successfully #{ @comment.published_status}." }
+      format.json { head :no_content }
     end
   end
   private

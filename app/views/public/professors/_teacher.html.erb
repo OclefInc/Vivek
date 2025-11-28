@@ -15,31 +15,29 @@
           <%= teacher.name %>
         </h3>
       </div>
-      <div class="flex justify-around py-3 bg-slate-50 dark:bg-zinc-900 rounded-lg">
-        <div class="text-center">
+      <div class="grid grid-cols-3 py-3 bg-slate-50 dark:bg-zinc-900 rounded-lg divide-x divide-gray-300 dark:divide-gray-600">
+        <div class="text-center px-2">
           <div class="text-2xl font-bold text-sky-800 dark:text-teal-300">
             <%= teacher.assignments.distinct.count %>
           </div>
-          <div class="text-xs text-sky-700 dark:text-teal-400">
-            <%= pluralize(teacher.assignments.distinct.count, 'Project') %>
+          <div class="text-xs text-sky-700 dark:text-teal-400 mt-1">
+            <%= 'Project'.pluralize(teacher.assignments.distinct.count) %>
           </div>
         </div>
-        <div class="h-12 w-px bg-gray-300 dark:bg-gray-600"></div>
-        <div class="text-center">
+        <div class="text-center px-2">
           <div class="text-2xl font-bold text-sky-800 dark:text-teal-300">
             <%= teacher.lessons.count %>
           </div>
-          <div class="text-xs text-sky-700 dark:text-teal-400">
-            <%= pluralize(teacher.lessons.count, 'Lesson') %>
+          <div class="text-xs text-sky-700 dark:text-teal-400 mt-1">
+            <%= 'Lesson'.pluralize(teacher.lessons.count) %>
           </div>
         </div>
-        <div class="h-12 w-px bg-gray-300 dark:bg-gray-600"></div>
-        <div class="text-center">
+        <div class="text-center px-2">
           <div class="text-2xl font-bold text-sky-800 dark:text-teal-300">
             <%= teacher.tutorials.count %>
           </div>
-          <div class="text-xs text-sky-700 dark:text-teal-400">
-            <%= pluralize(teacher.tutorials.count, 'Tutorial') %>
+          <div class="text-xs text-sky-700 dark:text-teal-400 mt-1">
+            <%= 'Tutorial'.pluralize(teacher.tutorials.count) %>
           </div>
         </div>
       </div>

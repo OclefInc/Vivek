@@ -1,15 +1,9 @@
 class Public::CommentsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, only: [ :create, :edit, :update, :destroy ]
+
   def index
-    redirect_to_root_path unless current_user.is_employee?
-    @comments = Comment.includes(:user, :annotation)
-
-    if params[:query].present?
-      query = "%#{params[:query]}%"
-      @comments = @comments.joins(:user).where("users.name ILIKE ? OR comments.body ILIKE ?", query, query)
-    end
-
-    @comments = @comments.order(created_at: :desc)
+    @annotation = params[:annotation_type].constantize.find(params[:annotation_id]) if params[:annotation_type].present? && params[:annotation_id].present?
+    @comments = @annotation.comments.includes(:user).order(created_at: :desc) if @annotation
   end
   def show
     redirect_to_root_path unless current_user.is_employee?
@@ -19,25 +13,64 @@ class Public::CommentsController < ApplicationController
   def create
     @comment = Comment.new(comment_params)
     @comment.user = current_user
-    @comment.save
-    if @comment.annotation_type == "Lesson"
-      @episode = @comment.annotation
-      @project = @episode.assignment
-      redirect_to episode_path(@project, @episode)
-    elsif @comment.annotation_type == "Assignment"
-      redirect_to project_path(@comment.annotation)
+
+    if @comment.save
+      if @comment.annotation_type == "Lesson"
+        @episode = @comment.annotation
+        @project = @episode.assignment
+        redirect_to episode_path(@project, @episode), notice: "Comment posted."
+      elsif @comment.annotation_type == "Assignment"
+        redirect_to project_path(@comment.annotation), notice: "Comment posted."
+      end
+    else
+      redirect_back fallback_location: root_path, alert: @comment.errors.full_messages.to_sentence
     end
   end
+
+  def edit
+    @comment = Comment.find(params[:id])
+    redirect_to root_path, alert: "Not authorized" unless @comment.user == current_user
+  end
+
+  def update
+    @comment = Comment.find(params[:id])
+    if @comment.user == current_user
+      if @comment.update(comment_params)
+        respond_to do |format|
+          format.turbo_stream { render turbo_stream: turbo_stream.replace("comment_#{@comment.id}", partial: "public/comments/comment", locals: { comment: @comment }) }
+          format.html {
+            if @comment.annotation_type == "Lesson"
+              @episode = @comment.annotation
+              @project = @episode.assignment
+              redirect_to episode_path(@project, @episode), notice: "Comment updated."
+            elsif @comment.annotation_type == "Assignment"
+              redirect_to project_path(@comment.annotation), notice: "Comment updated."
+            end
+          }
+        end
+      else
+        render :edit, status: :unprocessable_entity
+      end
+    else
+      redirect_to root_path, alert: "Not authorized"
+    end
+  end
+
   def destroy
     @comment = Comment.find(params[:id])
-    @comment.toggle_publish(current_user.id)
-    respond_to do |format|
-      format.html { redirect_to @comment, status: :see_other, notice: "Comment was successfully #{ @comment.published_status}." }
-      format.json { head :no_content }
+    if @comment.user == current_user
+      @comment.destroy
+      redirect_back fallback_location: root_path, notice: "Comment deleted."
+    else
+      @comment.toggle_publish(current_user.id)
+      respond_to do |format|
+        format.html { redirect_to @comment, status: :see_other, notice: "Comment was successfully #{ @comment.published_status}." }
+        format.json { head :no_content }
+      end
     end
   end
   private
     def comment_params
       params.expect(comment: [ :note, :annotation_id, :annotation_type ])
-      end
+    end
 end

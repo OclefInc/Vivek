@@ -30,15 +30,8 @@
       end
       relevant_teacher_ids = relevant_teacher_ids.compact.uniq
     %>
-    <% annotation.comments.where(unpublished_date: nil).order(created_at: :desc).includes(user: :teacher).each do |comment| %>
-      <% is_relevant_teacher = comment.user.teacher.present? && relevant_teacher_ids.include?(comment.user.teacher.id) %>
-      <div class="my-6 w-full  <%= is_relevant_teacher ? 'border border-indigo-300 bg-indigo-50 dark:border-indigo-700 dark:bg-indigo-900/30 p-3 rounded shadow-sm' : '' %>">
-        <div class="flex justify-between">
-          <div class="text-sm text-bold text-sky-700 dark:text-teal-500"> <%= comment.user.name %> wrote: </div>
-          <div class="text-zinc-300 text-sm px-3 justify-end"> <%= local_time(comment.created_at) %> </div>
-        </div>
-        <div class="dark:text-teal-200 text-sky-400"> <%= comment.note %> </div>
-      </div>
+    <% annotation.comments.where(unpublished_date: nil).order(created_at: :desc).includes(user: :teacher, likes: :user).each do |comment| %>
+      <%= render partial: "public/comments/comment", locals: { comment: comment } %>
     <% end %>
   </div>
 </turbo-frame>

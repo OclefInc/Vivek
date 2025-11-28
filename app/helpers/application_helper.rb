@@ -16,4 +16,14 @@ module ApplicationHelper
       "#{base_class} #{inactive_class}"
     end
   end
+
+  def user_avatar(user, size: 40)
+    if user.avatar.attached?
+      image_tag user.cropped_avatar(size: size), class: "rounded-full object-cover", style: "width: #{size}px; height: #{size}px;"
+    elsif user.picture_url.present?
+      image_tag user.picture_url, class: "rounded-full object-cover", style: "width: #{size}px; height: #{size}px;"
+    else
+      content_tag :div, user.initials, class: "rounded-full bg-indigo-500 text-white flex items-center justify-center text-xs font-bold", style: "width: #{size}px; height: #{size}px;"
+    end
+  end
 end

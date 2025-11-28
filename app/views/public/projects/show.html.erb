@@ -2,15 +2,15 @@
 <%= render 'header' %>
 <div class="xl:flex xl:gap-8 py-4">
   <div class="xl:min-w-[640px] xl:max-w-[640px] md:flex-1 md:basis-1/2 mb-4 xl:mb-0">
-    <div>
+    <div class="rounded-lg overflow-hidden shadow-sm">
       <%= render 'video_description' %>
     </div>
     <!-- Comments Section -->
     <div class="w-full mt-8">
-      <%= render partial:"/public/comments/module", locals:{annotation:@project} %>
+      <turbo-frame id="comments_module" src="<%= comments_path(annotation_type: @project.class.name, annotation_id: @project.id) %>"></turbo-frame>
     </div>
   </div>
-  <div class="w-full xl:flex-1 xl:basis-1/2 xl:self-start overflow-y-auto">
+  <div class="w-full xl:flex-1 xl:basis-1/2 xl:self-start overflow-y-auto rounded-lg overflow-hidden shadow-sm">
     <%= render 'episode_table' %>
   </div>
 </div>

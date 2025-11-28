@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_21_223728) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_28_155103) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_stat_statements"
@@ -125,6 +125,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_21_223728) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "likes", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "likeable_type", null: false
+    t.bigint "likeable_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["likeable_type", "likeable_id"], name: "index_likes_on_likeable"
+    t.index ["user_id"], name: "index_likes_on_user_id"
+  end
+
   create_table "sheet_musics", force: :cascade do |t|
     t.integer "composition_id"
     t.datetime "created_at", null: false
@@ -206,6 +216,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_21_223728) do
   add_foreign_key "chapters", "lessons"
   add_foreign_key "chapters_tutorials", "chapters"
   add_foreign_key "chapters_tutorials", "tutorials"
+  add_foreign_key "likes", "users"
   add_foreign_key "tutorials", "skill_categories"
   add_foreign_key "tutorials", "teachers"
 end

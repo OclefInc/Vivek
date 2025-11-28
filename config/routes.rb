@@ -23,6 +23,7 @@ Rails.application.routes.draw do
 
   scope path: "/admin", module: "admin" do
     resources :accounts
+    resources :comments, as: :admin_comments
     resources :skill_categories, only: [ :index, :show ]
     resources :compositions
     resources :teachers do
@@ -63,6 +64,7 @@ Rails.application.routes.draw do
     end
 
     resources :comments
+    resources :likes, only: [ :create, :destroy ]
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

@@ -15,25 +15,26 @@ class Comment < ApplicationRecord
   belongs_to :user
   belongs_to :annotation, polymorphic: true, touch: true
   has_rich_text :note
+  has_many :likes, as: :likeable, dependent: :destroy
   after_create :email_admin
 
   def published_status
     if is_published?
       "published"
-    else 
+    else
       "unpublished"
     end
   end
 
   def toggle_publish(a_id)
     if is_published?
-      self.unpublished_date=Time.now
-      self.admin_id=a_id
+      self.unpublished_date = Time.now
+      self.admin_id = a_id
       self.save
-      CommentMailer.notify_user(self.id).deliver_later(wait:60.minutes)
+      CommentMailer.notify_user(self.id).deliver_later(wait: 60.minutes)
     else
-      self.unpublished_date=nil
-      self.admin_id=a_id
+      self.unpublished_date = nil
+      self.admin_id = a_id
       self.save
     end
   end
@@ -42,8 +43,32 @@ class Comment < ApplicationRecord
     self.unpublished_date.nil?
   end
 
+  validate :content_validity
+
   private
-  def email_admin
-    CommentMailer.notify_admin(self.id).deliver_later
-  end
+
+    def content_validity
+      return unless note.present?
+      text = note.to_plain_text.to_s.strip
+
+      if text.blank?
+        errors.add(:note, "can't be empty")
+      end
+
+      # Check for keyboard smashing (long strings of consonants)
+      # We treat 'y' as a vowel to avoid flagging words like "rhythms"
+      if text.match?(/[bcdfghjklmnpqrstvwxz]{7,}/i)
+        errors.add(:note, "doesn't look like a real word")
+      end
+
+      # Check for repeated characters (e.g. "aaaaa")
+      if text.match?(/(.)\1{4,}/)
+        errors.add(:note, "contains too many repeated characters")
+      end
+    end
+
+  private
+    def email_admin
+      CommentMailer.notify_admin(self.id).deliver_later
+    end
 end

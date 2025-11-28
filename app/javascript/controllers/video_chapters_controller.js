@@ -2,7 +2,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["chaptersList", "nameInput", "startTimeInput"]
+  static targets = ["chaptersList", "nameInput", "startTimeInput", "chevron"]
   static values = { url: String, startTime: Number, endTime: Number }
 
   connect() {
@@ -87,6 +87,15 @@ export default class extends Controller {
         }
       }
     })
+  }
+
+  toggleList() {
+    if (this.hasChaptersListTarget) {
+      this.chaptersListTarget.classList.toggle("hidden")
+    }
+    if (this.hasChevronTarget) {
+      this.chevronTarget.classList.toggle("rotate-180")
+    }
   }
 
   async deleteChapter(event) {

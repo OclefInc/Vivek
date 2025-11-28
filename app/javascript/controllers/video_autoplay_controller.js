@@ -11,6 +11,13 @@ export default class extends Controller {
     this.element.addEventListener('ended', this.handleVideoEnd.bind(this))
     this.countdownElement = null
     this.countdownInterval = null
+
+    const urlParams = new URLSearchParams(window.location.search)
+    if (urlParams.get('autoplay') === 'true') {
+      this.element.play().catch(error => {
+        console.log("Autoplay prevented:", error)
+      })
+    }
   }
 
   disconnect() {
@@ -22,6 +29,12 @@ export default class extends Controller {
     if (this.hasNextUrlValue && this.nextUrlValue) {
       this.showCountdown()
     }
+  }
+
+  visitNextUrl() {
+    const url = new URL(this.nextUrlValue, window.location.origin)
+    url.searchParams.set('autoplay', 'true')
+    window.Turbo.visit(url.toString())
   }
 
   showCountdown() {
@@ -77,7 +90,7 @@ export default class extends Controller {
 
     playNowButton.addEventListener('click', () => {
       this.clearCountdown()
-      window.Turbo.visit(this.nextUrlValue)
+      this.visitNextUrl()
     })
 
     cancelButton.addEventListener('click', () => this.clearCountdown())
@@ -95,7 +108,7 @@ export default class extends Controller {
         numberElement.textContent = count
       } else {
         this.clearCountdown()
-        window.Turbo.visit(this.nextUrlValue)
+        this.visitNextUrl()
       }
     }, 1000)
   }

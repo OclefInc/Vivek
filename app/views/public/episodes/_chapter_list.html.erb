@@ -4,11 +4,16 @@
      data-video-chapters-url-value="<%= project_episode_path(@episode.project, @episode) %>"
      data-video-chapters-video-target="video">
     <div class="">
-      <div class="flex justify-between items-center mb-2">
-        <h3 class="text-md font-semibold">Chapters</h3>
+      <div class="flex items-center mb-2 cursor-pointer group select-none" data-action="click->video-chapters#toggleList">
+        <svg data-video-chapters-target="chevron" class="w-5 h-5 transform transition-transform duration-200 text-gray-500 group-hover:text-indigo-600 dark:group-hover:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+        <h3 class="ms-3 text-md font-semibold group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+          <%= pluralize(@episode.chapters.count, "Clips") %>
+        </h3>
       </div>
       <%= turbo_frame_tag "chapters_list" do %>
-        <div data-video-chapters-target="chaptersList" class="space-y-1">
+        <div data-video-chapters-target="chaptersList" class="space-y-1 hidden">
           <% @episode.chapters.each do |chapter| %>
             <%= render 'chapter', chapter: chapter %>
           <% end %>

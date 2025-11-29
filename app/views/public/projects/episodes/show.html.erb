@@ -1,9 +1,9 @@
 <% content_for :title, "Lesson: #{@episode.name}" %>
 <% content_for :meta_description, @episode.meta_description  %>
 <% if @episode.lesson_video.attached? && @episode.lesson_video.previewable? %>
-  <% content_for :meta_image, url_for(@episode.lesson_video.preview(resize_to_limit: [1200, 630])) %>
+  <% content_for :meta_image, rails_representation_url(@episode.lesson_video.preview(resize_to_limit: [1200, 630]), only_path: false) %>
 <% elsif @episode.project.student.profile_picture.attached? %>
-  <% content_for :meta_image, url_for(@episode.project.student.display_avatar(size: 600)) %>
+  <% content_for :meta_image, rails_representation_url(@episode.project.student.display_avatar(size: 600), only_path: false) %>
 <% end %>
 <%= render '/public/projects/header', project: @episode.project %>
 <div class="xl:flex xl:gap-8 py-4">

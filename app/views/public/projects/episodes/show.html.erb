@@ -1,6 +1,8 @@
 <% content_for :title, "Lesson: #{@episode.name}" %>
-<% content_for :meta_description, @episode.description.to_plain_text.truncate(160) if @episode.description.present? %>
-<% if @episode.project.student.avatar.attached? %>
+<% content_for :meta_description, @episode.meta_description  %>
+<% if @episode.lesson_video.attached? && @episode.lesson_video.previewable? %>
+  <% content_for :meta_image, url_for(@episode.lesson_video.preview(resize_to_limit: [1200, 630])) %>
+<% elsif @episode.project.student.profile_picture.attached? %>
   <% content_for :meta_image, url_for(@episode.project.student.display_avatar(size: 600)) %>
 <% end %>
 <%= render '/public/projects/header', project: @episode.project %>

@@ -35,6 +35,18 @@ class Assignment < ApplicationRecord
   has_many :subscriptions, dependent: :destroy
   has_many :subscribers, through: :subscriptions, source: :user
 
+  def to_param
+    "#{id}-#{composition.name.parameterize}-#{student.name.parameterize}"
+  end
+
+  def meta_description
+    if description.present? && description.to_plain_text.present?
+      description.to_plain_text.truncate(160)
+    else
+      "Project: #{name}"
+    end
+  end
+
   def complete?
     summary_video.attached? && lessons.exists?
   end

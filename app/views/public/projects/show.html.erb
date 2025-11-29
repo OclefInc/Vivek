@@ -1,6 +1,8 @@
 <% content_for :title, "Project: #{@project.name}" %>
-<% content_for :meta_description, @project.description.to_plain_text.truncate(160) if @project.description.present? %>
-<% if @project.student.avatar.attached? %>
+<% content_for :meta_description, @project.meta_description %>
+<% if @project.summary_video.attached? && @project.summary_video.previewable? %>
+  <% content_for :meta_image, url_for(@project.summary_video.preview(resize_to_limit: [1200, 630])) %>
+<% elsif @project.student.profile_picture.attached? %>
   <% content_for :meta_image, url_for(@project.student.display_avatar(size: 600)) %>
 <% end %>
 <%= render 'header', project: @project %>

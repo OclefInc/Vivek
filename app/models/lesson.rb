@@ -42,6 +42,20 @@ class Lesson < ApplicationRecord
 
   delegate :existing_description_attachments, to: :assignment
 
+  def to_param
+    "#{id}-#{name.parameterize}"
+  end
+
+  def meta_description
+    if description.present? && description.to_plain_text.present?
+      description.to_plain_text.truncate(160)
+    elsif assignment.present? && assignment.description.present?
+      assignment.description.to_plain_text.truncate(160)
+    else
+      "Lesson #{name}"
+    end
+  end
+
   def complete?
     teacher.present? && chapters.exists? && lesson_video.attached? && !description.blank?
   end

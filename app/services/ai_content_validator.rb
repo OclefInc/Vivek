@@ -1,11 +1,13 @@
 class AiContentValidator
+  def self.client
+    @client ||= OpenAI::Client.new
+  end
+
   def self.validate(text)
     return true if text.blank?
 
     # Skip if no API key is configured to avoid errors in dev/test without keys
     return true if ENV["OPENAI_ACCESS_TOKEN"].blank?
-
-    client = OpenAI::Client.new
 
     begin
       response = client.chat(

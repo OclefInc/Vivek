@@ -8,6 +8,6 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-[ "Composition", "Standardize Test Preparation", "Foundation Development", "Skill Development" ].each do |name|
+[ "Repertoire", "Standardized Test Preparation", "Foundation Development", "Skill Development", "Music Theory" ].each do |name|
   ProjectType.find_or_create_by!(name: name)
 end

@@ -57,6 +57,7 @@ Rails.application.routes.draw do
     resources :students, path: "students", as: "public_students"
     resources :projects do
       resources :episodes
+      resource :subscription, only: [ :create, :destroy ], controller: "subscriptions"
     end
     resources :tutorials do
       resources :chapters, only: [ :show ], controller: "tutorials/chapters"
@@ -65,6 +66,7 @@ Rails.application.routes.draw do
 
     resources :comments
     resources :likes, only: [ :create, :destroy ]
+    get "subscriptions", to: "subscriptions#index", as: :subscriptions
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

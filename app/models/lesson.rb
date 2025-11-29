@@ -92,6 +92,14 @@ class Lesson < ApplicationRecord
     assignment
   end
 
+  after_create :notify_subscribers
+
+  def notify_subscribers
+    assignment.subscribers.each do |user|
+      ProjectMailer.new_lesson_notification(user, self).deliver_later
+    end
+  end
+
     private
       def assign_default_name
         # set name to date if name is blank

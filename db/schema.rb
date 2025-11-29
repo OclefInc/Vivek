@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_28_214305) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_29_082434) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_stat_statements"
@@ -174,6 +174,15 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_28_214305) do
     t.integer "avatar_crop_height"
   end
 
+  create_table "subscriptions", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "assignment_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["assignment_id"], name: "index_subscriptions_on_assignment_id"
+    t.index ["user_id"], name: "index_subscriptions_on_user_id"
+  end
+
   create_table "teachers", force: :cascade do |t|
     t.string "name"
     t.string "city"
@@ -234,6 +243,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_28_214305) do
   add_foreign_key "chapters_tutorials", "chapters"
   add_foreign_key "chapters_tutorials", "tutorials"
   add_foreign_key "likes", "users"
+  add_foreign_key "subscriptions", "assignments"
+  add_foreign_key "subscriptions", "users"
   add_foreign_key "tutorials", "skill_categories"
   add_foreign_key "tutorials", "teachers"
 end

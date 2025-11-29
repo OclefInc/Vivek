@@ -32,6 +32,8 @@ class Assignment < ApplicationRecord
   has_rich_text :description
   has_one_attached :summary_video
   has_many :comments, as: :annotation
+  has_many :subscriptions, dependent: :destroy
+  has_many :subscribers, through: :subscriptions, source: :user
 
   def complete?
     summary_video.attached? && lessons.exists?

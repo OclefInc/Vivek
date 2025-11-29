@@ -1,0 +1,11 @@
+<p>Hello <%= @user.name %>,</p>
+<p>A new lesson "<strong><%= @lesson.name %></strong>" has been added to the project "<strong><%= @project.name %></strong>".</p>
+<p>
+  <%= link_to "View Lesson", public_project_episode_url(@project, @lesson), style: "display: inline-block; padding: 10px 20px; background-color: #2563eb; color: white; text-decoration: none; border-radius: 5px;" %>
+</p>
+<p>
+  <small>
+    You are receiving this email because you subscribed to updates for this project.
+    <%= link_to "Unsubscribe", public_project_url(@project) %>
+  </small>
+</p>

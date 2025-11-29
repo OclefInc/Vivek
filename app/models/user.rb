@@ -45,6 +45,8 @@ class User < ApplicationRecord
   has_one :student
   has_one_attached :avatar
   has_many :likes, dependent: :destroy
+  has_many :subscriptions, dependent: :destroy
+  has_many :subscribed_assignments, through: :subscriptions, source: :assignment
 
   validates_presence_of :name
   # Make password optional for non-OAuth users (they use magic links)

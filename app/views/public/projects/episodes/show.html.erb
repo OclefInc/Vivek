@@ -1,6 +1,8 @@
-<% content_for :title, "Lesson: #{@episode.name}" %>
+<% content_for :title, "Lesson: #{@episode.name} - #{@episode.project.composition.name} by #{@episode.project.student.name} | The Vivek Project" %>
 <% content_for :meta_description, @episode.meta_description  %>
-<% if @episode.lesson_video.attached? && @episode.lesson_video.previewable? %>
+<% if @episode.video_thumbnail.attached? %>
+  <% content_for :meta_image, rails_representation_url(@episode.video_thumbnail.variant(resize_to_limit: [1200, 630]), only_path: false) %>
+<% elsif @episode.lesson_video.attached? && @episode.lesson_video.previewable? %>
   <% content_for :meta_image, rails_representation_url(@episode.lesson_video.preview(resize_to_limit: [1200, 630]), only_path: false) %>
 <% elsif @episode.project.student.profile_picture.attached? %>
   <% content_for :meta_image, rails_representation_url(@episode.project.student.display_avatar(size: 600), only_path: false) %>

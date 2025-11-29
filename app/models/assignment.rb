@@ -31,6 +31,7 @@ class Assignment < ApplicationRecord
   has_many :teachers, through: :lessons
   has_rich_text :description
   has_one_attached :summary_video
+  has_one_attached :video_thumbnail
   has_many :comments, as: :annotation
   has_many :subscriptions, dependent: :destroy
   has_many :subscribers, through: :subscriptions, source: :user
@@ -107,5 +108,61 @@ class Assignment < ApplicationRecord
       end
     end
     unique_blobs.values
+  end
+
+  def generate_video_thumbnail
+    require "vips"
+
+    title = composition.name
+    subtitle = student.name
+
+    if lessons.any?
+      start_date = lessons.minimum(:date)&.strftime("%b %d, %Y")
+      end_date = lessons.maximum(:date)&.strftime("%b %d, %Y")
+      count = lessons.count
+      lesson_count_text = "#{count} #{'Lesson'.pluralize(count)}"
+      if !complete?
+        lesson_count_text += " (In Progress)"
+      end
+      date_range_text = "#{start_date} - #{end_date}"
+    else
+      lesson_count_text = ""
+      date_range_text = ""
+    end
+
+    svg = <<~SVG
+      <svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
+        <rect width="100%" height="100%" fill="#1f2937"/>
+        <text x="50%" y="35%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="Arial, Helvetica, sans-serif" font-size="60" font-weight="bold">
+          #{CGI.escapeHTML(title)}
+        </text>
+        <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#9ca3af" font-family="Arial, Helvetica, sans-serif" font-size="40">
+          #{CGI.escapeHTML(subtitle)}
+        </text>
+        <text x="50%" y="65%" dominant-baseline="middle" text-anchor="middle" fill="#9ca3af" font-family="Arial, Helvetica, sans-serif" font-size="35">
+          #{CGI.escapeHTML(lesson_count_text)}
+        </text>
+        <text x="50%" y="75%" dominant-baseline="middle" text-anchor="middle" fill="#9ca3af" font-family="Arial, Helvetica, sans-serif" font-size="30">
+          #{CGI.escapeHTML(date_range_text)}
+        </text>
+      </svg>
+    SVG
+
+    image = Vips::Image.new_from_buffer(svg, "")
+
+    Tempfile.create([ "thumbnail", ".png" ]) do |file|
+      image.write_to_file(file.path)
+      video_thumbnail.attach(io: File.open(file.path), filename: "thumbnail.png", content_type: "image/png")
+    end
+  end
+
+  after_save :enqueue_thumbnail_generation, if: :saved_change_to_summary_video_attachment?
+
+  def saved_change_to_summary_video_attachment?
+    attachment_changes["summary_video"].present?
+  end
+
+  def enqueue_thumbnail_generation
+    GenerateAssignmentThumbnailJob.perform_later(self)
   end
 end

@@ -1,6 +1,8 @@
-<% content_for :title, "Project: #{@project.name}" %>
+<% content_for :title, "Project: #{@project.composition.name} by #{@project.student.name} | The Vivek Project" %>
 <% content_for :meta_description, @project.meta_description %>
-<% if @project.summary_video.attached? && @project.summary_video.previewable? %>
+<% if @project.video_thumbnail.attached? %>
+  <% content_for :meta_image, rails_representation_url(@project.video_thumbnail.variant(resize_to_limit: [1200, 630]), only_path: false) %>
+<% elsif @project.summary_video.attached? && @project.summary_video.previewable? %>
   <% content_for :meta_image, rails_representation_url(@project.summary_video.preview(resize_to_limit: [1200, 630]), only_path: false) %>
 <% elsif @project.student.profile_picture.attached? %>
   <% content_for :meta_image, rails_representation_url(@project.student.display_avatar(size: 600), only_path: false) %>

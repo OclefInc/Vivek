@@ -30,6 +30,7 @@ class Lesson < ApplicationRecord
   has_rich_text :student_journal
   has_rich_text :teacher_journal
   has_one_attached :lesson_video
+  has_one_attached :video_thumbnail
 
   before_validation :assign_default_name, on: :create
   before_create :assign_sort_position
@@ -102,16 +103,71 @@ class Lesson < ApplicationRecord
     end
   end
 
+  def generate_video_thumbnail
+    require "vips"
+
+    title = name
+    subtitle = "#{assignment.composition.name}"
+    teacher_name = teacher&.name || ""
+    lesson_date = date&.strftime("%b %d, %Y") || ""
+
+    svg = <<~SVG
+      <svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
+        <rect width="100%" height="100%" fill="#1f2937"/>
+        <text x="50%" y="35%" dominant-baseline="middle" text-anchor="middle" fill="white" font-family="Arial, Helvetica, sans-serif" font-size="60" font-weight="bold">
+          #{CGI.escapeHTML(title)}
+        </text>
+        <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="#9ca3af" font-family="Arial, Helvetica, sans-serif" font-size="40">
+          #{CGI.escapeHTML(subtitle)}
+        </text>
+        <text x="50%" y="60%" dominant-baseline="middle" text-anchor="middle" fill="#9ca3af" font-family="Arial, Helvetica, sans-serif" font-size="30">
+          #{CGI.escapeHTML(teacher_name)}
+        </text>
+        <text x="50%" y="70%" dominant-baseline="middle" text-anchor="middle" fill="#9ca3af" font-family="Arial, Helvetica, sans-serif" font-size="30">
+          #{CGI.escapeHTML(lesson_date)}
+        </text>
+      </svg>
+    SVG
+
+    image = Vips::Image.new_from_buffer(svg, "")
+
+    Tempfile.create([ "thumbnail", ".png" ]) do |file|
+      image.write_to_file(file.path)
+      video_thumbnail.attach(io: File.open(file.path), filename: "thumbnail.png", content_type: "image/png")
+    end
+  end
+
   def project
     assignment
   end
 
   after_create :notify_subscribers
+  after_create_commit :regenerate_assignment_thumbnail
+  after_destroy_commit :regenerate_assignment_thumbnail
+  after_update_commit :regenerate_assignment_thumbnail, if: :saved_change_to_date?
 
   def notify_subscribers
     assignment.subscribers.each do |user|
       ProjectMailer.new_lesson_notification(user, self).deliver_later
     end
+  end
+
+  def regenerate_assignment_thumbnail
+    GenerateAssignmentThumbnailJob.perform_later(assignment) if assignment
+  end
+
+  after_save :enqueue_thumbnail_generation, if: :saved_change_to_thumbnail_attributes?
+
+  def saved_change_to_thumbnail_attributes?
+    saved_change_to_name? || saved_change_to_teacher_id? || saved_change_to_date?
+  end
+
+  def enqueue_thumbnail_generation
+    GenerateLessonThumbnailJob.set(wait: 1.minute).perform_later(self, {
+      name: name,
+      teacher_id: teacher_id,
+      date: date&.to_s
+    })
   end
 
     private

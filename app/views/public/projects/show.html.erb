@@ -1,4 +1,4 @@
-<% content_for :title, "Project: #{@project.composition.name} by #{@project.student.name} | The Vivek Project" %>
+<% content_for :title, "The Vivek Project: #{@project.composition.name} (#{@project.lessons.count} Videos)" %>
 <% content_for :meta_description, @project.meta_description %>
 <% if @project.video_thumbnail.attached? %>
   <% content_for :meta_image, rails_representation_url(@project.video_thumbnail.variant(resize_to_limit: [1200, 630]), only_path: false) %>

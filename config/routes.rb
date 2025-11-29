@@ -50,13 +50,10 @@ Rails.application.routes.draw do
     post "attachments/update_pages", to: "attachments#update_pages"
   end
   scope path: "/public", module: "public" do
-    resources :sheet_musics, path: "sheet_musics", as: "public_sheet_musics"
-    resources :skills, path: "skills", as: "public_skills"
-    resources :compositions, path: "compositions", as: "public_compositions"
     resources :professors
     resources :students, path: "students", as: "public_students"
     resources :projects do
-      resources :episodes
+      resources :episodes, controller: "projects/episodes"
       resource :subscription, only: [ :create, :destroy ], controller: "subscriptions"
     end
     resources :tutorials do

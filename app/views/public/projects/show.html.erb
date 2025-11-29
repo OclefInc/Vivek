@@ -1,4 +1,8 @@
 <% content_for :title, "Project: #{@project.name}" %>
+<% content_for :meta_description, @project.description.to_plain_text.truncate(160) if @project.description.present? %>
+<% if @project.student.avatar.attached? %>
+  <% content_for :meta_image, url_for(@project.student.display_avatar(size: 600)) %>
+<% end %>
 <%= render 'header', project: @project %>
 <div class="xl:flex xl:gap-8 py-4">
   <div class="xl:min-w-[640px] xl:max-w-[640px] md:flex-1 md:basis-1/2 mb-4 xl:mb-0">

@@ -5,6 +5,18 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="<%= request.original_url %>">
+    <meta property="og:title" content="<%= content_for(:title) || "The Vivek Project" %>">
+    <meta property="og:description" content="<%= content_for(:meta_description) || "A platform for music education projects." %>">
+    <meta property="og:image" content="<%= content_for(:meta_image) || image_url("favicon.svg") %>">
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="<%= request.original_url %>">
+    <meta property="twitter:title" content="<%= content_for(:title) || "The Vivek Project" %>">
+    <meta property="twitter:description" content="<%= content_for(:meta_description) || "A platform for music education projects." %>">
+    <meta property="twitter:image" content="<%= content_for(:meta_image) || image_url("favicon.svg") %>">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= yield :head %>

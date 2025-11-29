@@ -1,3 +1,4 @@
+<% content_for :title, "About The Vivek Project" %>
 <style>
   .about-page *:not(h1):not(h2):not(h3) {
     font-family: Georgia, Times, 'Times New Roman', serif !important;
@@ -128,6 +129,9 @@
         The source code for this website is maintained by Oclef Inc.
         <br>The code is open source, licensed under the MIT License, and available on <%= link_to "GitHub", "https://github.com/OclefInc/Vivek", class: "text-sky-600 dark:text-teal-400 hover:underline", target: "_blank" %>.
       </p>
+      <div class="max-w-md mx-auto mt-6">
+        <%= render 'shared/share_buttons' %>
+      </div>
     </section>
   </div>
 </div>

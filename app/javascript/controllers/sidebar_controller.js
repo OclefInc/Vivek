@@ -17,7 +17,7 @@ export default class extends Controller {
   }
 
   close() {
-    this.menuTarget.style.transform = "translateX(-100%)"
+    this.menuTarget.style.transform = "translateX(100%)"
     this.overlayTarget.classList.add("hidden")
   }
 }

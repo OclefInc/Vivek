@@ -65,8 +65,6 @@ export default class extends Controller {
             this.videoContainerTarget.style.opacity = '0'
         }
         this.videoTarget.pause()
-        this.videoTarget.currentTime = 0
-        this.progressBarTarget.style.width = '0%'
     }
 
     togglePlay(event) {

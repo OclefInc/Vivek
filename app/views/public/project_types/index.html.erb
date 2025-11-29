@@ -1,9 +1,9 @@
 <div class="mb-8 text-center">
-  <p class="text-center text-xl text-sky-800 dark:text-teal-200 text-bold" > Project Types </p>
+  <h1 class="text-center text-3xl md:text-4xl font-bold text-sky-800 dark:text-teal-200">Project Types</h1>
 </div>
 <% @project_types.each do |project_type| %>
   <% if project_type.assignments.any? %>
-    <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4 px-1 md:px-4"><%= project_type.name %></h2>
+    <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4 px-1 md:px-4"><%= link_to(project_type.name, project_type_path(project_type), class: "text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300") %></h2>
     <div class="flex overflow-x-auto gap-3 lg:gap-6 w-full px-1 md:px-4 mb-8 pb-4 snap-x">
       <% project_type.assignments.each do |project| %>
         <div class="w-[300px] md:w-[350px] flex-none snap-center">

@@ -15,6 +15,7 @@
 #
 class Student < ApplicationRecord
   has_many :assignments
+  has_many :lessons, through: :assignments
 
   after_save :touch_assignments
   has_one_attached :profile_picture

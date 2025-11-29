@@ -34,7 +34,7 @@ class Assignment < ApplicationRecord
   has_many :comments, as: :annotation
 
   def complete?
-    !lessons.map { |lesson| lesson.complete? }.any?(false)
+    summary_video.attached? && lessons.exists?
   end
 
   def status

@@ -5,7 +5,9 @@ class HomeController < ApplicationController
   layout "public"
   # GET /assignments or /assignments.json
   def index
-    @projects = Assignment.all
+    @projects = Assignment.includes(lessons: [ :chapters, :rich_text_description, { lesson_video_attachment: :blob } ]).all
+    @in_progress_projects = @projects.reject(&:complete?)
+    @completed_projects = @projects.select(&:complete?)
   end
   def about
   end

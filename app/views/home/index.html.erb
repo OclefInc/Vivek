@@ -4,7 +4,7 @@
 </div>
 <% if @in_progress_projects.any? %>
   <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4 px-1 md:px-4">Projects In Progress</h2>
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-6 w-full px-1 md:px-4 mb-8">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-6 w-full px-1 md:px-4 mb-8">
     <% @in_progress_projects.each do |project| %>
       <%= render 'project_card', project: project %>
     <% end %>
@@ -12,7 +12,7 @@
 <% end %>
 <% if @completed_projects.any? %>
   <h2 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4 px-1 md:px-4">Completed Projects</h2>
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-6 w-full px-1 md:px-4">
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-6 w-full px-1 md:px-4">
     <% @completed_projects.each do |project| %>
       <%= render 'project_card', project: project %>
     <% end %>

@@ -30,5 +30,8 @@
       <%= render 'chapter_list', episode: @episode %>
     </div>
     <%= @episode.description %>
+    <div class="xl:hidden mt-5">
+      <%= render '/public/projects/episode_dropdown', episode: @episode, project: @episode.project %>
+    </div>
   </div>
 </div>

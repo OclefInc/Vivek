@@ -1,27 +1,16 @@
 <% content_for :title, "Lesson: #{@episode.name}" %>
-<%= render 'header' %>
+<%= render '/public/projects/header', project: @episode.project %>
 <div class="xl:flex xl:gap-8 py-4">
   <div class="xl:min-w-[640px] xl:max-w-[640px] md:flex-1 md:basis-1/2 mb-4 xl:mb-0">
     <div class="rounded-lg overflow-hidden shadow-sm">
       <%= render 'video_description' %>
     </div>
-    <div class="xl:hidden mt-5">
-      <div class="flex items-center gap-2">
-        <select id="episode_select" class="w-full border rounded px-2 py-1 bg-white dark:bg-zinc-800 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-zinc-600" onchange="if (this.value) window.location.href = this.value">
-          <% @episode.project.lessons.each do |lesson| %>
-            <option value="<%= project_episode_path(@episode.project, lesson) %>" <%= 'selected' if lesson == @episode %>>
-              <%= lesson.name %>
-            </option>
-            <% end %>
-          </select>
-        </div>
-      </div>
-      <!-- Comments Section -->
-      <div class="w-full mt-8">
-        <turbo-frame id="comments_module" src="<%= comments_path(annotation_type: @episode.class.name, annotation_id: @episode.id) %>"></turbo-frame>
-      </div>
-    </div>
-    <div class="hidden xl:block w-full xl:flex-1 xl:basis-1/2 xl:self-start overflow-y-auto rounded-lg shadow-sm">
-      <%= render 'episode_table' %>
+    <!-- Comments Section -->
+    <div class="w-full mt-8">
+      <turbo-frame id="comments_module" src="<%= comments_path(annotation_type: @episode.class.name, annotation_id: @episode.id) %>"></turbo-frame>
     </div>
   </div>
+  <div class="hidden xl:block w-full xl:flex-1 xl:basis-1/2 xl:self-start overflow-y-auto rounded-lg shadow-sm">
+    <%= render '/public/projects/episode_table', episode: @episode, project: @episode.project %>
+  </div>
+</div>

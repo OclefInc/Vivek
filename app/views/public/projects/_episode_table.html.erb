@@ -1,4 +1,4 @@
-<table class="w-full flex-auto bg-blue-50 text-slate-700 dark:text-slate-300 shadow dark:bg-zinc-800 bg-opacity-50 rounded-2xl">
+<table class="w-full flex-auto bg-blue-50 text-slate-700 dark:text-slate-300 shadow dark:bg-zinc-800 bg-opacity-50">
   <thead class="sticky top-0 bg-indigo-100 dark:bg-zinc-800 z-10">
     <tr>
       <th class="pl-2 text-left font-semibold md:px-3 py-2 border-b border-sky-200 dark:border-zinc-600 text-sky-800 dark:text-teal-200">Lesson</th>
@@ -11,15 +11,16 @@
       </th>
     </tr>
   </thead>
-  <tbody>
-    <% @project.lessons.order(:sort).each do |lesson| %>
-      <tr class="hover:bg-sky-50 dark:hover:bg-zinc-700/50 transition-colors">
-        <td class="m-2 text-left px-3 py-2 md:px-3 py-2 border-b border-sky-200 dark:border-zinc-600 dark:text-indigo-400 hover:indigo-300">
+  <tbody data-sortable-target="tbody">
+    <% project.lessons.order(:sort).each_with_sortable_id do |lesson, sortable_id| %>
+      <% is_current = episode.try(:id) == lesson.id %>
+      <tr class="<%= is_current ? '' : 'hover:bg-sky-50 dark:hover:bg-zinc-700/50' %> transition-colors">
+        <td class="m-2 <%= is_current ? 'bg-yellow-50 dark:bg-teal-900' : '' %> text-left px-3 py-2 md:px-3 py-2 border-b border-sky-200 dark:border-zinc-600 dark:text-indigo-400 <%= is_current ? '' : 'hover:indigo-300' %>">
           <span class="inline-flex items-center gap-2">
-            <%= link_to lesson.name, project_episode_path(@project, lesson), class: 'text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300' %>
+            <%= link_to lesson.name, project_episode_path(project, lesson), class: 'text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300' %>
           </span>
         </td>
-        <td class="m-2 text-left text-sm px-3 py-2 md:px-3 py-2 border-b border-sky-200 dark:border-zinc-600 text-slate-700 dark:text-slate-300 whitespace-nowrap">
+        <td class="m-2 <%= is_current ? 'bg-yellow-50 dark:bg-teal-900' : '' %> text-left text-sm px-3 py-2 md:px-3 py-2 border-b border-sky-200 dark:border-zinc-600 text-slate-700 dark:text-slate-300 whitespace-nowrap">
           <%= lesson.date&.strftime('%b %d, %Y') || 'No date' %>
         </td>
       </tr>

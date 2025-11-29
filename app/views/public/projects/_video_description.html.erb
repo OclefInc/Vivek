@@ -67,6 +67,7 @@
       <% end %>
     </div>
     <%= @project.description %>
+    <%= render 'shared/share_buttons' %>
     <div class="xl:hidden mt-5">
       <%= render 'episode_dropdown', episode: nil, project: @project %>
     </div>

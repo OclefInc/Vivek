@@ -1,18 +1,43 @@
-<div id="<%= dom_id student %>" class="flex w-auto my-2 space-y-2 items-start">
-  <div class="py-2 px-4">
-    <%= image_tag student.display_avatar(size: 128), class:"max-w-32" if student.display_avatar(size: 128) %>
-  </div>
-  <div class="w-auto pb-2 px-4">
-    <div class="font-bold w-35 pb-2 text-sky-800 dark:text-teal-300">
-      <%= student.name %>
+ <!-- Student Profile Card -->
+<div class="bg-white dark:bg-zinc-800 rounded-2xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700 hover:border-blue-400">
+  <div class="p-6">
+    <div class="flex flex-col items-center mb-4">
+      <div class="w-24 h-24 rounded-full overflow-hidden mb-3 border-4 border-gray-200 dark:border-gray-700">
+        <% if student.display_avatar(size: 96) %>
+          <%= image_tag student.display_avatar(size: 96), alt: student.name, class: "w-full h-full object-cover" %>
+        <% else %>
+          <div class="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
+            <span class="text-white text-3xl font-bold"><%= student.initials&.upcase || student.name&.first&.upcase %></span>
+          </div>
+        <% end %>
+      </div>
+      <h3 class="text-lg font-bold text-sky-800 dark:text-teal-300 text-center mb-2">
+        <%= student.name %>
+      </h3>
+      <% if student.year_of_birth.present? %>
+        <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">Born: <%= student.year_of_birth %></p>
+      <% end %>
+      <% if student.bio.present? %>
+        <p class="text-sm text-gray-600 dark:text-gray-300 text-center max-w-2xl"><%= student.bio %></p>
+      <% end %>
     </div>
-    <p class="text-sky-700 dark:text-teal-400">
-      Born:
-      <%= student.year_of_birth %>
-    </p>
-  </div>
-  <div class="flex-auto w-full text-sky-800 dark:text-teal-400">
-    <strong>Bio:</strong>
-    <%= student.bio %>
+    <div class="grid grid-cols-2 py-3 bg-slate-50 dark:bg-zinc-900 rounded-lg divide-x divide-gray-300 dark:divide-gray-600 max-w-lg mx-auto">
+      <div class="text-center px-2">
+        <div class="text-2xl font-bold text-sky-800 dark:text-teal-300">
+          <%= student.assignments.distinct.count %>
+        </div>
+        <div class="text-xs text-sky-700 dark:text-teal-400 mt-1">
+          <%= 'Project'.pluralize(student.assignments.distinct.count) %>
+        </div>
+      </div>
+      <div class="text-center px-2">
+        <div class="text-2xl font-bold text-sky-800 dark:text-teal-300">
+          <%= student.lessons.count %>
+        </div>
+        <div class="text-xs text-sky-700 dark:text-teal-400 mt-1">
+          <%= 'Lesson'.pluralize(student.lessons.count) %>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

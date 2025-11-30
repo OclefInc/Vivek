@@ -1,0 +1,26 @@
+<% content_for :title, "Professors" %>
+<div class=" max-w-7xl mx-auto ">
+  <div class="mb-8 text-center">
+    <h1 class="text-center text-3xl md:text-4xl font-bold text-sky-800 dark:text-teal-200">Contributors</h1>
+  </div>
+  <div class="flex flex-col mt-12 mb-8">
+    <h2 class="text-2xl font-semibold text-sky-800 dark:text-teal-300 mb-2 px-1 md:px-4">Students</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-6 w-full max-w-7xl px-1 md:px-4">
+      <% Student.order(:name).each do |student| %>
+        <%= link_to student_path(student), class: "block" do %>
+          <%= render partial: "/public/students/student", locals: { student: student } %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+  <div class="flex flex-col">
+    <h2 class="text-2xl font-semibold text-sky-800 dark:text-teal-300 mb-2 px-1 md:px-4">Teachers</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-6 w-full max-w-7xl px-1 md:px-4">
+      <% Teacher.order(:name).each do |teacher| %>
+        <%= link_to professor_path(teacher), class: "block" do %>
+          <%= render partial: "/public/professors/teacher", locals: { teacher: teacher } %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

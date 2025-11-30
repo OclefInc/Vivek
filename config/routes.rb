@@ -82,5 +82,6 @@ Rails.application.routes.draw do
 
   get "/about", to: "home#about"
   get "/contact", to: "home#contact"
+  get "/contributors", to: "home#contributors"
   root to: "home#index"
 end

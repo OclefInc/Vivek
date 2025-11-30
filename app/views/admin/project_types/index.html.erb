@@ -4,23 +4,25 @@
   </div>
   <div id="project_types" class="grid grid-cols-1 md:grid-cols-2 gap-6">
     <% @project_types.each do |project_type| %>
-      <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden flex flex-col">
-        <!-- Category Header -->
-        <div class="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 px-6 py-4 border-b border-blue-200 dark:border-blue-800">
-          <div class="flex justify-between items-center">
-            <h2 class="text-xl font-semibold text-blue-700 dark:text-blue-300">
-              <%= project_type.name %>
-            </h2>
-            <%= link_to "Edit", edit_project_type_path(project_type), class: "bg-blue-500 hover:bg-blue-600 border border-blue-700 rounded px-3 py-1 text-sm text-white dark:text-gray-300 hover:text-gray-900 dark:hover:text-white" %>
+      <% cache project_type do %>
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden flex flex-col">
+          <!-- Category Header -->
+          <div class="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 px-6 py-4 border-b border-blue-200 dark:border-blue-800">
+            <div class="flex justify-between items-center">
+              <h2 class="text-xl font-semibold text-blue-700 dark:text-blue-300">
+                <%= project_type.name %>
+              </h2>
+              <%= link_to "Edit", edit_project_type_path(project_type), class: "bg-blue-500 hover:bg-blue-600 border border-blue-700 rounded px-3 py-1 text-sm text-white dark:text-gray-300 hover:text-gray-900 dark:hover:text-white" %>
+            </div>
+            <p class="text-sm text-blue-600 dark:text-blue-400 mt-1">
+              <%= pluralize(project_type.assignments.count, 'project') %>
+            </p>
           </div>
-          <p class="text-sm text-blue-600 dark:text-blue-400 mt-1">
-            <%= pluralize(project_type.assignments.count, 'project') %>
-          </p>
+          <div class="p-6 text-gray-700 dark:text-gray-300">
+            <%= project_type.description %>
+          </div>
         </div>
-        <div class="p-6 text-gray-700 dark:text-gray-300">
-          <%= project_type.description %>
-        </div>
-      </div>
+      <% end %>
     <% end %>
   </div>
 </div>

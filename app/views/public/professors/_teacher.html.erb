@@ -1,46 +1,44 @@
-<%= link_to professor_path(teacher), class: "block" do %>
-  <div class="bg-white dark:bg-zinc-800 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-200 dark:border-gray-700 hover:border-blue-400 dark:hover:border-blue-500 cursor-pointer">
-    <div class="p-6">
-      <div class="flex flex-col items-center mb-4">
-        <div class="w-24 h-24 rounded-full overflow-hidden mb-3 border-4 border-gray-200 dark:border-gray-700">
-          <% if teacher.display_avatar(size: 96) %>
-            <%= image_tag teacher.display_avatar(size: 96), alt: teacher.name, class: "w-full h-full object-cover" %>
-          <% else %>
-            <div class="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
-              <span class="text-white text-3xl font-bold"><%= teacher.initials&.upcase || teacher.name&.first&.upcase %></span>
-            </div>
-          <% end %>
-        </div>
-        <h3 class="text-lg font-bold text-sky-800 dark:text-teal-300 text-center mb-2">
-          <%= teacher.name %>
-        </h3>
+<div class="bg-white dark:bg-zinc-800 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-200 dark:border-gray-700 hover:border-blue-400 dark:hover:border-blue-500 cursor-pointer">
+  <div class="p-6">
+    <div class="flex flex-col items-center mb-4">
+      <div class="w-24 h-24 rounded-full overflow-hidden mb-3 border-4 border-gray-200 dark:border-gray-700">
+        <% if teacher.display_avatar(size: 96) %>
+          <%= image_tag teacher.display_avatar(size: 96), alt: teacher.name, class: "w-full h-full object-cover" %>
+        <% else %>
+          <div class="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
+            <span class="text-white text-3xl font-bold"><%= teacher.initials&.upcase || teacher.name&.first&.upcase %></span>
+          </div>
+        <% end %>
       </div>
-      <div class="grid grid-cols-3 py-3 bg-slate-50 dark:bg-zinc-900 rounded-lg divide-x divide-gray-300 dark:divide-gray-600">
-        <div class="text-center px-2">
-          <div class="text-2xl font-bold text-sky-800 dark:text-teal-300">
-            <%= teacher.assignments.distinct.count %>
-          </div>
-          <div class="text-xs text-sky-700 dark:text-teal-400 mt-1">
-            <%= 'Project'.pluralize(teacher.assignments.distinct.count) %>
-          </div>
+      <h3 class="text-lg font-bold text-sky-800 dark:text-teal-300 text-center mb-2">
+        <%= teacher.name %>
+      </h3>
+    </div>
+    <div class="grid grid-cols-3 py-3 bg-slate-50 dark:bg-zinc-900 rounded-lg divide-x divide-gray-300 dark:divide-gray-600">
+      <div class="text-center px-2">
+        <div class="text-2xl font-bold text-sky-800 dark:text-teal-300">
+          <%= teacher.assignments.distinct.count %>
         </div>
-        <div class="text-center px-2">
-          <div class="text-2xl font-bold text-sky-800 dark:text-teal-300">
-            <%= teacher.lessons.count %>
-          </div>
-          <div class="text-xs text-sky-700 dark:text-teal-400 mt-1">
-            <%= 'Lesson'.pluralize(teacher.lessons.count) %>
-          </div>
+        <div class="text-xs text-sky-700 dark:text-teal-400 mt-1">
+          <%= 'Project'.pluralize(teacher.assignments.distinct.count) %>
         </div>
-        <div class="text-center px-2">
-          <div class="text-2xl font-bold text-sky-800 dark:text-teal-300">
-            <%= teacher.tutorials.count %>
-          </div>
-          <div class="text-xs text-sky-700 dark:text-teal-400 mt-1">
-            <%= 'Presentation'.pluralize(teacher.tutorials.count) %>
-          </div>
+      </div>
+      <div class="text-center px-2">
+        <div class="text-2xl font-bold text-sky-800 dark:text-teal-300">
+          <%= teacher.lessons.count %>
+        </div>
+        <div class="text-xs text-sky-700 dark:text-teal-400 mt-1">
+          <%= 'Lesson'.pluralize(teacher.lessons.count) %>
+        </div>
+      </div>
+      <div class="text-center px-2">
+        <div class="text-2xl font-bold text-sky-800 dark:text-teal-300">
+          <%= teacher.tutorials.count %>
+        </div>
+        <div class="text-xs text-sky-700 dark:text-teal-400 mt-1">
+          <%= 'Presentation'.pluralize(teacher.tutorials.count) %>
         </div>
       </div>
     </div>
   </div>
-<% end %>
+</div>

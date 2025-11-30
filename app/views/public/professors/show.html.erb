@@ -26,9 +26,11 @@
       <div class="bg-slate-50 dark:bg-gray-900 p-6 overflow-x-auto">
         <div class="flex gap-6 pb-4" style="min-width: min-content;">
           <% @teacher.tutorials.uniq.each do |tutorial| %>
-            <div class="flex-none w-80">
-              <%= render partial: 'tutorial_card', locals: { tutorial: tutorial } %>
-            </div>
+            <% if tutorial.video_file.attached? %>
+              <div class="flex-none w-80">
+                <%= render partial: '/public/professors/tutorials/tutorial_card', locals: { tutorial: tutorial } %>
+              </div>
+            <% end %>
           <% end %>
         </div>
       </div>

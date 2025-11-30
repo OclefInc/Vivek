@@ -5,15 +5,14 @@ class Admin::AssignmentsController < ApplicationController
 
   # GET /assignments or /assignments.json
   def index
-    @assignments = Assignment.includes(:student, :teacher, :composition)
+    @assignments = Assignment.includes(:student, :teacher)
 
     if params[:query].present?
       query = "%#{params[:query]}%"
       @assignments = @assignments
         .joins(:student)
         .joins("LEFT JOIN teachers ON teachers.id = assignments.teacher_id")
-        .joins("LEFT JOIN compositions ON compositions.id = assignments.composition_id")
-        .where("students.name ILIKE ? OR teachers.name ILIKE ? OR compositions.name ILIKE ?",
+        .where("students.name ILIKE ? OR teachers.name ILIKE ? OR assignments.project_name ILIKE ?",
                query, query, query)
         .distinct
     end
@@ -49,16 +48,14 @@ class Admin::AssignmentsController < ApplicationController
 
   # POST /assignments or /assignments.json
   def create
-    # Find or create student, teacher, and composition by name
+    # Find or create student, teacher by name
     student = find_or_create_record(Student, assignment_params[:student_name])
     teacher = find_or_create_record(Teacher, assignment_params[:teacher_name])
-    composition = find_or_create_record(Composition, assignment_params[:composition_name])
 
     # Create assignment with the associated records
-    @assignment = Assignment.new(assignment_params.except(:student_name, :teacher_name, :composition_name))
+    @assignment = Assignment.new(assignment_params.except(:student_name, :teacher_name))
     @assignment.student_id = student&.id
     @assignment.teacher_id = teacher&.id
-    @assignment.composition_id = composition&.id
 
     respond_to do |format|
       if @assignment.save
@@ -73,18 +70,16 @@ class Admin::AssignmentsController < ApplicationController
 
   # PATCH/PUT /assignments/1 or /assignments/1.json
   def update
-    # Find or create student, teacher, and composition by name
+    # Find or create student, teacher by name
     student = find_or_create_record(Student, assignment_params[:student_name])
     teacher = find_or_create_record(Teacher, assignment_params[:teacher_name])
-    composition = find_or_create_record(Composition, assignment_params[:composition_name])
 
     # Update the lesson with other params first
-    @assignment.assign_attributes(assignment_params.except(:student_name, :teacher_name, :composition_name))
+    @assignment.assign_attributes(assignment_params.except(:student_name, :teacher_name))
 
     # Update associations using IDs to avoid conflict with string columns
     @assignment.student_id = student&.id if student
     @assignment.teacher_id = teacher&.id if teacher
-    @assignment.composition_id = composition&.id if composition
 
     respond_to do |format|
       if @assignment.save
@@ -115,7 +110,7 @@ class Admin::AssignmentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def assignment_params
-      params.require(:assignment).permit(:student_id, :teacher_name,  :composition_id, :student_name, :composition_name, :summary_video, :description, :project_type_id)
+      params.require(:assignment).permit(:student_id, :teacher_name,  :project_name, :student_name, :summary_video, :description, :project_type_id)
     end
 
     # Find or create a record by name, skipping validation

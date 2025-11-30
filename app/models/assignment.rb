@@ -25,8 +25,7 @@
 class Assignment < ApplicationRecord
   belongs_to :student
   belongs_to :teacher, optional: true
-  belongs_to :composition
-  belongs_to :project_type, optional: true
+  belongs_to :project_type
 
   has_many :lessons
   has_many :teachers, through: :lessons
@@ -38,7 +37,7 @@ class Assignment < ApplicationRecord
   has_many :subscribers, through: :subscriptions, source: :user
 
   def to_param
-    "#{id}-#{composition.name.parameterize}-#{student.name.parameterize}"
+    "#{id}-#{project_name.parameterize}-#{student.name.parameterize}"
   end
 
   def meta_description
@@ -62,7 +61,7 @@ class Assignment < ApplicationRecord
   end
 
   def name
-    "#{composition.name} (#{student.name})"
+    "#{project_name} (#{student.name})"
   end
 
   def first_lesson

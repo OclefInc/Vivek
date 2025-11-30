@@ -8,7 +8,7 @@
       <div class="flex justify-between items-start">
         <h1 class="text-2xl text-sky-800 dark:text-teal-200 font-bold border-l-4 border-teal-400 pl-3">Skill Info:</h1>
         <div class="flex items-start justify-end gap-2">
-          <%= link_to "All skills", skills_path, 
+          <%= link_to "All skills", skills_path,
           class: "rounded-xl px-3 py-2 border-2 border-indigo-300 bg-indigo-500 hover:bg-indigo-400 hover:border-indigo-100 text-white font-medium whitespace-nowrap"
           %>
         </div>
@@ -36,7 +36,7 @@
           <% @skill.lessons.each do |lesson| %>
             <tr class="hover:bg-sky-50 dark:hover:bg-zinc-700/50 transition-colors">
               <td class="px-3 py-2 border-b border-sky-200 dark:border-zinc-600"><%= link_to lesson.name, lesson, class:"text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300 px-1 py-1" %></td>
-              <td class="px-3 py-2 border-b border-sky-200 dark:border-zinc-600 text-slate-700 dark:text-slate-300"><%= lesson.assignment.composition.name %></td>
+              <td class="px-3 py-2 border-b border-sky-200 dark:border-zinc-600 text-slate-700 dark:text-slate-300"><%= lesson.assignment.project_name %></td>
               <td class="px-3 py-2 border-b border-sky-200 dark:border-zinc-600 text-slate-700 dark:text-slate-300"><%= lesson.assignment.student.name %></td>
               <td class="px-3 py-2 border-b border-sky-200 dark:border-zinc-600 text-slate-700 dark:text-slate-300"><%= lesson.assignment.teacher.name %></td>
             </tr>

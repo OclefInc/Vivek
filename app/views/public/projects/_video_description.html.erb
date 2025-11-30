@@ -4,7 +4,7 @@
       <div class=" w-full relative bg-black" style="max-width: 640px; aspect-ratio: 4/3;" data-controller="video-poster">
         <%= video_tag @project.summary_video, id: "lesson-video", style: "width: 100%; height: 100%; object-fit: contain;", controls: true, preload: "metadata", data: { video_poster_target: "video" } %>
         <div data-video-poster-target="overlay" class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none bg-black">
-          <h2 class="text-white text-3xl font-bold text-center px-8"><%= @project.composition.name %></h2>
+          <h2 class="text-white text-3xl font-bold text-center px-8"><%= @project.project_name %></h2>
           <p class="text-gray-300 text-xl mt-3"><%= @project.student.name %></p>
           <% if @project.lessons.any? %>
             <p class="text-gray-400 text-lg mt-2">
@@ -21,7 +21,7 @@
       <% if first_lesson %>
         <%= link_to project_episode_path(@project, first_lesson, {autoplay: true}), class: "block w-full relative bg-black group", style: "max-width: 640px; aspect-ratio: 4/3;" do %>
           <div class="absolute inset-0 flex flex-col items-center justify-center bg-black">
-            <h2 class="text-white text-3xl font-bold text-center px-8"><%= @project.composition.name %></h2>
+            <h2 class="text-white text-3xl font-bold text-center px-8"><%= @project.project_name %></h2>
             <p class="text-gray-300 text-xl mt-3"><%= @project.student.name %></p>
             <% if @project.lessons.any? %>
               <p class="text-gray-400 text-lg mt-2">

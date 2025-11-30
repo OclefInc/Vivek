@@ -107,7 +107,7 @@ class Lesson < ApplicationRecord
     require "vips"
 
     title = name
-    subtitle = "#{assignment.composition.name}"
+    subtitle = "#{assignment.project_name}"
     teacher_name = teacher&.name || ""
     lesson_date = date&.strftime("%b %d, %Y") || ""
 

@@ -22,7 +22,7 @@
     <% @skill.lessons.each do |lesson| %>
       <tr>
         <td class="px-3 py-2 border-b border-gray-300"><%= link_to lesson.name, lesson, class:"text-blue-500 hover:text-red-500 px-1 py-1" %></td>
-        <td class="px-3 py-2 border-b border-gray-300"><%= lesson.assignment.composition.name %></td>
+        <td class="px-3 py-2 border-b border-gray-300"><%= lesson.assignment.project_name %></td>
         <td class="px-3 py-2 border-b border-gray-300"><%= lesson.assignment.teacher.name %></td>
       </tr>
     <% end %>

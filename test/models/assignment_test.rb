@@ -4,6 +4,7 @@
 #
 #  id              :bigint           not null, primary key
 #  composition     :string
+#  project_name    :string
 #  student         :string
 #  teacher         :string
 #  created_at      :datetime         not null

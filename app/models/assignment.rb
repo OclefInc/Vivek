@@ -24,9 +24,9 @@
 #
 class Assignment < ApplicationRecord
   belongs_to :student
-  belongs_to :teacher, optional: true
   belongs_to :project_type
 
+  belongs_to :teacher, optional: true # use for default teacher when uploading new lesson videos
   has_many :lessons
   has_many :teachers, through: :lessons
   has_rich_text :description
@@ -44,7 +44,7 @@ class Assignment < ApplicationRecord
     if description.present? && description.to_plain_text.present?
       description.to_plain_text.truncate(160)
     else
-      "Project: #{name}"
+      "Project: #{project_name} (#{student.name})"
     end
   end
 
@@ -58,10 +58,6 @@ class Assignment < ApplicationRecord
     else
       "Incomplete"
     end
-  end
-
-  def name
-    "#{project_name} (#{student.name})"
   end
 
   def first_lesson

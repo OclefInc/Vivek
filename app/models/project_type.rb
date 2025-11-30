@@ -9,4 +9,5 @@
 #
 class ProjectType < ApplicationRecord
   has_many :assignments
+  has_rich_text :description
 end

@@ -38,6 +38,7 @@ Rails.application.routes.draw do
     resources :assignments do
       resources :lessons, shallow: true
     end
+    resources :project_types
     resources :chapters_tutorials, only: [ :destroy ]
 
     resources :tutorials do
@@ -59,7 +60,7 @@ Rails.application.routes.draw do
     resources :tutorials do
       resources :chapters, only: [ :show ], controller: "tutorials/chapters"
     end
-    resources :project_types
+    resources :project_types, path: "project_types", as: "public_project_types"
 
     resources :comments
     resources :likes, only: [ :create, :destroy ]

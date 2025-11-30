@@ -27,10 +27,11 @@
     <!-- Sidebar -->
     <aside class="bg-sky-100 dark:bg-gray-800 w-64 flex-shrink-0 hidden md:flex flex-col">
       <div class="p-5 border-b border-sky-200 dark:border-gray-700">
-        <span class="text-2xl font-medium text-black dark:text-gray-100"><%= link_to("The Vivek Project", root_path) %></span>
+        <span class="text-2xl font-medium text-black dark:text-gray-100"><%= link_to("Admin", admin_path) %></span>
       </div>
       <nav class="flex-1 overflow-y-auto py-4">
         <%= link_to "Projects", assignments_path, class: nav_link_class(["/admin/assignments", "/admin/lessons", "/admin", "/admin/"]) %>
+        <%= link_to "Project Types", project_types_path, class: nav_link_class(["/admin/project_types"]) %>
         <%= link_to "Students", students_path, class: nav_link_class(["/admin/students"]) %>
         <%= link_to "Teachers", teachers_path, class: nav_link_class(["/admin/teachers", "/admin/tutorials"]) %>
         <%= link_to "Skills", skill_categories_path, class: nav_link_class(["/admin/skill_categories"]) %>
@@ -56,6 +57,7 @@
           </div>
           <span>My Account</span>
         </a>
+        <%= link_to "Leave Admin", root_path, class: "block px-5 py-2 text-cyan-600 dark:text-cyan-400 hover:text-cyan-500 dark:hover:text-cyan-300 mb-2 text-center" %>
         <%= button_to "Log out", destroy_user_session_path, method: :delete, class:"w-full bg-white dark:bg-gray-700 border-sky-50 dark:border-gray-600 border-2 py-2 px-3 hover:border-sky-500 dark:hover:border-gray-500 rounded-lg text-black dark:text-gray-200" %>
       </div>
     </aside>
@@ -68,7 +70,7 @@
           </svg>
         </button>
         <span class="text-xl font-medium text-black dark:text-gray-100">
-          <%= content_for?(:page_title) ? content_for(:page_title) : (content_for?(:title) ? content_for(:title) : link_to("The Vivek Project", root_path, class: "text-black dark:text-gray-100")) %>
+          <%= content_for?(:page_title) ? content_for(:page_title) : (content_for?(:title) ? content_for(:title) : link_to("Admin", admin_path, class: "text-black dark:text-gray-100")) %>
         </span>
       </div>
     </div>
@@ -81,10 +83,11 @@
            class="fixed top-0 left-0 h-full bg-sky-100 dark:bg-gray-800 w-64 z-50 md:hidden flex flex-col"
            style="transform: translateX(-100%); transition: transform 0.3s ease-in-out;">
       <div class="p-5 border-b border-sky-200 dark:border-gray-700">
-        <span class="text-2xl font-medium text-black dark:text-gray-100"><%= link_to("The Vivek Project", root_path) %></span>
+        <span class="text-2xl font-medium text-black dark:text-gray-100"><%= link_to("Admin", admin_path) %></span>
       </div>
       <nav class="flex-1 overflow-y-auto py-4">
         <%= link_to "Projects", assignments_path, class: nav_link_class(["/admin/assignments", "/admin/lessons", "/admin", "/admin/"]) %>
+        <%= link_to "Project Types", project_types_path, class: nav_link_class(["/admin/project_types"]) %>
         <%= link_to "Students", students_path, class: nav_link_class(["/admin/students"]) %>
         <%= link_to "Teachers", teachers_path, class: nav_link_class(["/admin/teachers", "/admin/tutorials"]) %>
         <%= link_to "Skills", skill_categories_path, class: nav_link_class(["/admin/skill_categories"]) %>
@@ -110,6 +113,7 @@
           </div>
           <span>My Account</span>
         </a>
+        <%= link_to "Leave Admin", root_path, class: "block px-5 py-2 text-cyan-600 dark:text-cyan-400 hover:text-cyan-500 dark:hover:text-cyan-300 mb-2 text-center" %>
         <%= button_to "Log out", destroy_user_session_path, method: :delete, class:"w-full bg-white dark:bg-gray-700 border-sky-50 dark:border-gray-600 border-2 py-2 px-3 hover:border-sky-500 dark:hover:border-gray-500 rounded-lg text-black dark:text-gray-200" %>
       </div>
     </aside>

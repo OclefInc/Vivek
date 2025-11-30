@@ -62,7 +62,7 @@
       <% if @project.project_type %>
         <p class="text-slate-700 dark:text-slate-300 text-sm sm:text-base">
           <strong class="font-semibold text-white">Type:</strong>
-          <span><%= link_to(@project.project_type.name, @project.project_type, class:'text-indigo-300 hover:text-indigo-200') %></span>
+          <span><%= link_to(@project.project_type.name, public_project_type_path(@project.project_type), class:'text-indigo-300 hover:text-indigo-200') %></span>
         </p>
       <% end %>
     </div>

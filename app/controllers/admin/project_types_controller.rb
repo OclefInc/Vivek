@@ -20,7 +20,7 @@ module Admin
       @project_type = ProjectType.new(project_type_params)
 
       if @project_type.save
-        redirect_to admin_project_types_path, notice: "Project type was successfully created."
+        redirect_to project_types_path, notice: "Project type was successfully created."
       else
         render :new, status: :unprocessable_entity
       end
@@ -28,7 +28,7 @@ module Admin
 
     def update
       if @project_type.update(project_type_params)
-        redirect_to admin_project_types_path, notice: "Project type was successfully updated."
+        redirect_to project_types_path, notice: "Project type was successfully updated."
       else
         render :edit, status: :unprocessable_entity
       end
@@ -36,7 +36,7 @@ module Admin
 
     def destroy
       @project_type.destroy
-      redirect_to admin_project_types_path, notice: "Project type was successfully destroyed."
+      redirect_to project_types_path, notice: "Project type was successfully destroyed."
     end
 
     private

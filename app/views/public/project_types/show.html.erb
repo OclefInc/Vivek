@@ -5,7 +5,9 @@
       <%= @project_type.name %>
     </p>
   </div>
-  <%= @project_type.description %>
+  <div class="mb-8 text-slate-800 dark:text-white text-center text-lg max-w-lg mx-auto">
+    <%= @project_type.description %>
+  </div>
 </div>
 <div class="flex overflow-x-auto gap-3 lg:gap-6 w-full px-1 md:px-4 mb-8 pb-4 snap-x">
   <% @project_type.assignments.each do |project| %>

@@ -32,6 +32,8 @@ class Tutorial < ApplicationRecord
   has_one_attached :video_file
   has_rich_text :description
 
+  has_many :comments, as: :annotation
+
   before_validation :assign_default_name, on: :create
   before_create :assign_sort_position
 

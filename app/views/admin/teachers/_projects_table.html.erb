@@ -7,7 +7,7 @@
     </tr>
   </thead>
   <tbody>
-    <% @teacher.projects.sort_by(&:name).each do |project| %>
+    <% @teacher.projects.sort_by(&:project_name).each do |project| %>
       <tr>
         <td class="text-left py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-300"><%= link_to project.project_name, project, class:"text-blue-500 hover:text-red-500 dark:text-blue-400 dark:hover:text-red-400" %></td>
         <td class="text-left md:px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-300"><%= project.student.name %></td>

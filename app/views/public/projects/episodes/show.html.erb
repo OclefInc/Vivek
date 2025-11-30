@@ -7,18 +7,20 @@
 <% elsif @episode.project.student.profile_picture.attached? %>
   <% content_for :meta_image, rails_representation_url(@episode.project.student.display_avatar(size: 600), only_path: false) %>
 <% end %>
-<%= render '/public/projects/header', project: @episode.project %>
-<div class="xl:flex xl:gap-8 py-4">
-  <div class="xl:min-w-[640px] xl:max-w-[640px] md:flex-1 md:basis-1/2 mb-4 xl:mb-0">
-    <div class="rounded-lg overflow-hidden shadow-sm">
-      <%= render 'video_description' %>
+<div class="flex flex-col items-center max-w-7xl mx-auto ">
+  <%= render '/public/projects/header', project: @episode.project %>
+  <div class="xl:flex xl:gap-8 py-4">
+    <div class="xl:min-w-[640px] xl:max-w-[640px] md:flex-1 md:basis-1/2 mb-4 xl:mb-0">
+      <div class="rounded-lg overflow-hidden shadow-sm">
+        <%= render 'video_description' %>
+      </div>
+      <!-- Comments Section -->
+      <div class="w-full mt-8">
+        <turbo-frame id="comments_module" src="<%= comments_path(annotation_type: @episode.class.name, annotation_id: @episode.id) %>"></turbo-frame>
+      </div>
     </div>
-    <!-- Comments Section -->
-    <div class="w-full mt-8">
-      <turbo-frame id="comments_module" src="<%= comments_path(annotation_type: @episode.class.name, annotation_id: @episode.id) %>"></turbo-frame>
+    <div class="hidden xl:block w-full xl:flex-1 xl:basis-1/2 xl:self-start overflow-y-auto rounded-lg shadow-sm">
+      <%= render '/public/projects/episode_table', episode: @episode, project: @episode.project %>
     </div>
-  </div>
-  <div class="hidden xl:block w-full xl:flex-1 xl:basis-1/2 xl:self-start overflow-y-auto rounded-lg shadow-sm">
-    <%= render '/public/projects/episode_table', episode: @episode, project: @episode.project %>
   </div>
 </div>

@@ -1,63 +1,65 @@
 <% content_for :title, "Student: #{@student.name}" %>
-<div class="w-full mx-auto space-y-6 font-sans">
-  <% if notice.present? %>
-    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
-  <% end %>
-  <!-- Student Profile Card -->
-  <div class="bg-white dark:bg-zinc-800 rounded-2xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700">
-    <div class="p-6">
-      <div class="flex flex-col items-center mb-4">
-        <div class="w-24 h-24 rounded-full overflow-hidden mb-3 border-4 border-gray-200 dark:border-gray-700">
-          <% if @student.display_avatar(size: 96) %>
-            <%= image_tag @student.display_avatar(size: 96), alt: @student.name, class: "w-full h-full object-cover" %>
-          <% else %>
-            <div class="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
-              <span class="text-white text-3xl font-bold"><%= @student.initials&.upcase || @student.name&.first&.upcase %></span>
+<div class="flex flex-col items-center max-w-7xl mx-auto ">
+  <div class="w-full mx-auto space-y-6 font-sans">
+    <% if notice.present? %>
+      <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
+    <% end %>
+    <!-- Student Profile Card -->
+    <div class="bg-white dark:bg-zinc-800 rounded-2xl shadow-lg overflow-hidden border border-gray-200 dark:border-gray-700">
+      <div class="p-6">
+        <div class="flex flex-col items-center mb-4">
+          <div class="w-24 h-24 rounded-full overflow-hidden mb-3 border-4 border-gray-200 dark:border-gray-700">
+            <% if @student.display_avatar(size: 96) %>
+              <%= image_tag @student.display_avatar(size: 96), alt: @student.name, class: "w-full h-full object-cover" %>
+            <% else %>
+              <div class="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
+                <span class="text-white text-3xl font-bold"><%= @student.initials&.upcase || @student.name&.first&.upcase %></span>
+              </div>
+            <% end %>
+          </div>
+          <h3 class="text-lg font-bold text-sky-800 dark:text-teal-300 text-center mb-2">
+            <%= @student.name %>
+          </h3>
+          <% if @student.year_of_birth.present? %>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">Born: <%= @student.year_of_birth %></p>
+          <% end %>
+          <% if @student.bio.present? %>
+            <p class="text-sm text-gray-600 dark:text-gray-300 text-center max-w-2xl"><%= @student.bio %></p>
+          <% end %>
+        </div>
+        <div class="grid grid-cols-2 py-3 bg-slate-50 dark:bg-zinc-900 rounded-lg divide-x divide-gray-300 dark:divide-gray-600 max-w-lg mx-auto">
+          <div class="text-center px-2">
+            <div class="text-2xl font-bold text-sky-800 dark:text-teal-300">
+              <%= @student.assignments.distinct.count %>
+            </div>
+            <div class="text-xs text-sky-700 dark:text-teal-400 mt-1">
+              <%= 'Project'.pluralize(@student.assignments.distinct.count) %>
+            </div>
+          </div>
+          <div class="text-center px-2">
+            <div class="text-2xl font-bold text-sky-800 dark:text-teal-300">
+              <%= @student.lessons.count %>
+            </div>
+            <div class="text-xs text-sky-700 dark:text-teal-400 mt-1">
+              <%= 'Lesson'.pluralize(@student.lessons.count) %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Projects Section -->
+    <div class="bg-white dark:bg-zinc-800 rounded-2xl shadow-lg overflow-hidden">
+      <div class="bg-gradient-to-r from-slate-50 to-blue-50 dark:from-zinc-900 dark:to-zinc-800 px-6 pt-6 pb-3">
+        <h1 class="text-2xl text-slate-900 dark:text-teal-200 font-semibold">Projects</h1>
+      </div>
+      <div class="bg-slate-50 dark:bg-zinc-900 p-6 overflow-x-auto">
+        <div class="flex gap-6 pb-4" style="min-width: min-content;">
+          <% @student.assignments.includes(:lessons).sort_by { |a| a.lessons.minimum(:date) || Date.new(1900, 1, 1) }.reverse.each do |assignment| %>
+            <div class="flex-none w-80">
+              <%= render partial: 'project_card', locals: { project: assignment } %>
             </div>
           <% end %>
         </div>
-        <h3 class="text-lg font-bold text-sky-800 dark:text-teal-300 text-center mb-2">
-          <%= @student.name %>
-        </h3>
-        <% if @student.year_of_birth.present? %>
-          <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">Born: <%= @student.year_of_birth %></p>
-        <% end %>
-        <% if @student.bio.present? %>
-          <p class="text-sm text-gray-600 dark:text-gray-300 text-center max-w-2xl"><%= @student.bio %></p>
-        <% end %>
-      </div>
-      <div class="grid grid-cols-2 py-3 bg-slate-50 dark:bg-zinc-900 rounded-lg divide-x divide-gray-300 dark:divide-gray-600 max-w-lg mx-auto">
-        <div class="text-center px-2">
-          <div class="text-2xl font-bold text-sky-800 dark:text-teal-300">
-            <%= @student.assignments.distinct.count %>
-          </div>
-          <div class="text-xs text-sky-700 dark:text-teal-400 mt-1">
-            <%= 'Project'.pluralize(@student.assignments.distinct.count) %>
-          </div>
-        </div>
-        <div class="text-center px-2">
-          <div class="text-2xl font-bold text-sky-800 dark:text-teal-300">
-            <%= @student.lessons.count %>
-          </div>
-          <div class="text-xs text-sky-700 dark:text-teal-400 mt-1">
-            <%= 'Lesson'.pluralize(@student.lessons.count) %>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <!-- Projects Section -->
-  <div class="bg-white dark:bg-zinc-800 rounded-2xl shadow-lg overflow-hidden">
-    <div class="bg-gradient-to-r from-slate-50 to-blue-50 dark:from-zinc-900 dark:to-zinc-800 px-6 pt-6 pb-3">
-      <h1 class="text-2xl text-slate-900 dark:text-teal-200 font-semibold">Projects</h1>
-    </div>
-    <div class="bg-slate-50 dark:bg-zinc-900 p-6 overflow-x-auto">
-      <div class="flex gap-6 pb-4" style="min-width: min-content;">
-        <% @student.assignments.includes(:lessons).sort_by { |a| a.lessons.minimum(:date) || Date.new(1900, 1, 1) }.reverse.each do |assignment| %>
-          <div class="flex-none w-80">
-            <%= render partial: 'project_card', locals: { project: assignment } %>
-          </div>
-        <% end %>
       </div>
     </div>
   </div>

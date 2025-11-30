@@ -6,11 +6,11 @@
     <% end %>
     <%= render @student %>
     <!-- Projects Section -->
-    <div class="bg-white dark:bg-zinc-800 rounded-2xl shadow-lg overflow-hidden">
-      <div class="bg-gradient-to-r from-slate-50 to-blue-50 dark:from-zinc-900 dark:to-zinc-800 px-6 pt-6 pb-3">
+    <div class="bg-white dark:bg-gray-800 rounded shadow-lg overflow-hidden">
+      <div class="bg-gradient-to-r from-slate-50 to-blue-50 dark:from-gray-800 dark:to-gray-900 px-6 pt-6 pb-3">
         <h1 class="text-2xl text-slate-900 dark:text-teal-200 font-semibold">Projects</h1>
       </div>
-      <div class="bg-slate-50 dark:bg-zinc-900 p-6 overflow-x-auto">
+      <div class="bg-slate-50 dark:bg-gray-900 p-6 overflow-x-auto">
         <div class="flex gap-6 pb-4" style="min-width: min-content;">
           <% @student.assignments.includes(:lessons).sort_by { |a| a.lessons.minimum(:date) || Date.new(1900, 1, 1) }.reverse.each do |assignment| %>
             <div class="flex-none w-80">

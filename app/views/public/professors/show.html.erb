@@ -5,11 +5,11 @@
       <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
     <% end %>
     <%= render partial: 'teacher', locals: { teacher: @teacher } %>
-    <div class="bg-white dark:bg-zinc-800 rounded-2xl shadow-lg overflow-hidden">
-      <div class="bg-gradient-to-r from-slate-50 to-blue-50 dark:from-zinc-900 dark:to-zinc-800 px-6 pt-6 pb-3">
+    <div class="bg-white dark:bg-gray-800 rounded shadow-lg overflow-hidden">
+      <div class="bg-gradient-to-r from-slate-50 to-blue-50 dark:to-gray-900 dark:from-gray-800 px-6 pt-6 pb-3">
         <h1 class="text-2xl text-slate-900 dark:text-teal-200 font-semibold">Projects</h1>
       </div>
-      <div class="bg-slate-50 dark:bg-zinc-900 p-6 overflow-x-auto">
+      <div class="bg-slate-50 dark:bg-gray-900 p-6 overflow-x-auto">
         <div class="flex gap-6 pb-4" style="min-width: min-content;">
           <% @teacher.assignments.uniq.each do |assignment| %>
             <div class="flex-none w-80">
@@ -19,11 +19,11 @@
         </div>
       </div>
     </div>
-    <div class="bg-white dark:bg-zinc-800 rounded-2xl shadow-lg overflow-hidden">
-      <div class="bg-gradient-to-r from-slate-50 to-blue-50 dark:from-zinc-900 dark:to-zinc-800 px-6 pt-6 pb-3">
+    <div class="bg-white dark:bg-gray-800 rounded shadow-lg overflow-hidden">
+      <div class="bg-gradient-to-r from-slate-50 to-blue-50 dark:to-gray-900 dark:from-gray-800 px-6 pt-6 pb-3">
         <h1 class="text-2xl text-slate-900 dark:text-teal-200 font-semibold">Presentations</h1>
       </div>
-      <div class="bg-slate-50 dark:bg-zinc-900 p-6 overflow-x-auto">
+      <div class="bg-slate-50 dark:bg-gray-900 p-6 overflow-x-auto">
         <div class="flex gap-6 pb-4" style="min-width: min-content;">
           <% @teacher.tutorials.uniq.each do |tutorial| %>
             <div class="flex-none w-80">

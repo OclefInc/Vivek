@@ -28,7 +28,7 @@
     <% @project_types.each do |project_type| %>
       <% cache project_type do %>
         <% if project_type.assignments.any? %>
-          <section class="bg-gray-50 dark:bg-gray-800 p-6  rounded-lg border-2 border-blue-200 dark:border-indigo-700">
+          <section class="bg-gray-100 dark:bg-gray-800 p-6  rounded-lg border-2 border-blue-200 dark:border-indigo-700">
             <div class="flex items-center gap-3 mb-4">
               <div class="text-indigo-600 dark:text-indigo-400">
                 <%= project_type_icon(project_type) %>

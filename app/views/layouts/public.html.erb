@@ -46,7 +46,7 @@
             <%= link_to "The Vivek Project", root_path, class: "text-xl font-medium text-white hover:text-teal-200" %>
           </div>
           <!-- Desktop Navigation -->
-          <nav class="hidden md:flex items-center gap-6">
+          <nav class="hidden xl:flex items-center gap-6">
             <%= link_to "About", about_path, class: "text-teal-200 hover:text-white px-3 py-2 rounded-lg transition-colors #{request.path == about_path ? 'bg-white/10' : ''}" %>
             <%= link_to "Project Types", public_project_types_path, class: "text-teal-200 hover:text-white px-3 py-2 rounded-lg transition-colors #{request.path == project_types_path ? 'bg-white/10' : ''}" %>
             <%= link_to "Contributors", contributors_path, class: "text-teal-200 hover:text-white px-3 py-2 rounded-lg transition-colors #{request.path == contributors_path ? 'bg-white/10' : ''}" %>
@@ -91,7 +91,7 @@
             <% end %>
           </nav>
           <!-- Mobile menu button -->
-          <button data-action="click->sidebar#toggle" class="md:hidden p-2 rounded-lg hover:bg-white/10">
+          <button data-action="click->sidebar#toggle" class="xl:hidden p-2 rounded-lg hover:bg-white/10">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
             </svg>
@@ -101,11 +101,11 @@
     </header>
     <!-- Mobile menu overlay -->
     <div data-sidebar-target="overlay"
-         class="hidden fixed inset-0 bg-black bg-opacity-50 z-40 md:hidden"
+         class="hidden fixed inset-0 bg-black bg-opacity-50 z-40 xl:hidden"
          data-action="click->sidebar#close"></div>
     <!-- Mobile menu -->
     <aside data-sidebar-target="menu"
-           class="fixed top-0 right-0 h-full bg-gradient-to-b from-indigo-800 to-teal-500 w-64 z-50 md:hidden flex flex-col text-white"
+           class="fixed top-0 right-0 h-full bg-gradient-to-b from-indigo-800 to-teal-500 w-64 z-50 xl:hidden flex flex-col text-white"
            style="transform: translateX(100%); transition: transform 0.3s ease-in-out;">
       <div class="p-5 border-b border-teal-600">
         <span class="text-xl font-medium">

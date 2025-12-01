@@ -146,6 +146,8 @@ class Lesson < ApplicationRecord
   after_create_commit :regenerate_assignment_thumbnail
   after_destroy_commit :regenerate_assignment_thumbnail
   after_update_commit :regenerate_assignment_thumbnail, if: :saved_change_to_date?
+  after_commit :update_teacher_assignments_count
+  after_commit :update_student_lessons_count
 
   def notify_subscribers
     assignment.subscribers.each do |user|
@@ -169,6 +171,31 @@ class Lesson < ApplicationRecord
       teacher_id: teacher_id,
       date: date&.to_s
     })
+  end
+
+  def update_teacher_assignments_count
+    if destroyed?
+      teacher&.update_assignments_count
+    elsif saved_change_to_teacher_id?
+      Teacher.find_by(id: teacher_id_before_last_save)&.update_assignments_count
+      teacher&.update_assignments_count
+    else
+      teacher&.update_assignments_count
+    end
+  end
+
+  def update_student_lessons_count
+    if destroyed?
+      assignment&.student&.update_lessons_count
+    elsif saved_change_to_assignment_id?
+      if assignment_id_before_last_save
+        old_assignment = Assignment.find_by(id: assignment_id_before_last_save)
+        old_assignment&.student&.update_lessons_count
+      end
+      assignment&.student&.update_lessons_count
+    else
+      assignment&.student&.update_lessons_count
+    end
   end
 
     private

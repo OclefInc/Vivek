@@ -3,10 +3,12 @@
 # Table name: students
 #
 #  id                 :bigint           not null, primary key
+#  assignments_count  :integer          default(0), not null
 #  avatar_crop_height :integer
 #  avatar_crop_width  :integer
 #  avatar_crop_x      :integer
 #  avatar_crop_y      :integer
+#  lessons_count      :integer          default(0), not null
 #  name               :string
 #  year_of_birth      :integer
 #  created_at         :datetime         not null
@@ -64,6 +66,17 @@ class Student < ApplicationRecord
 
   def using_user_avatar?
     user.present? && (user.avatar.attached? || user.picture_url.present?)
+  end
+
+  def update_lessons_count
+    update_columns(lessons_count: lessons.count)
+  end
+
+  def self.reset_all_counters
+    find_each do |student|
+      Student.reset_counters(student.id, :assignments)
+      student.update_lessons_count
+    end
   end
 
   private

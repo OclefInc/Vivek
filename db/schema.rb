@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_30_232436) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_01_034916) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_stat_statements"
@@ -183,6 +183,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_30_232436) do
     t.integer "avatar_crop_y"
     t.integer "avatar_crop_width"
     t.integer "avatar_crop_height"
+    t.integer "assignments_count", default: 0, null: false
+    t.integer "lessons_count", default: 0, null: false
   end
 
   create_table "subscriptions", force: :cascade do |t|
@@ -204,6 +206,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_30_232436) do
     t.integer "avatar_crop_y"
     t.integer "avatar_crop_width"
     t.integer "avatar_crop_height"
+    t.integer "tutorials_count", default: 0, null: false
+    t.integer "assignments_count", default: 0, null: false
   end
 
   create_table "tutorials", force: :cascade do |t|

@@ -3,10 +3,12 @@
 # Table name: students
 #
 #  id                 :bigint           not null, primary key
+#  assignments_count  :integer          default(0), not null
 #  avatar_crop_height :integer
 #  avatar_crop_width  :integer
 #  avatar_crop_x      :integer
 #  avatar_crop_y      :integer
+#  lessons_count      :integer          default(0), not null
 #  name               :string
 #  year_of_birth      :integer
 #  created_at         :datetime         not null

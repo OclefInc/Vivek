@@ -3,12 +3,14 @@
 # Table name: teachers
 #
 #  id                 :bigint           not null, primary key
+#  assignments_count  :integer          default(0), not null
 #  avatar_crop_height :integer
 #  avatar_crop_width  :integer
 #  avatar_crop_x      :integer
 #  avatar_crop_y      :integer
 #  city               :string
 #  name               :string
+#  tutorials_count    :integer          default(0), not null
 #  created_at         :datetime         not null
 #  updated_at         :datetime         not null
 #  user_id            :integer
@@ -63,6 +65,10 @@ class Teacher < ApplicationRecord
     user.present? && (user.avatar.attached? || user.picture_url.present?)
   end
 
+  def update_assignments_count
+    update_columns(assignments_count: assignments.distinct.count)
+  end
+
   private
 
     def touch_assignments
@@ -70,5 +76,12 @@ class Teacher < ApplicationRecord
       lessons.find_each(&:touch)
       # Touch all assignments where this teacher taught a lesson to bust cache
       assignments.distinct.find_each(&:touch)
+    end
+
+    def self.reset_all_counters
+      find_each do |teacher|
+        Teacher.reset_counters(teacher.id, :tutorials)
+        teacher.update_assignments_count
+      end
     end
 end

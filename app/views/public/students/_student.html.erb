@@ -18,18 +18,18 @@
     <div class="grid grid-cols-2 py-3 bg-slate-50 dark:bg-gray-900 rounded-lg divide-x divide-gray-300 dark:divide-gray-600 max-w-lg mx-auto">
       <div class="text-center px-2">
         <div class="text-2xl font-bold text-sky-800 dark:text-teal-300">
-          <%= student.assignments.distinct.count %>
+          <%= student.assignments_count %>
         </div>
         <div class="text-xs text-sky-700 dark:text-teal-400 mt-1">
-          <%= 'Project'.pluralize(student.assignments.distinct.count) %>
+          <%= 'Project'.pluralize(student.assignments_count) %>
         </div>
       </div>
       <div class="text-center px-2">
         <div class="text-2xl font-bold text-sky-800 dark:text-teal-300">
-          <%= student.lessons.count %>
+          <%= student.lessons_count %>
         </div>
         <div class="text-xs text-sky-700 dark:text-teal-400 mt-1">
-          <%= 'Lesson'.pluralize(student.lessons.count) %>
+          <%= 'Lesson'.pluralize(student.lessons_count) %>
         </div>
       </div>
     </div>

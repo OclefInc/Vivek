@@ -23,7 +23,7 @@
 #  fk_rails_...  (project_type_id => project_types.id)
 #
 class Assignment < ApplicationRecord
-  belongs_to :student, touch: true
+  belongs_to :student, touch: true, counter_cache: true
   belongs_to :project_type, touch: true
 
   belongs_to :teacher, optional: true # use for default teacher when uploading new lesson videos

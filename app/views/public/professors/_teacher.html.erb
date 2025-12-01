@@ -14,29 +14,21 @@
         <%= teacher.name %>
       </h3>
     </div>
-    <div class="grid grid-cols-3 py-3 bg-slate-50 dark:bg-gray-900 rounded-lg divide-x divide-gray-300 dark:divide-gray-600">
+    <div class="grid grid-cols-2 py-3 bg-slate-50 dark:bg-gray-900 rounded-lg divide-x divide-gray-300 dark:divide-gray-600">
       <div class="text-center px-2">
         <div class="text-2xl font-bold text-sky-800 dark:text-teal-300">
-          <%= teacher.assignments.distinct.count %>
+          <%= teacher.assignments_count %>
         </div>
         <div class="text-xs text-sky-700 dark:text-teal-400 mt-1">
-          <%= 'Project'.pluralize(teacher.assignments.distinct.count) %>
+          <%= 'Project'.pluralize(teacher.assignments_count) %>
         </div>
       </div>
       <div class="text-center px-2">
         <div class="text-2xl font-bold text-sky-800 dark:text-teal-300">
-          <%= teacher.lessons.count %>
+          <%= teacher.tutorials_count %>
         </div>
         <div class="text-xs text-sky-700 dark:text-teal-400 mt-1">
-          <%= 'Lesson'.pluralize(teacher.lessons.count) %>
-        </div>
-      </div>
-      <div class="text-center px-2">
-        <div class="text-2xl font-bold text-sky-800 dark:text-teal-300">
-          <%= teacher.tutorials.count %>
-        </div>
-        <div class="text-xs text-sky-700 dark:text-teal-400 mt-1">
-          <%= 'Presentation'.pluralize(teacher.tutorials.count) %>
+          <%= 'Presentation'.pluralize(teacher.tutorials_count) %>
         </div>
       </div>
     </div>

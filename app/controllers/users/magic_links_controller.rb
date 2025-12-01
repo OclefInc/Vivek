@@ -1,4 +1,5 @@
 class Users::MagicLinksController < ApplicationController
+  skip_before_action :verify_authenticity_token
   def create
     @user = User.find_by(email: params[:email]&.downcase&.strip)
 
@@ -6,6 +7,7 @@ class Users::MagicLinksController < ApplicationController
       @user.generate_magic_link_token!
       if Rails.env.development?
         magic_link = users_magic_link_url(token: @user.magic_link_token)
+        Rails.logger.info "Magic link for #{@user.email}: #{magic_link}"
         flash[:notice] = "Development Mode: Click here to login: <a href='#{magic_link}' class='underline text-blue-600'>#{magic_link}</a>".html_safe
       else
         @user.send_magic_link

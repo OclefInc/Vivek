@@ -73,7 +73,7 @@
     <%= @project.description %>
     <div class="mt-4 flex items-center justify-between">
       <%= render 'shared/share_buttons' %>
-      <%= render partial: "public/bookmarks/button", locals: { bookmarkable: @project } %>
+      <%= turbo_frame_tag "bookmark_button_#{dom_id(@project)}", src: button_public_bookmarks_path(bookmarkable_id: @project.id, bookmarkable_type: @project.class.name), class: "flex items-center" %>
     </div>
     <div class="xl:hidden mt-5">
       <%= render 'episode_dropdown', episode: nil, project: @project %>

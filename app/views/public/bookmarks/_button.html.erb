@@ -1,5 +1,5 @@
-<% if user_signed_in? %>
-  <div id="bookmark_button_<%= dom_id(bookmarkable) %>" class="flex items-center">
+<%= turbo_frame_tag "bookmark_button_#{dom_id(bookmarkable)}", class: "flex items-center" do %>
+  <% if user_signed_in? %>
     <% bookmark = current_user.bookmarks.find_by(bookmarkable: bookmarkable) %>
     <% if bookmark %>
       <%= button_to public_bookmark_path(bookmark), method: :delete, form_class: "inline-flex", class: "p-0 bg-transparent border-0 flex items-center text-sky-600 hover:text-sky-700 dark:text-teal-400 dark:hover:text-teal-300 transition-colors", title: "Remove bookmark" do %>
@@ -14,5 +14,5 @@
         </svg>
       <% end %>
     <% end %>
-  </div>
+  <% end %>
 <% end %>

@@ -1,10 +1,16 @@
 module Public
   class BookmarksController < ApplicationController
     layout "public"
-    before_action :authenticate_user!
+    before_action :authenticate_user!, except: [ :button ]
 
     def index
       @bookmarks = current_user.bookmarks.includes(:bookmarkable).order(created_at: :desc)
+    end
+
+    def button
+      @bookmarkable = GlobalID::Locator.locate params[:bookmarkable_sgid]
+      @bookmarkable ||= params[:bookmarkable_type].constantize.find(params[:bookmarkable_id])
+      render partial: "public/bookmarks/button", locals: { bookmarkable: @bookmarkable }
     end
 
     def create

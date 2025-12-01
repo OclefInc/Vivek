@@ -12,7 +12,7 @@
     <%= tutorial.description %>
     <div class="mt-4 flex items-center justify-between">
       <%= render 'shared/share_buttons' %>
-      <%= render partial: "public/bookmarks/button", locals: { bookmarkable: tutorial } %>
+      <%= turbo_frame_tag "bookmark_button_#{dom_id(tutorial)}", src: button_public_bookmarks_path(bookmarkable_id: tutorial.id, bookmarkable_type: tutorial.class.name), class: "flex items-center" %>
     </div>
   </div>
 </div>

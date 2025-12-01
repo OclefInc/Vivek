@@ -65,7 +65,9 @@ Rails.application.routes.draw do
     resources :project_types, path: "project_types", as: "public_project_types"
 
     resources :comments
-    resources :bookmarks, only: [ :index, :create, :destroy ], path: "bookmarks", as: "public_bookmarks"
+    resources :bookmarks, only: [ :index, :create, :destroy ], as: "public_bookmarks" do
+      get :button, on: :collection
+    end
     resources :likes, only: [ :create, :destroy ]
     get "subscriptions", to: "subscriptions#index", as: :subscriptions
   end

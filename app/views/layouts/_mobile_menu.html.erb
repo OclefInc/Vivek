@@ -1,0 +1,70 @@
+<!-- Mobile menu overlay -->
+<div data-sidebar-target="overlay"
+         class="hidden fixed inset-0 bg-black/50 z-60 xl:hidden"
+         data-action="click->sidebar#close"></div>
+<!-- Mobile menu -->
+<aside data-sidebar-target="menu"
+           class="fixed top-0 right-0 h-full bg-gradient-to-b to-indigo-800 from-teal-500 w-64 z-60 xl:hidden flex flex-col text-white"
+           style="transform: translateX(100%); transition: transform 0.3s ease-in-out;">
+  <div class="p-5 border-b border-teal-600">
+    <span class="text-xl font-medium">
+      The Vivek Project
+    </span>
+  </div>
+  <nav class="flex-1 overflow-y-auto py-4 px-2">
+    <div class="mb-4 px-3">
+      <%= form_with url: projects_path, method: :get, class: "relative" do |form| %>
+        <%= form.text_field :query, value: params[:query], placeholder: "Search projects...", class: "w-full bg-white/10 text-white placeholder-teal-200/70 border-none rounded-lg py-2 px-4 pl-10 focus:ring-2 focus:ring-teal-300 text-sm" %>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-teal-200">
+          <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+        </svg>
+      <% end %>
+    </div>
+    <%= link_to "About", about_path, class: "block text-teal-200 hover:text-white hover:bg-white/10 px-3 py-2 rounded-lg mb-1" %>
+    <%= link_to "Project Types", public_project_types_path, class: "block text-teal-200 hover:text-white hover:bg-white/10 px-3 py-2 rounded-lg mb-1" %>
+    <%= link_to "Contributors", contributors_path, class: "block text-teal-200 hover:text-white hover:bg-white/10 px-3 py-2 rounded-lg mb-1" %>
+    <%= link_to "Contact", contact_path, class: "block text-teal-200 hover:text-white hover:bg-white/10 px-3 py-2 rounded-lg mb-1" %>
+  </nav>
+  <div class="py-4 px-2 border-t border-teal-600">
+    <% if user_signed_in? %>
+      <% if current_user.is_employee? %>
+        <%= link_to admin_path, class: "block text-teal-200 hover:text-white hover:bg-white/10 px-3 py-2 rounded-lg mb-1 flex items-center" do %>
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 0 1-1.043 3.296 3.745 3.745 0 0 1-3.296 1.043A3.745 3.745 0 0 1 12 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 0 1-3.296-1.043 3.745 3.745 0 0 1-1.043-3.296A3.745 3.745 0 0 1 3 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 0 1 1.043-3.296 3.746 3.746 0 0 1 3.296-1.043A3.746 3.746 0 0 1 12 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 0 1 3.296 1.043 3.746 3.746 0 0 1 1.043 3.296A3.745 3.745 0 0 1 21 12Z" />
+          </svg>
+          Admin
+        <% end %>
+      <% end %>
+      <%= link_to edit_user_registration_path, class: "block text-teal-200 hover:text-white hover:bg-white/10 px-3 py-2 rounded-lg mb-1 flex items-center" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+        </svg>
+        Account
+      <% end %>
+      <%= link_to subscriptions_path, class: "block text-teal-200 hover:text-white hover:bg-white/10 px-3 py-2 rounded-lg mb-1 flex items-center" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.31 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0" />
+        </svg>
+        Subscriptions
+      <% end %>
+      <%= link_to public_bookmarks_path, class: "block text-teal-200 hover:text-white hover:bg-white/10 px-3 py-2 rounded-lg mb-1 flex items-center" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 0 1 11.186 0Z" />
+        </svg>
+        Bookmarks
+      <% end %>
+    <% end %>
+    <% if user_signed_in? %>
+      <%= button_to destroy_user_session_path, method: :delete, class: "w-full text-left px-3 py-2 text-sm text-red-300 hover:text-red-200 hover:bg-white/10 flex items-center rounded-lg" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
+        </svg>
+        Log out
+      <% end %>
+    <% else %>
+      <%= link_to new_user_session_path, class: "w-full inline-flex items-center justify-center bg-white opacity-90 hover:opacity-100 border-lime-600 border-2 py-2 px-4 hover:border-teal-600 rounded-xl text-black" do %>
+        Login
+      <% end %>
+    <% end %>
+  </div>
+</aside>

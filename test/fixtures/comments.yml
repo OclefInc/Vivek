@@ -14,11 +14,9 @@
 #  user_id          :integer
 #
 one:
-  user_id: 1
-  annotation_id: 1
-  annotation_type: MyString
+  user: one
+  annotation: one (Assignment)
 
 two:
-  user_id: 1
-  annotation_id: 1
-  annotation_type: MyString
+  user: two
+  annotation: two (Assignment)

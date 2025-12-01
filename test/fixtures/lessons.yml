@@ -19,8 +19,10 @@
 #
 one:
   name: MyString
-  assignment_id: 1
+  assignment: one
+  teacher: one
 
 two:
   name: MyString
-  assignment_id: 1
+  assignment: two
+  teacher: two

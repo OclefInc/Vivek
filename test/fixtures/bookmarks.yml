@@ -22,10 +22,8 @@
 #
 one:
   user: one
-  bookmarkable: one
-  bookmarkable_type: Bookmarkable
+  bookmarkable: one (Assignment)
 
 two:
   user: two
-  bookmarkable: two
-  bookmarkable_type: Bookmarkable
+  bookmarkable: two (Assignment)

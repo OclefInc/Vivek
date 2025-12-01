@@ -40,8 +40,14 @@
 #  index_users_on_magic_link_token      (magic_link_token) UNIQUE
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
-one: {}
-# column: value
-#
-two: {}
-# column: value
+one:
+  email: one@example.com
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
+  confirmed_at: <%= Time.now %>
+  name: "User One"
+
+two:
+  email: two@example.com
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
+  confirmed_at: <%= Time.now %>
+  name: "User Two"

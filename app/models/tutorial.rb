@@ -40,6 +40,10 @@ class Tutorial < ApplicationRecord
 
   validates_presence_of :name
 
+  def to_param
+    "#{id}-#{name.parameterize}"
+  end
+
   def views
   end
 

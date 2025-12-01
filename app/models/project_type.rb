@@ -10,4 +10,8 @@
 class ProjectType < ApplicationRecord
   has_many :assignments
   has_rich_text :description
+
+  def to_param
+    "#{id}-#{name.parameterize}"
+  end
 end

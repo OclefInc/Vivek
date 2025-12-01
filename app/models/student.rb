@@ -28,6 +28,10 @@ class Student < ApplicationRecord
   validates_presence_of :name
   validate :profile_picture_is_image_type
 
+  def to_param
+    "#{id}-#{name.parameterize}"
+  end
+
   def profile_picture_is_image_type
     unless profile_picture.present? && profile_picture.content_type.starts_with?("image/")
       errors.add(:profile_picture, "must be an image file")

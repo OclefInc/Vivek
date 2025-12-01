@@ -27,6 +27,10 @@ class Teacher < ApplicationRecord
 
   after_save :touch_assignments
 
+  def to_param
+    "#{id}-#{name.parameterize}"
+  end
+
   def projects
     assignments.uniq
   end

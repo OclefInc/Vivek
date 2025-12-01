@@ -12,6 +12,11 @@
     <meta property="og:title" content="<%= content_for(:title) || "The Vivek Project" %>">
     <meta property="og:description" content="<%= content_for(:meta_description) || "The Vivek Project is a free service provided by the Oclef Foundation, dedicated to documenting piano pedagogy on video. Our mission is to illuminate the teaching and learning process that has remained hidden for far too long." %>">
     <meta property="og:image" content="<%= content_for(:meta_image) || image_url("social_share.png") %>">
+    <meta property="og:site_name" content="The Vivek Project">
+    <!-- Google / Search Engine Tags -->
+    <meta itemprop="name" content="<%= content_for(:title) || "The Vivek Project" %>">
+    <meta itemprop="description" content="<%= content_for(:meta_description) || "The Vivek Project is a free service provided by the Oclef Foundation, dedicated to documenting piano pedagogy on video. Our mission is to illuminate the teaching and learning process that has remained hidden for far too long." %>">
+    <meta itemprop="image" content="<%= content_for(:meta_image) || image_url("social_share.png") %>">
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="<%= request.original_url %>">

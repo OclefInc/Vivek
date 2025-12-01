@@ -59,7 +59,7 @@ module ApplicationHelper
           <path stroke-linecap="round" stroke-linejoin="round" d="M9 16.5a3 3 0 1 0 6 0 3 3 0 0 0-6 0m3-13.5v13.5m0-13.5a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5m0 4.5a4.5 4.5 0 1 0 0 9 4.5 4.5 0 0 0 0-9" />
         </svg>'
       end
-    when "Foundation Development"
+    when "Foundation"
       # Cube
       raw '<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8">
         <path stroke-linecap="round" stroke-linejoin="round" d="M21 7.5l-9-5.25L3 7.5m18 0l-9 5.25m9-5.25v9l-9 5.25M3 7.5l9 5.25M3 7.5v9l9 5.25m0-9v9" />

@@ -25,7 +25,7 @@ class Tutorial < ApplicationRecord
 
   set_sortable :sort  # Indicate a sort column
 
-  belongs_to :teacher, counter_cache: true
+  belongs_to :teacher, counter_cache: true, touch: true
   belongs_to :skill_category, optional: true
   has_many :chapters_tutorials, -> { order(:sort) }, dependent: :destroy
   has_many :chapters, through: :chapters_tutorials

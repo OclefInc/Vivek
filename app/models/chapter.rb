@@ -30,8 +30,8 @@ class Chapter < ApplicationRecord
   default_scope { order(:start_time) }
 
   after_create :update_previous_chapter_stop_time
-  after_save :touch_assignment
-  after_destroy :touch_assignment
+  after_save :touch_assignment_and_teacher
+  after_destroy :touch_assignment_and_teacher
 
   private
 
@@ -48,7 +48,8 @@ class Chapter < ApplicationRecord
       end
     end
 
-    def touch_assignment
+    def touch_assignment_and_teacher
+      lesson.teacher.touch if lesson.teacher
       lesson.assignment.touch if lesson.assignment
     end
 end

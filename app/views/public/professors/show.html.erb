@@ -1,39 +1,43 @@
 <% content_for :title, "Professor: #{@teacher.name}" %>
-<div class="flex flex-col items-center max-w-7xl mx-auto ">
-  <div class="w-full mx-auto space-y-6 font-sans">
-    <% if notice.present? %>
-      <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
-    <% end %>
-    <%= render partial: 'teacher', locals: { teacher: @teacher } %>
-    <div class="bg-gradient-to-r from-slate-50 to-blue-50 dark:to-gray-900 dark:from-gray-800  rounded  overflow-hidden">
-      <div class="px-6 pt-6 pb-3">
-        <h1 class="text-2xl text-slate-900 dark:text-teal-200 font-semibold">Projects</h1>
+<% cache @teacher do %>
+  <div class="flex flex-col items-center max-w-7xl mx-auto ">
+    <div class="w-full mx-auto space-y-6 font-sans">
+      <% if notice.present? %>
+        <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
+      <% end %>
+      <div class="rounded overflow-hidden border border-gray-200 dark:border-gray-700">
+        <%= render partial: 'teacher', locals: { teacher: @teacher } %>
       </div>
-      <div class="p-6 overflow-x-auto">
-        <div class="flex gap-6 pb-4" style="min-width: min-content;">
-          <% @teacher.assignments.uniq.each do |assignment| %>
-            <div class="flex-none w-80">
-              <%= render partial: 'home/project_card', locals: { project: assignment } %>
-            </div>
-          <% end %>
+      <div class="bg-gradient-to-r from-slate-50 to-blue-50 dark:to-gray-900 dark:from-gray-800  rounded  overflow-hidden">
+        <div class="px-6 pt-6 pb-3">
+          <h1 class="text-2xl text-slate-900 dark:text-teal-200 font-semibold">Projects</h1>
         </div>
-      </div>
-    </div>
-    <div class="bg-gradient-to-r from-slate-50 to-blue-50 dark:to-gray-900 dark:from-gray-800  rounded overflow-hidden">
-      <div class="px-6 pt-6 pb-3">
-        <h1 class="text-2xl text-slate-900 dark:text-teal-200 font-semibold">Presentations</h1>
-      </div>
-      <div class="p-6 overflow-x-auto">
-        <div class="flex gap-6 pb-4" style="min-width: min-content;">
-          <% @teacher.tutorials.uniq.each do |tutorial| %>
-            <% if tutorial.video_file.attached? %>
+        <div class="p-6 overflow-x-auto">
+          <div class="flex gap-6 pb-4" style="min-width: min-content;">
+            <% @teacher.assignments.uniq.each do |assignment| %>
               <div class="flex-none w-80">
-                <%= render partial: '/public/professors/tutorials/tutorial_card', locals: { tutorial: tutorial } %>
+                <%= render partial: 'home/project_card', locals: { project: assignment } %>
               </div>
             <% end %>
-          <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="bg-gradient-to-r from-slate-50 to-blue-50 dark:to-gray-900 dark:from-gray-800  rounded overflow-hidden">
+        <div class="px-6 pt-6 pb-3">
+          <h1 class="text-2xl text-slate-900 dark:text-teal-200 font-semibold">Presentations</h1>
+        </div>
+        <div class="p-6 overflow-x-auto">
+          <div class="flex gap-6 pb-4" style="min-width: min-content;">
+            <% @teacher.tutorials.uniq.each do |tutorial| %>
+              <% if tutorial.video_file.attached? %>
+                <div class="flex-none w-80">
+                  <%= render partial: '/public/professors/tutorials/tutorial_card', locals: { tutorial: tutorial } %>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
+<% end %>

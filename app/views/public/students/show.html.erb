@@ -6,18 +6,14 @@
     <% end %>
     <%= render @student %>
     <!-- Projects Section -->
-    <div class="bg-white dark:bg-gray-800 rounded  overflow-hidden">
-      <div class="bg-gradient-to-r from-slate-50 to-blue-50 dark:from-gray-800 dark:to-gray-900 px-6 pt-6 pb-3">
+    <div class="bg-gradient-to-r from-slate-50 to-blue-50 dark:from-gray-800 dark:to-gray-900  rounded  overflow-hidden py-4">
+      <div class="px-6 pb-3">
         <h1 class="text-2xl text-slate-900 dark:text-teal-200 font-semibold">Projects</h1>
       </div>
-      <div class="bg-slate-50 dark:bg-gray-900 p-6 overflow-x-auto">
-        <div class="flex gap-6 pb-4" style="min-width: min-content;">
-          <% @student.assignments.includes(:lessons).sort_by { |a| a.lessons.minimum(:date) || Date.new(1900, 1, 1) }.reverse.each do |assignment| %>
-            <div class="flex-none w-80">
-              <%= render partial: 'project_card', locals: { project: assignment } %>
-            </div>
-          <% end %>
-        </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-6 w-full px-1 md:px-4">
+        <% @student.assignments.includes(:lessons).sort_by { |a| a.lessons.minimum(:date) || Date.new(1900, 1, 1) }.reverse.each do |assignment| %>
+          <%= render partial: 'project_card', locals: { project: assignment } %>
+        <% end %>
       </div>
     </div>
   </div>

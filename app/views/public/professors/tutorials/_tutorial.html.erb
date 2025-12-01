@@ -1,6 +1,6 @@
 <div id="<%= dom_id tutorial %>">
   <div class="text-white p-4">
-    <div class="flex justify-between items-center mb-4">
+    <div class="mb-4">
       <h3 class="text-lg font-semibold">About This Presentation:</h3>
       <% if tutorial.skill_category %>
         <p class="text-slate-700 dark:text-slate-300 text-sm sm:text-base">
@@ -10,6 +10,9 @@
       <% end %>
     </div>
     <%= tutorial.description %>
-    <%= render 'shared/share_buttons' %>
+    <div class="mt-4 flex items-center justify-between">
+      <%= render 'shared/share_buttons' %>
+      <%= render partial: "public/bookmarks/button", locals: { bookmarkable: tutorial } %>
+    </div>
   </div>
 </div>

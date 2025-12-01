@@ -51,23 +51,30 @@
   <div class="bg-gray-800 text-white p-4">
     <div class="flex justify-between items-center">
       <h3 class="text-lg font-semibold">About This Project:</h3>
-    </div>
-    <div class="flex justify-between">
-      <p class="text-slate-700 dark:text-slate-300 text-sm sm:text-base">
-        <strong class="font-semibold text-white"><%= 'Teacher'.pluralize(@project.teachers.uniq.count) %>:</strong>
+      <div class="flex items-center gap-2">
+        <span><%= "Teacher".pluralize(@project.teachers.uniq.count) %>:</span>
         <% @project.teachers.uniq.each do |teacher| %>
-          <%= link_to teacher.name, professor_path(teacher), class:'text-indigo-300 hover:text-indigo-200' %>
+          <% if teacher.display_avatar(size: 24) %>
+            <%= link_to professor_path(teacher) , title: "#{teacher.name}" do %>
+              <%= image_tag teacher.display_avatar(size: 24), class: "w-6 h-6 rounded-full object-cover border border-gray-200 dark:border-gray-700" %>
+            <% end %>
+          <% else %>
+            <%= link_to teacher.name, professor_path(teacher), class:'text-indigo-300 hover:text-indigo-200' %>
+          <% end %>
         <% end %>
-      </p>
-      <% if @project.project_type %>
-        <p class="text-slate-700 dark:text-slate-300 text-sm sm:text-base">
-          <strong class="font-semibold text-white">Type:</strong>
-          <span><%= link_to(@project.project_type.name, public_project_type_path(@project.project_type), class:'text-indigo-300 hover:text-indigo-200') %></span>
-        </p>
-      <% end %>
+      </div>
     </div>
+    <% if @project.project_type %>
+      <p class="text-slate-700 dark:text-slate-300 text-sm sm:text-base mb-4">
+        <strong class="font-semibold text-white">Type:</strong>
+        <span><%= link_to(@project.project_type.name, public_project_type_path(@project.project_type), class:'text-indigo-300 hover:text-indigo-200') %></span>
+      </p>
+    <% end %>
     <%= @project.description %>
-    <%= render 'shared/share_buttons' %>
+    <div class="mt-4 flex items-center justify-between">
+      <%= render 'shared/share_buttons' %>
+      <%= render partial: "public/bookmarks/button", locals: { bookmarkable: @project } %>
+    </div>
     <div class="xl:hidden mt-5">
       <%= render 'episode_dropdown', episode: nil, project: @project %>
     </div>

@@ -1,0 +1,18 @@
+<% if user_signed_in? %>
+  <div id="bookmark_button_<%= dom_id(bookmarkable) %>" class="flex items-center">
+    <% bookmark = current_user.bookmarks.find_by(bookmarkable: bookmarkable) %>
+    <% if bookmark %>
+      <%= button_to public_bookmark_path(bookmark), method: :delete, form_class: "inline-flex", class: "p-0 bg-transparent border-0 flex items-center text-sky-600 hover:text-sky-700 dark:text-teal-400 dark:hover:text-teal-300 transition-colors", title: "Remove bookmark" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+          <path fill-rule="evenodd" d="M6.32 2.577a49.255 49.255 0 0111.36 0c1.497.174 2.57 1.46 2.57 2.93V21a.75.75 0 01-1.085.67L12 18.089l-7.165 3.583A.75.75 0 013.75 21V5.507c0-1.47 1.073-2.756 2.57-2.93z" clip-rule="evenodd" />
+        </svg>
+      <% end %>
+    <% else %>
+      <%= button_to public_bookmarks_path, params: { bookmark: { bookmarkable_id: bookmarkable.id, bookmarkable_type: bookmarkable.class.name } }, form_class: "inline-flex", class: "p-0 bg-transparent border-0 flex items-center text-gray-400 hover:text-sky-600 dark:text-gray-500 dark:hover:text-teal-400 transition-colors", title: "Bookmark this" do %>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.208 48.208 0 0111.186 0z" />
+        </svg>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>

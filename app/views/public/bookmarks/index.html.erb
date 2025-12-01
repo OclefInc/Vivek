@@ -1,0 +1,40 @@
+<div class="container mx-auto px-4 py-8">
+  <h1 class="text-3xl font-bold text-slate-900 dark:text-white mb-8">My Bookmarks</h1>
+  <% if @bookmarks.any? %>
+    <div class="grid gap-6">
+      <% @bookmarks.each do |bookmark| %>
+        <div class="bg-white dark:bg-slate-800 rounded-lg shadow p-6 border border-slate-200 dark:border-slate-700">
+          <div class="flex justify-between items-start">
+            <div>
+              <div class="text-sm text-slate-500 dark:text-slate-400 mb-1 uppercase tracking-wide font-semibold">
+                <%= bookmark.bookmarkable_type %>
+              </div>
+              <h2 class="text-xl font-semibold text-slate-900 dark:text-white mb-2">
+                <% case bookmark.bookmarkable %>
+                <% when Assignment %>
+                  <%= link_to bookmark.bookmarkable.project_name, project_path(bookmark.bookmarkable), class: "hover:text-indigo-600 dark:hover:text-indigo-400" %>
+                <% when Lesson %>
+                  <%= link_to bookmark.bookmarkable.name, project_episode_path(bookmark.bookmarkable.project, bookmark.bookmarkable), class: "hover:text-indigo-600 dark:hover:text-indigo-400" %>
+                <% when Tutorial %>
+                  <%= link_to bookmark.bookmarkable.name, professor_tutorial_path(bookmark.bookmarkable.teacher, bookmark.bookmarkable), class: "hover:text-indigo-600 dark:hover:text-indigo-400" %>
+                <% end %>
+              </h2>
+              <p class="text-slate-600 dark:text-slate-300 line-clamp-2">
+                <% if bookmark.bookmarkable.respond_to?(:description) %>
+                  <%= bookmark.bookmarkable.description %>
+                <% end %>
+              </p>
+            </div>
+            <div class="ml-4">
+              <%= render partial: "public/bookmarks/button", locals: { bookmarkable: bookmark.bookmarkable } %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div class="text-center py-12 bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-dashed border-slate-300 dark:border-slate-700">
+      <p class="text-slate-500 dark:text-slate-400 text-lg">You haven't bookmarked anything yet.</p>
+    </div>
+  <% end %>
+</div>

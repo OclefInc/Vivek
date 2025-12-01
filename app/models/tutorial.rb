@@ -33,6 +33,7 @@ class Tutorial < ApplicationRecord
   has_rich_text :description
 
   has_many :comments, as: :annotation
+  has_many :bookmarks, as: :bookmarkable, dependent: :destroy
 
   before_validation :assign_default_name, on: :create
   before_create :assign_sort_position

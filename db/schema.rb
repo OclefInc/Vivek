@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_30_065154) do
+ActiveRecord::Schema[8.0].define(version: 2025_11_30_232436) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_stat_statements"
@@ -67,6 +67,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_30_065154) do
     t.bigint "project_type_id"
     t.string "project_name"
     t.index ["project_type_id"], name: "index_assignments_on_project_type_id"
+  end
+
+  create_table "bookmarks", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "bookmarkable_type", null: false
+    t.bigint "bookmarkable_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bookmarkable_type", "bookmarkable_id"], name: "index_bookmarks_on_bookmarkable"
+    t.index ["user_id"], name: "index_bookmarks_on_user_id"
   end
 
   create_table "chapters", force: :cascade do |t|
@@ -240,6 +250,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_30_065154) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "assignments", "project_types"
+  add_foreign_key "bookmarks", "users"
   add_foreign_key "chapters", "lessons"
   add_foreign_key "chapters_tutorials", "chapters"
   add_foreign_key "chapters_tutorials", "tutorials"

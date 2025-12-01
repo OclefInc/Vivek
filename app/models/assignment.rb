@@ -35,6 +35,7 @@ class Assignment < ApplicationRecord
   has_many :comments, as: :annotation
   has_many :subscriptions, dependent: :destroy
   has_many :subscribers, through: :subscriptions, source: :user
+  has_many :bookmarks, as: :bookmarkable, dependent: :destroy
 
   def to_param
     "#{id}-#{project_name.parameterize}-#{student.name.parameterize}"

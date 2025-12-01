@@ -31,6 +31,7 @@ class Lesson < ApplicationRecord
   has_rich_text :teacher_journal
   has_one_attached :lesson_video
   has_one_attached :video_thumbnail
+  has_many :bookmarks, as: :bookmarkable, dependent: :destroy
 
   before_validation :assign_default_name, on: :create
   before_create :assign_sort_position

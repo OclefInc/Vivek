@@ -52,8 +52,14 @@
           </div>
           <!-- Desktop Navigation -->
           <nav class="hidden xl:flex items-center gap-6">
+            <%= form_with url: projects_path, method: :get, class: "relative" do |form| %>
+              <%= form.text_field :query, value: params[:query], placeholder: "Search projects...", class: "bg-white/10 text-white placeholder-teal-200/70 border-none rounded-full py-1.5 px-4 pl-10 focus:ring-2 focus:ring-teal-300 text-sm w-64" %>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-teal-200">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+              </svg>
+            <% end %>
             <%= link_to "About", about_path, class: "text-teal-200 hover:text-white px-3 py-2 rounded-lg transition-colors #{request.path == about_path ? 'bg-white/10' : ''}" %>
-            <%= link_to "Project Types", public_project_types_path, class: "text-teal-200 hover:text-white px-3 py-2 rounded-lg transition-colors #{request.path == project_types_path ? 'bg-white/10' : ''}" %>
+            <%= link_to "Project Types", public_project_types_path, class: "text-teal-200 hover:text-white px-3 py-2 rounded-lg transition-colors #{request.path == public_project_types_path ? 'bg-white/10' : ''}" %>
             <%= link_to "Contributors", contributors_path, class: "text-teal-200 hover:text-white px-3 py-2 rounded-lg transition-colors #{request.path == contributors_path ? 'bg-white/10' : ''}" %>
             <%= link_to "Contact", contact_path, class: "text-teal-200 hover:text-white px-3 py-2 rounded-lg transition-colors #{request.path == contact_path ? 'bg-white/10' : ''}" %>
             <% if user_signed_in? %>
@@ -119,6 +125,14 @@
         </span>
       </div>
       <nav class="flex-1 overflow-y-auto py-4 px-2">
+        <div class="mb-4 px-3">
+          <%= form_with url: projects_path, method: :get, class: "relative" do |form| %>
+            <%= form.text_field :query, value: params[:query], placeholder: "Search projects...", class: "w-full bg-white/10 text-white placeholder-teal-200/70 border-none rounded-lg py-2 px-4 pl-10 focus:ring-2 focus:ring-teal-300 text-sm" %>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-teal-200">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+            </svg>
+          <% end %>
+        </div>
         <%= link_to "About", about_path, class: "block text-teal-200 hover:text-white hover:bg-white/10 px-3 py-2 rounded-lg mb-1" %>
         <%= link_to "Project Types", public_project_types_path, class: "block text-teal-200 hover:text-white hover:bg-white/10 px-3 py-2 rounded-lg mb-1" %>
         <%= link_to "Contributors", contributors_path, class: "block text-teal-200 hover:text-white hover:bg-white/10 px-3 py-2 rounded-lg mb-1" %>

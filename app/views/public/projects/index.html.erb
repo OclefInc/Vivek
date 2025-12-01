@@ -1,31 +1,10 @@
-<div>
-  <div class="text-sky-900 dark:text-teal-400 text-2xl mb-2">Projects</div>
-</div>
-<div id="projects" class="min-w-full divide-y divide-zinc-200 space-y-5">
-  <% @projects.each do |project| %>
-    <div class="flex-col border shadow border-sky-100 rounded-2xl bg-sky-50 dark:border-zinc-800 dark:bg-zinc-900 border-2 px-4 py-3">
-      <div class="flex justify-between">
-        <h4 class="text-xl ps-4 py-2 text-orange-700 hover:text-amber-500 dark:text-orange-600 dark:hover:text-orange-400 italic"> <%= link_to project.project_name, project_path(project) %> </h4>
-        <div class="flex sm:flex-nowrap mb-2 text-xl pe-4 py-2">
-          <% project.teachers.uniq.each do |teacher| %>
-            <%= link_to teacher.name, professor_path(teacher), class:'text-xl text-bold text-indigo-600 hover:text-indigo-400' %>
-          <% end %>
-        </div>
-      </div>
-      <div class="flex sm:flex-nowrap text-zinc-900 dark:text-teal-400">
-        <div class="flex-col w-auto px-6 m-2 ">
-          <div class="sm:flex-nowrap mb-2">
-            <strong> Focus: </strong>
-            <p class="text-nowrap"> <%= project.project_name %></p>
-          </div>
-          <div class="text-nowrap"> <b> <%= project.lessons.length %> </b> Episodes
-          </div>
-        </div>
-        <div class="flex-auto w-auto px-6 my-2 ">
-          <strong>Description:</strong>
-          <p class=""> <%= project.description %> </p>
-        </div>
-      </div>
-    </div>
-  <% end %>
+<div class="flex flex-col items-center max-w-7xl mx-auto ">
+  <div class="text-center mb-6">
+    <div class="text-sky-900 dark:text-teal-400 text-2xl mb-2">Projects</div>
+  </div>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-6 w-full px-1 md:px-4">
+    <% @projects.each do |project| %>
+      <%= render partial: 'home/project_card', locals: { project: project } %>
+    <% end %>
+  </div>
 </div>

@@ -1,5 +1,4 @@
 class Users::MagicLinksController < ApplicationController
-  skip_before_action :verify_authenticity_token
   def create
     @user = User.find_by(email: params[:email]&.downcase&.strip)
 
@@ -22,7 +21,7 @@ class Users::MagicLinksController < ApplicationController
       flash[:notice] = "If that email exists, we sent you a login link."
       redirect_to new_user_session_path
     end
-  end
+end
 
   def show
     @user = User.find_by(magic_link_token: params[:token])

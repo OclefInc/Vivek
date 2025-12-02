@@ -1,4 +1,5 @@
 class Public::CommentsController < ApplicationController
+  layout "public"
   before_action :authenticate_user!, only: [ :create, :edit, :update, :destroy ]
 
   def index

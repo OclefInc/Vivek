@@ -2,17 +2,30 @@
   <thead>
     <tr>
       <th class="text-left py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">Project</th>
-      <th class="text-left md:px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">Student</th>
-      <th class="text-left md:px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">Lessons</th>
+      <th class="text-right md:px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">Student</th>
     </tr>
   </thead>
   <tbody>
     <% @teacher.projects.sort_by(&:project_name).each do |project| %>
+      <% cache project %>
       <tr>
-        <td class="text-left py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-300"><%= link_to project.project_name, project, class:"text-blue-500 hover:text-red-500 dark:text-blue-400 dark:hover:text-red-400" %></td>
-        <td class="text-left md:px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-300"><%= project.student.name %></td>
-        <td class="text-left md:px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-300"><%= project.lessons.where(teacher: @teacher).count %></td>
+        <td class="text-left py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-300">
+          <%= link_to project.project_name, project, class:"text-blue-500 hover:text-red-500 dark:text-blue-400 dark:hover:text-red-400" %>
+          <span class="block">
+            <%= pluralize(project.lessons.where(teacher: @teacher).count, 'Lesson') %>
+          </span>
+        </td>
+        <td class="text-right md:px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-300">
+          <div class="flex justify-end">
+            <% if project.student.display_avatar(size: 32) %>
+              <%= image_tag project.student.display_avatar(size: 32), alt: project.student.name, class: "w-8 h-8 rounded-full object-cover border border-gray-200 dark:border-gray-700" %>
+            <% else %>
+              <%= project.student.name %>
+            <% end %>
+          </div>
+        </td>
       </tr>
     <% end %>
-  </tbody>
+  <% end %>
+</tbody>
 </table>

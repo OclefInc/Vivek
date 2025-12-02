@@ -28,6 +28,13 @@ class Admin::ProjectTypesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to project_types_url
   end
 
+  test "should not create project_type with invalid params" do
+    assert_no_difference("ProjectType.count") do
+      post project_types_url, params: { project_type: { name: "" } }
+    end
+    assert_response :unprocessable_entity
+  end
+
   test "should show project_type" do
     get project_type_url(@project_type)
     assert_response :success
@@ -43,6 +50,11 @@ class Admin::ProjectTypesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to project_types_url
     @project_type.reload
     assert_equal "Updated Type", @project_type.name
+  end
+
+  test "should not update project_type with invalid params" do
+    patch project_type_url(@project_type), params: { project_type: { name: "" } }
+    assert_response :unprocessable_entity
   end
 
   test "should destroy project_type" do

@@ -53,4 +53,39 @@ class Admin::TutorialsControllerTest < ActionDispatch::IntegrationTest
     end
     assert_redirected_to tutorials_url
   end
+
+  test "should get edit with field" do
+    get edit_tutorial_url(@tutorial, field: "name")
+    assert_response :success
+  end
+
+  test "should fail to create tutorial" do
+    assert_no_difference("Tutorial.count") do
+      post tutorials_url, params: { tutorial: { name: "", teacher_id: @teacher.id } }
+    end
+    assert_response :unprocessable_entity
+  end
+
+  test "should fail to create tutorial json" do
+    assert_no_difference("Tutorial.count") do
+      post tutorials_url(format: :json), params: { tutorial: { name: "", teacher_id: @teacher.id } }
+    end
+    assert_response :unprocessable_entity
+  end
+
+  test "should fail to update tutorial" do
+    patch tutorial_url(@tutorial), params: { tutorial: { name: "" } }
+    assert_response :unprocessable_entity
+  end
+
+  test "should fail to update tutorial json" do
+    patch tutorial_url(@tutorial, format: :json), params: { tutorial: { name: "" } }
+    assert_response :unprocessable_entity
+  end
+
+  test "should destroy tutorial json" do
+    tutorial = Tutorial.create!(name: "To Destroy", teacher: @teacher, skill_category: @skill_category)
+    delete tutorial_url(tutorial, format: :json)
+    assert_response :no_content
+  end
 end

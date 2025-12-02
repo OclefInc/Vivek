@@ -88,4 +88,70 @@ class Admin::AssignmentsControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to assignments_url
   end
+
+  test "should search assignments" do
+    sign_in @user
+    User.any_instance.stubs(:is_employee?).returns(true)
+
+    get assignments_url(query: @assignment.project_name)
+    assert_response :success
+    assert_select "h3", text: @assignment.project_name
+  end
+
+  test "should filter assignments by teacher" do
+    sign_in @user
+    User.any_instance.stubs(:is_employee?).returns(true)
+
+    teacher = teachers(:one)
+    @assignment.update(teacher: teacher)
+    Lesson.create!(assignment: @assignment, teacher: teacher, name: "Test Lesson", sort: 1)
+
+    get assignments_url(teacher_id: teacher.id)
+    assert_response :success
+    assert_select "h3", text: @assignment.project_name
+  end
+
+  test "should get edit with field" do
+    sign_in @user
+    User.any_instance.stubs(:is_employee?).returns(true)
+
+    get edit_assignment_url(@assignment, field: "description")
+    assert_response :success
+  end
+
+  test "should fail to create assignment" do
+    sign_in @user
+    User.any_instance.stubs(:is_employee?).returns(true)
+
+    assert_no_difference("Assignment.count") do
+      post assignments_url, params: { assignment: { project_name: "" } }
+    end
+    assert_response :unprocessable_entity
+  end
+
+  test "should fail to create assignment json" do
+    sign_in @user
+    User.any_instance.stubs(:is_employee?).returns(true)
+
+    assert_no_difference("Assignment.count") do
+      post assignments_url(format: :json), params: { assignment: { project_name: "" } }
+    end
+    assert_response :unprocessable_entity
+  end
+
+  test "should fail to update assignment" do
+    sign_in @user
+    User.any_instance.stubs(:is_employee?).returns(true)
+
+    patch assignment_url(@assignment), params: { assignment: { project_name: "" } }
+    assert_response :unprocessable_entity
+  end
+
+  test "should fail to update assignment json" do
+    sign_in @user
+    User.any_instance.stubs(:is_employee?).returns(true)
+
+    patch assignment_url(@assignment, format: :json), params: { assignment: { project_name: "" } }
+    assert_response :unprocessable_entity
+  end
 end

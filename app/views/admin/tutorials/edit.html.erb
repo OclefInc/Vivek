@@ -2,9 +2,9 @@
   <%= form_with(model: @tutorial, class: "contents", data: { turbo_frame: "_top" }) do |form| %>
     <% if @tutorial.errors.any? %>
       <div id="error_explanation" class="bg-red-50 dark:bg-red-900/30 text-red-500 dark:text-red-300 px-3 py-2 font-medium rounded-md mt-3">
-        <h2><%= pluralize(tutorial.errors.count, "error") %> prohibited this tutorial from being saved:</h2>
+        <h2><%= pluralize(@tutorial.errors.count, "error") %> prohibited this tutorial from being saved:</h2>
         <ul class="list-disc ml-6">
-          <% tutorial.errors.each do |error| %>
+          <% @tutorial.errors.each do |error| %>
             <li><%= error.full_message %></li>
           <% end %>
         </ul>

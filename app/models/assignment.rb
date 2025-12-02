@@ -27,6 +27,7 @@ class Assignment < ApplicationRecord
   belongs_to :project_type, touch: true
 
   belongs_to :teacher, optional: true # use for default teacher when uploading new lesson videos
+  validates :project_name, presence: true
   has_many :lessons
   has_many :teachers, through: :lessons
   has_rich_text :description

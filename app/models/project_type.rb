@@ -11,6 +11,8 @@ class ProjectType < ApplicationRecord
   has_many :assignments
   has_rich_text :description
 
+  validates :name, presence: true
+
   def to_param
     "#{id}-#{name.parameterize}"
   end

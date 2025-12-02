@@ -29,6 +29,9 @@ class Users::MagicLinksController < ApplicationController
       # Clear the token after use
       @user.update(magic_link_token: nil, magic_link_sent_at: nil)
 
+      # Confirm the user if they haven't been confirmed yet (Magic Link acts as confirmation)
+      @user.confirm unless @user.confirmed?
+
       # Sign in the user
       sign_in(@user)
       flash[:notice] = "Successfully logged in!"

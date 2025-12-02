@@ -57,4 +57,33 @@ class Admin::TeachersControllerTest < ActionDispatch::IntegrationTest
     end
     assert_redirected_to teachers_url
   end
+
+  test "should get edit with field" do
+    get edit_teacher_url(@teacher, field: "name")
+    assert_response :success
+  end
+
+  test "should fail to create teacher" do
+    assert_no_difference("Teacher.count") do
+      post teachers_url, params: { teacher: { name: "" } }
+    end
+    assert_response :unprocessable_entity
+  end
+
+  test "should fail to create teacher json" do
+    assert_no_difference("Teacher.count") do
+      post teachers_url(format: :json), params: { teacher: { name: "" } }
+    end
+    assert_response :unprocessable_entity
+  end
+
+  test "should fail to update teacher" do
+    patch teacher_url(@teacher), params: { teacher: { name: "" } }
+    assert_response :unprocessable_entity
+  end
+
+  test "should fail to update teacher json" do
+    patch teacher_url(@teacher, format: :json), params: { teacher: { name: "" } }
+    assert_response :unprocessable_entity
+  end
 end

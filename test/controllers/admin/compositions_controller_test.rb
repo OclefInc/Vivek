@@ -57,4 +57,33 @@ class Admin::CompositionsControllerTest < ActionDispatch::IntegrationTest
     end
     assert_redirected_to compositions_url
   end
+
+  test "should fail to create composition" do
+    assert_no_difference("Composition.count") do
+      post compositions_url, params: { composition: { name: "" } }
+    end
+    assert_response :unprocessable_entity
+  end
+
+  test "should fail to create composition json" do
+    assert_no_difference("Composition.count") do
+      post compositions_url(format: :json), params: { composition: { name: "" } }
+    end
+    assert_response :unprocessable_entity
+  end
+
+  test "should fail to update composition" do
+    patch composition_url(@composition), params: { composition: { name: "" } }
+    assert_response :unprocessable_entity
+  end
+
+  test "should fail to update composition json" do
+    patch composition_url(@composition, format: :json), params: { composition: { name: "" } }
+    assert_response :unprocessable_entity
+  end
+
+  test "should destroy composition json" do
+    delete composition_url(@composition, format: :json)
+    assert_response :no_content
+  end
 end

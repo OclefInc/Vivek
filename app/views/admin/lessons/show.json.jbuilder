@@ -1,1 +1,1 @@
-json.partial! "lessons/lesson", lesson: @lesson
+json.partial! "admin/lessons/lesson", lesson: @lesson

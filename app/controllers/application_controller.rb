@@ -8,4 +8,16 @@ class ApplicationController < ActionController::Base
       redirect_to root_path
     end
   end
+
+  layout :layout_by_resource
+
+  private
+
+    def layout_by_resource
+      if devise_controller?
+        "public"
+      else
+        "application"
+      end
+    end
 end

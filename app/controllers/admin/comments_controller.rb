@@ -1,18 +1,18 @@
 class Admin::CommentsController < ApplicationController
   before_action :authenticate_user!
   def index
-    redirect_to_root_path unless current_user.is_employee?
-    @comments = Comment.includes(:user, :annotation)
+    redirect_to root_path unless current_user.is_employee?
+    @comments = Comment.includes(:user).preload(:annotation)
 
     if params[:query].present?
       query = "%#{params[:query]}%"
-      @comments = @comments.joins(:user).where("users.name ILIKE ? OR comments.body ILIKE ?", query, query)
+      @comments = @comments.joins(:user).left_joins(:rich_text_note).where("users.name ILIKE ? OR action_text_rich_texts.body ILIKE ?", query, query)
     end
 
     @comments = @comments.order(created_at: :desc)
   end
   def show
-    redirect_to_root_path unless current_user.is_employee?
+    redirect_to root_path unless current_user.is_employee?
     @comment = Comment.find(params[:id])
   end
 
@@ -24,8 +24,4 @@ class Admin::CommentsController < ApplicationController
       format.json { head :no_content }
     end
   end
-  private
-    def comment_params
-      params.expect(comment: [ :note, :annotation_id, :annotation_type ])
-    end
 end

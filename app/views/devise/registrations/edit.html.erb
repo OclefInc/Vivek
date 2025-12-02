@@ -71,7 +71,8 @@
           <%= render "devise/shared/error_messages", resource: resource %>
           <div class="field text-gray-300 mb-4">
             <%= f.label :email %><br />
-            <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "block w-full bg-cyan-800 text-gray-300 shadow-sm rounded-xl px-3 py-2 outline focus:outline-2 outline-teal-300" %>
+            <%= f.email_field :email, disabled: true, class: "block w-full bg-cyan-900 text-gray-400 shadow-sm rounded-xl px-3 py-2 outline-none cursor-not-allowed" %>
+            <p class="text-xs text-gray-400 mt-1">Email cannot be changed.</p>
           </div>
           <div class="field text-gray-300 mb-4">
             <%= f.label :name %><br />
@@ -110,26 +111,7 @@
               </div>
             </div>
           </div>
-          <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-            <div class="text-gray-400 text-sm mb-4">Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
-          <% end %>
-          <div class="field text-gray-300 mb-4">
-            <%= f.label :new_password %>
-            <% if @minimum_password_length %>
-              <em class="text-sm italic text-gray-400"> (<%= @minimum_password_length %> characters minimum)</em>
-            <% end %><br />
-            <%= f.password_field :password, autocomplete: "new-password", class: "block w-full bg-cyan-800 text-gray-300 shadow-sm rounded-xl px-3 py-2 outline focus:outline-2 outline-teal-300" %>
-            <i class="text-sm text-gray-400">(Leave blank if you don't want to change it)</i>
-          </div>
-          <div class="field text-gray-300 mb-4">
-            <%= f.label :confirm_new_password %><br />
-            <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "block w-full bg-cyan-800 text-gray-300 shadow-sm rounded-xl px-3 py-2 outline focus:outline-2 outline-teal-300" %>
-          </div>
-          <div class="field text-gray-300 mb-4">
-            <%= f.label :current_password %>
-            <%= f.password_field :current_password, autocomplete: "current-password", class: "block w-full bg-cyan-800 text-gray-300 shadow-sm rounded-xl px-3 py-2 outline focus:outline-2 outline-teal-300" %>
-            <i class="text-sm text-gray-400">(Enter current password to confirm any changes)</i><br />
-          </div>
+
           <div class="flex text-gray-300 mb-4 justify-between items-center">
             <div>
               <%= f.submit "Update", class: "w-full sm:w-auto rounded-xl px-3 py-2 bg-indigo-600 hover:bg-indigo-400 text-white inline-block font-medium cursor-pointer text-center tracking-wider" %>

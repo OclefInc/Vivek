@@ -31,6 +31,34 @@ class Admin::LessonsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to assignment_url(@assignment)
   end
 
+  test "should fail to create lesson" do
+    assert_no_difference("Lesson.count") do
+      post assignment_lessons_url(@assignment), params: { lesson: { name: "", assignment_id: @assignment.id } }
+    end
+    assert_response :unprocessable_entity
+  end
+
+  test "should create lesson with return_url" do
+    assert_difference("Lesson.count") do
+      post assignment_lessons_url(@assignment, return_url: root_path), params: { lesson: { name: "New Lesson", date: Date.today, assignment_id: @assignment.id } }
+    end
+    assert_redirected_to root_path
+  end
+
+  test "should create lesson json" do
+    assert_difference("Lesson.count") do
+      post assignment_lessons_url(@assignment, format: :json), params: { lesson: { name: "New Lesson", date: Date.today, assignment_id: @assignment.id } }
+    end
+    assert_response :created
+  end
+
+  test "should fail to create lesson json" do
+    assert_no_difference("Lesson.count") do
+      post assignment_lessons_url(@assignment, format: :json), params: { lesson: { name: "", assignment_id: @assignment.id } }
+    end
+    assert_response :unprocessable_entity
+  end
+
   test "should show lesson" do
     get lesson_url(@lesson)
     assert_response :success
@@ -41,6 +69,11 @@ class Admin::LessonsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should get edit with field" do
+    get edit_lesson_url(@lesson, field: "name")
+    assert_response :success
+  end
+
   test "should update lesson" do
     patch lesson_url(@lesson), params: { lesson: { name: "Updated Lesson" } }
     @lesson.reload
@@ -48,17 +81,36 @@ class Admin::LessonsControllerTest < ActionDispatch::IntegrationTest
     assert_equal "Updated Lesson", @lesson.name
   end
 
+  test "should fail to update lesson" do
+    patch lesson_url(@lesson), params: { lesson: { name: "" } }
+    assert_response :unprocessable_entity
+  end
+
+  test "should update lesson with teacher name" do
+    patch lesson_url(@lesson), params: { lesson: { teacher_name: "New Teacher" } }
+    @lesson.reload
+    assert_equal "New Teacher", @lesson.teacher.name
+  end
+
+  test "should update lesson with return_url" do
+    patch lesson_url(@lesson, return_url: root_path), params: { lesson: { name: "Updated Lesson" } }
+    assert_redirected_to root_path
+  end
+
+  test "should update lesson json" do
+    patch lesson_url(@lesson, format: :json), params: { lesson: { name: "Updated Lesson" } }
+    assert_response :ok
+  end
+
+  test "should fail to update lesson json" do
+    patch lesson_url(@lesson, format: :json), params: { lesson: { name: "" } }
+    assert_response :unprocessable_entity
+  end
+
   test "should destroy lesson" do
     assert_difference("Lesson.count", -1) do
       delete lesson_url(@lesson)
     end
-    assert_redirected_to lessons_url # Wait, destroy redirects to lessons_path in controller?
-    # Controller says: redirect_to lessons_path
-    # But lessons_path might be /admin/lessons (index of all lessons? No, index requires assignment_id)
-    # If lessons_path is /admin/lessons, and index requires assignment_id, then redirecting to lessons_path without params will error in index action.
-    # But let's see if lessons_path exists.
-    # resources :lessons is defined. So lessons_path exists.
-    # If the controller redirects to lessons_path, it might be a bug if index requires param.
-    # But I'm testing the controller as is.
+    assert_redirected_to lessons_url
   end
 end

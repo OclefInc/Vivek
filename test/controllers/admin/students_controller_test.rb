@@ -37,6 +37,20 @@ class Admin::StudentsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to student_url(Student.last)
   end
 
+  test "should fail to create student" do
+    assert_no_difference("Student.count") do
+      post students_url, params: { student: { name: "" } }
+    end
+    assert_response :unprocessable_entity
+  end
+
+  test "should fail to create student json" do
+    assert_no_difference("Student.count") do
+      post students_url(format: :json), params: { student: { name: "" } }
+    end
+    assert_response :unprocessable_entity
+  end
+
   test "should show student" do
     get student_url(@student)
     assert_response :success
@@ -47,10 +61,25 @@ class Admin::StudentsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should get edit with field" do
+    get edit_student_url(@student, field: "name")
+    assert_response :success
+  end
+
   test "should update student" do
     patch student_url(@student), params: { student: { name: "Updated Student" } }
     assert_redirected_to student_url(@student.reload)
     assert_equal "Updated Student", @student.name
+  end
+
+  test "should fail to update student" do
+    patch student_url(@student), params: { student: { name: "" } }
+    assert_response :unprocessable_entity
+  end
+
+  test "should fail to update student json" do
+    patch student_url(@student, format: :json), params: { student: { name: "" } }
+    assert_response :unprocessable_entity
   end
 
   test "should destroy student" do

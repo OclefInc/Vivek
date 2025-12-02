@@ -24,6 +24,13 @@ class Admin::ChaptersControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to lesson_url(@lesson)
   end
 
+  test "should not create chapter with invalid params" do
+    assert_no_difference("Chapter.count") do
+      post lesson_chapters_url(@lesson), params: { chapter: { name: "", start_time: 10 } }
+    end
+    assert_response :unprocessable_entity
+  end
+
   test "should get edit" do
     get edit_lesson_chapter_url(@lesson, @chapter)
     assert_response :success
@@ -34,6 +41,11 @@ class Admin::ChaptersControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to lesson_url(@lesson)
     @chapter.reload
     assert_equal "Updated Chapter", @chapter.name
+  end
+
+  test "should not update chapter with invalid params" do
+    patch lesson_chapter_url(@lesson, @chapter), params: { chapter: { name: "" } }
+    assert_response :unprocessable_entity
   end
 
   test "should destroy chapter" do

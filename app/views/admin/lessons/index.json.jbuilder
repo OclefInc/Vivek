@@ -1,1 +1,1 @@
-json.array! @lessons, partial: "lessons/lesson", as: :lesson
+json.array! @lessons, partial: "admin/lessons/lesson", as: :lesson

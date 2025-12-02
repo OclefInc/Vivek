@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class Users::RegistrationsController < Devise::RegistrationsController
-  layout "public"
   before_action :configure_sign_up_params, only: [ :create ]
   before_action :configure_account_update_params, only: [ :update ]
 
@@ -18,6 +17,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
     unless resource.oauth_user?
       resource.password = Devise.friendly_token[0, 20]
       resource.password_confirmation = resource.password
+      # Skip default confirmation email since we use magic links
+      resource.skip_confirmation_notification!
     end
 
     resource.save
@@ -52,25 +53,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
       resource.avatar.attach(params[:user][:avatar])
     end
 
-    if resource.provider.present?
-      # OAuth users can only update their name and avatar, no password required
-      update_params = {
-        name: params[:user][:name],
-        avatar_crop_x: params[:user][:avatar_crop_x],
-        avatar_crop_y: params[:user][:avatar_crop_y],
-        avatar_crop_width: params[:user][:avatar_crop_width],
-        avatar_crop_height: params[:user][:avatar_crop_height]
-      }
-
-      if resource.update(update_params)
-        bypass_sign_in resource, scope: :user
-        redirect_to edit_user_registration_path, notice: "Profile updated successfully."
-      else
-        render :edit, status: :unprocessable_entity
-      end
+    # Allow updating without password for everyone
+    # We use account_update_params which filters allowed keys
+    if resource.update(account_update_params)
+      bypass_sign_in resource, scope: :user
+      redirect_to edit_user_registration_path, notice: "Profile updated successfully."
     else
-      # Regular users go through normal Devise update flow
-      super
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -92,12 +81,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [ :email, :name, :password, :password_confirmantion, :current_password, :avatar ])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [ :email, :name, :avatar ])
   end
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_account_update_params
-    devise_parameter_sanitizer.permit(:account_update, keys: [ :email, :name, :password, :password_confirmation, :current_password, :avatar, :avatar_crop_x, :avatar_crop_y, :avatar_crop_width, :avatar_crop_height ])
+    devise_parameter_sanitizer.permit(:account_update, keys: [ :name, :avatar, :avatar_crop_x, :avatar_crop_y, :avatar_crop_width, :avatar_crop_height ])
   end
 
   # The path used after sign up.

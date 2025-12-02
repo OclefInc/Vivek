@@ -19,4 +19,10 @@ class Admin::Teachers::TutorialsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_match @tutorial.name, response.body
   end
+
+  test "should search tutorials" do
+    get teacher_tutorials_url(@teacher, q: @tutorial.name)
+    assert_response :success
+    assert_match @tutorial.name, response.body
+  end
 end

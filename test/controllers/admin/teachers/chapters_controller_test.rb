@@ -20,4 +20,12 @@ class Admin::Teachers::ChaptersControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_match @chapter.name, response.body
   end
+
+  test "should search chapters" do
+    get teacher_chapters_url(@teacher, q: @chapter.name)
+    assert_response :success
+    json_response = JSON.parse(response.body)
+    assert_not_empty json_response["options"]
+    assert_equal @chapter.name, json_response["options"].first["text"]
+  end
 end

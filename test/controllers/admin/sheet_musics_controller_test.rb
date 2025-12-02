@@ -53,4 +53,33 @@ class Admin::SheetMusicsControllerTest < ActionDispatch::IntegrationTest
     end
     assert_redirected_to sheet_musics_url
   end
+
+  test "should fail to create sheet_music" do
+    assert_no_difference("SheetMusic.count") do
+      post sheet_musics_url, params: { sheet_music: { composition_id: @composition.id } }
+    end
+    assert_response :unprocessable_entity
+  end
+
+  test "should fail to create sheet_music json" do
+    assert_no_difference("SheetMusic.count") do
+      post sheet_musics_url(format: :json), params: { sheet_music: { composition_id: @composition.id } }
+    end
+    assert_response :unprocessable_entity
+  end
+
+  test "should fail to update sheet_music" do
+    patch sheet_music_url(@sheet_music), params: { sheet_music: { composition_id: nil } }
+    assert_response :unprocessable_entity
+  end
+
+  test "should fail to update sheet_music json" do
+    patch sheet_music_url(@sheet_music, format: :json), params: { sheet_music: { composition_id: nil } }
+    assert_response :unprocessable_entity
+  end
+
+  test "should destroy sheet_music json" do
+    delete sheet_music_url(@sheet_music, format: :json)
+    assert_response :no_content
+  end
 end

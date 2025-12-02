@@ -25,9 +25,9 @@ class Users::RegistrationsController < Devise::RegistrationsController
     yield resource if block_given?
     if resource.persisted?
       if resource.active_for_authentication?
-        set_flash_message! :notice, :signed_up
         # Send magic link instead of signing in directly
         resource.send_magic_link
+        flash[:notice] = "Welcome! Check your email for a magic link to login."
         respond_with resource, location: new_user_session_path
       else
         set_flash_message! :notice, :"signed_up_but_#{resource.inactive_message}"

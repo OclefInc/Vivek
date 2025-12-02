@@ -4,11 +4,10 @@
 <% end %>
 <h1 class="font-semibold text-4xl dark:text-gray-200">Skill Info:</h1>
 <div class="flex justify-between ">
-  <%= render @skill %>
+  <%= render @skill_category %>
   <div class="ml-4 flex items-start justify-end gap-2 my-5 space-y-5">
-    <%= link_to "Edit", edit_skill_path(@skill), class: "rounded-md px-3 py-2 bg-gray-100 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600 font-medium whitespace-nowrap" %>
-    <%= link_to "All skills", skills_path, class: "rounded-md px-3 py-2 bg-gray-100 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600 font-medium whitespace-nowrap" %>
-    <%= button_to "Delete", @skill, method: :delete, form_class: "sm:inline-block mt-2 sm:mt-0 sm:ml-2", class: "w-full rounded-lg px-3 py-2 text-white bg-red-600 hover:bg-red-500 dark:bg-red-700 dark:hover:bg-red-600 font-medium cursor-pointer", data: { turbo_confirm: "Are you sure?" } %>
+    <%= link_to "All skills", skill_categories_path, class: "rounded-md px-3 py-2 bg-gray-100 hover:bg-gray-50 dark:bg-gray-700 dark:hover:bg-gray-600 font-medium whitespace-nowrap" %>
+    <%= button_to "Delete", @skill_category, method: :delete, form_class: "sm:inline-block mt-2 sm:mt-0 sm:ml-2", class: "w-full rounded-lg px-3 py-2 text-white bg-red-600 hover:bg-red-500 dark:bg-red-700 dark:hover:bg-red-600 font-medium cursor-pointer", data: { turbo_confirm: "Are you sure?" } %>
   </div>
 </div>
 <h1 class="text-2xl text-left text-red-600 dark:text-red-400 px-3 py-2">Lessons</h1>
@@ -19,11 +18,16 @@
       <th class="text-left px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">Composition</th>
       <th class="text-left px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">Teacher</th>
     </tr>
-    <% @skill.lessons.each do |lesson| %>
-      <tr>
-        <td class="px-3 py-2 border-b border-gray-300"><%= link_to lesson.name, lesson, class:"text-blue-500 hover:text-red-500 px-1 py-1" %></td>
-        <td class="px-3 py-2 border-b border-gray-300"><%= lesson.assignment.project_name %></td>
-        <td class="px-3 py-2 border-b border-gray-300"><%= lesson.assignment.teacher.name %></td>
-      </tr>
+    <% @skill_category.tutorials.each do |tutorial| %>
+      <% tutorial.chapters.each do |chapter| %>
+        <% lesson = chapter.lesson %>
+        <% if lesson %>
+          <tr>
+            <td class="px-3 py-2 border-b border-gray-300"><%= link_to lesson.name, lesson, class:"text-blue-500 hover:text-red-500 px-1 py-1" %></td>
+            <td class="px-3 py-2 border-b border-gray-300"><%= lesson.assignment&.project_name %></td>
+            <td class="px-3 py-2 border-b border-gray-300"><%= lesson.assignment&.teacher&.name %></td>
+          </tr>
+        <% end %>
+      <% end %>
     <% end %>
   </table>

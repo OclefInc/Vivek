@@ -21,4 +21,5 @@
 class Subscription < ApplicationRecord
   belongs_to :user
   belongs_to :assignment
+  validates :user_id, uniqueness: { scope: :assignment_id }
 end

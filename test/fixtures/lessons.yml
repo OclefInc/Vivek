@@ -21,8 +21,10 @@ one:
   name: MyString
   assignment: one
   teacher: one
+  date: 2023-01-01
 
 two:
   name: MyString
   assignment: two
   teacher: two
+  date: 2023-01-01

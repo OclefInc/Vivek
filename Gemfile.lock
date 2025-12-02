@@ -245,6 +245,8 @@ GEM
       railties (>= 7.1)
       stimulus-rails
       turbo-rails
+    mocha (2.8.2)
+      ruby2_keywords (>= 0.0.5)
     msgpack (1.8.0)
     multi_xml (0.7.2)
       bigdecimal (~> 3.1)
@@ -438,6 +440,7 @@ GEM
     ruby-vips (2.2.4)
       ffi (~> 1.12)
       logger
+    ruby2_keywords (0.0.5)
     rubyzip (2.4.1)
     rufo (0.18.1)
     securerandom (0.4.1)
@@ -556,6 +559,7 @@ DEPENDENCIES
   local_time
   mailgun-rails
   mission_control-jobs
+  mocha (~> 2.8)
   omniauth
   omniauth-apple
   omniauth-facebook

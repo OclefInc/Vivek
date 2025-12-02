@@ -95,3 +95,5 @@ gem "rails_sortable"
 gem "mission_control-jobs"
 
 gem "ruby-openai", "~> 8.3"
+
+gem "mocha", "~> 2.8", group: :test

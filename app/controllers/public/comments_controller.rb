@@ -5,10 +5,6 @@ class Public::CommentsController < ApplicationController
     @annotation = params[:annotation_type].constantize.find(params[:annotation_id]) if params[:annotation_type].present? && params[:annotation_id].present?
     @comments = @annotation.comments.includes(:user).order(created_at: :desc) if @annotation
   end
-  def show
-    redirect_to_root_path unless current_user.is_employee?
-    @comment = Comment.find(params[:id])
-  end
 
   def create
     @comment = Comment.new(comment_params)

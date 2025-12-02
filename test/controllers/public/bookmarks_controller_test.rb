@@ -31,6 +31,17 @@ class Public::BookmarksControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to root_path
   end
 
+  test "should fail to create bookmark" do
+    sign_in @user
+
+    assert_no_difference("Bookmark.count") do
+      post public_bookmarks_path, params: { bookmark: { bookmarkable_id: nil, bookmarkable_type: @bookmarkable.class.name } }
+    end
+
+    assert_redirected_to root_path
+    assert_equal "Unable to bookmark.", flash[:alert]
+  end
+
   test "should destroy bookmark" do
     sign_in @user
     assert_difference("Bookmark.count", -1) do

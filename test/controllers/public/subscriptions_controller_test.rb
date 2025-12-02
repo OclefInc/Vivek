@@ -6,7 +6,8 @@ class Public::SubscriptionsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @user = users(:one)
     @project = assignments(:one)
-    @subscription = @project.subscriptions.create(user: @user)
+    # Use the existing subscription from fixtures instead of creating a new one
+    @subscription = subscriptions(:one)
   end
 
   test "should get index" do
@@ -26,6 +27,18 @@ class Public::SubscriptionsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to project_path(@project)
   end
 
+  test "should fail to create duplicate subscription" do
+    sign_in @user
+    # Subscription already exists from setup
+
+    assert_no_difference("Subscription.count") do
+      post project_subscription_path(@project)
+    end
+
+    assert_redirected_to project_path(@project)
+    assert_equal "Unable to subscribe.", flash[:alert]
+  end
+
   test "should destroy subscription" do
     sign_in @user
     assert_difference("Subscription.count", -1) do
@@ -33,5 +46,17 @@ class Public::SubscriptionsControllerTest < ActionDispatch::IntegrationTest
     end
 
     assert_redirected_to project_path(@project)
+  end
+
+  test "should fail to destroy non-existent subscription" do
+    sign_in @user
+    @subscription.destroy
+
+    assert_no_difference("Subscription.count") do
+      delete project_subscription_path(@project)
+    end
+
+    assert_redirected_to project_path(@project)
+    assert_equal "Unable to unsubscribe.", flash[:alert]
   end
 end

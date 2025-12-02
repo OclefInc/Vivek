@@ -14,4 +14,9 @@ class Public::ProjectsControllerTest < ActionDispatch::IntegrationTest
     get project_path(@project)
     assert_response :success
   end
+
+  test "should get index with query" do
+    get projects_path(query: "test")
+    assert_response :success
+  end
 end

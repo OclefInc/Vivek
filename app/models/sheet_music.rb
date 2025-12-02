@@ -17,6 +17,10 @@ class SheetMusic < ApplicationRecord
   validates_presence_of :pdf_file
   validate :pdf_file_is_pdf_type
 
+  def project_name
+    composition&.name
+  end
+
   def pdf_file_is_pdf_type
     if pdf_file.attached?
       unless pdf_file.content_type.starts_with?("application/pdf")

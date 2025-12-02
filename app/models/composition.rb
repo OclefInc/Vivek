@@ -10,6 +10,7 @@
 #
 class Composition < ApplicationRecord
   has_many :sheet_musics
+  has_many :assignments
   has_rich_text :description
 
   validates_presence_of :name, :composer

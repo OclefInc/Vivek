@@ -25,10 +25,8 @@ one:
   lesson: one
   name: MyString
   start_time: 1
-  sort: 1
 
 two:
   lesson: two
   name: MyString
   start_time: 1
-  sort: 1

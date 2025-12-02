@@ -25,11 +25,15 @@
 #  fk_rails_...  (project_type_id => project_types.id)
 #
 one:
-  student: MyString
-  teacher: MyString
+  student: one
+  teacher: one
   composition: MyString
+  project_name: Project One
+  project_type: one
 
 two:
-  student: MyString
-  teacher: MyString
+  student: two
+  teacher: two
   composition: MyString
+  project_name: Project Two
+  project_type: two

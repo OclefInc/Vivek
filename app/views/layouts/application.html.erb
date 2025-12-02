@@ -38,6 +38,9 @@
         <%= link_to "Music", compositions_path, class: nav_link_class(["/admin/compositions"]) %>
         <%= link_to "Comments", admin_comments_path, class: nav_link_class(["/admin/comments"]) %>
         <%= link_to "Accounts", accounts_path, class: nav_link_class(["/admin/accounts"]) %>
+        <% if Rails.env.development? %>
+          <a href="/coverage/index.html" target="_blank" class="<%= nav_link_class([]) %>">Coverage</a>
+        <% end %>
       </nav>
       <div class="p-5 border-t border-sky-200 dark:border-gray-700">
         <% if current_user.teacher.present? %>
@@ -94,6 +97,9 @@
         <%= link_to "Music", compositions_path, class: nav_link_class(["/admin/compositions"]) %>
         <%= link_to "Comments", admin_comments_path, class: nav_link_class(["/comments"]) %>
         <%= link_to "Accounts", accounts_path, class: nav_link_class(["/admin/accounts"]) %>
+        <% if Rails.env.development? %>
+          <a href="/coverage/index.html" target="_blank" class="<%= nav_link_class([]) %>">Coverage</a>
+        <% end %>
       </nav>
       <div class="p-5 border-t border-sky-200 dark:border-gray-700">
         <% if current_user.teacher.present? %>

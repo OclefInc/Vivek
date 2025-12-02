@@ -7,8 +7,8 @@ class Public::Professors::Tutorials::ChaptersControllerTest < ActionDispatch::In
     @chapter = chapters(:one)
 
     # Attach video to lesson
-    file = Rails.root.join('test', 'fixtures', 'files', 'test_video.mp4')
-    @chapter.lesson.lesson_video.attach(io: File.open(file), filename: 'test_video.mp4', content_type: 'video/mp4')
+    file = Rails.root.join("test", "fixtures", "files", "test_video.mp4")
+    @chapter.lesson.lesson_video.attach(io: File.open(file), filename: "test_video.mp4", content_type: "video/mp4")
   end
 
   test "should get show" do

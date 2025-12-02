@@ -1,6 +1,8 @@
 ENV["RAILS_ENV"] ||= "test"
 require "simplecov"
-SimpleCov.start "rails"
+SimpleCov.start "rails" do
+  coverage_dir "public/coverage"
+end
 
 require_relative "../config/environment"
 require "rails/test_help"

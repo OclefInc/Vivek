@@ -46,7 +46,6 @@
         <% if current_user.teacher.present? %>
           <%= link_to "Profile", teacher_path(current_user.teacher), class: "block px-5 py-2 text-cyan-600 dark:text-cyan-400 hover:text-cyan-500 dark:hover:text-cyan-300 mb-2 text-center" %>
         <% end %>
-        <%= link_to "Account", "/users/edit", class: "block px-5 py-2 text-cyan-600 dark:text-cyan-400 hover:text-cyan-500 dark:hover:text-cyan-300 mb-2 text-center" %>
         <%= link_to "Home", root_path, class: "block px-5 py-2 text-cyan-600 dark:text-cyan-400 hover:text-cyan-500 dark:hover:text-cyan-300 mb-2 text-center" %>
       </div>
     </aside>
@@ -91,7 +90,6 @@
         <% if current_user.teacher.present? %>
           <%= link_to "Profile", teacher_path(current_user.teacher), class: "block px-5 py-2 text-cyan-600 dark:text-cyan-400 hover:text-cyan-500 dark:hover:text-cyan-300 mb-2 text-center" %>
         <% end %>
-        <%= link_to "Account", "/users/edit", class: "block px-5 py-2 text-cyan-600 dark:text-cyan-400 hover:text-cyan-500 dark:hover:text-cyan-300 mb-2 text-center" %>
         <%= link_to "Home", root_path, class: "block px-5 py-2 text-cyan-600 dark:text-cyan-400 hover:text-cyan-500 dark:hover:text-cyan-300 mb-2 text-center" %>
       </div>
     </aside>

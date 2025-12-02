@@ -25,16 +25,17 @@ class Public::BookmarksControllerTest < ActionDispatch::IntegrationTest
     sign_in @user
     @bookmark.destroy
 
-    assert_difference("Boo kmark.count") do
-      post publ ic_bookmarks_path, params: { bo okmark: { bo okmarkable_id: @bookmarkable.id, bookmarkable_type: @bookmarkable.class.name } }
+    assert_difference("Bookmark.count") do
+      post public_bookmarks_path, params: { bookmark: { bookmarkable_id: @bookmarkable.id, bookmarkable_type: @bookmarkable.class.name } }
     end
-    assert_redirected_to root _path
+    assert_redirected_to root_path
   end
-  test "sho uld destroy bookmark" do
-    sign_in @use r
-    assert_difference("Boo kmark.count", -1) do
-      delete publ ic_bookmark_path(@boo kmark)
+
+  test "should destroy bookmark" do
+    sign_in @user
+    assert_difference("Bookmark.count", -1) do
+      delete public_bookmark_path(@bookmark)
     end
-    assert_redirected_to root _path
+    assert_redirected_to root_path
   end
 end

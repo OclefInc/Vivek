@@ -1,7 +1,7 @@
 <% new_comment = local_assigns[:new_comment] || Comment.new(annotation: annotation) %>
 <turbo-frame id="comments_module">
   <div class="block w-full">
-    <%= render "shared/flash" %>
+    <%= render "shared/flash", inline: true %>
     <% if signed_in? %>
       <%= form_with(model: new_comment) do |form| %>
         <div class="comment-trix-wrapper">

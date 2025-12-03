@@ -67,12 +67,24 @@ class User < ApplicationRecord
 
   # OmniAuth callback method
   def self.from_omniauth(auth)
-    user = where(provider: auth.provider, uid: auth.uid).first_or_initialize do |u|
-      u.email = auth.info.email
-      u.password = Devise.friendly_token[0, 20]
-      u.name = auth.info.name || "#{auth.info.first_name} #{auth.info.last_name}".strip
-      # Skip confirmation for OAuth users
-      u.skip_confirmation!
+    # First try to find by provider/uid
+    user = where(provider: auth.provider, uid: auth.uid).first
+
+    # If not found, try to find by email
+    unless user
+      user = find_by(email: auth.info.email)
+      if user
+        # If found by email, update provider/uid to link the account
+        user.provider = auth.provider
+        user.uid = auth.uid
+      else
+        # If still not found, initialize new user
+        user = new(provider: auth.provider, uid: auth.uid)
+        user.email = auth.info.email
+        user.password = Devise.friendly_token[0, 20]
+        user.name = auth.info.name || "#{auth.info.first_name} #{auth.info.last_name}".strip
+        user.skip_confirmation!
+      end
     end
 
     # Always update picture_url on login to get latest/higher quality image

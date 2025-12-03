@@ -40,4 +40,68 @@ class UserTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
+
+  test "should link existing user with omniauth" do
+    user = users(:one)
+    # Use update_columns to bypass Devise reconfirmable logic which would put the new email in unconfirmed_email
+    user.update_columns(provider: nil, uid: nil, email: "existing@example.com")
+
+    auth = OmniAuth::AuthHash.new({
+      provider: "google_oauth2",
+      uid: "123456789",
+      info: {
+        email: "existing@example.com",
+        name: "Google User",
+        image: "http://example.com/image.jpg"
+      }
+    })
+
+    assert_no_difference "User.count" do
+      omniauth_user = User.from_omniauth(auth)
+      assert_equal user.id, omniauth_user.id
+      assert_equal "google_oauth2", omniauth_user.provider
+      assert_equal "123456789", omniauth_user.uid
+      assert_equal "http://example.com/image.jpg", omniauth_user.picture_url
+    end
+  end
+
+  test "should link existing user with github omniauth" do
+    user = users(:two)
+    user.update_columns(provider: nil, uid: nil, email: "github_user@example.com")
+
+    auth = OmniAuth::AuthHash.new({
+      provider: "github",
+      uid: "987654321",
+      info: {
+        email: "github_user@example.com",
+        name: "GitHub User",
+        image: "http://example.com/github_image.jpg"
+      }
+    })
+
+    assert_no_difference "User.count" do
+      omniauth_user = User.from_omniauth(auth)
+      assert_equal user.id, omniauth_user.id
+      assert_equal "github", omniauth_user.provider
+      assert_equal "987654321", omniauth_user.uid
+    end
+  end
+
+  test "should create new user if email does not match" do
+    auth = OmniAuth::AuthHash.new({
+      provider: "facebook",
+      uid: "555555555",
+      info: {
+        email: "new_facebook@example.com",
+        name: "Facebook User",
+        image: "http://example.com/fb_image.jpg"
+      }
+    })
+
+    assert_difference "User.count", 1 do
+      omniauth_user = User.from_omniauth(auth)
+      assert_equal "facebook", omniauth_user.provider
+      assert_equal "new_facebook@example.com", omniauth_user.email
+    end
+  end
 end

@@ -87,6 +87,6 @@ class Student < ApplicationRecord
   private
 
     def touch_assignments
-      assignments.find_each(&:touch)
+      assignments.update_all(updated_at: Time.current)
     end
 end

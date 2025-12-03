@@ -1,7 +1,7 @@
 class Admin::TeachersController < ApplicationController
   before_action :authenticate_user!
   before_action :authorize_user
-  before_action :set_teacher, only: %i[ show edit update destroy ]
+  before_action :set_teacher, only: %i[ show edit update destroy presentations projects ]
 
   # GET /teachers or /teachers.json
   def index
@@ -67,6 +67,12 @@ class Admin::TeachersController < ApplicationController
       format.html { redirect_to teachers_path, status: :see_other, notice: "Teacher was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+
+  def projects
+  end
+
+  def presentations
   end
 
   private

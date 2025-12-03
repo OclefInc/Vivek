@@ -172,13 +172,13 @@ class User < ApplicationRecord
       # Touch student's assignments if user has a student profile
       if student.present?
         student.touch
-        student.assignments.find_each(&:touch)
+        student.assignments.update_all(updated_at: Time.current)
       end
 
       # Touch teacher's assignments if user has a teacher profile
       if teacher.present?
         teacher.touch
-        teacher.assignments.distinct.find_each(&:touch)
+        teacher.assignments.distinct.update_all(updated_at: Time.current)
       end
     end
 end

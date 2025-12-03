@@ -76,10 +76,10 @@ class Teacher < ApplicationRecord
   private
 
     def touch_assignments
-      tutorials.find_each(&:touch)
-      lessons.find_each(&:touch)
+      tutorials.update_all(updated_at: Time.current)
+      lessons.update_all(updated_at: Time.current)
       # Touch all assignments where this teacher taught a lesson to bust cache
-      assignments.distinct.find_each(&:touch)
+      assignments.distinct.update_all(updated_at: Time.current)
     end
 
     def self.reset_all_counters

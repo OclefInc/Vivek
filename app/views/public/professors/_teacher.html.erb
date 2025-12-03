@@ -1,20 +1,26 @@
-<% cache teacher do %>
-  <div class="bg-white dark:bg-gray-800 shadow-sm transition-all  ">
-    <div class="p-6">
-      <div class="flex flex-col items-center mb-4">
-        <div class="w-24 h-24 rounded-full overflow-hidden mb-3 border-4 border-gray-200 dark:border-gray-700">
-          <% if teacher.display_avatar(size: 96) %>
-            <%= image_tag teacher.display_avatar(size: 96), alt: teacher.name, class: "w-full h-full object-cover" %>
-          <% else %>
-            <div class="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
-              <span class="text-white text-3xl font-bold"><%= teacher.initials&.upcase || teacher.name&.first&.upcase %></span>
-            </div>
-          <% end %>
-        </div>
-        <h3 class="text-lg font-bold text-sky-800 dark:text-teal-300 text-center mb-2">
-          <%= teacher.name %>
-        </h3>
+<% display_bio = local_assigns[:display_bio] || false %>
+<div class="bg-white dark:bg-gray-800 shadow-sm transition-all  ">
+  <div class="p-6">
+    <div class="flex flex-col items-center mb-4">
+      <div class="w-24 h-24 rounded-full overflow-hidden mb-3 border-4 border-gray-200 dark:border-gray-700">
+        <% if teacher.display_avatar(size: 96) %>
+          <%= image_tag teacher.display_avatar(size: 96), alt: teacher.name, class: "w-full h-full object-cover" %>
+        <% else %>
+          <div class="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
+            <span class="text-white text-3xl font-bold"><%= teacher.initials&.upcase || teacher.name&.first&.upcase %></span>
+          </div>
+        <% end %>
       </div>
+      <h3 class="text-xl font-bold text-sky-800 dark:text-teal-300 text-center">
+        <%= teacher.name %>
+      </h3>
+      <% if display_bio %>
+        <p class="text-md dark:text-white mb-2" >Contact: <span class="text-blue-500 hover:text-blue-700"><%= mail_to teacher.user.email if teacher.user.present? %></span></p>
+        <h4 class="text-lg text-sky-900 dark:text-teal-500 text-center">Teaching Philosophy</h4>
+        <div class="text-md dark:text-white mt-2"><%= teacher.bio %></div>
+      <% end %>
+    </div>
+    <% cache teacher do %>
       <div class="grid grid-cols-2 py-3 bg-slate-50 dark:bg-gray-900 rounded-lg divide-x divide-gray-300 dark:divide-gray-600">
         <div class="text-center px-2">
           <div class="text-2xl font-bold text-sky-800 dark:text-teal-300">
@@ -33,6 +39,6 @@
           </div>
         </div>
       </div>
-    </div>
+    <% end %>
   </div>
-<% end %>
+</div>

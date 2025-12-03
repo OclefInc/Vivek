@@ -28,15 +28,6 @@
         <div class="dark:text-white"> Please <%= link_to('sign in', new_user_session_path, data: { turbo_frame: "_top" }, class: 'text-blue-400 hover:text-blue-300  underline') %> to add a comment </div>
       </div>
     <% end %>
-    <%
-      relevant_teacher_ids = []
-      if annotation.is_a?(Assignment)
-        relevant_teacher_ids = annotation.teacher_ids + [annotation.teacher_id]
-      elsif annotation.is_a?(Lesson)
-        relevant_teacher_ids = annotation.assignment.teacher_ids + [annotation.assignment.teacher_id]
-      end
-      relevant_teacher_ids = relevant_teacher_ids.compact.uniq
-    %>
     <% annotation.comments.where(unpublished_date: nil).order(created_at: :desc).includes(user: :teacher, likes: :user).each do |comment| %>
       <%= render partial: "public/comments/comment", locals: { comment: comment } %>
     <% end %>

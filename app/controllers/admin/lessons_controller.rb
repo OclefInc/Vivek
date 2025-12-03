@@ -51,7 +51,7 @@ class Admin::LessonsController < ApplicationController
 
     respond_to do |format|
       if @lesson.update(lesson_params.except(:skill_names, :teacher_name))
-        format.html { redirect_to params[:return_url] || @lesson, notice: "Lesson was successfully updated." }
+        format.html { redirect_to params[:return_url] || @lesson }
         format.json { render :show, status: :ok, location: @lesson }
       else
         format.html { render :edit, status: :unprocessable_entity }

@@ -83,7 +83,7 @@ class Admin::AssignmentsController < ApplicationController
 
     respond_to do |format|
       if @assignment.save
-        format.html { redirect_to @assignment, notice: "Assignment was successfully updated." }
+        format.html { redirect_to @assignment }
         format.json { render :show, status: :ok, location: @assignment }
       else
         format.html { render :edit, status: :unprocessable_entity }

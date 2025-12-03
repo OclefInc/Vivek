@@ -23,11 +23,8 @@ Rails.application.routes.draw do
     resources :skill_categories, only: [ :index, :show ]
     resources :compositions
     resources :teachers do
-      member do
-        get :presentations
-        get :projects
-      end
       resources :chapters, only: [ :index ], controller: "teachers/chapters"
+      resources :projects, only: [ :index ], controller: "teachers/projects"
       resources :tutorials, only: [ :index ], controller: "teachers/tutorials"
     end
     resources :sheet_musics

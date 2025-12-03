@@ -14,7 +14,9 @@ class Admin::Teachers::TutorialsController < ApplicationController
         text: tutorial.name
       }
     end
-
-    render json: { options: options }
+    respond_to do |format|
+      format.html
+      format.json { render json: { options: options } }
+    end
   end
 end

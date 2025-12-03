@@ -69,12 +69,6 @@ class Admin::TeachersController < ApplicationController
     end
   end
 
-  def projects
-  end
-
-  def presentations
-  end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_teacher

@@ -4,7 +4,7 @@
   <div class="xl:min-w-[640px] xl:max-w-[640px] md:flex-1 md:basis-1/2 mb-4 xl:mb-0">
     <%= render 'profile_picture', teacher: @teacher %>
     <%= render @teacher %>
-    <turbo-frame src="<%= projects_teacher_path(@teacher) %>" id="projects"></turbo-frame>
-    <turbo-frame src="<%= presentations_teacher_path(@teacher) %>" id="presentations"></turbo-frame>
+    <turbo-frame src="<%= teacher_projects_path(@teacher) %>" id="projects"  target="_top"></turbo-frame>
+    <turbo-frame src="<%= teacher_tutorials_path(@teacher) %>" id="presentations"  target="_top"></turbo-frame>
   </div>
 </div>

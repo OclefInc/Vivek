@@ -1,49 +1,93 @@
 <% teacher.skill_categories.uniq.sort_by(&:name).each do |skill_category| %>
-  <div data-controller="sortable">
-    <table class="w-full table-auto border-collapse">
-      <thead>
-        <tr>
-          <th class="text-left  py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">Skill Type: <%= skill_category.name %></th>
-          <th class="text-right md:px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">Clips</th>
-        </tr>
-      </thead>
-      <tbody data-sortable-target="tbody">
-        <% teacher.tutorials.where(skill_category_id: skill_category.id).sort_by(&:name).each_with_sortable_id do |tutorial, sortable_id| %>
-          <tr id="<%= sortable_id %>">
-            <td class="text-left py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-300"><%= link_to tutorial.name, tutorial, class:"text-blue-500 hover:text-red-500 dark:text-blue-400 dark:hover:text-red-400" %></td>
-            <td class="text-right md:px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-300"><%= tutorial.chapters_tutorials.count %></td>
-          </tr>
+  <div class="border-b border-gray-200 dark:border-gray-700" x-data="{ expanded: false }">
+    <button @click="expanded = !expanded" class="w-full flex justify-between items-center py-4 text-left focus:outline-none hover:bg-gray-50 dark:hover:bg-gray-800 px-2 rounded transition-colors">
+      <span class="font-bold text-lg dark:text-gray-200">
+        <%= skill_category.name %>
+        <span class="ml-2 text-sm font-normal text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-full">
+          <%= teacher.tutorials.where(skill_category_id: skill_category.id).count %>
+        </span>
+      </span>
+      <svg class="w-5 h-5 transform transition-transform duration-200 dark:text-gray-200" :class="{'rotate-180': expanded}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+      </svg>
+    </button>
+    <div x-show="expanded"
+         x-transition:enter="transition ease-out duration-200"
+         x-transition:enter-start="opacity-0 -translate-y-2"
+         x-transition:enter-end="opacity-100 translate-y-0"
+         x-transition:leave="transition ease-in duration-150"
+         x-transition:leave-start="opacity-100 translate-y-0"
+         x-transition:leave-end="opacity-0 -translate-y-2"
+         class="pb-4 px-2">
+      <div data-controller="sortable">
+        <table class="w-full table-auto border-collapse">
+          <thead>
+            <tr>
+              <th class="text-left py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">Name</th>
+              <th class="text-right md:px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">Clips</th>
+            </tr>
+          </thead>
+          <tbody data-sortable-target="tbody">
+            <% teacher.tutorials.where(skill_category_id: skill_category.id).sort_by(&:name).each_with_sortable_id do |tutorial, sortable_id| %>
+              <tr id="<%= sortable_id %>">
+                <td class="text-left py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-300"><%= link_to tutorial.name, tutorial, class:"text-blue-500 hover:text-red-500 dark:text-blue-400 dark:hover:text-red-400" %></td>
+                <td class="text-right md:px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-300"><%= tutorial.chapters_tutorials.count %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+        <% if teacher.tutorials.where(skill_category_id: skill_category.id).any? %>
+          <div class="mt-3 mb-3 flex justify-between items-center gap-2">
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" class="sr-only peer" data-action="change->sortable#toggle">
+              <div class="w-11 h-6 bg-gray-200 dark:bg-gray-700 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 dark:after:border-gray-600 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
+              <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-200">Enable Sorting</span>
+            </label>
+          </div>
         <% end %>
-      </tbody>
-    </table>
-    <% if teacher.tutorials.where(skill_category_id: skill_category.id).any? %>
-      <div class="mt-3 mb-3 flex justify-between items-center gap-2">
-        <label class="relative inline-flex items-center cursor-pointer">
-          <input type="checkbox" class="sr-only peer" data-action="change->sortable#toggle">
-          <div class="w-11 h-6 bg-gray-200 dark:bg-gray-700 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 dark:after:border-gray-600 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
-          <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-200">Enable Sorting</span>
-        </label>
       </div>
-    <% end %>
+    </div>
   </div>
 <% end %>
 <% if teacher.tutorials.where(skill_category_id: nil).any? %>
-  <div data-controller="sortable">
-    <table class="w-full table-auto border-collapse">
-      <thead>
-        <tr>
-          <th class="text-left  py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">Uncategorized</th>
-          <th class="text-left md:px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">Clips</th>
-        </tr>
-      </thead>
-      <tbody data-sortable-target="tbody">
-        <% teacher.tutorials.where(skill_category_id: nil).sort_by(&:name).each_with_sortable_id do |tutorial, sortable_id| %>
-          <tr id="<%= sortable_id %>">
-            <td class="text-left py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-300"><%= link_to tutorial.name, tutorial, class:"text-blue-500 hover:text-red-500 dark:text-blue-400 dark:hover:text-red-400" %></td>
-            <td class="text-left md:px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-300"><%= tutorial.chapters_tutorials.count %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+  <div class="border-b border-gray-200 dark:border-gray-700" x-data="{ expanded: false }">
+    <button @click="expanded = !expanded" class="w-full flex justify-between items-center py-4 text-left focus:outline-none hover:bg-gray-50 dark:hover:bg-gray-800 px-2 rounded transition-colors">
+      <span class="font-bold text-lg dark:text-gray-200">
+        Uncategorized
+        <span class="ml-2 text-sm font-normal text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded-full">
+          <%= teacher.tutorials.where(skill_category_id: nil).count %>
+        </span>
+      </span>
+      <svg class="w-5 h-5 transform transition-transform duration-200 dark:text-gray-200" :class="{'rotate-180': expanded}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+      </svg>
+    </button>
+    <div x-show="expanded"
+         x-transition:enter="transition ease-out duration-200"
+         x-transition:enter-start="opacity-0 -translate-y-2"
+         x-transition:enter-end="opacity-100 translate-y-0"
+         x-transition:leave="transition ease-in duration-150"
+         x-transition:leave-start="opacity-100 translate-y-0"
+         x-transition:leave-end="opacity-0 -translate-y-2"
+         class="pb-4 px-2">
+      <div data-controller="sortable">
+        <table class="w-full table-auto border-collapse">
+          <thead>
+            <tr>
+              <th class="text-left py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">Name</th>
+              <th class="text-left md:px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">Clips</th>
+            </tr>
+          </thead>
+          <tbody data-sortable-target="tbody">
+            <% teacher.tutorials.where(skill_category_id: nil).sort_by(&:name).each_with_sortable_id do |tutorial, sortable_id| %>
+              <tr id="<%= sortable_id %>">
+                <td class="text-left py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-300"><%= link_to tutorial.name, tutorial, class:"text-blue-500 hover:text-red-500 dark:text-blue-400 dark:hover:text-red-400" %></td>
+                <td class="text-left md:px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-300"><%= tutorial.chapters_tutorials.count %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
 <% end %>

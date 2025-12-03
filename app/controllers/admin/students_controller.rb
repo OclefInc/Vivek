@@ -50,7 +50,7 @@ class Admin::StudentsController < ApplicationController
   def update
     respond_to do |format|
       if @student.update(student_params)
-        format.html { redirect_to @student, notice: "Student was successfully updated." }
+        format.html { redirect_to @student }
         format.json { render :show, status: :ok, location: @student }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -77,6 +77,6 @@ class Admin::StudentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def student_params
-      params.expect(student: [ :profile_picture, :name, :year_of_birth, :bio, :user_id, :avatar_crop_x, :avatar_crop_y, :avatar_crop_width, :avatar_crop_height ])
+      params.expect(student: [ :age_started_piano, :profile_picture, :name, :year_of_birth, :bio, :user_id, :avatar_crop_x, :avatar_crop_y, :avatar_crop_width, :avatar_crop_height ])
     end
 end

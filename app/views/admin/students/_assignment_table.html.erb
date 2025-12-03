@@ -1,8 +1,7 @@
 <table class="w-full table-auto border-collapse">
   <thead>
     <tr>
-      <th class="text-left px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">Project</th>
-      <th class="text-left px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">Dates</th>
+      <th class="text-left px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">Name</th>
       <th class="text-right px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">Lesson</th>
     </tr>
   </thead>
@@ -12,8 +11,7 @@
         <tr>
           <td class="text-left px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-300">
             <%= link_to assignment.project_name, assignment, class:"text-blue-500 hover:text-red-500 dark:text-blue-400 dark:hover:text-red-400" %>
-          </td>
-          <td class="px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-300">
+            <br>
             <%= assignment.lessons.minimum(:date)&.strftime('%b %d, %Y') || 'No date' %>
             <% if assignment.lessons.minimum(:date) != assignment.lessons.maximum(:date) %>
               - <%= assignment.lessons.maximum(:date)&.strftime('%b %d, %Y') %>

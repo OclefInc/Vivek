@@ -6,6 +6,7 @@
 #  composition     :string
 #  project_name    :string
 #  student         :string
+#  student_age     :integer
 #  teacher         :string
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null

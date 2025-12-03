@@ -1,19 +1,23 @@
 <% content_for :title, "Teacher" %>
 <%= render 'show_header' %>
-<div class="xl:flex xl:gap-8">
-  <div class="py-4 xl:min-w-[480px]  xl:max-w-[480px]">
+<div class="flex flex-col items-center max-w-7xl mx-auto ">
+  <div class="xl:min-w-[640px] xl:max-w-[640px] md:flex-1 md:basis-1/2 mb-4 xl:mb-0">
     <%= render 'profile_picture', teacher: @teacher %>
     <%= render @teacher %>
+    <div class="mt-10 flex items-center justify-center">
+      <h4 class="font-bold text-xl dark:text-gray-200 me-3">Projects</h4>
+      <%= link_to new_assignment_path({ teacher_id: @teacher.id }), title: "Add Presentation", class: "p-1 bg-blue-600 hover:bg-blue-400 text-white rounded-lg self-start xl:self-auto" do %>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+        </svg>
+      <% end %>
+    </div>
     <%= render 'projects_table' %>
-  </div>
-  <div class="w-full py-4 xl:flex-1 xl:basis-1/2 xl:px-5 md:-mx-5 ">
-    <div class="mt-10 flex items-center justify-between">
-      <h4 class="font-bold text-xl dark:text-gray-200">Presentations</h4>
-      <%= link_to new_tutorial_path({ teacher_id: @teacher.id }),
-      class: "text-blue-600 hover:text-blue-500",
-      title: "Add Presentation" do %>
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+    <div class="mt-10 flex items-center justify-center">
+      <h4 class="font-bold text-xl dark:text-gray-200 me-3">Presentations</h4>
+      <%= link_to new_tutorial_path({ teacher_id: @teacher.id }), title: "Add Presentation", class: "p-1 bg-blue-600 hover:bg-blue-400 text-white rounded-lg self-start xl:self-auto" do %>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
         </svg>
       <% end %>
     </div>

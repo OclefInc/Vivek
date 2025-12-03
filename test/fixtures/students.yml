@@ -5,6 +5,7 @@
 # Table name: students
 #
 #  id                 :bigint           not null, primary key
+#  age_started_piano  :integer
 #  assignments_count  :integer          default(0), not null
 #  avatar_crop_height :integer
 #  avatar_crop_width  :integer

@@ -104,4 +104,51 @@ class UserTest < ActiveSupport::TestCase
       assert_equal "new_facebook@example.com", omniauth_user.email
     end
   end
+
+  test "should allow login with multiple providers for same email" do
+    email = "multi_provider@example.com"
+    user = User.create!(
+      email: email,
+      name: "Multi User",
+      password: "password",
+      provider: "google_oauth2",
+      uid: "google_123"
+    )
+
+    # 1. Login with GitHub (same email)
+    github_auth = OmniAuth::AuthHash.new({
+      provider: "github",
+      uid: "github_456",
+      info: {
+        email: email,
+        name: "GitHub User",
+        image: "http://example.com/gh.jpg"
+      }
+    })
+
+    assert_no_difference "User.count" do
+      github_user = User.from_omniauth(github_auth)
+      assert_equal user.id, github_user.id
+      assert_equal "github", github_user.provider
+      assert_equal "github_456", github_user.uid
+    end
+
+    # 2. Login with Google again
+    google_auth = OmniAuth::AuthHash.new({
+      provider: "google_oauth2",
+      uid: "google_123",
+      info: {
+        email: email,
+        name: "Google User",
+        image: "http://example.com/google.jpg"
+      }
+    })
+
+    assert_no_difference "User.count" do
+      google_user = User.from_omniauth(google_auth)
+      assert_equal user.id, google_user.id
+      assert_equal "google_oauth2", google_user.provider
+      assert_equal "google_123", google_user.uid
+    end
+  end
 end

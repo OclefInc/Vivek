@@ -43,7 +43,7 @@ class Lesson < ApplicationRecord
   # validate :lesson_video_is_video_type
 
   delegate :existing_description_attachments, to: :assignment
-  delegate :vip_users, to: :assignment
+  delegate :contributors, to: :assignment
 
   def to_param
     "#{id}-#{name.parameterize}"

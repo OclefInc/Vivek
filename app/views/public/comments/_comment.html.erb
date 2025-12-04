@@ -58,6 +58,6 @@
         <% end %>
       </div>
     </div>
-    <div class="dark:text-teal-200 text-sky-400 <%= comment.annotation.vip_users.include?(comment.user) ? 'border border-indigo-300 bg-indigo-50 dark:border-indigo-700 dark:bg-indigo-900/30 p-3 rounded-lg shadow-sm' : '' %>"> <%= comment.note %> </div>
+    <div class="dark:text-teal-200 text-sky-400 <%= comment.annotation.contributors.include?(comment.user) ? 'border border-indigo-300 bg-indigo-50 dark:border-indigo-700 dark:bg-indigo-900/30 p-3 rounded-lg shadow-sm' : '' %>"> <%= comment.note %> </div>
   </div>
 </turbo-frame>

@@ -126,4 +126,14 @@ export default class extends Controller {
             document.exitFullscreen()
         }
     }
+
+    skipForward(event) {
+        event.stopPropagation()
+        this.videoTarget.currentTime += 10
+    }
+
+    skipBackward(event) {
+        event.stopPropagation()
+        this.videoTarget.currentTime -= 10
+    }
 }

@@ -1,15 +1,55 @@
-<div class="text-white flex items-center gap-4">
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 text-gray-900 dark:text-white">
-    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0ZM3.75 12h.007v.008H3.75V12Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0ZM3.75 17.25h.007v.008H3.75v-.008Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
-  </svg>
-  <select id="episode_select" class="flex-1 border rounded px-2 py-1 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 border-gray-300 dark:border-zinc-600" onchange="if (this.value) window.location.href = this.value">
-    <% if episode.nil? %>
-      <option value="" disabled selected>Select Lesson</option>
+<!-- Mobile: Split Button with Lesson Dropdown -->
+<div class="xl:hidden relative" x-data="{ open: false }">
+  <p class="dark:text-gray-200 flex items-center">
+    <% if episode.present?%>
+      <strong>Lesson: </strong>
+      <button @click="open = !open"
+            type="button"
+            class="px-3 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 flex-shrink-0  flex items-center">
+        <span><%= episode.name %></span>
+        <svg class="w-5 h-5 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </button>
+    <% else %>
+      <button @click="open = !open"
+            type="button"
+            class="px-3 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 flex-shrink-0  flex items-center">
+        <span><%= pluralize(project.lessons.count, 'Lesson') %></span>
+        <svg class="w-5 h-5 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </button>
     <% end %>
-    <% project.lessons.each do |lesson| %>
-      <option value="<%= project_episode_path(project, lesson) %>"  <%= 'selected' if lesson.id == episode.try(:id) %>>
-      <%= lesson.name %>
-    </option>
+  </p>
+  <!-- Lesson Dropdown Menu -->
+  <div x-show="open"
+         @click.away="open = false"
+         x-transition:enter="transition ease-out duration-100"
+         x-transition:enter-start="transform opacity-0 scale-95"
+         x-transition:enter-end="transform opacity-100 scale-100"
+         x-transition:leave="transition ease-in duration-75"
+         x-transition:leave-start="transform opacity-100 scale-100"
+         x-transition:leave-end="transform opacity-0 scale-95"
+         class="absolute left-0 top-full mt-2 w-full max-w-sm bg-white dark:bg-gray-800 rounded-md shadow-lg border border-gray-200 dark:border-gray-700 z-50 max-h-96 overflow-y-auto"
+         style="display: none;">
+    <div class="py-1">
+      <div class="px-4 py-2 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase border-b border-gray-200 dark:border-gray-700">
+        All Lessons
+      </div>
+      <% project.lessons.order(:sort).each do |lesson| %>
+        <%= link_to project_episode_path(project, lesson),
+              class: "block px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 #{lesson.id == episode.try(:id) ? 'bg-blue-50 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 font-medium' : 'text-gray-700 dark:text-gray-300'}" do %>
+          <div class="flex items-center justify-between">
+            <span><%= lesson.name %></span>
+            <% if lesson.id == episode.try(:id) %>
+              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
+              </svg>
+            <% end %>
+          </div>
+        <% end %>
       <% end %>
-    </select>
+    </div>
   </div>
+</div>

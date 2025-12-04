@@ -28,45 +28,22 @@
         <% end %>
         <!-- Teachers and content (above background) -->
         <div class="relative z-10">
-          <% teachers = assignment.teachers.distinct %>
-          <% if teachers.any? %>
-            <div class="flex gap-4 mb-3 justify-center">
-              <% teachers.first(3).each do |teacher| %>
-                <div class="flex flex-col items-center">
-                  <div class="rounded-full overflow-hidden w-20 h-20 border border-gray-600 shadow-lg flex items-center justify-center">
-                    <% if teacher.display_avatar(size: 80) %>
-                      <%= image_tag teacher.display_avatar(size: 80), class: "w-full h-full object-cover" %>
-                    <% else %>
-                      <div class="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
-                        <span class="text-white text-3xl font-bold"><%= teacher.initials || teacher.email&.first&.upcase %></span>
-                      </div>
-                    <% end %>
+          <div class="flex gap-4 mb-3 justify-center">
+            <div class="flex flex-col items-center">
+              <div class="rounded-full overflow-hidden w-20 h-20 border border-gray-600 shadow-lg flex items-center justify-center">
+                <% if assignment.student.display_avatar(size: 80) %>
+                  <%= image_tag assignment.student.display_avatar(size: 80), class: "w-full h-full object-cover" %>
+                <% else %>
+                  <div class="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
+                    <span class="text-white text-3xl font-bold"><%= assignment.student.initials %></span>
                   </div>
-                  <p class="text-white font-semibold text-center text-sm mt-2">
-                    <%= teacher.name %>
-                  </p>
-                </div>
-              <% end %>
-              <% if teachers.count > 3 %>
-                <div class="flex flex-col items-center">
-                  <div class="rounded-full w-20 h-20 border-2 border-white shadow-lg flex items-center justify-center bg-white/20">
-                    <span class="text-white font-bold text-sm">+<%= teachers.count - 3 %></span>
-                  </div>
-                  <p class="text-white/80 text-sm mt-2">more</p>
-                </div>
-              <% end %>
-            </div>
-          <% else %>
-            <div class="rounded-full overflow-hidden w-32 h-32 border border-white shadow-lg flex items-center justify-center">
-              <div class="aspect-square w-[128px] overflow-hidden">
-                <svg class="text-gray-400" fill="currentColor" viewBox="0 0 24 24">
-                  <circle cx="12" cy="8" r="4"/>
-                  <path d="M2 19c0-2.5 4-5 10-5s10 2.5 10 5v5H2v-5z"/>
-                </svg>
+                <% end %>
               </div>
+              <p class="text-white font-semibold text-center text-sm mt-2">
+                <%= assignment.student.name %>
+              </p>
             </div>
-            <p class="text-white/80 text-sm mt-2">No teachers assigned</p>
-          <% end %>
+          </div>
         </div>
       </div>
       <!-- Summary Section -->
@@ -77,7 +54,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
               <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
             </svg>
-            <span><%= assignment.student.name %></span>
+            <span><%= assignment.teachers.uniq.map{|teacher| teacher.name}.join(", ") %></span>
           </div>
           <% if assignment.lessons.any? %>
             <div class="flex items-center gap-2">

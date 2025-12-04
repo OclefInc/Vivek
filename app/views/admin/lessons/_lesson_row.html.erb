@@ -3,11 +3,11 @@
     <td class="text-left md:px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">
       <div class="flex items-center gap-2">
         <% if lesson.teacher.display_avatar(size: 24) %>
-          <div class="w-6 h-6">
+          <div class="min-w-6 min-h-6">
             <%= image_tag lesson.teacher.display_avatar(size: 24), alt: lesson.teacher.name, class: "w-6 h-6 rounded-full object-cover border border-gray-200 dark:border-gray-700" %>
           </div>
         <% else %>
-          <div class=" rounded-full w-6 h-6 bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
+          <div class=" rounded-full min-w-6 min-h-6 bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
             <span class="text-white text-xs"><%= lesson.teacher.initials&.upcase %></span>
           </div>
         <% end %>

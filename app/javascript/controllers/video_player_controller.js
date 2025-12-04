@@ -10,8 +10,13 @@ export default class extends Controller {
         "timeDisplay",
         "thumbnailTooltip",
         "thumbnailVideo",
+        "chapterTitle",
         "controls"
     ]
+
+    static values = {
+        chapters: Array
+    }
 
     connect() {
         this.videoTarget.controls = false
@@ -67,6 +72,25 @@ export default class extends Controller {
 
     updateDuration() {
         this.updateTimeDisplay()
+        this.renderChapterMarkers()
+    }
+
+    renderChapterMarkers() {
+        if (!this.hasChaptersValue || !this.videoTarget.duration) return
+
+        // Remove existing markers
+        this.progressContainerTarget.querySelectorAll('.chapter-marker').forEach(el => el.remove())
+
+        this.chaptersValue.forEach(chapter => {
+            const percent = (chapter.start_time / this.videoTarget.duration) * 100
+            // Don't add marker at 0% or > 100%
+            if (percent <= 0 || percent >= 100) return
+
+            const marker = document.createElement('div')
+            marker.className = 'chapter-marker absolute top-0 bottom-0 w-0.5 bg-black z-20 pointer-events-none'
+            marker.style.left = `${percent}%`
+            this.progressContainerTarget.appendChild(marker)
+        })
     }
 
     updateTimeDisplay() {
@@ -110,6 +134,27 @@ export default class extends Controller {
         // Update thumbnail video time
         if (this.hasThumbnailVideoTarget) {
             this.thumbnailVideoTarget.currentTime = time
+        }
+
+        // Update chapter title
+        if (this.hasChapterTitleTarget && this.hasChaptersValue) {
+            // Find the current chapter
+            // Chapters are assumed to be sorted by start_time
+            let currentChapter = null
+            for (const chapter of this.chaptersValue) {
+                if (time >= chapter.start_time) {
+                    currentChapter = chapter
+                } else {
+                    break
+                }
+            }
+
+            if (currentChapter && currentChapter.name) {
+                this.chapterTitleTarget.textContent = currentChapter.name
+                this.chapterTitleTarget.classList.remove("hidden")
+            } else {
+                this.chapterTitleTarget.classList.add("hidden")
+            }
         }
     }
 

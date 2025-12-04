@@ -8,7 +8,8 @@
         end
       %>
 <div class="bg-black flex items-center justify-center aspect-[4/3] xl:aspect-auto xl:max-w-[640px] xl:h-[480px] relative group"
-         data-controller="video-poster video-player">
+         data-controller="video-poster video-player"
+         data-video-player-chapters-value="<%= lesson.chapters.to_json(only: [:start_time, :name]) %>">
   <%= video_tag video_url,
           id: 'lesson-video',
           controls: false,

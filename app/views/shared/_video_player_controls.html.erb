@@ -10,12 +10,15 @@
            data-video-player-target="progressBar"
            style="width: 0%"></div>
     <!-- Thumbnail Tooltip -->
-    <div class="absolute bottom-6 hidden pointer-events-none bg-black border border-gray-700 rounded shadow-lg overflow-hidden w-32 aspect-video z-50"
+    <div class="absolute bottom-6 hidden pointer-events-none bg-black border border-gray-700 rounded shadow-lg overflow-hidden w-32 z-50"
            data-video-player-target="thumbnailTooltip">
-      <video class="w-full h-full object-cover"
-               muted
-               preload="metadata"
-               data-video-player-target="thumbnailVideo"></video>
+      <div class="bg-black/80 text-white text-[10px] px-1 py-0.5 text-center truncate hidden" data-video-player-target="chapterTitle"></div>
+      <div class="aspect-video w-full">
+        <video class="w-full h-full object-cover"
+                 muted
+                 preload="metadata"
+                 data-video-player-target="thumbnailVideo"></video>
+      </div>
     </div>
   </div>
   <!-- Buttons & Time -->

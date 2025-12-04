@@ -2,7 +2,8 @@
   <div class="bg-black flex items-center justify-center aspect-[4/3] xl:aspect-auto xl:max-w-[640px] xl:h-[480px] relative group"
          data-controller="video-chapters video-player"
          data-video-chapters-start-time-value="<%= @chapter.start_time %>"
-         data-video-chapters-end-time-value="<%= @chapter.stop_time %>">
+         data-video-chapters-end-time-value="<%= @chapter.stop_time %>"
+         data-video-player-chapters-value="<%= @tutorial.chapters.to_json(only: [:start_time, :name]) %>">
     <%
       video_url = url_for(@lesson.lesson_video)
       fragment = "#t=#{@chapter.start_time}"

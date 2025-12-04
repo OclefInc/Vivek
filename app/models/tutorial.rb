@@ -53,16 +53,15 @@ class Tutorial < ApplicationRecord
 
   private
     def assign_default_name
-         # set name to date if name is blank
-      self.name  = Date.today.to _s if name.blan k? && video_file.attached?
+      # set name to date if name is blank
+      self.name = Date.today.to_s if name.blank? && video_file.attached?
     end
 
     def assign_sort_position
-         # Set sort to the next position after the last lesson in the assignment
+      # Set sort to the next position after the last lesson in the assignment
       if teacher.present?
-        max_so r t = teacher.tutorials.maxim um(:sor t) || 0
-        self.sort = max_so r t + 1
+        max_sort = teacher.tutorials.maximum(:sort) || 0
+        self.sort = max_sort + 1
       end
-    e
-nd
+    end
 end

@@ -1,23 +1,20 @@
 <% cache lesson do %>
   <tr id="<%= sortable_id %>" data-lesson-id="<%= lesson.id %>" data-lesson-highlight-target="row">
     <td class="text-left md:px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">
-      <span class="inline-flex items-center gap-2">
-        <% if lesson.complete? %>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-2.5 h-2.5 text-green-500 dark:text-green-400 flex-shrink-0">
-            <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd" />
-          </svg>
+      <div class="flex items-center gap-2">
+        <% if lesson.teacher.display_avatar(size: 24) %>
+          <div class="w-6 h-6">
+            <%= image_tag lesson.teacher.display_avatar(size: 24), alt: lesson.teacher.name, class: "w-6 h-6 rounded-full object-cover border border-gray-200 dark:border-gray-700" %>
+          </div>
         <% else %>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-2.5 h-2.5 text-gray-400 dark:text-gray-500 flex-shrink-0">
-            <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25z" clip-rule="evenodd" />
-          </svg>
+          <div class=" rounded-full w-6 h-6 bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
+            <span class="text-white text-xs"><%= lesson.teacher.initials&.upcase %></span>
+          </div>
         <% end %>
         <span id="lesson_<%= lesson.id %>_name_in_table">
           <%= link_to lesson.name, lesson, class:"text-blue-500 hover:text-red-500 dark:text-blue-400 dark:hover:text-red-400" %>
         </span>
-      </span>
-    </td>
-    <td class="text-left md:px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">
-      <%= lesson.chapters.count %>
+      </div>
     </td>
     <td class="text-left md:px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">
       <span id="lesson_<%= lesson.id %>_date"
@@ -41,16 +38,19 @@
         <% end %>
       </span>
     </td>
-    <td class="text-right md:px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-300">
-      <div class="flex justify-end">
-        <% if lesson.teacher.display_avatar(size: 24) %>
-          <%= image_tag lesson.teacher.display_avatar(size: 24), alt: lesson.teacher.name, class: "w-6 h-6 rounded-full object-cover border border-gray-200 dark:border-gray-700" %>
+    <td class="text-right md:px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">
+      <%= lesson.chapters.count %>
+      <span class="inline-flex items-center gap-2">
+        <% if lesson.complete? %>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-2.5 h-2.5 text-green-500 dark:text-green-400 flex-shrink-0">
+            <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z" clip-rule="evenodd" />
+          </svg>
         <% else %>
-          <div class=" rounded-full w-6 h-6 bg-gradient-to-br from-blue-400 to-purple-500 flex items-center justify-center">
-            <span class="text-white text-xs"><%= lesson.teacher.initials&.upcase %></span>
-          </div>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-2.5 h-2.5 text-gray-400 dark:text-gray-500 flex-shrink-0">
+            <path fill-rule="evenodd" d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25z" clip-rule="evenodd" />
+          </svg>
         <% end %>
-      </div>
+      </span>
     </td>
   </tr>
 <% end %>

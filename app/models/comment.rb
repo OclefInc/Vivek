@@ -16,7 +16,7 @@ class Comment < ApplicationRecord
   belongs_to :annotation, polymorphic: true, touch: true
   has_rich_text :note
   has_many :likes, as: :likeable, dependent: :destroy
-  after_create :email_admin
+  after_create :email_notification
 
   def published_status
     if is_published?
@@ -64,7 +64,8 @@ class Comment < ApplicationRecord
     end
 
   private
-    def email_admin
-      CommentMailer.notify_admin(self.id).deliver_later
+    def email_notification
+      CommentMailer.notify_contributors(self.id).deliver_later
+      # CommentMailer.notify_admin(self.id).deliver_later
     end
 end

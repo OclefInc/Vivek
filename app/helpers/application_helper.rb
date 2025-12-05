@@ -48,7 +48,7 @@ module ApplicationHelper
       # Treble Clef
       file_path = Rails.root.join("app", "assets", "images", "rickvanderzwet_Treble_clef_1.svg")
       if File.exist?(file_path)
-        svg = File.read(file_path)
+        svg = File.read(file_path).dup
         # Make it colorable and size it
         svg.sub!(/<svg/, '<svg class="w-8 h-8"')
         svg.gsub!(/stroke="#000"/, 'stroke="currentColor" fill="currentColor"')

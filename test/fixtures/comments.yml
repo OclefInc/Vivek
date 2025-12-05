@@ -20,3 +20,7 @@ one:
 two:
   user: two
   annotation: two (Assignment)
+
+comment_for_tutorial:
+  user: one
+  annotation: one (Tutorial)

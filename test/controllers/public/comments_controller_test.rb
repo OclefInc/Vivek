@@ -4,7 +4,7 @@ class Public::CommentsControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
   setup do
-    @comment = comments(:one)
+    @comment = comments(:comment_for_tutorial)
     @user = users(:one)
     # Ensure the comment belongs to the user for update/destroy tests
     @comment.update(user: @user)

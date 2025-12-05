@@ -207,7 +207,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "is_teacher? returns true if teacher record exists" do
-    user = users(:one)
+    user = users(:two)
     assert_not user.is_teacher?
 
     Teacher.create!(user_id: user.id, name: "Teacher Name")
@@ -271,7 +271,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "touch_related_assignments touches student and teacher assignments" do
-    user = users(:one)
+    user = User.create!(email: "touch_test@example.com", password: "password", name: "Touch Test")
 
     # Setup student and assignment
     student = Student.new(user_id: user.id, name: "Student")

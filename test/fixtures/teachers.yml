@@ -24,3 +24,7 @@ one:
 two:
   name: MyString
   city: MyString
+
+teacher_with_user:
+  name: "Teacher With User"
+  user: one

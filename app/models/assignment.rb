@@ -120,7 +120,7 @@ class Assignment < ApplicationRecord
   def generate_video_thumbnail
     require "vips"
 
-    title = composition.name
+    title = project_name
     subtitle = student.name
 
     if lessons.any?

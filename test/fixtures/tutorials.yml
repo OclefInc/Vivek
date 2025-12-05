@@ -24,7 +24,7 @@
 #
 one:
   name: MyString
-  teacher: one
+  teacher: teacher_with_user
 
 two:
   name: MyString

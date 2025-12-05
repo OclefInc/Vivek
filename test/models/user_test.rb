@@ -165,7 +165,7 @@ class UserTest < ActiveSupport::TestCase
 
   test "roles returns correct roles" do
     user = users(:one)
-    
+
     # Initially no roles
     user.stubs(:is_employee?).returns(false)
     user.stubs(:is_student?).returns(false)
@@ -202,7 +202,7 @@ class UserTest < ActiveSupport::TestCase
     student = Student.new(user_id: user.id, name: "Student Name")
     student.profile_picture.attach(io: File.open(Rails.root.join("test/fixtures/files/test_image.png")), filename: "test_image.png", content_type: "image/png")
     student.save!
-    
+
     assert user.is_student?
   end
 
@@ -216,7 +216,7 @@ class UserTest < ActiveSupport::TestCase
 
   test "account_type returns correct string" do
     user = users(:one)
-    
+
     # Guest
     user.stubs(:is_employee?).returns(false)
     user.stubs(:is_student?).returns(false)
@@ -238,7 +238,7 @@ class UserTest < ActiveSupport::TestCase
 
   test "magic link methods" do
     user = users(:one)
-    
+
     # generate_magic_link_token!
     user.generate_magic_link_token!
     assert_not_nil user.magic_link_token
@@ -255,7 +255,7 @@ class UserTest < ActiveSupport::TestCase
     mail = mock
     mail.expects(:deliver_now)
     MagicLinkMailer.expects(:login_link).with(user).returns(mail)
-    
+
     user.send_magic_link
   end
 
@@ -272,7 +272,7 @@ class UserTest < ActiveSupport::TestCase
 
   test "touch_related_assignments touches student and teacher assignments" do
     user = users(:one)
-    
+
     # Setup student and assignment
     student = Student.new(user_id: user.id, name: "Student")
     student.profile_picture.attach(io: File.open(Rails.root.join("test/fixtures/files/test_image.png")), filename: "test_image.png", content_type: "image/png")
@@ -282,7 +282,7 @@ class UserTest < ActiveSupport::TestCase
     project_type = ProjectType.first || ProjectType.create!(name: "Type")
 
     assignment = Assignment.create!(student: student, project_name: "Test Project", project_type: project_type)
-    
+
     # Setup teacher and assignment
     teacher = Teacher.create!(user_id: user.id, name: "Teacher")
     # Create assignment for teacher (via lesson usually, but let's just check logic)
@@ -303,7 +303,7 @@ class UserTest < ActiveSupport::TestCase
       user.reload
       user.name = "Touched Name"
       user.save
-      
+
       # Reload to check updates
       student.reload
       assignment.reload
@@ -325,7 +325,7 @@ class UserTest < ActiveSupport::TestCase
   test "cropped_avatar returns variant if avatar attached" do
     user = users(:one)
     user.avatar.attach(io: File.open(Rails.root.join("test/fixtures/files/test_image.png")), filename: "test_image.png", content_type: "image/png")
-    
+
     assert_not_nil user.cropped_avatar
     assert_kind_of ActiveStorage::VariantWithRecord, user.cropped_avatar
   end
@@ -333,42 +333,42 @@ class UserTest < ActiveSupport::TestCase
   test "cropped_avatar uses crop coordinates if present" do
     user = users(:one)
     user.avatar.attach(io: File.open(Rails.root.join("test/fixtures/files/test_image.png")), filename: "test_image.png", content_type: "image/png")
-    
+
     user.avatar_crop_x = 10
     user.avatar_crop_y = 10
     user.avatar_crop_width = 100
     user.avatar_crop_height = 100
-    
+
     assert_not_nil user.cropped_avatar
     assert_kind_of ActiveStorage::VariantWithRecord, user.cropped_avatar
   end
 
   test "password_required? logic" do
     user = User.new
-    
+
     # Not oauth user, not persisted, password not present -> false (because !oauth_user?)
     # Wait: oauth_user? && !persisted?
     # If user is new and not oauth, password_required? is false?
     # Let's check logic: oauth_user? && !persisted? || password.present? || password_confirmation.present?
-    
+
     # Case 1: New non-oauth user (Magic link user)
     user.provider = nil
     user.uid = nil
     assert_not user.password_required?
-    
+
     # Case 2: New oauth user
     user.provider = "google"
     user.uid = "123"
     assert user.password_required?
-    
+
     # Case 3: Persisted oauth user
     user.save(validate: false)
     assert_not user.password_required?
-    
+
     # Case 4: Setting password explicitly
     user.password = "password"
     assert user.password_required?
-    
+
     user.password = nil
     user.password_confirmation = "password"
     assert user.password_required?

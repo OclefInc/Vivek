@@ -28,4 +28,10 @@ class Admin::AccountsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_match @account.name, response.body
   end
+
+  test "should redirect non-employee users" do
+    User.any_instance.stubs(:is_employee?).returns(false)
+    get accounts_url
+    assert_redirected_to root_path
+  end
 end

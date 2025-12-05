@@ -10,7 +10,9 @@ module ActiveStorageBlobExtension
   end
 
   def attachment(record)
-    attachments.select { |att| att.record.record == record }.first
+    attachments.find do |att|
+      att.record == record || (att.record.respond_to?(:record) && att.record.record == record)
+    end
   end
 end
 

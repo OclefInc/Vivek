@@ -3,7 +3,11 @@ require "rake"
 
 class DatabaseRakeTest < ActiveSupport::TestCase
   setup do
-    Vivek::Application.load_tasks if Rake::Task.tasks.empty?
+    unless Rake::Task.task_defined?("database:prod")
+      silence_warnings do
+        Vivek::Application.load_tasks
+      end
+    end
     Rake::Task["database:prod"].reenable
     Rake::Task["database:local"].reenable
   end

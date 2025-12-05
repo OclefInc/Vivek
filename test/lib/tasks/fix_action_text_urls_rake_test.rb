@@ -3,7 +3,13 @@ require "rake"
 
 class FixActionTextUrlsRakeTest < ActiveSupport::TestCase
   setup do
-    Vivek::Application.load_tasks if Rake::Task.tasks.empty?
+    unless Rake::Task.task_defined?("action_text:fix_urls")
+      # Silence warnings about already initialized constants (e.g. STATS_DIRECTORIES)
+      # which can happen if tasks are reloaded
+      silence_warnings do
+        Vivek::Application.load_tasks
+      end
+    end
     Rake::Task["action_text:fix_urls"].reenable
   end
 

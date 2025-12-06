@@ -88,5 +88,5 @@ Rails.application.routes.draw do
   root to: "home#index"
 
   # Catch all routing errors and redirect to root in production
-  match "*path", to: redirect("/", status: 302), via: :all, constraints: ->(req) { Rails.env.production? }
+  # match "*path", to: redirect("/", status: 302), via: :all, constraints: ->(req) { Rails.env.production? }
 end

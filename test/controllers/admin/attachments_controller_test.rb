@@ -142,6 +142,21 @@ class Admin::AttachmentsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should handle rich text in touch_associated_objects" do
+    student = students(:two)
+    # Create orphaned rich text
+    rich_text = ActionText::RichText.new(
+      name: "bio",
+      body: ActionText::Content.new("<div><action-text-attachment sgid='#{@blob.key}'></action-text-attachment></div>"),
+      record_type: "Student",
+      record_id: student.id
+    )
+    rich_text.save!(validate: false)
+
+    post "/admin/attachments/update_metadata", params: { sgid: @blob.signed_id, copyrighted: true }, as: :json
+    assert_response :success
+  end
+
   test "should handle orphaned rich text in touch_associated_objects" do
     # Create orphaned rich text
     rich_text = ActionText::RichText.new(

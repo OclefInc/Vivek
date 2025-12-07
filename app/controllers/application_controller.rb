@@ -1,6 +1,9 @@
 class ApplicationController < ActionController::Base
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   # allow_browser versions: :modern
+
+  rescue_from ActionController::UnknownFormat, with: :handle_unknown_format if Rails.env.production?
+
   before_action :store_return_to_location
 
   def authorize_user
@@ -27,5 +30,9 @@ class ApplicationController < ActionController::Base
       else
         "application"
       end
+    end
+
+    def handle_unknown_format
+      redirect_to root_path
     end
 end

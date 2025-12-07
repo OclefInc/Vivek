@@ -15,3 +15,12 @@ class ApplicationControllerTest < ActionDispatch::IntegrationTest
     assert_select "body.admin-layout", false
   end
 end
+
+class ApplicationControllerUnitTest < ActiveSupport::TestCase
+  test "handle_unknown_format redirects to root" do
+    controller = ApplicationController.new
+    controller.stubs(:root_path).returns("http://test.host/")
+    controller.expects(:redirect_to).with("http://test.host/")
+    controller.send(:handle_unknown_format)
+  end
+end

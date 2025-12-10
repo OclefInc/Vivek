@@ -38,6 +38,7 @@ class Admin::Journals::JournalEntriesControllerTest < ActionDispatch::Integratio
 
   test "should update journal_entry" do
     patch journal_journal_entry_url(@journal, @journal_entry), params: { journal_entry: { name: "Updated Entry" } }
+    @journal_entry.reload
     assert_redirected_to journal_journal_entry_url(@journal, @journal_entry)
   end
 

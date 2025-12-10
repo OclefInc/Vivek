@@ -70,7 +70,7 @@ class Admin::JournalsController < ApplicationController
     @journal.destroy!
 
     respond_to do |format|
-      format.html { redirect_to admin_journals_path, status: :see_other, notice: "Journal was successfully destroyed." }
+      format.html { redirect_to journals_url, status: :see_other, notice: "Journal was successfully destroyed." }
       format.json { head :no_content }
     end
   end

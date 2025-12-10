@@ -1,6 +1,12 @@
 <div data-controller="video-time"
      data-video-time-url-value="<%= journal_journal_entry_path(@journal_entry.journal, @journal_entry) %>">
   <%= turbo_frame_tag "journal_entry_#{@journal_entry.id}_journal_entry_video" do %>
-    <%= render 'video_player', journal_entry: @journal_entry %>
+    <% if @journal_entry.entry_video.attached? %>
+      <%= render 'video_player', journal_entry: @journal_entry %>
+    <% else %>
+      <div class="bg-gray-100 dark:bg-gray-800 flex items-center justify-center aspect-[4/3] xl:aspect-auto xl:max-w-[640px] xl:h-[480px]">
+        <p class="text-gray-500 dark:text-gray-400">No video uploaded</p>
+      </div>
+    <% end %>
   <% end %>
 </div>

@@ -55,11 +55,9 @@ class JournalEntry < ApplicationRecord
   alias_method :previous, :previous_entry
 
   after_create :notify_subscribers
-  after_create_commit :regenerate_assignment_thumbnail
-  after_destroy_commit :regenerate_assignment_thumbnail
-  after_update_commit :regenerate_assignment_thumbnail, if: :saved_change_to_date?
-  after_commit :update_teacher_assignments_count
-  after_commit :update_student_lessons_count
+  after_create_commit :regenerate_journal_thumbnail
+  after_destroy_commit :regenerate_journal_thumbnail
+  after_update_commit :regenerate_journal_thumbnail, if: :saved_change_to_date?
 
   def notify_subscribers
     journal.subscribers.each do |user|
@@ -67,7 +65,7 @@ class JournalEntry < ApplicationRecord
     end
   end
 
-  def regenerate_assignment_thumbnail
+  def regenerate_journal_thumbnail
     GenerateVideoThumbnailJob.perform_later(journal) if journal
   end
 

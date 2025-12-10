@@ -31,7 +31,7 @@ class Admin::Journals::JournalEntriesController < ApplicationController
 
     respond_to do |format|
       if @journal_entry.save
-        format.html { redirect_to [  @journal ] }
+        format.html { redirect_to [ @journal, @journal_entry ] }
         format.json { render :show, status: :created, location: [ :admin, @journal, @journal_entry ] }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -58,7 +58,7 @@ class Admin::Journals::JournalEntriesController < ApplicationController
     @journal_entry.destroy!
 
     respond_to do |format|
-      format.html { redirect_to @journal, status: :see_other }
+      format.html { redirect_to journal_journal_entries_url(@journal), status: :see_other }
       format.json { head :no_content }
     end
   end

@@ -24,6 +24,10 @@
 #
 one:
   journal: one
+  name: "Test Entry One"
+  date: <%= Date.today %>
 
 two:
   journal: two
+  name: "Test Entry Two"
+  date: <%= Date.today %>

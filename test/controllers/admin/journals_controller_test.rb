@@ -29,7 +29,7 @@ class Admin::JournalsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create journal" do
     assert_difference("Journal.count") do
-      post journals_url, params: { journal: { composition_id: compositions(:one).id, user_id: @user.id } }
+      post journals_url, params: { journal: { composition_name: compositions(:one).name } }
     end
 
     assert_redirected_to journal_url(Journal.last)

@@ -9,8 +9,8 @@ class Admin::AssignmentsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should redirect non-employee" do
-    sign_in @user
-    # User one is not an employee by default (email doesn't end in oclef.com)
+    # Use user two who is not an employee
+    sign_in users(:two)
 
     # Accessing a route that uses the authorize_user before_action
     get assignments_path

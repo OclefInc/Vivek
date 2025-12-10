@@ -9,6 +9,7 @@
 #  avatar_crop_x        :integer
 #  avatar_crop_y        :integer
 #  city                 :string
+#  journals_count       :integer          default(0), not null
 #  name                 :string
 #  show_on_contributors :boolean          default(TRUE), not null
 #  tutorials_count      :integer          default(0), not null
@@ -27,6 +28,8 @@ class Teacher < ApplicationRecord
   validates_presence_of :name
 
   after_save :touch_assignments
+
+  delegate :journals, to: :user, allow_nil: true
 
   def to_param
     "#{id}-#{name.parameterize}"

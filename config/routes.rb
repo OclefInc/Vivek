@@ -67,14 +67,13 @@ Rails.application.routes.draw do
       resources :tutorials, controller: "professors/tutorials" do
         resources :chapters, only: [ :show ], controller: "professors/tutorials/chapters"
       end
+      resources :journals, controller: "professors/journals" do
+        resource :subscription, only: [ :create, :destroy ], controller: "subscriptions"
+      end
     end
     resources :students, path: "students", as: "public_students"
     resources :projects do
       resources :episodes, controller: "projects/episodes"
-      resource :subscription, only: [ :create, :destroy ], controller: "subscriptions"
-    end
-
-    resources :journals, path: "journals", as: "public_journals" do
       resource :subscription, only: [ :create, :destroy ], controller: "subscriptions"
     end
 

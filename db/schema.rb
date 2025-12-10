@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_12_10_185315) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_10_222950) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_stat_statements"
@@ -234,6 +234,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_10_185315) do
     t.integer "tutorials_count", default: 0, null: false
     t.integer "assignments_count", default: 0, null: false
     t.boolean "show_on_contributors", default: true, null: false
+    t.integer "journals_count", default: 0, null: false
   end
 
   create_table "tutorials", force: :cascade do |t|

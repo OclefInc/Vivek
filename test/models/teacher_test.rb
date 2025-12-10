@@ -9,6 +9,7 @@
 #  avatar_crop_x        :integer
 #  avatar_crop_y        :integer
 #  city                 :string
+#  journals_count       :integer          default(0), not null
 #  name                 :string
 #  show_on_contributors :boolean          default(TRUE), not null
 #  tutorials_count      :integer          default(0), not null

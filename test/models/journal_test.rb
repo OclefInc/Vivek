@@ -103,31 +103,6 @@ class JournalTest < ActiveSupport::TestCase
     journal.generate_video_thumbnail
   end
 
-  test "saved_change_to_summary_video_attachment? returns true when video changed" do
-    journal = Journal.create!(composition: @composition, user: @user)
-
-    # Mock attachment_changes
-    journal.expects(:attachment_changes).returns({ "summary_video" => "some_change" })
-
-    assert journal.saved_change_to_summary_video_attachment?
-  end
-
-  test "saved_change_to_summary_video_attachment? returns false when video not changed" do
-    journal = Journal.create!(composition: @composition, user: @user)
-
-    # Mock attachment_changes
-    journal.expects(:attachment_changes).returns({})
-
-    assert_not journal.saved_change_to_summary_video_attachment?
-  end
-
-  test "enqueue_thumbnail_generation enqueues job" do
-    journal = Journal.create!(composition: @composition, user: @user)
-
-    assert_enqueued_with(job: GenerateVideoThumbnailJob, args: [ journal ]) do
-      journal.enqueue_thumbnail_generation
-    end
-  end
 
   test "enqueues thumbnail generation after save when summary video changes" do
     journal = Journal.create!(composition: @composition, user: @user)
@@ -137,6 +112,40 @@ class JournalTest < ActiveSupport::TestCase
 
     assert_enqueued_with(job: GenerateVideoThumbnailJob) do
       journal.save
+    end
+  end
+
+  test "increments teacher journals_count when journal is created" do
+    user = users(:one)
+    teacher = Teacher.create!(name: "Test Teacher", user: user)
+
+    initial_count = teacher.journals_count
+
+    journal = Journal.create!(composition: @composition, user: user)
+    teacher.reload
+
+    assert_equal initial_count + 1, teacher.journals_count
+  end
+
+  test "decrements teacher journals_count when journal is destroyed" do
+    user = users(:one)
+    teacher = Teacher.create!(name: "Test Teacher", user: user)
+    journal = Journal.create!(composition: @composition, user: user)
+
+    teacher.reload
+    count_before = teacher.journals_count
+
+    journal.destroy
+    teacher.reload
+
+    assert_equal count_before - 1, teacher.journals_count
+  end
+
+  test "does not crash when user has no teacher on journal create" do
+    user = users(:two) # User without teacher
+
+    assert_nothing_raised do
+      Journal.create!(composition: @composition, user: user)
     end
   end
 end

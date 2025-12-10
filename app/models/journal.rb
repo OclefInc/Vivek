@@ -33,7 +33,13 @@ class Journal < ApplicationRecord
   has_many :comments, as: :annotation
   has_many :subscriptions, as: :subscribable, dependent: :destroy
   has_many :subscribers, through: :subscriptions, source: :user
+
+  after_create :increment_teacher_journals_count
+  after_destroy :decrement_teacher_journals_count
+
   has_many :bookmarks, as: :bookmarkable, dependent: :destroy
+
+  delegate :teacher, to: :user
 
   def to_param
     "#{id}-#{name.parameterize}-#{user.name.parameterize}"
@@ -91,11 +97,21 @@ class Journal < ApplicationRecord
 
   after_save :enqueue_thumbnail_generation, if: :saved_change_to_summary_video_attachment?
 
-  def saved_change_to_summary_video_attachment?
-    attachment_changes["summary_video"].present?
-  end
+  private
 
-  def enqueue_thumbnail_generation
-    GenerateVideoThumbnailJob.perform_later(self)
-  end
+    def increment_teacher_journals_count
+      user.teacher&.increment!(:journals_count)
+    end
+
+    def decrement_teacher_journals_count
+      user.teacher&.decrement!(:journals_count)
+    end
+
+    def saved_change_to_summary_video_attachment?
+      attachment_changes["summary_video"].present?
+    end
+
+    def enqueue_thumbnail_generation
+      GenerateVideoThumbnailJob.perform_later(self)
+    end
 end

@@ -7,6 +7,7 @@ class Public::SubscriptionsControllerTest < ActionDispatch::IntegrationTest
     @user = users(:one)
     @project = assignments(:one)
     @journal = journals(:one)
+    @professor = @journal.user.teacher
     # Use the existing subscription from fixtures instead of creating a new one
     @subscription = subscriptions(:one)
   end
@@ -65,7 +66,7 @@ class Public::SubscriptionsControllerTest < ActionDispatch::IntegrationTest
     sign_in @user
 
     assert_difference("Subscription.count") do
-      post public_journal_subscription_path(@journal)
+      post professor_journal_subscription_path(@professor, @journal)
     end
 
     assert_redirected_to project_path(@journal)
@@ -77,7 +78,7 @@ class Public::SubscriptionsControllerTest < ActionDispatch::IntegrationTest
     @journal_subscription = @journal.subscriptions.create!(user: @user)
 
     assert_difference("Subscription.count", -1) do
-      delete public_journal_subscription_path(@journal)
+      delete professor_journal_subscription_path(@professor, @journal)
     end
 
     assert_redirected_to project_path(@journal)

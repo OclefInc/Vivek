@@ -1,0 +1,44 @@
+<% content_for :title, "Edit My Profile" %>
+<div class="max-w-2xl mx-auto p-6">
+  <h1 class="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-6">Edit My Profile</h1>
+  <%= form_with(model: @teacher, url: profile_path, method: :patch, local: true, class: "space-y-6") do |form| %>
+    <% if @teacher.errors.any? %>
+      <div class="rounded-md bg-red-50 dark:bg-red-900/20 p-4">
+        <div class="flex">
+          <div class="ml-3">
+            <h3 class="text-sm font-medium text-red-800 dark:text-red-200">
+              <%= pluralize(@teacher.errors.count, "error") %> prohibited this profile from being saved:
+            </h3>
+            <div class="mt-2 text-sm text-red-700 dark:text-red-300">
+              <ul class="list-disc list-inside space-y-1">
+                <% @teacher.errors.each do |error| %>
+                  <li><%= error.full_message %></li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    <div>
+      <%= form.label :name, class: "block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" %>
+      <%= form.text_field :name, class: "w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-gray-100" %>
+    </div>
+    <div>
+      <%= form.label :city, class: "block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" %>
+      <%= form.text_field :city, class: "w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-gray-100" %>
+    </div>
+    <div>
+      <%= form.label :bio, "Teaching Philosophy", class: "block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" %>
+      <%= form.rich_text_area :bio, class: "w-full" %>
+    </div>
+    <div>
+      <%= form.label :profile_picture, class: "block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2" %>
+      <%= form.file_field :profile_picture, class: "w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-gray-100" %>
+    </div>
+    <div class="flex gap-4">
+      <%= form.submit "Save Changes", class: "inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors" %>
+      <%= link_to "Cancel", profile_path, class: "inline-flex items-center px-4 py-2 bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors" %>
+    </div>
+  <% end %>
+</div>

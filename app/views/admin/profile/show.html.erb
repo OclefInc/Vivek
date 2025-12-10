@@ -1,0 +1,11 @@
+<% content_for :title, "My Profile" %>
+<%= render 'admin/teachers/show_header' %>
+<div class="flex flex-col items-center max-w-7xl mx-auto ">
+  <div class="xl:min-w-[640px] xl:max-w-[640px] md:flex-1 md:basis-1/2 mb-4 xl:mb-0">
+    <%= render 'admin/teachers/profile_picture', teacher: @teacher %>
+    <%= render @teacher %>
+    <turbo-frame src="<%= teacher_journals_path(@teacher) %>" id="journals"  target="_top"></turbo-frame>
+    <turbo-frame src="<%= teacher_tutorials_path(@teacher) %>" id="presentations"  target="_top"></turbo-frame>
+    <turbo-frame src="<%= teacher_projects_path(@teacher) %>" id="projects"  target="_top"></turbo-frame>
+  </div>
+</div>

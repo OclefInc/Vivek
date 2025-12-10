@@ -6,7 +6,7 @@
       </svg>
     <% end %>
     <% if current_user.teacher.present? %>
-      <%= link_to teacher_path(current_user.teacher) do %>
+      <%= link_to profile_path do %>
         <div class="rounded-full border overflow-hidden w-6 h-6 ">
           <% if current_user.avatar.attached? %>
             <%= image_tag current_user.cropped_avatar(size: 48), class: "w-6 h-6 rounded-full object-cover" %>

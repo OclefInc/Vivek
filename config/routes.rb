@@ -22,6 +22,7 @@ Rails.application.routes.draw do
     resources :comments, as: :admin_comments
     resources :skill_categories, only: [ :index, :show ]
     resources :compositions
+    resource :profile, only: [ :show, :edit, :update ], controller: "profile"
     resources :teachers do
       collection do
         post :create_from_user

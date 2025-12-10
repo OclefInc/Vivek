@@ -1,5 +1,6 @@
 <div data-controller="video-time"
-     data-video-time-url-value="<%= journal_journal_entry_path(@journal_entry.journal, @journal_entry) %>">
+     data-video-time-url-value="<%= journal_journal_entry_path(@journal_entry.journal, @journal_entry) %>"
+     data-video-time-resource-value="journal_entry">
   <%= turbo_frame_tag "journal_entry_#{@journal_entry.id}_entry_video" do %>
     <% if @journal_entry.entry_video.attached? %>
       <%= render 'video_player', journal_entry: @journal_entry %>

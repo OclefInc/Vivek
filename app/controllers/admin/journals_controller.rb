@@ -35,7 +35,7 @@ class Admin::JournalsController < ApplicationController
     respond_to do |format|
       if @journal.save
         format.html { redirect_to [  @journal ], notice: "Journal was successfully created." }
-        format.json { render :show, status: :created, location: [ :admin, @journal ] }
+        format.json { render :show, status: :created, location: [ @journal ] }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @journal.errors, status: :unprocessable_entity }
@@ -57,7 +57,7 @@ class Admin::JournalsController < ApplicationController
     respond_to do |format|
       if @journal.save
         format.html { redirect_to [  @journal ] }
-        format.json { render :show, status: :ok, location: [ :admin, @journal ] }
+        format.json { render :show, status: :ok, location: [  @journal ] }
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @journal.errors, status: :unprocessable_entity }

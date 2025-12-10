@@ -32,7 +32,7 @@ class Admin::Journals::JournalEntriesController < ApplicationController
     respond_to do |format|
       if @journal_entry.save
         format.html { redirect_to [ @journal, @journal_entry ] }
-        format.json { render :show, status: :created, location: [ :admin, @journal, @journal_entry ] }
+        format.json { render :show, status: :created, location: [  @journal, @journal_entry ] }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @journal_entry.errors, status: :unprocessable_entity }
@@ -45,7 +45,7 @@ class Admin::Journals::JournalEntriesController < ApplicationController
     respond_to do |format|
       if @journal_entry.update(journal_entry_params)
         format.html { redirect_to [  @journal, @journal_entry ] }
-        format.json { render :show, status: :ok, location: [ :admin, @journal, @journal_entry ] }
+        format.json { render :show, status: :ok, location: [  @journal, @journal_entry ] }
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @journal_entry.errors, status: :unprocessable_entity }

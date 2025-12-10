@@ -1,12 +1,12 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["video", "startTime", "endTime", "startDisplay", "endDisplay","form"]
-  static values = { url: String }
+  static targets = ["video", "startTime", "endTime", "startDisplay", "endDisplay", "form"]
+  static values = { url: String, resource: String }
 
   toggleForm() {
-  this.formTarget.classList.toggle("hidden")
-}
+    this.formTarget.classList.toggle("hidden")
+  }
 
   async setStartTime() {
     const currentTime = Math.floor(this.videoTarget.currentTime)
@@ -25,7 +25,8 @@ export default class extends Controller {
   async save(field, value) {
     try {
       const formData = new FormData()
-      formData.append(`lesson[${field}]`, value)
+      const resourceName = this.hasResourceValue ? this.resourceValue : 'lesson'
+      formData.append(`${resourceName}[${field}]`, value)
       formData.append("_method", "PATCH")
 
       const response = await fetch(this.urlValue, {

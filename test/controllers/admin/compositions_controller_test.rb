@@ -88,7 +88,7 @@ class Admin::CompositionsControllerTest < ActionDispatch::IntegrationTest
   test "should destroy composition json" do
     # Create a new composition that's not referenced by any journals
     composition = Composition.create!(name: "Deletable Composition JSON", composer: "Test Composer")
-    
+
     delete composition_url(composition, format: :json)
     assert_response :no_content
   end

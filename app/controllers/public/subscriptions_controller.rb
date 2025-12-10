@@ -31,8 +31,8 @@ class Public::SubscriptionsController < ApplicationController
     def set_project
       if params[:project_id]
         @project = Assignment.find(params[:project_id])
-      elsif params[:journal_id]
-        @project = Journal.find(params[:journal_id])
+      elsif params[:journal_id] || params[:public_journal_id]
+        @project = Journal.find(params[:journal_id] || params[:public_journal_id])
       end
     end
 end

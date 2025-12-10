@@ -6,6 +6,7 @@ class Public::SubscriptionsControllerTest < ActionDispatch::IntegrationTest
   setup do
     @user = users(:one)
     @project = assignments(:one)
+    @journal = journals(:one)
     # Use the existing subscription from fixtures instead of creating a new one
     @subscription = subscriptions(:one)
   end
@@ -58,5 +59,27 @@ class Public::SubscriptionsControllerTest < ActionDispatch::IntegrationTest
 
     assert_redirected_to project_path(@project)
     assert_equal "Unable to unsubscribe.", flash[:alert]
+  end
+
+  test "should create journal subscription" do
+    sign_in @user
+
+    assert_difference("Subscription.count") do
+      post public_journal_subscription_path(@journal)
+    end
+
+    assert_redirected_to project_path(@journal)
+  end
+
+  test "should destroy journal subscription" do
+    sign_in @user
+    # Create a journal subscription first
+    @journal_subscription = @journal.subscriptions.create!(user: @user)
+
+    assert_difference("Subscription.count", -1) do
+      delete public_journal_subscription_path(@journal)
+    end
+
+    assert_redirected_to project_path(@journal)
   end
 end

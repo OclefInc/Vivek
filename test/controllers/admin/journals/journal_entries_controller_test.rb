@@ -28,6 +28,11 @@ class Admin::Journals::JournalEntriesControllerTest < ActionDispatch::Integratio
     assert_response :success
   end
 
+  test "should get edit with field parameter" do
+    get edit_journal_journal_entry_url(@journal, @journal_entry), params: { field: "name" }
+    assert_response :success
+  end
+
   test "should create journal_entry" do
     assert_difference("JournalEntry.count") do
       post journal_journal_entries_url(@journal), params: { journal_entry: { name: "Test Entry", date: Date.today } }
@@ -36,10 +41,36 @@ class Admin::Journals::JournalEntriesControllerTest < ActionDispatch::Integratio
     assert_redirected_to journal_journal_entry_url(@journal, JournalEntry.last)
   end
 
+  test "should not create journal_entry with invalid params" do
+    assert_no_difference("JournalEntry.count") do
+      post journal_journal_entries_url(@journal), params: { journal_entry: { name: "", date: nil } }
+    end
+
+    assert_response :unprocessable_entity
+  end
+
+  test "should not create journal_entry with invalid params as json" do
+    assert_no_difference("JournalEntry.count") do
+      post journal_journal_entries_url(@journal, format: :json), params: { journal_entry: { name: "", date: nil } }
+    end
+
+    assert_response :unprocessable_entity
+  end
+
   test "should update journal_entry" do
     patch journal_journal_entry_url(@journal, @journal_entry), params: { journal_entry: { name: "Updated Entry" } }
     @journal_entry.reload
     assert_redirected_to journal_journal_entry_url(@journal, @journal_entry)
+  end
+
+  test "should not update journal_entry with invalid params" do
+    patch journal_journal_entry_url(@journal, @journal_entry), params: { journal_entry: { name: "", date: nil } }
+    assert_response :unprocessable_entity
+  end
+
+  test "should not update journal_entry with invalid params as json" do
+    patch journal_journal_entry_url(@journal, @journal_entry, format: :json), params: { journal_entry: { name: "", date: nil } }
+    assert_response :unprocessable_entity
   end
 
   test "should destroy journal_entry" do

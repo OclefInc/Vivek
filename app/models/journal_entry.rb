@@ -61,7 +61,7 @@ class JournalEntry < ApplicationRecord
 
   def notify_subscribers
     journal.subscribers.each do |user|
-      JournalMailer.new_entry_notification(user, self).deliver_later
+      JournalMailer.new_journal_entry_notification(user, self).deliver_later
     end
   end
 

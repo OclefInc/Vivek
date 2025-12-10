@@ -4,7 +4,8 @@ class Public::SubscriptionsController < ApplicationController
   before_action :set_project, except: [ :index ]
 
   def index
-    @projects = current_user.subscribed_assignments
+    @assignments = current_user.subscribed_assignments
+    @journals = current_user.subscribed_journals
   end
 
   def create
@@ -28,6 +29,10 @@ class Public::SubscriptionsController < ApplicationController
   private
 
     def set_project
-      @project = Assignment.find(params[:project_id])
+      if params[:project_id]
+        @project = Assignment.find(params[:project_id])
+      elsif params[:journal_id]
+        @project = Journal.find(params[:journal_id])
+      end
     end
 end

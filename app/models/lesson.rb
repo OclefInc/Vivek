@@ -157,7 +157,7 @@ class Lesson < ApplicationRecord
   end
 
   def regenerate_assignment_thumbnail
-    GenerateAssignmentThumbnailJob.perform_later(assignment) if assignment
+    GenerateVideoThumbnailJob.perform_later(assignment) if assignment
   end
 
   after_save :enqueue_thumbnail_generation, if: :saved_change_to_thumbnail_attributes?

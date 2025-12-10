@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_12_03_173203) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_10_164934) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_stat_statements"
@@ -118,6 +118,27 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_03_173203) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "journal_entries", force: :cascade do |t|
+    t.bigint "journal_id", null: false
+    t.date "date"
+    t.string "name"
+    t.integer "sort", default: 1000
+    t.integer "video_start_time"
+    t.integer "video_end_time"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["journal_id"], name: "index_journal_entries_on_journal_id"
+  end
+
+  create_table "journals", force: :cascade do |t|
+    t.bigint "composition_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["composition_id"], name: "index_journals_on_composition_id"
+    t.index ["user_id"], name: "index_journals_on_user_id"
+  end
+
   create_table "lessons", force: :cascade do |t|
     t.string "name"
     t.integer "assignment_id"
@@ -191,10 +212,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_03_173203) do
 
   create_table "subscriptions", force: :cascade do |t|
     t.bigint "user_id", null: false
-    t.bigint "assignment_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["assignment_id"], name: "index_subscriptions_on_assignment_id"
+    t.string "subscribable_type"
+    t.bigint "subscribable_id"
+    t.index ["subscribable_type", "subscribable_id"], name: "index_subscriptions_on_subscribable_type_and_subscribable_id"
     t.index ["user_id"], name: "index_subscriptions_on_user_id"
   end
 
@@ -260,8 +282,10 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_03_173203) do
   add_foreign_key "chapters", "lessons"
   add_foreign_key "chapters_tutorials", "chapters"
   add_foreign_key "chapters_tutorials", "tutorials"
+  add_foreign_key "journal_entries", "journals"
+  add_foreign_key "journals", "compositions"
+  add_foreign_key "journals", "users"
   add_foreign_key "likes", "users"
-  add_foreign_key "subscriptions", "assignments"
   add_foreign_key "subscriptions", "users"
   add_foreign_key "tutorials", "skill_categories"
   add_foreign_key "tutorials", "teachers"

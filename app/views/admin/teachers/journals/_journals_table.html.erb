@@ -1,0 +1,21 @@
+<table class="w-full table-auto border-collapse">
+  <thead>
+    <tr>
+      <th class="text-left py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% current_user.journals.sort_by(&:name).each do |journal| %>
+      <% cache journal do %>
+        <tr>
+          <td class="text-left py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-300">
+            <%= link_to journal.name, journal, class:"text-blue-500 hover:text-red-500 dark:text-blue-400 dark:hover:text-red-400" %>
+            <span class="block">
+              <%= pluralize(journal.journal_entries.count, 'Lesson') %>
+            </span>
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+</table>

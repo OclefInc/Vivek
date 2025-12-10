@@ -41,7 +41,7 @@
 #  index_users_on_reset_password_token  (reset_password_token) UNIQUE
 #
 one:
-  email: one@example.com
+  email: one@oclef.com
   encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
   confirmed_at: <%= Time.now %>
   name: "User One"

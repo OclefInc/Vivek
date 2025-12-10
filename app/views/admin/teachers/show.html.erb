@@ -6,5 +6,6 @@
     <%= render @teacher %>
     <turbo-frame src="<%= teacher_projects_path(@teacher) %>" id="projects"  target="_top"></turbo-frame>
     <turbo-frame src="<%= teacher_tutorials_path(@teacher) %>" id="presentations"  target="_top"></turbo-frame>
+    <turbo-frame src="<%= teacher_journals_path(@teacher) %>" id="journals"  target="_top"></turbo-frame>
   </div>
 </div>

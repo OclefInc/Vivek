@@ -1,0 +1,31 @@
+<% cache journal_entry do %>
+  <tr id="<%= sortable_id %>" data-journal_entry-id="<%= journal_entry.id %>" data-journal_entry-highlight-target="row">
+    <td class="text-left md:px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">
+      <span id="lesson_<%= journal_entry.id %>_name_in_table">
+        <%= link_to journal_entry.name, [journal_entry.journal, journal_entry], class:"text-blue-500 hover:text-red-500 dark:text-blue-400 dark:hover:text-red-400" %>
+      </span>
+    </td>
+    <td class="text-left md:px-3 py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">
+      <span id="lesson_<%= journal_entry.id %>_date"
+                    data-controller="inline-edit"
+                    data-inline-edit-url-value="<%= lesson_path(journal_entry) %>"
+                    data-inline-edit-field-value="date"
+                    class="inline-block">
+        <span data-inline-edit-target="display"
+                      data-action="click->inline-edit#edit"
+          class="cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700 px-1 rounded items-center gap-1">
+          <%= journal_entry.date.strftime("%b %d, %Y") %>
+        </span>
+        <%= form_with(model: journal_entry, url: [journal_entry.journal, journal_entry], data:{ inline_edit_target: 'form', turbo_frame: '_top', turbo_stream: true}) do |form| %>
+          <input type="hidden" name="return_url" value="<%= request.fullpath %>">
+          <input data-inline-edit-target="input"
+                      name="journal_entry[date]"
+                       type="date"
+                       value="<%= journal_entry.date %>"
+                       data-action="keydown->inline-edit#save blur->inline-edit#blur"
+          class="hidden border border-gray-300 dark:border-gray-600 rounded px-2 py-1 dark:bg-gray-800 dark:text-gray-200" />
+        <% end %>
+      </span>
+    </td>
+  </tr>
+<% end %>

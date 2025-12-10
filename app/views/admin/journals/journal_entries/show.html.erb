@@ -1,0 +1,15 @@
+<% content_for :title, 'Journal Entry' %>
+<%= render 'show_header' %>
+<div class="xl:hidden mt-5">
+  <%= render '/admin/journals/summary', journal: @journal %>
+</div>
+<div class="xl:flex xl:gap-8">
+  <div class="md:-mx-5 py-4 xl:min-w-[640px] md:flex-1 md:basis-1/2 md:px-5 xl:max-w-[640px]">
+    <%= render 'journal_entry_video', journal_entry: @journal_entry %>
+    <%= render @journal_entry %>
+  </div>
+  <div class="hidden xl:block w-full py-4 xl:flex-1 xl:basis-1/2 xl:px-5 md:-mx-5 ">
+    <%= render '/admin/journals/summary', journal: @journal %>
+    <%= render 'table',  journal_entries: @journal.journal_entries, current_journal_entry: @journal_entry, journal: @journal, current_journal_entry_id: @journal_entry.id  %>
+  </div>
+</div>

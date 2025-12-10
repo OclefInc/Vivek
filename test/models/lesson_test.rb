@@ -170,7 +170,7 @@ class LessonTest < ActiveSupport::TestCase
     lesson = lessons(:one)
     user = users(:two) # Use a different user
     # Subscribe user to assignment
-    Subscription.create!(user: user, assignment: lesson.assignment)
+    Subscription.create!(user: user, subscribable: lesson.assignment)
 
     assert_enqueued_with(job: ActionMailer::MailDeliveryJob) do
       lesson.notify_subscribers
@@ -180,7 +180,7 @@ class LessonTest < ActiveSupport::TestCase
   test "regenerate_assignment_thumbnail enqueues job" do
     lesson = lessons(:one)
 
-    assert_enqueued_with(job: GenerateAssignmentThumbnailJob) do
+    assert_enqueued_with(job: GenerateVideoThumbnailJob) do
       lesson.regenerate_assignment_thumbnail
     end
   end

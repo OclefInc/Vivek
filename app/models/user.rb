@@ -44,9 +44,11 @@ class User < ApplicationRecord
   has_one :teacher
   has_one :student
   has_one_attached :avatar
+  has_many :journals, dependent: :destroy
   has_many :likes, dependent: :destroy
   has_many :subscriptions, dependent: :destroy
-  has_many :subscribed_assignments, through: :subscriptions, source: :assignment
+  has_many :subscribed_assignments, -> { where(subscriptions: { subscribable_type: "Assignment" }) }, through: :subscriptions, source: :subscribable, source_type: "Assignment"
+  has_many :subscribed_journals, -> { where(subscriptions: { subscribable_type: "Journal" }) }, through: :subscriptions, source: :subscribable, source_type: "Journal"
   has_many :bookmarks, dependent: :destroy
 
   validates_presence_of :name

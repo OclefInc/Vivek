@@ -18,8 +18,8 @@ class DailyLessonNotificationJobTest < ActiveJob::TestCase
     subscriber1 = users(:one)
     subscriber2 = users(:two)
 
-    Subscription.create!(assignment: assignment, user: subscriber1)
-    Subscription.create!(assignment: assignment, user: subscriber2)
+    Subscription.create!(subscribable: assignment, user: subscriber1)
+    Subscription.create!(subscribable: assignment, user: subscriber2)
 
     # We expect 2 emails to be sent (enqueued and then performed)
     assert_difference -> { ActionMailer::Base.deliveries.size }, 2 do
@@ -42,7 +42,7 @@ class DailyLessonNotificationJobTest < ActiveJob::TestCase
 
     # Create a subscriber
     subscriber = users(:one)
-    Subscription.create!(assignment: assignment, user: subscriber)
+    Subscription.create!(subscribable: assignment, user: subscriber)
 
     assert_no_difference -> { ActionMailer::Base.deliveries.size } do
       perform_enqueued_jobs do

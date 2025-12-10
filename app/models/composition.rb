@@ -9,9 +9,10 @@
 #  updated_at :datetime         not null
 #
 class Composition < ApplicationRecord
+  has_many :journals
   has_many :sheet_musics
   has_many :assignments
   has_rich_text :description
 
-  validates_presence_of :name, :composer
+  validates_presence_of :name
 end

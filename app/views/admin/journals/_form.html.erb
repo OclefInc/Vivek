@@ -1,0 +1,32 @@
+<%= form_with(model: journal, html: { onkeydown: "return event.key != 'Enter';" }) do |form| %>
+  <% if journal.errors.any? %>
+    <div class="bg-red-50 dark:bg-red-900 text-red-500 dark:text-red-200 px-3 py-2 rounded-md">
+      <h2><%= pluralize(journal.errors.count, "error") %> prohibited this journal from being saved:</h2>
+      <ul>
+        <% journal.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="mb-4">
+    <%= form.label :composition, class: "dark:text-gray-200", style: "display: block" %>
+    <select name="journal[composition_name]"
+            data-controller="searchable-select"
+            data-searchable-select-placeholder-value="Select or type composition name..."
+            class="block outline-none dark:bg-gray-800 dark:text-gray-200 dark:border-gray-600">
+      <option value=""></option>
+      <% Composition.order(:name).each do |composition| %>
+        <option value="<%= composition.name %>" <%= 'selected' if journal.composition.try(:name) == composition.name %>><%= composition.name %></option>
+        <% end %>
+      </select>
+    </div>
+    <div>
+      <%= form.label :description, class: "dark:text-gray-200", style: "display: block" %>
+      <%= form.rich_text_area :description,
+      class: "block shadow rounded-md border border-gray-200 dark:border-gray-600 outline-none px-3 py-2 mt-2 mb-4 w-full dark:bg-gray-800 dark:text-gray-200" %>
+    </div>
+    <div class="my-2">
+      <%= form.submit class: "rounded-lg py-2 px-3 bg-blue-600 hover:bg-blue-400 text-white inline-block font-medium cursor-pointer" %>
+    </div>
+  <% end %>

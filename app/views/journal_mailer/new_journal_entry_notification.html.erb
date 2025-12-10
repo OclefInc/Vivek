@@ -1,0 +1,11 @@
+<p>Hello <%= @user.name %>,</p>
+<p>A new entry "<strong><%= @journal_entry.name %></strong>" has been added to the journal "<strong><%= @journal.name %></strong>".</p>
+<p>
+  <%= link_to "View Entry", journal_journal_entry_url(@journal, @journal_entry), style: "display: inline-block; padding: 10px 20px; background-color: #2563eb; color: white; text-decoration: none; border-radius: 5px;" %>
+</p>
+<p>
+  <small>
+    You are receiving this email because you subscribed to updates for this journal.
+    <%= link_to "Unsubscribe", journal_url(@journal) %>
+  </small>
+</p>

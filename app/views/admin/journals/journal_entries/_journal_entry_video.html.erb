@@ -1,0 +1,6 @@
+<div data-controller="video-time"
+     data-video-time-url-value="<%= journal_journal_entry_path(@journal_entry.journal, @journal_entry) %>">
+  <%= turbo_frame_tag "journal_entry_#{@journal_entry.id}_journal_entry_video" do %>
+    <%= render 'video_player', journal_entry: @journal_entry %>
+  <% end %>
+</div>

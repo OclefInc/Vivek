@@ -52,8 +52,11 @@ class Admin::CompositionsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should destroy composition" do
+    # Create a new composition that's not referenced by any journals
+    composition = Composition.create!(name: "Deletable Composition", composer: "Test Composer")
+
     assert_difference("Composition.count", -1) do
-      delete composition_url(@composition)
+      delete composition_url(composition)
     end
     assert_redirected_to compositions_url
   end

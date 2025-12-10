@@ -1,0 +1,11 @@
+<% content_for :title, 'Journal' %>
+<%= render 'show_header' %>
+<div class="xl:flex xl:gap-8">
+  <div class="md:-mx-5 py-4 xl:min-w-[640px]  xl:max-w-[640px] md:flex-1 md:basis-1/2 md:px-5">
+    <%= render 'summary_video', journal: @journal %>
+    <%= render @journal %>
+  </div>
+  <div class=" w-full py-4 xl:flex-1 xl:basis-1/2 xl:px-5 md:-mx-5 ">
+    <%= render '/admin/journals/journal_entries/table',  journal_entries: @journal.journal_entries, current_journal_entry: @journal_entry, journal: @journal, current_journal_entry_id: nil  %>
+  </div>
+</div>

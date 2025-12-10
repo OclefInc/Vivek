@@ -1,0 +1,26 @@
+<%
+        video_url = journal_entry.entry_video
+        if journal_entry.video_start_time.present? || journal_entry.video_end_time.present?
+          fragment = "#t="
+          fragment += journal_entry.video_start_time.to_s if journal_entry.video_start_time.present?
+          fragment += "," + journal_entry.video_end_time.to_s if journal_entry.video_end_time.present?
+          video_url = url_for(journal_entry.entry_video) + fragment
+        end
+      %>
+<div class="bg-black flex items-center justify-center aspect-[4/3] xl:aspect-auto xl:max-w-[640px] xl:h-[480px] relative group"
+         data-controller="video-poster video-player"
+         data-video-player-chapters-value="[]">
+  <%= video_tag video_url,
+          id: 'journal-entry-video',
+          controls: false,
+          preload: "metadata",
+          class: "w-full h-full object-contain",
+          data: {
+            video_poster_target: "video",
+            video_time_target: "video",
+            video_player_target: "video",
+            action: "click->video-player#togglePlay"
+          } %>
+  <%= render 'video_poster', journal_entry: journal_entry %>
+  <%= render 'shared/video_player_controls' %>
+</div>

@@ -35,7 +35,7 @@ class Assignment < ApplicationRecord
   has_one_attached :summary_video
   has_one_attached :video_thumbnail
   has_many :comments, as: :annotation
-  has_many :subscriptions, dependent: :destroy
+  has_many :subscriptions, as: :subscribable, dependent: :destroy
   has_many :subscribers, through: :subscriptions, source: :user
   has_many :bookmarks, as: :bookmarkable, dependent: :destroy
 
@@ -170,6 +170,6 @@ class Assignment < ApplicationRecord
   end
 
   def enqueue_thumbnail_generation
-    GenerateAssignmentThumbnailJob.perform_later(self)
+    GenerateVideoThumbnailJob.perform_later(self)
   end
 end

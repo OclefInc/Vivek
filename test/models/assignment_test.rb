@@ -184,7 +184,7 @@ class AssignmentTest < ActiveSupport::TestCase
   test "enqueue_thumbnail_generation enqueues job" do
     assignment = assignments(:one)
 
-    assert_enqueued_with(job: GenerateAssignmentThumbnailJob) do
+    assert_enqueued_with(job: GenerateVideoThumbnailJob) do
       assignment.enqueue_thumbnail_generation
     end
   end
@@ -192,7 +192,7 @@ class AssignmentTest < ActiveSupport::TestCase
   test "enqueues thumbnail generation on summary video change" do
     assignment = assignments(:one)
 
-    assert_enqueued_with(job: GenerateAssignmentThumbnailJob) do
+    assert_enqueued_with(job: GenerateVideoThumbnailJob) do
       assignment.summary_video.attach(io: File.open(Rails.root.join("test/fixtures/files/test_video.mp4")), filename: "test_video.mp4", content_type: "video/mp4")
       assignment.save
     end

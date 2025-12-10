@@ -24,6 +24,7 @@ Rails.application.routes.draw do
     resources :compositions
     resources :teachers do
       resources :chapters, only: [ :index ], controller: "teachers/chapters"
+      resources :journals, only: [ :index ], controller: "teachers/journals"
       resources :projects, only: [ :index ], controller: "teachers/projects"
       resources :tutorials, only: [ :index ], controller: "teachers/tutorials"
     end
@@ -34,6 +35,9 @@ Rails.application.routes.draw do
     end
     resources :assignments do
       resources :lessons, shallow: true
+    end
+    resources :journals do
+      resources :journal_entries, controller: "journals/journal_entries"
     end
     resources :project_types
     resources :chapters_tutorials, only: [ :destroy ]
@@ -56,6 +60,10 @@ Rails.application.routes.draw do
     resources :students, path: "students", as: "public_students"
     resources :projects do
       resources :episodes, controller: "projects/episodes"
+      resource :subscription, only: [ :create, :destroy ], controller: "subscriptions"
+    end
+
+    resources :journals, path: "journals", as: "public_journals" do
       resource :subscription, only: [ :create, :destroy ], controller: "subscriptions"
     end
 

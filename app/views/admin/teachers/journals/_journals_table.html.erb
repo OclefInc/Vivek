@@ -1,7 +1,7 @@
 <table class="w-full table-auto border-collapse">
   <thead>
     <tr>
-      <th class="text-left py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">Name</th>
+      <th class="text-left py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-200">Compoosition</th>
     </tr>
   </thead>
   <tbody>
@@ -11,7 +11,7 @@
           <td class="text-left py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-300">
             <%= link_to journal.name, journal, class:"text-blue-500 hover:text-red-500 dark:text-blue-400 dark:hover:text-red-400" %>
             <span class="block">
-              <%= pluralize(journal.journal_entries.count, 'Lesson') %>
+              <%= pluralize(journal.journal_entries.count, 'Entries') %>
             </span>
           </td>
         </tr>

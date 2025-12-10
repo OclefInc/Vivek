@@ -1,7 +1,20 @@
 <div class="flex justify-between items-center">
-  <span class="px-2 py-1 font-bold text-2xl dark:text-gray-200">
-    Journal
-  </span>
+  <div class="flex items-center gap-3">
+    <% if @journal.user.cropped_avatar(size: 32) %>
+      <div class="rounded-full overflow-hidden w-8 h-8  border border-gray-600 shadow-lg flex items-center justify-center">
+        <%= image_tag @journal.user.cropped_avatar(size: 32), class: "w-full h-full object-cover" %>
+      </div>
+    <% else %>
+      <div class="rounded-full overflow-hidden w-8 h-8 bg-gradient-to-br from-blue-400 to-purple-500  border border-gray-600 shadow-lg flex items-center justify-center">
+        <div class="w-full h-full flex items-center justify-center">
+          <span class="text-white text-sm font-bold"><%= @journal.user.initials %></span>
+        </div>
+      </div>
+    <% end %>
+    <span class="px-2 py-1 font-bold text-2xl dark:text-gray-200">
+      Learning Journal
+    </span>
+  </div>
   <div class="ml-2 flex items-center justify-end gap-1">
     <div class="relative" data-controller="dropdown" data-action="click@window->dropdown#hide">
       <button type="button"

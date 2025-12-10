@@ -23,13 +23,23 @@ Rails.application.routes.draw do
     resources :skill_categories, only: [ :index, :show ]
     resources :compositions
     resources :teachers do
+      collection do
+        post :create_from_user
+      end
+      member do
+        patch :toggle_visibility
+      end
       resources :chapters, only: [ :index ], controller: "teachers/chapters"
       resources :journals, only: [ :index ], controller: "teachers/journals"
       resources :projects, only: [ :index ], controller: "teachers/projects"
       resources :tutorials, only: [ :index ], controller: "teachers/tutorials"
     end
     resources :sheet_musics
-    resources :students
+    resources :students do
+      member do
+        patch :toggle_visibility
+      end
+    end
     resources :lessons do
       resources :chapters, only: [ :new, :create, :edit, :update, :destroy ]
     end

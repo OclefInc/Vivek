@@ -1,0 +1,16 @@
+<%= turbo_stream.replace "teacher_visibility_badge" do %>
+  <div id="teacher_visibility_badge" class="mb-3">
+    <strong class="dark:text-gray-200">Profile Status: </strong>
+    <%= button_to toggle_visibility_teacher_path(@teacher), method: :patch, class: "inline-block", form: { data: { turbo_frame: "_top" } } do %>
+      <% if @teacher.show_on_contributors %>
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-600 text-white dark:bg-green-600 hover:bg-green-700 dark:hover:bg-green-700 cursor-pointer transition-colors">
+          Public
+        </span>
+      <% else %>
+        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-600 text-white dark:bg-gray-600 hover:bg-gray-700 dark:hover:bg-gray-700 cursor-pointer transition-colors">
+          Private
+        </span>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>

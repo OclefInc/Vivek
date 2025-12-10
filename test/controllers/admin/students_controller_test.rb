@@ -88,4 +88,18 @@ class Admin::StudentsControllerTest < ActionDispatch::IntegrationTest
     end
     assert_redirected_to students_url
   end
+
+  test "should toggle visibility from public to private" do
+    @student.update!(show_on_contributors: true)
+    patch toggle_visibility_student_path(@student)
+    assert_redirected_to student_url(@student)
+    assert_equal false, @student.reload.show_on_contributors
+  end
+
+  test "should toggle visibility from private to public" do
+    @student.update!(show_on_contributors: false)
+    patch toggle_visibility_student_path(@student)
+    assert_redirected_to student_url(@student)
+    assert_equal true, @student.reload.show_on_contributors
+  end
 end

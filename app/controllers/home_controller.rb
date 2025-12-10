@@ -13,4 +13,8 @@ class HomeController < ApplicationController
   end
   def contact
   end
+  def contributors
+    @students = Student.where(show_on_contributors: true).order(:name)
+    @teachers = Teacher.where(show_on_contributors: true).order(:name)
+  end
 end

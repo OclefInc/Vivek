@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_12_10_164934) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_10_185315) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_stat_statements"
@@ -208,6 +208,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_10_164934) do
     t.integer "assignments_count", default: 0, null: false
     t.integer "lessons_count", default: 0, null: false
     t.integer "age_started_piano"
+    t.boolean "show_on_contributors", default: true, null: false
   end
 
   create_table "subscriptions", force: :cascade do |t|
@@ -232,6 +233,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_10_164934) do
     t.integer "avatar_crop_height"
     t.integer "tutorials_count", default: 0, null: false
     t.integer "assignments_count", default: 0, null: false
+    t.boolean "show_on_contributors", default: true, null: false
   end
 
   create_table "tutorials", force: :cascade do |t|

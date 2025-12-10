@@ -22,10 +22,21 @@
                   </div>
                 <% end %>
               </div>
-              <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 text-center mb-3">
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 text-center mb-2">
                 <%= teacher.name %>
               </h3>
-              <div class="flex gap-6 text-sm text-gray-600 dark:text-gray-400">
+              <div class="mb-3">
+                <% if teacher.show_on_contributors %>
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-600 text-white dark:bg-green-600">
+                    Public
+                  </span>
+                <% else %>
+                  <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-600 text-white dark:bg-gray-600">
+                    Private
+                  </span>
+                <% end %>
+              </div>
+              <div class="flex gap-4 text-sm text-gray-600 dark:text-gray-400">
                 <div class="flex flex-col items-center">
                   <span class="font-semibold text-xl text-blue-600 dark:text-blue-400"><%= teacher.projects.length %></span>
                   <span class="text-xs">Projects</span>
@@ -33,6 +44,10 @@
                 <div class="flex flex-col items-center">
                   <span class="font-semibold text-xl text-green-600 dark:text-green-400"><%= teacher.tutorials.length %></span>
                   <span class="text-xs">Tutorials</span>
+                </div>
+                <div class="flex flex-col items-center">
+                  <span class="font-semibold text-xl text-purple-600 dark:text-purple-400"><%= teacher.user&.journals&.length || 0 %></span>
+                  <span class="text-xs">Journals</span>
                 </div>
               </div>
             </div>

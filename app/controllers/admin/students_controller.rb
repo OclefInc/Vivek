@@ -1,7 +1,7 @@
 class Admin::StudentsController < ApplicationController
   before_action :authenticate_user!
   before_action :authorize_user
-  before_action :set_student, only: %i[ show edit update destroy ]
+  before_action :set_student, only: %i[ show edit update destroy toggle_visibility ]
 
   # GET /students or /students.json
   def index
@@ -66,6 +66,15 @@ class Admin::StudentsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to students_path, status: :see_other, notice: "Student was successfully destroyed." }
       format.json { head :no_content }
+    end
+  end
+
+  # PATCH /students/1/toggle_visibility
+  def toggle_visibility
+    @student.update!(show_on_contributors: !@student.show_on_contributors)
+    respond_to do |format|
+      format.html { redirect_to @student, notice: "Profile visibility updated." }
+      format.turbo_stream
     end
   end
 

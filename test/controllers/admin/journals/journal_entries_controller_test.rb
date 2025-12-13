@@ -80,4 +80,12 @@ class Admin::Journals::JournalEntriesControllerTest < ActionDispatch::Integratio
 
     assert_redirected_to journal_journal_entries_url(@journal)
   end
+
+  test "should create journal_entry with unwrapped params" do
+    assert_difference("JournalEntry.count") do
+      post journal_journal_entries_url(@journal), params: { name: "Unwrapped Entry", date: Date.today }
+    end
+
+    assert_redirected_to journal_journal_entry_url(@journal, JournalEntry.last)
+  end
 end

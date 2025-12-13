@@ -4,7 +4,10 @@ require "rails/test_help"
 require "mocha/minitest"
 
 # Load rake tasks once for all tests to ensure consistent coverage
-Rails.application.load_tasks
+# Suppress warnings about already initialized constants (e.g., STATS_DIRECTORIES)
+silence_warnings do
+  Rails.application.load_tasks
+end
 
 module ActiveSupport
   class TestCase

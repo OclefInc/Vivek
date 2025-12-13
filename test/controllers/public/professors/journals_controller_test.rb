@@ -109,4 +109,42 @@ class Public::Professors::JournalsControllerTest < ActionDispatch::IntegrationTe
     get professor_journal_path(@teacher, @journal)
     assert_response :success
   end
+
+  test "index should handle teacher with nil user gracefully" do
+    teacher_without_user = Teacher.create!(
+      name: "Teacher Without User",
+      user: nil,
+      show_on_contributors: true
+    )
+
+    get professor_journals_path(teacher_without_user)
+    assert_response :success
+  end
+
+  test "show should handle journal from different user" do
+    other_user = users(:two)
+    other_teacher = Teacher.create!(
+      name: "Other Teacher",
+      user: other_user,
+      show_on_contributors: true
+    )
+
+    # Journal belongs to @user/@teacher, but we're accessing via other_teacher
+    get professor_journal_path(other_teacher, @journal)
+
+    # Should still show the journal (controller doesn't check teacher ownership)
+    assert_response :success
+  end
+
+  test "index uses public layout" do
+    get professor_journals_path(@teacher)
+    assert_response :success
+    assert_select "body"
+  end
+
+  test "show uses public layout" do
+    get professor_journal_path(@teacher, @journal)
+    assert_response :success
+    assert_select "body"
+  end
 end

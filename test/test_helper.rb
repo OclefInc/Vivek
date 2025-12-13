@@ -3,6 +3,9 @@ require_relative "../config/environment"
 require "rails/test_help"
 require "mocha/minitest"
 
+# Load rake tasks once for all tests to ensure consistent coverage
+Rails.application.load_tasks
+
 module ActiveSupport
   class TestCase
     # Run tests in parallel with specified workers

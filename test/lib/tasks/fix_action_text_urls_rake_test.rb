@@ -3,14 +3,11 @@ require "rake"
 
 class FixActionTextUrlsRakeTest < ActiveSupport::TestCase
   setup do
-    unless Rake::Task.task_defined?("action_text:fix_urls")
-      # Silence warnings about already initialized constants (e.g. STATS_DIRECTORIES)
-      # which can happen if tasks are reloaded
-      silence_warnings do
-        Vivek::Application.load_tasks
-      end
-    end
-    Rake::Task["action_text:fix_urls"].reenable
+    @task = Rake::Task["action_text:fix_urls"]
+  end
+
+  teardown do
+    @task.reenable if @task
   end
 
   test "fix_urls replaces production URLs with localhost" do
@@ -25,7 +22,7 @@ class FixActionTextUrlsRakeTest < ActiveSupport::TestCase
 
     # Capture stdout to avoid cluttering test output
     assert_output(/Updated 1 Action Text records/) do
-      Rake::Task["action_text:fix_urls"].invoke
+      @task.invoke
     end
 
     # Reload and verify

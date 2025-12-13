@@ -73,6 +73,11 @@ class Admin::Journals::JournalEntriesController < ApplicationController
     end
 
     def journal_entry_params
-      params.require(:journal_entry).permit(:name, :date, :description, :entry_video, :video_thumbnail, :video_start_time, :video_end_time)
+      if params[:journal_entry].present?
+        params.require(:journal_entry).permit(:name, :date, :description, :entry_video, :video_thumbnail, :video_start_time, :video_end_time)
+      else
+        # Handle unwrapped params (e.g., from direct upload forms)
+        params.permit(:name, :date, :description, :entry_video, :video_thumbnail, :video_start_time, :video_end_time)
+      end
     end
 end

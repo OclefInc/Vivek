@@ -87,7 +87,7 @@ class JournalEntry < ApplicationRecord
 
     title = name
     subtitle = "#{journal.name}"
-    user_name = user&.name || ""
+    user_name = journal.user&.name || ""
     journal_entry_date = date&.strftime("%b %d, %Y") || ""
 
     svg = <<~SVG

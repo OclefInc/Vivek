@@ -148,4 +148,26 @@ class JournalTest < ActiveSupport::TestCase
       Journal.create!(composition: @composition, user: user)
     end
   end
+
+  test "complete? returns true when summary_video attached and journal_entries exist" do
+    journal = Journal.create!(composition: @composition, user: @user)
+    journal.journal_entries.create!(name: "Entry 1", date: Date.today)
+    journal.summary_video.attach(io: File.open(Rails.root.join("test/fixtures/files/test_video.mp4")), filename: "test_video.mp4", content_type: "video/mp4")
+
+    assert journal.complete?
+  end
+
+  test "complete? returns false when summary_video not attached" do
+    journal = Journal.create!(composition: @composition, user: @user)
+    journal.journal_entries.create!(name: "Entry 1", date: Date.today)
+
+    assert_not journal.complete?
+  end
+
+  test "complete? returns false when no journal_entries exist" do
+    journal = Journal.create!(composition: @composition, user: @user)
+    journal.summary_video.attach(io: File.open(Rails.root.join("test/fixtures/files/test_video.mp4")), filename: "test_video.mp4", content_type: "video/mp4")
+
+    assert_not journal.complete?
+  end
 end

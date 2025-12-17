@@ -49,6 +49,10 @@ class Journal < ApplicationRecord
     journal_entries.order(:sort).first
   end
 
+  def complete?
+    summary_video.attached? && journal_entries.exists?
+  end
+
   def generate_video_thumbnail
     require "vips"
 

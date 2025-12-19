@@ -455,7 +455,6 @@ GEM
       simplecov-html (~> 0.11)
       simplecov_json_formatter (~> 0.1)
     simplecov-html (0.13.2)
-    simplecov-lcov (0.9.0)
     simplecov_json_formatter (0.1.4)
     snaky_hash (2.0.3)
       hashie (>= 0.1.0, < 6)
@@ -580,7 +579,6 @@ DEPENDENCIES
   rufo
   selenium-webdriver
   simplecov
-  simplecov-lcov
   solid_cable
   solid_cache
   solid_queue

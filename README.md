@@ -1,7 +1,6 @@
 # The Vivek Project
 
 [![CI](https://github.com/OclefInc/Vivek/actions/workflows/ci.yml/badge.svg)](https://github.com/OclefInc/Vivek/actions/workflows/ci.yml)
-[![codecov](https://codecov.io/gh/OclefInc/Vivek/graph/badge.svg)](https://codecov.io/gh/OclefInc/Vivek)
 
 A free, open-source platform for documenting piano pedagogy on video. Provided by the Oclef Foundation.
 

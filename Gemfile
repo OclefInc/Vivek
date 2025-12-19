@@ -68,6 +68,7 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
   gem "simplecov", require: false
+  gem "simplecov-lcov", require: false
 end
 
 gem "tailwindcss-rails", "~> 4.3"

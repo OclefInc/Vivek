@@ -100,7 +100,7 @@ jobs:
         if: always()
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./public/coverage/.resultset.json
+          files: ./public/coverage/lcov.info
           fail_ci_if_error: false
           verbose: true
 

@@ -43,7 +43,7 @@ class Admin::JournalsControllerTest < ActionDispatch::IntegrationTest
   test "should create journal with new composition name" do
     new_composition_name = "Brand New Composition #{Time.now.to_i}"
 
-    assert_difference(["Journal.count", "Composition.count"]) do
+    assert_difference([ "Journal.count", "Composition.count" ]) do
       post journals_url, params: { journal: { composition_name: new_composition_name } }
     end
 

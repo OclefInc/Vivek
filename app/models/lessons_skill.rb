@@ -9,6 +9,6 @@
 #  skill_id   :integer
 #
 class LessonsSkill < ApplicationRecord
-    belongs_to :lesson
-    belongs_to :skill
+  belongs_to :lesson
+  belongs_to :skill
 end

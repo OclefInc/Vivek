@@ -9,8 +9,8 @@
 #
 # Configuration details:
 # https://github.com/airbrake/airbrake-ruby#configuration
-if (project_id = ENV['AIRBRAKE_PROJECT_ID']) &&
-   project_key = (ENV['AIRBRAKE_PROJECT_KEY'] || ENV['AIRBRAKE_API_KEY'])
+if (project_id = ENV["AIRBRAKE_PROJECT_ID"]) &&
+   project_key = (ENV["AIRBRAKE_PROJECT_KEY"] || ENV["AIRBRAKE_API_KEY"])
   Airbrake.configure do |c|
     # You must set both project_id & project_key. To find your project_id and
     # project_key navigate to your project's General Settings and copy the
@@ -49,7 +49,7 @@ if (project_id = ENV['AIRBRAKE_PROJECT_ID']) &&
     # Airbrake. By default, all "password" attributes will have their contents
     # replaced.
     # https://github.com/airbrake/airbrake-ruby#blocklist_keys
-    c.blocklist_keys = [/password/i, /authorization/i]
+    c.blocklist_keys = [ /password/i, /authorization/i ]
 
     # Alternatively, you can integrate with Rails' filter_parameters.
     # Read more: https://goo.gl/gqQ1xS

@@ -20,8 +20,8 @@ module Public
 
     private
 
-    def like_params
-      params.require(:like).permit(:likeable_id, :likeable_type)
-    end
+      def like_params
+        params.require(:like).permit(:likeable_id, :likeable_type)
+      end
   end
 end

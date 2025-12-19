@@ -16,7 +16,7 @@ class ConvertSubscriptionsToPolymorphic < ActiveRecord::Migration[8.0]
     end
 
     # Add index for polymorphic association
-    add_index :subscriptions, [:subscribable_type, :subscribable_id]
+    add_index :subscriptions, [ :subscribable_type, :subscribable_id ]
 
     # Remove old foreign key and column
     remove_foreign_key :subscriptions, :assignments
@@ -39,7 +39,7 @@ class ConvertSubscriptionsToPolymorphic < ActiveRecord::Migration[8.0]
     end
 
     # Remove polymorphic columns and index
-    remove_index :subscriptions, [:subscribable_type, :subscribable_id]
+    remove_index :subscriptions, [ :subscribable_type, :subscribable_id ]
     remove_column :subscriptions, :subscribable_type
     remove_column :subscriptions, :subscribable_id
 

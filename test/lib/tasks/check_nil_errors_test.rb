@@ -25,7 +25,7 @@ class CheckNilErrorsTaskTest < ActiveSupport::TestCase
 
     output = capture_io do
       # Temporarily change Dir.glob to include test views
-      Dir.stubs(:glob).returns([@test_views_dir.join("unsafe_chain.html.erb").to_s])
+      Dir.stubs(:glob).returns([ @test_views_dir.join("unsafe_chain.html.erb").to_s ])
       @task.invoke
     end
 
@@ -36,7 +36,7 @@ class CheckNilErrorsTaskTest < ActiveSupport::TestCase
     create_test_view("unsafe_teacher.html.erb", "<%= lesson.teacher.name %>")
 
     output = capture_io do
-      Dir.stubs(:glob).returns([@test_views_dir.join("unsafe_teacher.html.erb").to_s])
+      Dir.stubs(:glob).returns([ @test_views_dir.join("unsafe_teacher.html.erb").to_s ])
       @task.invoke
     end
 
@@ -47,7 +47,7 @@ class CheckNilErrorsTaskTest < ActiveSupport::TestCase
     create_test_view("safe_navigation.html.erb", "<%= lesson.teacher&.name %>")
 
     output = capture_io do
-      Dir.stubs(:glob).returns([@test_views_dir.join("safe_navigation.html.erb").to_s])
+      Dir.stubs(:glob).returns([ @test_views_dir.join("safe_navigation.html.erb").to_s ])
       @task.invoke
     end
 
@@ -59,7 +59,7 @@ class CheckNilErrorsTaskTest < ActiveSupport::TestCase
     create_test_view("with_presence.html.erb", "<% if lesson.teacher.present? %><%= lesson.teacher.name %><% end %>")
 
     output = capture_io do
-      Dir.stubs(:glob).returns([@test_views_dir.join("with_presence.html.erb").to_s])
+      Dir.stubs(:glob).returns([ @test_views_dir.join("with_presence.html.erb").to_s ])
       @task.invoke
     end
 
@@ -70,7 +70,7 @@ class CheckNilErrorsTaskTest < ActiveSupport::TestCase
     create_test_view("unsafe_user.html.erb", "<%= @object.user.email %>")
 
     output = capture_io do
-      Dir.stubs(:glob).returns([@test_views_dir.join("unsafe_user.html.erb").to_s])
+      Dir.stubs(:glob).returns([ @test_views_dir.join("unsafe_user.html.erb").to_s ])
       @task.invoke
     end
 
@@ -81,7 +81,7 @@ class CheckNilErrorsTaskTest < ActiveSupport::TestCase
     create_test_view("unsafe_student.html.erb", "<%= assignment.student.name %>")
 
     output = capture_io do
-      Dir.stubs(:glob).returns([@test_views_dir.join("unsafe_student.html.erb").to_s])
+      Dir.stubs(:glob).returns([ @test_views_dir.join("unsafe_student.html.erb").to_s ])
       @task.invoke
     end
 
@@ -92,7 +92,7 @@ class CheckNilErrorsTaskTest < ActiveSupport::TestCase
     create_test_view("with_try.html.erb", "<%= lesson.teacher.try(:name) %>")
 
     output = capture_io do
-      Dir.stubs(:glob).returns([@test_views_dir.join("with_try.html.erb").to_s])
+      Dir.stubs(:glob).returns([ @test_views_dir.join("with_try.html.erb").to_s ])
       @task.invoke
     end
 
@@ -115,7 +115,7 @@ class CheckNilErrorsTaskTest < ActiveSupport::TestCase
     ERB
 
     output = capture_io do
-      Dir.stubs(:glob).returns([@test_views_dir.join("multiple_issues.html.erb").to_s])
+      Dir.stubs(:glob).returns([ @test_views_dir.join("multiple_issues.html.erb").to_s ])
       @task.invoke
     end
 
@@ -126,7 +126,7 @@ class CheckNilErrorsTaskTest < ActiveSupport::TestCase
     create_test_view("needs_fix.html.erb", "<%= lesson.teacher.name %>")
 
     output = capture_io do
-      Dir.stubs(:glob).returns([@test_views_dir.join("needs_fix.html.erb").to_s])
+      Dir.stubs(:glob).returns([ @test_views_dir.join("needs_fix.html.erb").to_s ])
       @task.invoke
     end
 
@@ -142,7 +142,7 @@ class CheckNilErrorsTaskTest < ActiveSupport::TestCase
     ERB
 
     output = capture_io do
-      Dir.stubs(:glob).returns([@test_views_dir.join("with_line_numbers.html.erb").to_s])
+      Dir.stubs(:glob).returns([ @test_views_dir.join("with_line_numbers.html.erb").to_s ])
       @task.invoke
     end
 
@@ -153,7 +153,7 @@ class CheckNilErrorsTaskTest < ActiveSupport::TestCase
     create_test_view("association.html.erb", "<%= @episode.teacher.display_avatar %>")
 
     output = capture_io do
-      Dir.stubs(:glob).returns([@test_views_dir.join("association.html.erb").to_s])
+      Dir.stubs(:glob).returns([ @test_views_dir.join("association.html.erb").to_s ])
       @task.invoke
     end
 
@@ -179,7 +179,7 @@ class CheckNilErrorsTaskTest < ActiveSupport::TestCase
     create_test_view("test_file.html.erb", "<%= lesson.teacher.name %>")
 
     output = capture_io do
-      Dir.stubs(:glob).returns([@test_views_dir.join("test_file.html.erb").to_s])
+      Dir.stubs(:glob).returns([ @test_views_dir.join("test_file.html.erb").to_s ])
       @task.invoke
     end
 
@@ -190,7 +190,7 @@ class CheckNilErrorsTaskTest < ActiveSupport::TestCase
     create_test_view("all_safe.html.erb", "<h1>Hello World</h1><p><%= @name %></p>")
 
     output = capture_io do
-      Dir.stubs(:glob).returns([@test_views_dir.join("all_safe.html.erb").to_s])
+      Dir.stubs(:glob).returns([ @test_views_dir.join("all_safe.html.erb").to_s ])
       @task.invoke
     end
 
@@ -201,7 +201,7 @@ class CheckNilErrorsTaskTest < ActiveSupport::TestCase
     create_test_view("simple.html.erb", "<div><%= user&.name %></div>")
 
     output = capture_io do
-      Dir.stubs(:glob).returns([@test_views_dir.join("simple.html.erb").to_s])
+      Dir.stubs(:glob).returns([ @test_views_dir.join("simple.html.erb").to_s ])
       @task.invoke
     end
 
@@ -213,7 +213,7 @@ class CheckNilErrorsTaskTest < ActiveSupport::TestCase
     create_test_view("unless_nil.html.erb", "<% if lesson.teacher.present? %><%= lesson.teacher.name %><% end %>")
 
     output = capture_io do
-      Dir.stubs(:glob).returns([@test_views_dir.join("unless_nil.html.erb").to_s])
+      Dir.stubs(:glob).returns([ @test_views_dir.join("unless_nil.html.erb").to_s ])
       @task.invoke
     end
 
@@ -226,7 +226,7 @@ class CheckNilErrorsTaskTest < ActiveSupport::TestCase
     create_test_view("pattern_match.html.erb", "<%= @episode.composition.name %>")
 
     output = capture_io do
-      Dir.stubs(:glob).returns([@test_views_dir.join("pattern_match.html.erb").to_s])
+      Dir.stubs(:glob).returns([ @test_views_dir.join("pattern_match.html.erb").to_s ])
       @task.invoke
     end
 
@@ -239,7 +239,7 @@ class CheckNilErrorsTaskTest < ActiveSupport::TestCase
     create_test_view("full_issue.html.erb", "<%= lesson.teacher.display_avatar %>")
 
     output = capture_io do
-      Dir.stubs(:glob).returns([@test_views_dir.join("full_issue.html.erb").to_s])
+      Dir.stubs(:glob).returns([ @test_views_dir.join("full_issue.html.erb").to_s ])
       @task.invoke
     end
 
@@ -251,20 +251,20 @@ class CheckNilErrorsTaskTest < ActiveSupport::TestCase
 
   private
 
-  def create_test_view(filename, content)
-    File.write(@test_views_dir.join(filename), content)
-  end
+    def create_test_view(filename, content)
+      File.write(@test_views_dir.join(filename), content)
+    end
 
-  def capture_io
-    require "stringio"
-    old_stdout = $stdout
-    $stdout = StringIO.new
+    def capture_io
+      require "stringio"
+      old_stdout = $stdout
+      $stdout = StringIO.new
 
-    yield
+      yield
 
-    output = $stdout.string
-    $stdout = old_stdout
+      output = $stdout.string
+      $stdout = old_stdout
 
-    [output]
-  end
+      [ output ]
+    end
 end

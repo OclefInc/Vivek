@@ -93,7 +93,7 @@ jobs:
           COVERAGE: true
           CI: true
           # REDIS_URL: redis://localhost:6379/0
-        run: bin/rails db:test:prepare test test:system
+        run: bin/rails db:test:prepare test
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v4

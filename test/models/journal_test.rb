@@ -103,7 +103,6 @@ class JournalTest < ActiveSupport::TestCase
     journal.generate_video_thumbnail
   end
 
-
   test "enqueues thumbnail generation after save when summary video changes" do
     journal = Journal.create!(composition: @composition, user: @user)
 

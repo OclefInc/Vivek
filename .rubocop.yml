@@ -10,6 +10,8 @@ AllCops:
   NewCops: enable
   TargetRubyVersion: 3.4
   SuggestExtensions: false
+  Exclude:
+    - 'app/views/**/*.erb'
 
 Layout/IndentationConsistency:
   Enabled: true

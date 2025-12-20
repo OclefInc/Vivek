@@ -10,8 +10,17 @@ AllCops:
   NewCops: enable
   TargetRubyVersion: 3.4
   SuggestExtensions: false
+  Include:
+    - '**/*.rb'
+    - '**/*.rake'
+    - '**/Gemfile'
+    - '**/Rakefile'
   Exclude:
     - 'app/views/**/*.erb'
+    - 'app/views/**/*.html.erb'
+    - '**/*.erb'
+    - 'node_modules/**/*'
+    - 'vendor/**/*'
 
 Layout/IndentationConsistency:
   Enabled: true

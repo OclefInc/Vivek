@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_12_10_222950) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_20_181416) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pg_stat_statements"
@@ -22,7 +22,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_10_222950) do
     t.bigint "record_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["record_type", "record_id", "name"], name: "index_action_text_rich_texts_uniqueness", unique: true
+    t.index [ "record_type", "record_id", "name" ], name: "index_action_text_rich_texts_uniqueness", unique: true
   end
 
   create_table "active_storage_attachments", force: :cascade do |t|
@@ -32,9 +32,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_10_222950) do
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
     t.jsonb "metadata", default: {}, null: false
-    t.index ["blob_id"], name: "index_active_storage_attachments_on_blob_id"
-    t.index ["metadata"], name: "index_active_storage_attachments_on_metadata", using: :gin
-    t.index ["record_type", "record_id", "name", "blob_id"], name: "index_active_storage_attachments_uniqueness", unique: true
+    t.index [ "blob_id" ], name: "index_active_storage_attachments_on_blob_id"
+    t.index [ "metadata" ], name: "index_active_storage_attachments_on_metadata", using: :gin
+    t.index [ "record_type", "record_id", "name", "blob_id" ], name: "index_active_storage_attachments_uniqueness", unique: true
   end
 
   create_table "active_storage_blobs", force: :cascade do |t|
@@ -46,13 +46,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_10_222950) do
     t.bigint "byte_size", null: false
     t.string "checksum"
     t.datetime "created_at", null: false
-    t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+    t.index [ "key" ], name: "index_active_storage_blobs_on_key", unique: true
   end
 
   create_table "active_storage_variant_records", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
-    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+    t.index [ "blob_id", "variation_digest" ], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
   create_table "assignments", force: :cascade do |t|
@@ -67,7 +67,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_10_222950) do
     t.bigint "project_type_id"
     t.string "project_name"
     t.integer "student_age"
-    t.index ["project_type_id"], name: "index_assignments_on_project_type_id"
+    t.string "summary_video_url"
+    t.index [ "project_type_id" ], name: "index_assignments_on_project_type_id"
   end
 
   create_table "bookmarks", force: :cascade do |t|
@@ -76,8 +77,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_10_222950) do
     t.bigint "bookmarkable_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["bookmarkable_type", "bookmarkable_id"], name: "index_bookmarks_on_bookmarkable"
-    t.index ["user_id"], name: "index_bookmarks_on_user_id"
+    t.index [ "bookmarkable_type", "bookmarkable_id" ], name: "index_bookmarks_on_bookmarkable"
+    t.index [ "user_id" ], name: "index_bookmarks_on_user_id"
   end
 
   create_table "chapters", force: :cascade do |t|
@@ -87,8 +88,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_10_222950) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "stop_time"
-    t.index ["lesson_id", "start_time"], name: "index_chapters_on_lesson_id_and_start_time"
-    t.index ["lesson_id"], name: "index_chapters_on_lesson_id"
+    t.index [ "lesson_id", "start_time" ], name: "index_chapters_on_lesson_id_and_start_time"
+    t.index [ "lesson_id" ], name: "index_chapters_on_lesson_id"
   end
 
   create_table "chapters_tutorials", force: :cascade do |t|
@@ -97,8 +98,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_10_222950) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "sort"
-    t.index ["chapter_id"], name: "index_chapters_tutorials_on_chapter_id"
-    t.index ["tutorial_id"], name: "index_chapters_tutorials_on_tutorial_id"
+    t.index [ "chapter_id" ], name: "index_chapters_tutorials_on_chapter_id"
+    t.index [ "tutorial_id" ], name: "index_chapters_tutorials_on_tutorial_id"
   end
 
   create_table "comments", force: :cascade do |t|
@@ -127,7 +128,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_10_222950) do
     t.integer "video_end_time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["journal_id"], name: "index_journal_entries_on_journal_id"
+    t.index [ "journal_id" ], name: "index_journal_entries_on_journal_id"
   end
 
   create_table "journals", force: :cascade do |t|
@@ -135,8 +136,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_10_222950) do
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["composition_id"], name: "index_journals_on_composition_id"
-    t.index ["user_id"], name: "index_journals_on_user_id"
+    t.index [ "composition_id" ], name: "index_journals_on_composition_id"
+    t.index [ "user_id" ], name: "index_journals_on_user_id"
   end
 
   create_table "lessons", force: :cascade do |t|
@@ -166,8 +167,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_10_222950) do
     t.bigint "likeable_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["likeable_type", "likeable_id"], name: "index_likes_on_likeable"
-    t.index ["user_id"], name: "index_likes_on_user_id"
+    t.index [ "likeable_type", "likeable_id" ], name: "index_likes_on_likeable"
+    t.index [ "user_id" ], name: "index_likes_on_user_id"
   end
 
   create_table "project_types", force: :cascade do |t|
@@ -217,8 +218,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_10_222950) do
     t.datetime "updated_at", null: false
     t.string "subscribable_type"
     t.bigint "subscribable_id"
-    t.index ["subscribable_type", "subscribable_id"], name: "index_subscriptions_on_subscribable_type_and_subscribable_id"
-    t.index ["user_id"], name: "index_subscriptions_on_user_id"
+    t.index [ "subscribable_type", "subscribable_id" ], name: "index_subscriptions_on_subscribable_type_and_subscribable_id"
+    t.index [ "user_id" ], name: "index_subscriptions_on_user_id"
   end
 
   create_table "teachers", force: :cascade do |t|
@@ -244,8 +245,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_10_222950) do
     t.datetime "updated_at", null: false
     t.integer "sort"
     t.bigint "skill_category_id"
-    t.index ["skill_category_id"], name: "index_tutorials_on_skill_category_id"
-    t.index ["teacher_id"], name: "index_tutorials_on_teacher_id"
+    t.index [ "skill_category_id" ], name: "index_tutorials_on_skill_category_id"
+    t.index [ "teacher_id" ], name: "index_tutorials_on_teacher_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -273,9 +274,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_12_10_222950) do
     t.integer "avatar_crop_height"
     t.string "magic_link_token"
     t.datetime "magic_link_sent_at"
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["magic_link_token"], name: "index_users_on_magic_link_token", unique: true
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index [ "email" ], name: "index_users_on_email", unique: true
+    t.index [ "magic_link_token" ], name: "index_users_on_magic_link_token", unique: true
+    t.index [ "reset_password_token" ], name: "index_users_on_reset_password_token", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

@@ -1,0 +1,5 @@
+class AddSummaryVideoUrlToAssignments < ActiveRecord::Migration[8.0]
+  def change
+    add_column :assignments, :summary_video_url, :string
+  end
+end

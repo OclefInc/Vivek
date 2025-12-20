@@ -11,4 +11,9 @@ export default class extends Controller {
     // Hide the overlay when video starts playing
     this.overlayTarget.classList.add('hidden')
   }
+
+  hideOverlay() {
+    // Hide the overlay when clicked (for YouTube iframes)
+    this.overlayTarget.classList.add('hidden')
+  }
 }

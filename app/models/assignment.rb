@@ -2,18 +2,19 @@
 #
 # Table name: assignments
 #
-#  id              :bigint           not null, primary key
-#  composition     :string
-#  project_name    :string
-#  student         :string
-#  student_age     :integer
-#  teacher         :string
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  composition_id  :integer
-#  project_type_id :bigint
-#  student_id      :integer
-#  teacher_id      :integer
+#  id                :bigint           not null, primary key
+#  composition       :string
+#  project_name      :string
+#  student           :string
+#  student_age       :integer
+#  summary_video_url :string
+#  teacher           :string
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  composition_id    :integer
+#  project_type_id   :bigint
+#  student_id        :integer
+#  teacher_id        :integer
 #
 # Indexes
 #
@@ -29,6 +30,7 @@ class Assignment < ApplicationRecord
 
   belongs_to :teacher, optional: true # use for default teacher when uploading new lesson videos
   validates :project_name, presence: true
+  validates :summary_video_url, format: { with: /\A(https?:\/\/)?(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)[\w-]+/i, message: "must be a valid YouTube URL" }, allow_blank: true
   has_many :lessons
   has_many :teachers, through: :lessons
   has_rich_text :description
@@ -60,7 +62,7 @@ class Assignment < ApplicationRecord
   end
 
   def complete?
-    summary_video.attached? && lessons.exists?
+    (summary_video.attached? || summary_video_url.present?) && lessons.exists?
   end
 
   def status
@@ -73,6 +75,26 @@ class Assignment < ApplicationRecord
 
   def first_lesson
     lessons.order(:sort).first
+  end
+
+  def youtube_video_id
+    return nil if summary_video_url.blank?
+
+    # Handle youtu.be/VIDEO_ID format
+    if summary_video_url.match(/youtu\.be\/([^?&]+)/)
+      return $1
+    end
+
+    # Handle youtube.com/watch?v=VIDEO_ID format
+    if summary_video_url.match(/youtube\.com\/watch\?v=([^&]+)/)
+      return $1
+    end
+
+    nil
+  end
+
+  def has_summary_video?
+    summary_video.attached? || summary_video_url.present?
   end
 
   def existing_description_attachments

@@ -17,6 +17,31 @@
         </div>
         <%= render 'shared/video_player_controls' %>
       </div>
+    <% elsif @project.summary_video_url.present? %>
+      <div class="w-full relative bg-black group" style="max-width: 640px; aspect-ratio: 4/3;" data-controller="video-poster">
+        <iframe
+          width="100%"
+          height="100%"
+          src="https://www.youtube.com/embed/<%= @project.youtube_video_id %>"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          class="w-full h-full"
+          data-video-poster-target="video">
+        </iframe>
+        <div data-video-poster-target="overlay" data-action="click->video-poster#hideOverlay" class="absolute inset-0 flex flex-col items-center justify-center bg-black cursor-pointer">
+          <h2 class="text-white text-3xl font-bold text-center px-8"><%= @project.project_name %></h2>
+          <p class="text-gray-300 text-xl mt-3"><%= @project.student.name %></p>
+          <% if @project.lessons.any? %>
+            <p class="text-gray-400 text-lg mt-2">
+              <%= @project.lessons.minimum(:date)&.strftime("%b %d, %Y") %> - <%= @project.lessons.maximum(:date)&.strftime("%b %d, %Y") %>
+            </p>
+            <p class="text-gray-400 text-lg mt-1">
+              <%= @project.lessons.count %> <%= 'Lesson'.pluralize(@project.lessons.count) %>
+            </p>
+          <% end %>
+        </div>
+      </div>
     <% else %>
       <div class="lg:min-w-[640px] lg:max-w-[640px] w-full relative bg-black group" style=" aspect-ratio: 4/3;">
         <% first_lesson = @project.lessons.order(:sort).first %>

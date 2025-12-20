@@ -29,13 +29,31 @@
       </div>
       <%= render 'shared/video_player_controls' %>
     </div>
-    <div class="text-center">
-      <%= link_to edit_assignment_path(@assignment, field: :summary_video), class: "text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300 text-sm" do %>
-        <span>
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 inline">
-            <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
-          </svg> Video</span>
-      <% end %>
+  <% elsif assignment.summary_video_url.present? %>
+    <div class="bg-black flex items-center justify-center aspect-[4/3] xl:aspect-auto xl:max-w-[640px] xl:h-[480px] relative group"
+           data-controller="video-poster">
+      <iframe
+        width="100%"
+        height="100%"
+        src="https://www.youtube.com/embed/<%= assignment.youtube_video_id %>"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+        class="w-full h-full"
+        data-video-poster-target="video">
+      </iframe>
+      <div data-video-poster-target="overlay" data-action="click->video-poster#hideOverlay" class="absolute inset-0 flex flex-col items-center justify-center bg-black cursor-pointer">
+        <h2 class="text-white text-3xl font-bold text-center px-8"><%= assignment.project_name %></h2>
+        <p class="text-gray-300 text-xl mt-3"><%= assignment.student.name %></p>
+        <% if assignment.lessons.any? %>
+          <p class="text-gray-400 text-lg mt-2">
+            <%= assignment.lessons.minimum(:date)&.strftime("%b %d, %Y") %> - <%= assignment.lessons.maximum(:date)&.strftime("%b %d, %Y") %>
+          </p>
+          <p class="text-gray-400 text-lg mt-1">
+            <%= assignment.lessons.count %> <%= 'Lesson'.pluralize(assignment.lessons.count) %>
+          </p>
+        <% end %>
+      </div>
     </div>
   <% else %>
     <div class="bg-black flex items-center justify-center aspect-[4/3] xl:aspect-auto xl:max-w-[640px] xl:h-[480px]">
@@ -52,4 +70,12 @@
       <% end %>
     </div>
   <% end %>
+  <div class="text-center">
+    <%= link_to edit_assignment_path(@assignment, field: :summary_video), class: "text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300 text-sm" do %>
+      <span>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 inline">
+          <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+        </svg> Video</span>
+    <% end %>
+  </div>
 <% end %>

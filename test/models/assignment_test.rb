@@ -2,18 +2,19 @@
 #
 # Table name: assignments
 #
-#  id              :bigint           not null, primary key
-#  composition     :string
-#  project_name    :string
-#  student         :string
-#  student_age     :integer
-#  teacher         :string
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  composition_id  :integer
-#  project_type_id :bigint
-#  student_id      :integer
-#  teacher_id      :integer
+#  id                :bigint           not null, primary key
+#  composition       :string
+#  project_name      :string
+#  student           :string
+#  student_age       :integer
+#  summary_video_url :string
+#  teacher           :string
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  composition_id    :integer
+#  project_type_id   :bigint
+#  student_id        :integer
+#  teacher_id        :integer
 #
 # Indexes
 #

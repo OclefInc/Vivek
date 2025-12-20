@@ -309,4 +309,46 @@ class AssignmentTest < ActiveSupport::TestCase
     assert_equal blob2.created_at, result.first[:created_at]
     assert_equal "L2", result.first[:lesson_name]
   end
+
+  test "youtube_video_id extracts ID from youtube.com/watch?v= URL" do
+    assignment = assignments(:one)
+    assignment.summary_video_url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+    assert_equal "dQw4w9WgXcQ", assignment.youtube_video_id
+  end
+
+  test "youtube_video_id extracts ID from youtu.be URL" do
+    assignment = assignments(:one)
+    assignment.summary_video_url = "https://youtu.be/dQw4w9WgXcQ"
+    assert_equal "dQw4w9WgXcQ", assignment.youtube_video_id
+  end
+
+  test "youtube_video_id returns nil when URL is blank" do
+    assignment = assignments(:one)
+    assignment.summary_video_url = nil
+    assert_nil assignment.youtube_video_id
+  end
+
+  test "youtube_video_id returns nil when URL is not a YouTube URL" do
+    assignment = assignments(:one)
+    assignment.summary_video_url = "https://example.com/video"
+    assert_nil assignment.youtube_video_id
+  end
+
+  test "has_summary_video? returns true when summary_video is attached" do
+    assignment = assignments(:one)
+    assignment.summary_video.attach(io: File.open(Rails.root.join("test/fixtures/files/test_video.mp4")), filename: "test_video.mp4", content_type: "video/mp4")
+    assert assignment.has_summary_video?
+  end
+
+  test "has_summary_video? returns true when summary_video_url is present" do
+    assignment = assignments(:one)
+    assignment.summary_video_url = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+    assert assignment.has_summary_video?
+  end
+
+  test "has_summary_video? returns false when neither video nor URL is present" do
+    assignment = assignments(:one)
+    assignment.summary_video_url = nil
+    assert_not assignment.has_summary_video?
+  end
 end

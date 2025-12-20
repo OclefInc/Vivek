@@ -5,7 +5,7 @@
         <%= video_tag @project.summary_video, id: "lesson-video", style: "width: 100%; height: 100%; object-fit: contain;", controls: false, preload: "metadata", data: { video_poster_target: "video", video_player_target: "video", action: "click->video-player#togglePlay" } %>
         <div data-video-poster-target="overlay" class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none bg-black">
           <h2 class="text-white text-3xl font-bold text-center px-8"><%= @project.project_name %></h2>
-          <p class="text-gray-300 text-xl mt-3"><%= @project.student.name %></p>
+          <p class="text-gray-300 text-xl mt-3"><%= @project.student&.name %></p>
           <% if @project.lessons.any? %>
             <p class="text-gray-400 text-lg mt-2">
               <%= @project.lessons.minimum(:date)&.strftime("%b %d, %Y") %> - <%= @project.lessons.maximum(:date)&.strftime("%b %d, %Y") %>
@@ -31,7 +31,7 @@
         </iframe>
         <div data-video-poster-target="overlay" data-action="click->video-poster#hideOverlay" class="absolute inset-0 flex flex-col items-center justify-center bg-black cursor-pointer">
           <h2 class="text-white text-3xl font-bold text-center px-8"><%= @project.project_name %></h2>
-          <p class="text-gray-300 text-xl mt-3"><%= @project.student.name %></p>
+          <p class="text-gray-300 text-xl mt-3"><%= @project.student&.name %></p>
           <% if @project.lessons.any? %>
             <p class="text-gray-400 text-lg mt-2">
               <%= @project.lessons.minimum(:date)&.strftime("%b %d, %Y") %> - <%= @project.lessons.maximum(:date)&.strftime("%b %d, %Y") %>
@@ -49,7 +49,7 @@
           <%= link_to project_episode_path(@project, first_lesson, {autoplay: true}), class: "block w-full relative bg-black group", style: "max-width: 640px; aspect-ratio: 4/3;" do %>
             <div class="absolute inset-0 flex flex-col items-center justify-center bg-black">
               <h2 class="text-white text-3xl font-bold text-center px-8"><%= @project.project_name %></h2>
-              <p class="text-gray-300 text-xl mt-3"><%= @project.student.name %></p>
+              <p class="text-gray-300 text-xl mt-3"><%= @project.student&.name %></p>
               <% if @project.lessons.any? %>
                 <p class="text-gray-400 text-lg mt-2">
                   <%= @project.lessons.minimum(:date)&.strftime("%b %d, %Y") %> - <%= @project.lessons.maximum(:date)&.strftime("%b %d, %Y") %>

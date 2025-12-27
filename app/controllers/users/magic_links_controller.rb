@@ -2,7 +2,7 @@ class Users::MagicLinksController < ApplicationController
   def create
     @user = User.find_by(email: params[:email]&.downcase&.strip)
 
-    if @user && !@user.oauth_user?
+    if @user && (!@user.oauth_user? || Rails.env.development?)
       @user.generate_magic_link_token!
       if Rails.env.development?
         magic_link = users_magic_link_url(token: @user.magic_link_token)

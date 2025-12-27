@@ -32,6 +32,27 @@ class Users::RegistrationsControllerTest < ActionDispatch::IntegrationTest
     assert_not_nil user.encrypted_password
   end
 
+  test "should create user and show magic link in development" do
+    Rails.env.stubs(:development?).returns(true)
+
+    assert_difference("User.count") do
+      assert_emails 0 do
+        post user_registration_path, params: {
+          user: {
+            email: "devuser@example.com",
+            name: "Dev User"
+          }
+        }
+      end
+    end
+
+    assert_redirected_to new_user_session_path
+    user = User.last
+    magic_link = users_magic_link_url(token: user.magic_link_token)
+    expected_flash = "Development Mode: Click here to login: <a href='#{magic_link}' class='underline text-blue-600'>#{magic_link}</a>"
+    assert_equal expected_flash, flash[:notice]
+  end
+
   test "should create user with avatar" do
     assert_difference("User.count") do
       post user_registration_path, params: {

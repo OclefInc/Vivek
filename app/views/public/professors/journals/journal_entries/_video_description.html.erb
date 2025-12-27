@@ -1,0 +1,34 @@
+<div id="<%= dom_id @journal_entry %>" class="" style="max-width: 640px; ">
+  <div style="aspect-ratio: 4/3;">
+    <% if @journal_entry.entry_video.attached? %>
+      <div class=" w-full relative bg-black group" style="max-width: 640px; aspect-ratio: 4/3;" data-controller="video-poster video-player">
+        <%= video_tag @journal_entry.entry_video, id: "journal-entry-video", style: "width: 100%; height: 100%; object-fit: contain;", controls: false, autoplay: true, preload: "metadata", data: {
+              video_poster_target: "video",
+              video_player_target: "video",
+              action: "click->video-player#togglePlay",
+              controller: "video-autoplay",
+              video_autoplay_next_url_value: (@journal_entry.next_entry ? professor_journal_journal_entry_path(@teacher, @journal, @journal_entry.next_entry) : nil),
+              video_autoplay_next_name_value: @journal_entry.next_entry&.name,
+              video_autoplay_next_date_value: @journal_entry.next_entry&.date&.strftime("%B %d, %Y")
+            } %>
+        <div data-video-poster-target="overlay" class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none bg-black">
+          <h2 class="text-white text-3xl font-bold text-center px-8"><%= @journal_entry.name %></h2>
+          <p class="text-gray-400 text-xl mt-4"><%= @journal_entry.date&.strftime("%B %d, %Y") %></p>
+        </div>
+        <%= render 'shared/video_player_controls' %>
+      </div>
+    <% end %>
+  </div>
+  <div class="bg-gray-800 p-4 text-white">
+    <div class="flex justify-between  items-center gap-2">
+      <h3 class="text-lg font-semibold">Entry Notes</h3>
+    </div>
+    <div class="mt-4 prose prose-invert max-w-none">
+      <%= @journal_entry.description %>
+    </div>
+    <div class="mt-4 flex items-center justify-between">
+      <%= render 'shared/share_buttons' %>
+      <%= turbo_frame_tag "bookmark_button_#{dom_id(@journal_entry)}", src: button_public_bookmarks_path(bookmarkable_id: @journal_entry.id, bookmarkable_type: @journal_entry.class.name), class: "flex items-center" %>
+    </div>
+  </div>
+</div>

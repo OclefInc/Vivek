@@ -26,8 +26,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
     if resource.persisted?
       if resource.active_for_authentication?
         # Send magic link instead of signing in directly
-        resource.send_magic_link
-        flash[:notice] = "Welcome! Check your email for a magic link to login."
+        if Rails.env.development?
+          resource.generate_magic_link_token!
+          magic_link = users_magic_link_url(token: resource.magic_link_token)
+          flash[:notice] = "Development Mode: Click here to login: <a href='#{magic_link}' class='underline text-blue-600'>#{magic_link}</a>".html_safe
+        else
+          resource.send_magic_link
+          flash[:notice] = "Welcome! Check your email for a magic link to login."
+        end
         respond_with resource, location: new_user_session_path
       else
         set_flash_message! :notice, :"signed_up_but_#{resource.inactive_message}"

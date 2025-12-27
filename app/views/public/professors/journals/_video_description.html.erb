@@ -1,0 +1,43 @@
+<div  id="<%= dom_id @journal %>" class="w-full" style="max-width: 640px; ">
+  <div style="aspect-ratio: 4/3;">
+    <% if @journal.summary_video.attached? %>
+      <div class=" w-full relative bg-black group" style="max-width: 640px; aspect-ratio: 4/3;" data-controller="video-poster video-player">
+        <%= video_tag @journal.summary_video, id: "journal-video", style: "width: 100%; height: 100%; object-fit: contain;", controls: false, preload: "metadata", data: { video_poster_target: "video", video_player_target: "video", action: "click->video-player#togglePlay" } %>
+        <div data-video-poster-target="overlay" class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none bg-black">
+          <h2 class="text-white text-3xl font-bold text-center px-8"><%= @journal.name %></h2>
+          <p class="text-gray-300 text-xl mt-3"><%= @journal.user&.name %></p>
+          <% if @journal.journal_entries.any? %>
+            <p class="text-gray-400 text-lg mt-2">
+              <%= @journal.journal_entries.minimum(:date)&.strftime("%b %d, %Y") %> - <%= @journal.journal_entries.maximum(:date)&.strftime("%b %d, %Y") %>
+            </p>
+            <p class="text-gray-400 text-lg mt-1">
+              <%= @journal.journal_entries.count %> <%= 'Entry'.pluralize(@journal.journal_entries.count) %>
+            </p>
+          <% end %>
+        </div>
+        <%= render 'shared/video_player_controls' %>
+      </div>
+    <% else %>
+      <div class="lg:min-w-[640px] lg:max-w-[640px] w-full relative bg-black group" style=" aspect-ratio: 4/3;">
+        <% first_entry = @journal.journal_entries.order(:sort).first %>
+        <% if first_entry %>
+          <div class="absolute inset-0 flex flex-col items-center justify-center bg-black">
+            <h2 class="text-white text-3xl font-bold text-center px-8"><%= @journal.name %></h2>
+            <p class="text-gray-300 text-xl mt-3"><%= @journal.user&.name %></p>
+          </div>
+        <% else %>
+          <div class="absolute inset-0 flex flex-col items-center justify-center bg-black">
+            <h2 class="text-white text-3xl font-bold text-center px-8"><%= @journal.name %></h2>
+            <p class="text-gray-300 text-xl mt-3"><%= @journal.user&.name %></p>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+  <div class="bg-gray-800 text-white p-4">
+    <h3 class="text-lg font-semibold">About This Journal:</h3>
+    <div class="mt-2 prose prose-invert max-w-none">
+      <%= @journal.description %>
+    </div>
+  </div>
+</div>

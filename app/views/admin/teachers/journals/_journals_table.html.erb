@@ -5,7 +5,7 @@
     </tr>
   </thead>
   <tbody>
-    <% current_user.journals.sort_by(&:name).each do |journal| %>
+    <% (@teacher.journals || Journal.none).includes(:composition).sort_by { |j| j.name || '' }.each do |journal| %>
       <% cache journal do %>
         <tr>
           <td class="text-left py-2 border-b border-gray-300 dark:border-gray-600 dark:text-gray-300">

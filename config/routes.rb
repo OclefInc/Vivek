@@ -68,6 +68,7 @@ Rails.application.routes.draw do
         resources :chapters, only: [ :show ], controller: "professors/tutorials/chapters"
       end
       resources :journals, controller: "professors/journals" do
+        resources :journal_entries, controller: "professors/journals/journal_entries"
         resource :subscription, only: [ :create, :destroy ], controller: "subscriptions"
       end
     end

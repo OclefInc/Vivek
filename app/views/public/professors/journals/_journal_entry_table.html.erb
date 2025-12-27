@@ -1,0 +1,29 @@
+<table class="w-full flex-auto bg-blue-50 text-slate-700 dark:text-slate-300 shadow dark:bg-gray-800 bg-opacity-50">
+  <thead class="sticky top-0 bg-indigo-100 dark:bg-gray-800 z-10">
+    <tr>
+      <th class="pl-2 text-left font-semibold md:px-3 py-2 border-b border-sky-200 dark:border-gray-600 text-sky-800 dark:text-teal-200">Entry</th>
+      <th class="text-left font-semibold md:px-3 py-2 border-b border-sky-200 dark:border-gray-600 text-sky-800 dark:text-teal-200 whitespace-nowrap">
+        <span class="inline-flex items-center gap-1">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 text-gray-500 dark:text-gray-400">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+          </svg>Date
+        </span>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <% journal.journal_entries.order(:sort).each do |entry| %>
+      <% is_current = journal_entry.try(:id) == entry.id %>
+      <tr class="<%= is_current ? '' : 'hover:bg-sky-50 dark:hover:bg-zinc-700/50' %> transition-colors">
+        <td class="m-2 <%= is_current ? 'bg-yellow-50 dark:bg-teal-900' : '' %> text-left px-3 py-2 md:px-3 py-2 border-b border-sky-200 dark:border-zinc-600 dark:text-indigo-400 <%= is_current ? '' : 'hover:indigo-300' %>">
+          <span class="inline-flex items-center gap-2">
+            <%= link_to entry.name, professor_journal_journal_entry_path(journal.user.teacher, journal, entry), class: 'text-indigo-600 hover:text-indigo-500 dark:text-indigo-400 dark:hover:text-indigo-300' %>
+          </span>
+        </td>
+        <td class="m-2 <%= is_current ? 'bg-yellow-50 dark:bg-teal-900' : '' %> text-left text-sm px-3 py-2 md:px-3 py-2 border-b border-sky-200 dark:border-zinc-600 text-slate-700 dark:text-slate-300 whitespace-nowrap">
+          <%= entry.date&.strftime('%b %d, %Y') || 'No date' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

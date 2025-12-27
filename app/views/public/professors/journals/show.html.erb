@@ -1,0 +1,26 @@
+<% content_for :title, "The Vivek Project: #{@journal.name} (#{@journal.journal_entries.count} Entries)" %>
+<% content_for :meta_description, @journal.description.to_plain_text %>
+<% if @journal.video_thumbnail.attached? %>
+  <% content_for :meta_image, rails_representation_url(@journal.video_thumbnail.variant(resize_to_limit: [1200, 630]), only_path: false) %>
+<% elsif @journal.summary_video.attached? && @journal.summary_video.previewable? %>
+  <% content_for :meta_image, rails_representation_url(@journal.summary_video.preview(resize_to_limit: [1200, 630]), only_path: false) %>
+<% elsif @journal.user.avatar.attached? %>
+  <% content_for :meta_image, rails_representation_url(@journal.user.cropped_avatar(size: 600), only_path: false) %>
+<% end %>
+<div class="flex flex-col items-center max-w-7xl mx-auto ">
+  <%= render 'header', journal: @journal, journal_entry: nil %>
+  <div class="xl:flex xl:gap-8 py-4">
+    <div class="xl:min-w-[640px] xl:max-w-[640px] md:flex-1 md:basis-1/2 mb-4 xl:mb-0">
+      <div class="rounded-lg overflow-hidden shadow-sm">
+        <%= render 'video_description' %>
+      </div>
+      <!-- Comments Section -->
+      <div class="w-full mt-8">
+        <turbo-frame id="comments_module" src="<%= comments_path(annotation_type: @journal.class.name, annotation_id: @journal.id) %>"></turbo-frame>
+      </div>
+    </div>
+    <div class="hidden xl:block w-full xl:flex-1 xl:basis-1/2 xl:self-start overflow-y-auto rounded-lg overflow-hidden shadow-sm">
+      <%= render 'journal_entry_table', journal_entry: nil, journal: @journal %>
+    </div>
+  </div>
+</div>

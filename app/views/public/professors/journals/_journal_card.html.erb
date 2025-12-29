@@ -8,8 +8,8 @@
            video_to_show = nil
            if journal.summary_video.attached?
              video_to_show = journal.summary_video
-           elsif (last_entry = journal.journal_entries.order(:sort).last) && last_entry.video_thumbnail.attached?
-             video_to_show = last_entry.video_thumbnail
+           elsif (last_entry = journal.journal_entries.order(:sort).last) && last_entry.entry_video.attached?
+             video_to_show = last_entry.entry_video
            end
         %>
         <% if video_to_show %>

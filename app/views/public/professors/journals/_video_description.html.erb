@@ -21,14 +21,31 @@
       <div class="lg:min-w-[640px] lg:max-w-[640px] w-full relative bg-black group" style=" aspect-ratio: 4/3;">
         <% first_entry = @journal.journal_entries.order(:sort).first %>
         <% if first_entry %>
-          <div class="absolute inset-0 flex flex-col items-center justify-center bg-black">
-            <h2 class="text-white text-3xl font-bold text-center px-8"><%= @journal.name %></h2>
-            <p class="text-gray-300 text-xl mt-3"><%= @journal.user&.name %></p>
-          </div>
+          <%= link_to professor_journal_journal_entry_path(@teacher, @journal, first_entry, {autoplay: true}), class: "block w-full relative bg-black group", style: "max-width: 640px; aspect-ratio: 4/3;" do %>
+            <div class="absolute inset-0 flex flex-col items-center justify-center bg-black">
+              <h2 class="text-white text-3xl font-bold text-center px-8"><%= @journal.name %></h2>
+              <p class="text-gray-300 text-xl mt-3"><%= @journal.user&.name %></p>
+              <% if @journal.journal_entries.any? %>
+                <p class="text-gray-400 text-lg mt-2">
+                  <%= @journal.journal_entries.minimum(:date)&.strftime("%b %d, %Y") %> - <%= @journal.journal_entries.maximum(:date)&.strftime("%b %d, %Y") %>
+                </p>
+                <p class="text-gray-400 text-lg mt-1">
+                  <%= @journal.journal_entries.count %> <%= 'Entry'.pluralize(@journal.journal_entries.count) %>
+                </p>
+              <% end %>
+              <div class="mt-8 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <span class="px-6 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-full text-white font-medium flex items-center gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+                    <path fill-rule="evenodd" d="M4.5 5.653c0-1.426 1.529-2.33 2.779-1.643l11.54 6.348c1.295.712 1.295 2.573 0 3.285L7.28 19.991c-1.25.687-2.779-.217-2.779-1.643V5.653z" clip-rule="evenodd" />
+                  </svg>
+                  Play First Entry
+                </span>
+              </div>
+            </div>
+          <% end %>
         <% else %>
-          <div class="absolute inset-0 flex flex-col items-center justify-center bg-black">
-            <h2 class="text-white text-3xl font-bold text-center px-8"><%= @journal.name %></h2>
-            <p class="text-gray-300 text-xl mt-3"><%= @journal.user&.name %></p>
+          <div class="bg-gray-200 dark:bg-zinc-700 p-2 rounded-2xl flex items-center justify-center w-full" style="aspect-ratio: 4/3;">
+            <span class="text-gray-500 dark:text-gray-400 text-lg">No summary video available</span>
           </div>
         <% end %>
       </div>

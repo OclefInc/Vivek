@@ -4,12 +4,15 @@ class Public::Professors::JournalsController < ApplicationController
   def index
     @teacher = Teacher.find(params[:professor_id])
     redirect_to root_path, alert: "This profile is not available." unless @teacher.show_on_contributors
-
-    if @teacher.journals.present?
-      @journals = @teacher.journals.where.not(summary_video_attachment: { id: nil }).joins(:summary_video_attachment)
-    else
-      @journals = []
-    end
+    @journals = @teacher.journals.joins(:journal_entries).distinct
+    # if @teacher.journals.present?
+    #   # @journals = @teacher.journals.where.not(summary_video_attachment: { id: nil }).joins(:summary_video_attachment)
+    #   # select journals that have at least one journal entry
+    #   @journals = @teacher.journals
+    #   # .joins(:journal_entries).distinct
+    # else
+    #   @journals = []
+    # end
   end
 
   def show

@@ -46,10 +46,12 @@
         </div>
         <div class="p-6 overflow-x-auto">
           <div class="flex gap-6 pb-4" style="min-width: min-content;">
-            <% (@teacher.journals.joins(:journal_entries).distinct || []).uniq.each do |journal| %>
-              <div class="flex-none w-80">
-                <%= render partial: '/public/professors/journals/journal_card', locals: { journal: journal } %>
-              </div>
+            <% if @teacher.journals %>
+              <% (@teacher.journals.joins(:journal_entries).distinct || []).uniq.each do |journal| %>
+                <div class="flex-none w-80">
+                  <%= render partial: '/public/professors/journals/journal_card', locals: { journal: journal } %>
+                </div>
+              <% end %>
             <% end %>
           </div>
         </div>

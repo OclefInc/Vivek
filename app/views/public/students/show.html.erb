@@ -16,7 +16,7 @@
         <div class="px-4 md:px-8 relative">
           <div class="absolute left-8 md:left-1/2 transform -translate-x-1/2 h-full border-l-2 border-gray-200 dark:border-gray-700"></div>
           <ol class="relative">
-            <% @student.assignments.includes(:lessons).sort_by { |a| a.lessons.minimum(:date) || Date.new(1900, 1, 1) }.each_with_index do |assignment, index| %>
+            <% @student.assignments.includes(:lessons).sort_by { |a| a.lessons.minimum(:date) || Date.today }.each_with_index do |assignment, index| %>
               <li class="mb-10 flex flex-col md:flex-row items-center justify-between w-full relative">
                 <div class="absolute left-8 md:left-1/2 transform -translate-x-1/2 flex items-center justify-center z-10 peer group">
                   <%= link_to project_path(assignment), class: "flex items-center justify-center w-8 h-8 bg-blue-100 rounded-full ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900 hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors" do %>

@@ -9,14 +9,35 @@
         <%= render @student %>
       </div>
       <!-- Projects Section -->
-      <div class="bg-gradient-to-r from-slate-50 to-blue-50 dark:from-gray-800 dark:to-gray-900  rounded  overflow-hidden py-4">
+      <div class="bg-gradient-to-r from-slate-50 to-blue-50 dark:from-gray-800 dark:to-gray-900 rounded overflow-hidden py-4">
         <div class="px-6 pb-3">
-          <h1 class="text-2xl text-slate-900 dark:text-teal-200 font-semibold">Projects</h1>
+          <h1 class="text-2xl text-slate-900 dark:text-teal-200 font-semibold text-center">Timeline</h1>
         </div>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-6 w-full px-1 md:px-4">
-          <% @student.assignments.includes(:lessons).sort_by { |a| a.lessons.minimum(:date) || Date.new(1900, 1, 1) }.reverse.each do |assignment| %>
-            <%= render partial: 'project_card', locals: { project: assignment } %>
-          <% end %>
+        <div class="px-4 md:px-8 relative">
+          <div class="absolute left-8 md:left-1/2 transform -translate-x-1/2 h-full border-l-2 border-gray-200 dark:border-gray-700"></div>
+          <ol class="relative">
+            <% @student.assignments.includes(:lessons).sort_by { |a| a.lessons.minimum(:date) || Date.new(1900, 1, 1) }.each_with_index do |assignment, index| %>
+              <li class="mb-10 flex flex-col md:flex-row items-center justify-between w-full relative">
+                <%= link_to project_path(assignment), class: "absolute left-8 md:left-1/2 transform -translate-x-1/2 flex items-center justify-center w-8 h-8 bg-blue-100 rounded-full ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900 z-10 peer hover:bg-blue-200 dark:hover:bg-blue-800 transition-colors" do %>
+                  <svg aria-hidden="true" class="w-4 h-4 text-blue-800 dark:text-blue-300" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path></svg>
+                <% end %>
+                <div class="w-full pl-16 md:pl-0 md:w-5/12 <%= index.even? ? 'md:pr-8 md:text-right md:mr-auto' : 'md:pl-8 md:text-left md:ml-auto' %> peer-hover:[&_a]:text-blue-600 dark:peer-hover:[&_a]:text-blue-400 transition-colors">
+                  <time class="block mb-2 text-sm font-normal leading-none text-gray-400 dark:text-gray-500">
+                    <% assignment_date = assignment.lessons.minimum(:date) || Date.new(1900, 1, 1) %>
+                    <%= assignment_date.strftime("%B %Y") %>
+                    <% if assignment.student_age.present? %>
+                      <span class="ml-1">
+                        (Age: <%= assignment.student_age %>)
+                      </span>
+                    <% end %>
+                  </time>
+                  <div class="<%= index.even? ? 'md:ml-auto' : '' %>">
+                    <%= link_to assignment.project_name, project_path(assignment), class: "text-lg font-semibold text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-colors" %>
+                  </div>
+                </div>
+              </li>
+            <% end %>
+          </ol>
         </div>
       </div>
     </div>

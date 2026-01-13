@@ -10,6 +10,7 @@
 #  sort                     :integer          default(1000)
 #  video_end_time           :integer
 #  video_start_time         :integer
+#  video_url                :string
 #  created_at               :datetime         not null
 #  updated_at               :datetime         not null
 #  assignment_id            :integer
@@ -39,6 +40,7 @@ class Lesson < ApplicationRecord
   before_create :assign_default_teacher
 
   validates_presence_of :name
+  validates :video_url, format: { with: /\A(https?:\/\/)?(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)[\w-]+/i, message: "must be a valid YouTube URL" }, allow_blank: true
   # validates_presence_of :lesson_video
   # validate :lesson_video_is_video_type
 
@@ -202,7 +204,7 @@ class Lesson < ApplicationRecord
     private
       def assign_default_name
         # set name to date if name is blank
-        self.name = Date.today.to_s if name.blank? && lesson_video.attached?
+        self.name = Date.today.to_s if name.blank? && (lesson_video.attached? || video_url.present?)
       end
 
       def assign_sort_position

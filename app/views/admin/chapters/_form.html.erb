@@ -13,11 +13,13 @@
     <div class="mb-3">
       <div class="flex justify-between items-center mb-1">
         <%= form.label :start_time, "Start Time (seconds)", class: "block text-sm" %>
-        <button type="button"
-                  data-action="click->video-chapters#captureCurrentTime"
-          class="px-2 py-1 bg-blue-600 hover:bg-blue-500 rounded text-xs">
-          Use Current Time
-        </button>
+        <% if lesson.lesson_video.attached? %>
+          <button type="button"
+                    data-action="click->video-chapters#captureCurrentTime"
+            class="px-2 py-1 bg-blue-600 hover:bg-blue-500 rounded text-xs">
+            Use Current Time
+          </button>
+        <% end %>
       </div>
       <%= form.number_field :start_time,
             class: "w-full px-3 py-2 bg-gray-800 border border-gray-600 rounded-lg text-white",

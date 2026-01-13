@@ -18,33 +18,56 @@
         </div>
         <%= render 'shared/video_player_controls' %>
       </div>
+    <% elsif @episode.video_url.present? %>
+      <%
+        youtube_id = @episode.video_url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/)&.[](1)
+        if youtube_id
+          embed_url = "https://www.youtube.com/embed/#{youtube_id}"
+          params = []
+          params << "start=#{@episode.video_start_time}" if @episode.video_start_time.present?
+          params << "end=#{@episode.video_end_time}" if @episode.video_end_time.present?
+          embed_url += "?#{params.join('&')}" if params.any?
+      %>
+      <div class="w-full relative bg-black group" style="max-width: 640px; aspect-ratio: 4/3;">
+        <iframe
+            width="100%"
+            height="100%"
+            src="<%= embed_url %>"
+            title="<%= @episode.name %>"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+            class="w-full h-full">
+        </iframe>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+<div class="bg-gray-800 p-4 text-white" data-controller="pdf-toggle">
+  <%# Tailwind classes used in JS controller %>
+  <div class="hidden text-blue-400 hover:text-blue-300 underline font-medium transition-colors"></div>
+  <div class="flex justify-between  items-center gap-2">
+    <h3 class="text-lg font-semibold">Lesson Notes and Music</h3>
+    <% if @episode.teacher.present? %>
+      <div class="flex items-center gap-2">
+        <span>Teacher:</span>
+        <% if @episode.teacher.display_avatar(size: 24) %>
+          <%= link_to professor_path(@episode.teacher) , title: "#{@episode.teacher.name}" do %>
+            <%= image_tag @episode.teacher.display_avatar(size: 24), class: "w-6 h-6 rounded-full object-cover border border-gray-200 dark:border-gray-700" %>
+          <% end %>
+        <% else %>
+          <%= link_to @episode.teacher.name, professor_path(@episode.teacher), class:'text-indigo-300 hover:text-indigo-200' %>
+        <% end %>
+      </div>
     <% end %>
   </div>
-  <div class="bg-gray-800 p-4 text-white" data-controller="pdf-toggle">
-    <%# Tailwind classes used in JS controller %>
-    <div class="hidden text-blue-400 hover:text-blue-300 underline font-medium transition-colors"></div>
-    <div class="flex justify-between  items-center gap-2">
-      <h3 class="text-lg font-semibold">Lesson Notes and Music</h3>
-      <% if @episode.teacher.present? %>
-        <div class="flex items-center gap-2">
-          <span>Teacher:</span>
-          <% if @episode.teacher.display_avatar(size: 24) %>
-            <%= link_to professor_path(@episode.teacher) , title: "#{@episode.teacher.name}" do %>
-              <%= image_tag @episode.teacher.display_avatar(size: 24), class: "w-6 h-6 rounded-full object-cover border border-gray-200 dark:border-gray-700" %>
-            <% end %>
-          <% else %>
-            <%= link_to @episode.teacher.name, professor_path(@episode.teacher), class:'text-indigo-300 hover:text-indigo-200' %>
-          <% end %>
-        </div>
-      <% end %>
-    </div>
-    <div class="mt-4">
-      <%= render 'chapter_list', episode: @episode %>
-    </div>
-    <%= @episode.description %>
-    <div class="mt-4 flex items-center justify-between">
-      <%= render 'shared/share_buttons' %>
-      <%= turbo_frame_tag "bookmark_button_#{dom_id(@episode)}", src: button_public_bookmarks_path(bookmarkable_id: @episode.id, bookmarkable_type: @episode.class.name), class: "flex items-center" %>
-    </div>
+  <div class="mt-4">
+    <%= render 'chapter_list', episode: @episode %>
   </div>
+  <%= @episode.description %>
+  <div class="mt-4 flex items-center justify-between">
+    <%= render 'shared/share_buttons' %>
+    <%= turbo_frame_tag "bookmark_button_#{dom_id(@episode)}", src: button_public_bookmarks_path(bookmarkable_id: @episode.id, bookmarkable_type: @episode.class.name), class: "flex items-center" %>
+  </div>
+</div>
 </div>

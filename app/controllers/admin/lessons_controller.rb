@@ -78,7 +78,7 @@ class Admin::LessonsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def lesson_params
-      params.expect(lesson: [ :date, :lesson_video, :name, :assignment_id, :description, :teacher_name, :video_start_time, :video_end_time, :description_copyrighted, :description_purchase_url, skill_ids: [], skill_names: [] ])
+      params.expect(lesson: [ :date, :lesson_video, :name, :assignment_id, :description, :teacher_name, :video_start_time, :video_end_time, :description_copyrighted, :description_purchase_url, :video_url, skill_ids: [], skill_names: [] ])
     end
 
     # Find or create a record by name, skipping validation

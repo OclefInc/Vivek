@@ -86,6 +86,10 @@ Rails.application.routes.draw do
     end
     resources :likes, only: [ :create, :destroy ]
     get "subscriptions", to: "subscriptions#index", as: :subscriptions
+
+    # Secure upload routes
+    get "/uploads/:token", to: "assignment_uploads#new", as: :new_assignment_upload
+    post "/uploads/:token", to: "assignment_uploads#create", as: :assignment_upload
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

@@ -17,6 +17,16 @@
       </button>
       <div data-dropdown-target="menu" class="hidden absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-gray-800 ring-1 ring-black dark:ring-gray-700 ring-opacity-5 z-10">
         <div class="py-1">
+          <%= link_to new_assignment_upload_url(token: @assignment.signed_id), class: "block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700", target: "_blank" do %>
+            Open Upload Page
+          <% end %>
+          <button type="button"
+                  class="block w-full text-left px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                  data-controller="clipboard"
+                  data-clipboard-content-value="<%= new_assignment_upload_url(token: @assignment.signed_id) %>"
+                  data-action="clipboard#copy">
+            Copy Upload Link
+          </button>
           <%= link_to edit_assignment_path(@assignment), class: "block px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700" do %>
             Edit Project
           <% end %>

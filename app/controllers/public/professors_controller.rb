@@ -4,7 +4,7 @@ class Public::ProfessorsController < ApplicationController
     @teachers = Teacher.where(show_on_contributors: true)
   end
   def show
-    @teacher = Teacher.find(params.expect(:id))
-    redirect_to root_path, alert: "This profile is not available." unless @teacher.show_on_contributors
+    @teacher = Teacher.find_by(id: params[:id])
+    redirect_to root_path, alert: "This profile is not available." unless @teacher && @teacher.show_on_contributors
   end
 end

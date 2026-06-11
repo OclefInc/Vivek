@@ -83,7 +83,7 @@ class Teacher < ApplicationRecord
       tutorials.update_all(updated_at: Time.current)
       lessons.update_all(updated_at: Time.current)
       # Touch all assignments where this teacher taught a lesson to bust cache
-      assignments.distinct.update_all(updated_at: Time.current)
+      assignments.update_all(updated_at: Time.current)
     end
 
     def self.reset_all_counters

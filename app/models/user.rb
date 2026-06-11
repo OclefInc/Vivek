@@ -180,7 +180,7 @@ class User < ApplicationRecord
       # Touch teacher's assignments if user has a teacher profile
       if teacher.present?
         teacher.touch
-        teacher.assignments.distinct.update_all(updated_at: Time.current)
+        teacher.assignments.update_all(updated_at: Time.current)
       end
     end
 end

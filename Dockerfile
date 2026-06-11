@@ -30,7 +30,7 @@ FROM base AS build
 
 # Install packages needed to build gems
 RUN apt-get update -qq && \
-    apt-get install --no-install-recommends -y build-essential git libpq-dev libyaml-dev pkg-config && \
+    apt-get install --no-install-recommends -y build-essential git libcurl4-openssl-dev libpq-dev libyaml-dev pkg-config && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Install application gems
@@ -45,8 +45,14 @@ COPY . .
 # Precompile bootsnap code for faster boot times
 RUN bundle exec bootsnap precompile app/ lib/
 
-# Precompiling assets for production without requiring secret RAILS_MASTER_KEY
-RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
+# Precompiling assets for production without requiring secret RAILS_MASTER_KEY.
+# Dummy AWS credentials let the S3 storage service initialize during build
+# without reaching the EC2 instance metadata endpoint (real values are injected
+# at runtime via Heroku config vars).
+RUN SECRET_KEY_BASE_DUMMY=1 \
+    AWS_ACCESS_KEY_ID=dummy \
+    AWS_SECRET_KEY=dummy \
+    ./bin/rails assets:precompile
 
 
 

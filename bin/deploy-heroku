@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+# Build the Docker image locally for Heroku's linux/amd64 runtime and deploy it
+# to the Heroku Container Registry.
+#
+# This is required when building on Apple Silicon (arm64): Heroku dynos run on
+# linux/amd64, so images must be cross-built or they will crash on boot with an
+# "exec format error".
+#
+# Process types (web/worker/release) reuse the same base image and only differ
+# by their CMD, so the heavy build runs once.
+#
+# Usage: bin/deploy-heroku [app-name]   (defaults to "vivek")
+set -euo pipefail
+
+APP="${1:-vivek}"
+REGISTRY="registry.heroku.com/${APP}"
+PLATFORM="linux/amd64"
+BASE_IMAGE="${APP}-app:latest"
+
+echo "==> Logging in to the Heroku Container Registry"
+heroku container:login
+
+echo "==> Building base image for ${PLATFORM} (this is the slow step)"
+docker buildx build --platform "${PLATFORM}" --load -t "${BASE_IMAGE}" .
+
+build_process() {
+  local process="$1"
+  local cmd="$2"
+  echo "==> Building '${process}' image"
+  docker buildx build --platform "${PLATFORM}" --load \
+    -t "${REGISTRY}/${process}" - <<EOF
+FROM ${BASE_IMAGE}
+CMD ${cmd}
+EOF
+}
+
+build_process web     '["bundle", "exec", "puma", "-C", "config/puma.rb"]'
+build_process worker  '["bundle", "exec", "rails", "solid_queue:start"]'
+build_process release '["bundle", "exec", "rails", "db:migrate"]'
+
+echo "==> Pushing images to ${REGISTRY}"
+docker push "${REGISTRY}/web"
+docker push "${REGISTRY}/worker"
+docker push "${REGISTRY}/release"
+
+echo "==> Releasing web, worker and release process types"
+heroku container:release web worker release -a "${APP}"
+
+echo "==> Done. Current formation:"
+heroku ps -a "${APP}"

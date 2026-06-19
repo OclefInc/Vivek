@@ -18,7 +18,11 @@ Rails.application.routes.draw do
   end
 
   scope path: "/admin", module: "admin" do
-    resources :accounts
+    resources :accounts do
+      member do
+        patch :update_employee
+      end
+    end
     resources :comments, as: :admin_comments
     resources :skill_categories, only: [ :index, :show ]
     resources :compositions

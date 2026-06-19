@@ -34,4 +34,24 @@ class Admin::AccountsControllerTest < ActionDispatch::IntegrationTest
     get accounts_url
     assert_redirected_to root_path
   end
+
+  test "should update employee status" do
+    @account.update!(is_employee: false)
+
+    patch update_employee_account_url(@account), params: { user: { is_employee: true } }
+
+    assert_redirected_to account_path(@account)
+    assert_equal "Employee status updated.", flash[:notice]
+    assert @account.reload.is_employee
+  end
+
+  test "should not allow removing own employee access" do
+    @user.update!(is_employee: true)
+
+    patch update_employee_account_url(@user), params: { user: { is_employee: false } }
+
+    assert_redirected_to account_path(@user)
+    assert_equal "You can't remove your own employee access.", flash[:alert]
+    assert @user.reload.is_employee
+  end
 end

@@ -13,6 +13,7 @@
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
 #  failed_attempts        :integer          default(0), not null
+#  is_employee            :boolean          default(FALSE), not null
 #  locked_at              :datetime
 #  magic_link_sent_at     :datetime
 #  magic_link_token       :string
@@ -123,7 +124,7 @@ class User < ApplicationRecord
   end
 
   def is_employee?
-    email.ends_with?("oclef.com")
+    self[:is_employee]
   end
   def is_student?
     Student.where(user_id: self.id).any?

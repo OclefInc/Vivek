@@ -1,2 +1,27 @@
 [tools]
 ruby = "4.0.5"
+
+[env]
+_.file = ".env"
+BUNDLE_JOBS = "4"
+BUNDLE_RETRY = "3"
+
+[tasks.setup]
+description = "Install gems and prepare the database"
+run = "bin/setup --skip-server"
+
+[tasks.dev]
+description = "Run Rails + Tailwind dev processes"
+run = "bin/dev"
+
+[tasks.test]
+description = "Run test suite"
+run = "bin/rails test"
+
+[tasks.lint]
+description = "Run RuboCop"
+run = "bundle exec rubocop"
+
+[tasks.console]
+description = "Open Rails console"
+run = "bin/rails console"

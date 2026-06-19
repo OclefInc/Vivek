@@ -21,6 +21,23 @@ A free, open-source platform for documenting piano pedagogy on video. Provided b
 - Yarn (for managing JS dependencies)
 - ImageMagick (for ActiveStorage variants)
 
+### Using mise (recommended)
+This repository includes [mise](https://mise.jdx.dev/) configuration in `mise.toml`.
+
+```bash
+mise install
+mise run setup
+mise run dev
+```
+
+Useful tasks:
+
+```bash
+mise run test
+mise run lint
+mise run console
+```
+
 ### 1. Clone the repository
 ```bash
 git clone https://github.com/OclefInc/vivek.git

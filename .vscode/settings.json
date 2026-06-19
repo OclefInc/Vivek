@@ -2,6 +2,9 @@
     "files.associations": {
         "*.tt": "erb"
     },
+    "rubyLsp.rubyVersionManager": {
+        "identifier": "mise"
+    },
     "rubyLsp.enabledFeatures": {
         "codeActions": true,
         "diagnostics": true,
@@ -21,15 +24,14 @@
         "workspaceSymbol": true,
         "references": true
     },
+    "rubocop.mode": "enableViaGemfile",
+    "rubocop.bundleCommandPath": "/Users/phongle/.local/share/mise/shims/bundle",
+    "rubocop.commandPath": "/Users/phongle/.local/share/mise/shims/rubocop",
     "editor.minimap.enabled": true,
     "[ruby]": {
         "editor.defaultFormatter": "Shopify.ruby-lsp",
         "editor.formatOnSave": true,
         "editor.tabSize": 2,
         "editor.insertSpaces": true
-        },
-    "ruby.format": "rubocop",
-    "ruby.lint": {
-        "rubocop": true
     }
 }

@@ -28,6 +28,9 @@
     "rubocop.bundleCommandPath": "/Users/phongle/.local/share/mise/shims/bundle",
     "rubocop.commandPath": "/Users/phongle/.local/share/mise/shims/rubocop",
     "editor.minimap.enabled": true,
+    "terminal.integrated.env.osx": {
+        "PATH": "${env:HOME}/.local/share/mise/shims:${env:PATH}"
+    },
     "[ruby]": {
         "editor.defaultFormatter": "Shopify.ruby-lsp",
         "editor.formatOnSave": true,

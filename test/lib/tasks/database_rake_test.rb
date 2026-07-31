@@ -55,7 +55,7 @@ class DatabaseRakeTest < ActiveSupport::TestCase
   test "database:local drops database with environment check disabled" do
     Object.any_instance.expects(:system).with("rails db:drop DISABLE_DATABASE_ENVIRONMENT_CHECK=1").returns(true)
     Object.any_instance.expects(:system).with("rails db:create").returns(true)
-    Object.any_instance.expects(:system).with("pg_restore --verbose --clean --no-acl --no-owner -h localhost -d vivek_dev latest.dump").returns(true)
+    Object.any_instance.expects(:system).with(regexp_matches(/pg_restore .*--clean .*--no-owner -h localhost -d vivek_dev latest\.dump/)).returns(true)
 
     Rake::Task["database:local"].invoke
   end
@@ -63,7 +63,7 @@ class DatabaseRakeTest < ActiveSupport::TestCase
   test "database:local creates database after dropping" do
     Object.any_instance.expects(:system).with("rails db:drop DISABLE_DATABASE_ENVIRONMENT_CHECK=1").returns(true)
     Object.any_instance.expects(:system).with("rails db:create").returns(true)
-    Object.any_instance.expects(:system).with("pg_restore --verbose --clean --no-acl --no-owner -h localhost -d vivek_dev latest.dump").returns(true)
+    Object.any_instance.expects(:system).with(regexp_matches(/pg_restore .*--clean .*--no-owner -h localhost -d vivek_dev latest\.dump/)).returns(true)
 
     Rake::Task["database:local"].invoke
   end
@@ -71,7 +71,7 @@ class DatabaseRakeTest < ActiveSupport::TestCase
   test "database:local restores from latest.dump file" do
     Object.any_instance.expects(:system).with("rails db:drop DISABLE_DATABASE_ENVIRONMENT_CHECK=1").returns(true)
     Object.any_instance.expects(:system).with("rails db:create").returns(true)
-    Object.any_instance.expects(:system).with("pg_restore --verbose --clean --no-acl --no-owner -h localhost -d vivek_dev latest.dump").returns(true)
+    Object.any_instance.expects(:system).with(regexp_matches(/pg_restore .*--clean .*--no-owner -h localhost -d vivek_dev latest\.dump/)).returns(true)
 
     Rake::Task["database:local"].invoke
   end

@@ -1,5 +1,31 @@
   <%= turbo_frame_tag "assignment_#{assignment.id}_summary_video" do %>
-  <% if assignment.summary_video.attached? %>
+  <% if assignment.summary_video_url.present? %>
+    <div class="bg-black flex items-center justify-center aspect-[4/3] xl:aspect-auto xl:max-w-[640px] xl:h-[480px] relative group"
+           data-controller="video-poster">
+      <iframe
+        width="100%"
+        height="100%"
+        src="https://www.youtube.com/embed/<%= assignment.youtube_video_id %>"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+        class="w-full h-full"
+        data-video-poster-target="video">
+      </iframe>
+      <div data-video-poster-target="overlay" data-action="click->video-poster#hideOverlay" class="absolute inset-0 flex flex-col items-center justify-center bg-black cursor-pointer">
+        <h2 class="text-white text-3xl font-bold text-center px-8"><%= assignment.project_name %></h2>
+        <p class="text-gray-300 text-xl mt-3"><%= assignment.student&.name %></p>
+        <% if assignment.lessons.any? %>
+          <p class="text-gray-400 text-lg mt-2">
+            <%= assignment.lessons.minimum(:date)&.strftime("%b %d, %Y") %> - <%= assignment.lessons.maximum(:date)&.strftime("%b %d, %Y") %>
+          </p>
+          <p class="text-gray-400 text-lg mt-1">
+            <%= assignment.lessons.count %> <%= 'Lesson'.pluralize(assignment.lessons.count) %>
+          </p>
+        <% end %>
+      </div>
+    </div>
+  <% elsif assignment.summary_video.attached? %>
     <div class="bg-black flex items-center justify-center aspect-[4/3] xl:aspect-auto xl:max-w-[640px] xl:h-[480px] relative group"
            data-controller="video-poster video-player">
       <%= video_tag assignment.summary_video,
@@ -28,32 +54,6 @@
         <% end %>
       </div>
       <%= render 'shared/video_player_controls' %>
-    </div>
-  <% elsif assignment.summary_video_url.present? %>
-    <div class="bg-black flex items-center justify-center aspect-[4/3] xl:aspect-auto xl:max-w-[640px] xl:h-[480px] relative group"
-           data-controller="video-poster">
-      <iframe
-        width="100%"
-        height="100%"
-        src="https://www.youtube.com/embed/<%= assignment.youtube_video_id %>"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
-        class="w-full h-full"
-        data-video-poster-target="video">
-      </iframe>
-      <div data-video-poster-target="overlay" data-action="click->video-poster#hideOverlay" class="absolute inset-0 flex flex-col items-center justify-center bg-black cursor-pointer">
-        <h2 class="text-white text-3xl font-bold text-center px-8"><%= assignment.project_name %></h2>
-        <p class="text-gray-300 text-xl mt-3"><%= assignment.student&.name %></p>
-        <% if assignment.lessons.any? %>
-          <p class="text-gray-400 text-lg mt-2">
-            <%= assignment.lessons.minimum(:date)&.strftime("%b %d, %Y") %> - <%= assignment.lessons.maximum(:date)&.strftime("%b %d, %Y") %>
-          </p>
-          <p class="text-gray-400 text-lg mt-1">
-            <%= assignment.lessons.count %> <%= 'Lesson'.pluralize(assignment.lessons.count) %>
-          </p>
-        <% end %>
-      </div>
     </div>
   <% else %>
     <div class="bg-black flex items-center justify-center aspect-[4/3] xl:aspect-auto xl:max-w-[640px] xl:h-[480px]">

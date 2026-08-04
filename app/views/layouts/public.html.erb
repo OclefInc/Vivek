@@ -112,6 +112,13 @@
                       </svg>
                       Bookmarks
                     <% end %>
+                    <% if current_user.email.ends_with?("@oclef.com") %>
+                      <div class="my-1 border-t border-gray-100"></div>
+                      <%= link_to "Pro", 'https://pro.oclef.com/users/sign_in', class: "block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center" %>
+                      <%= link_to "Blog", 'https://blog.oclef.com/users/sign_in', class: "block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center" %>
+                      <%= link_to "Hello", 'https://hello.oclef.com/users/sign_in', class: "block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center" %>
+                      <div class="my-1 border-t border-gray-100"></div>
+                    <% end %>
                     <%= button_to destroy_user_session_path, method: :delete, class: "w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center" do %>
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 mr-2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />

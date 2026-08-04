@@ -56,6 +56,13 @@
       <% end %>
     <% end %>
     <% if user_signed_in? %>
+      <% if current_user.email.ends_with?("@oclef.com") %>
+        <div class="my-1 border-t border-gray-100"></div>
+        <%= link_to "Pro", 'https://pro.oclef.com/users/sign_in', class: "block text-teal-200 hover:text-white hover:bg-white/10 px-3 py-2 rounded-lg mb-1 flex items-center" %>
+        <%= link_to "Blog", 'https://blog.oclef.com/users/sign_in', class: "block text-teal-200 hover:text-white hover:bg-white/10 px-3 py-2 rounded-lg mb-1 flex items-center" %>
+        <%= link_to "Hello", 'https://hello.oclef.com/users/sign_in', class: "block text-teal-200 hover:text-white hover:bg-white/10 px-3 py-2 rounded-lg mb-1 flex items-center" %>
+        <div class="my-1 border-t border-gray-100"></div>
+      <% end %>
       <%= button_to destroy_user_session_path, method: :delete, class: "w-full text-left px-3 py-2 text-sm text-red-300 hover:text-red-200 hover:bg-white/10 flex items-center rounded-lg" do %>
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />

@@ -45,6 +45,16 @@ class Admin::AccountsControllerTest < ActionDispatch::IntegrationTest
     assert @account.reload.is_employee
   end
 
+  test "should redirect when can not update employee status" do
+    User.any_instance.stubs(:update).returns(false)
+    @account.update!(is_employee: false)
+
+    patch update_employee_account_url(@account), params: { user: { is_employee: true } }
+
+    assert_redirected_to account_path(@account)
+    assert_equal "Unable to update employee status.", flash[:alert]
+  end
+
   test "should not allow removing own employee access" do
     @user.update!(is_employee: true)
 

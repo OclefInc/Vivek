@@ -46,9 +46,11 @@ one:
   encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
   confirmed_at: <%= Time.now %>
   name: "User One"
+  is_employee: true
 
 two:
   email: two@example.com
   encrypted_password: <%= Devise::Encryptor.digest(User, 'password') %>
   confirmed_at: <%= Time.now %>
   name: "User Two"
+  is_employee: false

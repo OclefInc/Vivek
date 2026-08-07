@@ -188,14 +188,6 @@ class UserTest < ActiveSupport::TestCase
     assert_includes user.roles, "Teacher"
   end
 
-  test "is_employee? returns true for oclef.com email" do
-    user = User.new(email: "test@oclef.com")
-    assert user.is_employee?
-
-    user.email = "test@example.com"
-    assert_not user.is_employee?
-  end
-
   test "is_student? returns true if student record exists" do
     user = users(:one)
     assert_not user.is_student?
